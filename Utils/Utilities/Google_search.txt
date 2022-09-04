@@ -1,0 +1,63 @@
+Refine web searches
+You can use symbols or words in your search to make your search results more precise.
+
+Google Search usually ignores punctuation that isn’t part of a search operator.
+Don’t put spaces between the symbol or word and your search term. A search for site:nytimes.com will work, but site: nytimes.com won’t.
+
+Common search techniques
+
+Search social media
+Put @ in front of a word to search social media. For example: @twitter.
+
+Search for a price
+Put $ in front of a number. For example: camera $400.
+
+Search hashtags
+Put # in front of a word. For example: #throwbackthursday
+
+Exclude words from your search
+Put - in front of a word you want to leave out. For example, jaguar speed -car
+
+Search for an exact match
+Put a word or phrase inside quotes. For example, "tallest building".
+
+Search for wildcards or unknown words
+Put a * in your word or phrase where you want to leave a placeholder. For example, "largest * in the world".
+
+Search within a range of numbers
+Put .. between two numbers. For example, camera $50..$100.
+
+Combine searches
+Put "OR" between each search query. For example,  marathon OR race.
+
+Search for a specific site
+Put "site:" in front of a site or domain. For example, site:youtube.com or site:.gov.
+
+Search for related sites
+Put "related:" in front of a web address you already know. For example, related:time.com.
+
+Get details about a site
+Put "info:" in front of the site address.
+
+See Google’s cached version of a site
+Put "cache:" in front of the site address.
+
+
+
+1.	Recherche sur Internet
+-	Related - Exemple : related:lemonde.fr pour avoir un site d'information
+-	L’ordre des mots, cela a une importance.
+-	Pour prendre en compte tous les mots d'une recherche, mettez-les entre guillemets : "ma recherche prenant en compte tous les mots".
+-	Si on ajoute &pws=0 à la fin de l'URL d'une recherche Google, on dépersonnalise la recherche.
+-	Opérateurs booléens : 
+Vous pouvez utiliser les signes "+" et "-", comme par exemple : "KFC+Colonel Sanders" ou "KFC-Colonel Sanders" pour faire une recherche sur le kfc avec un lien direct avec le colonel ("+"), ou bien sans celui-ci ("-").
+-	Rajouter les ":" permet de spécifier des nombres entre cette gamme. Par exemple, "IPhone XS Max 1600:2000 euros" cherchera les iPhones entre 1600 et 2000 euros.
+-	 Mettre le mot clé "AND" permet de faire une recherche sur les deux termes utilisés, et non dissociés : "kfc AND colonel Sanders" fera une recherche sur les deux, et non juste sur le colonel Sanders. De même avec le "OR" pour faire un terme ou l'autre.
+-	Opérateurs avancés :
+L'astérisque permet de connaître une expression : "qui vole *vole* " permet de retrouver l'expression "qui vole un oeuf vole une boeuf".
+-	Pour spécifier un site, on peut utiliser site:monsite.fr qui listera que les éléments de cette page. Très utile : par exemple pour rechercher des articles dans un média (site:lemonde.fr)
+-	Pour spécifier les types de documents : "filetype:PDF" recherche juste des pdf.
+-	Pour recherche un mot uniquement sur le corps d'un site, il faut utiliser "allintext:mot". Pour des phrases, "intext:ma phrase à rechercher".
+-	De même pour rechercher uniquement sur les titres, "allintitle:mot" et "intitle:ma phrase à rechercher"
+-	Pour avoir des informations sur un site web, on peut essayer de mettre "info:monsitederecherche.com"
+

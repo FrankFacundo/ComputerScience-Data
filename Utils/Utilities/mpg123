@@ -1,0 +1,28 @@
+mpg123 -vC [file]	//-v verbose: ex: frame numbers; -C control : enable terminal control keys
+
+mpg123 -k [number_of_start_frame] [file] //start at "number_of_start_frame"
+
+ -= terminal control keys =-
+[s]     or [ ] interrupt/restart playback (i.e. '(un)pause')
+[f]     next track
+[d]     previous track
+[b]     back to beginning of track
+[p]     loop around current position (like a damaged audio CD;-)
+[.]     forward
+[,]     rewind
+[:]     fast forward
+[;]     fast rewind
+[>]     fine forward
+[<]     fine rewind
+[+]     volume up
+[-]     volume down
+[r]     RVA switch
+[v]     verbose switch
+[l]     list current playlist, indicating current track there
+[t]     display tag info (again)
+[m]     print MPEG header info (again)
+[h]     this help
+[q]     quit
+[c]     or [C] pitch up (small step, big step)
+[x]     or [X] pitch down (small step, big step)
+[w]     reset pitch to zero

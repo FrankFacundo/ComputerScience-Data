@@ -1,0 +1,80 @@
+### Git commands
+
+## Common
+
+#Undo the last N commits and put the changes in staging area
+git reset --soft HEAD~N
+
+#Merge <branch name> with current branch
+git merge <branch name>
+
+#Push the local repository to the server
+git push origin <branch>
+
+#Rebase branch from origin
+git pull --rebase origin <branch>
+
+#Commit
+git commit -m "my commit message"
+
+###
+
+#HELP !!!
+git help -a
+
+#Help to commit
+git help commit
+
+#init the repository
+git init
+
+#add file to the git repository
+git add .
+
+#display all the commit
+git log
+
+#status of the git repository
+git status
+
+#go to this commit
+git checkout <hash>
+
+#create the opposite commit
+git revert <hash>
+
+#change the last commit message
+git commit --amend -m "new message"
+
+#Cancel all the changes that haven't been committed
+git reset --hard
+
+#Create a new branch
+git branch <name>
+
+#Go to this particular branch
+git checkout <branch name>
+
+#Create and go to this new branch
+git checkout -b <name>
+
+##Configuration client Git (file : .gitconfig)
+
+git config --global user.name "Frank Facundo"
+git config --global user.email "frank.facundo@telecom-paristech.fr"
+
+##Configuration new repository
+
+#git init
+#git remote add origin \git@gitlab.enst.fr:<username_here>/amphi-git.git
+#git add .
+#git commit -m "initial commit"
+
+##Exclusions (file : .gitignore)
+
+### Gitlab API
+
+#Link example 
+link_gitlab_api = https://gitlab.com/api/v4/projects/{project_number}/merge_requests?state=opened
+# To make a request (example)
+curl --header "PRIVATE-TOKEN: {TOKEN}" "{link_gitlab_api}" --INSECURE

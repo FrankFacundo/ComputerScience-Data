@@ -1,0 +1,101 @@
+https://github.com/MickaelLopes/FaceRecognitionChallenge
+
+https://www.nist.gov/system/files/documents/2018/05/22/nist_iarpa_frpc_2018_overview_public.pdf
+
+
+Use GPU Télécom : https://tutos.apps.rezel.net/telecom/telecom-gpu/?fbclid=IwAR3kckAH2_96bsV7yTVFWyeA9NSwjQAZ8R90eJydTkFb7Yau89uM5XnRups
+
+Tutorial : https://medium.com/@apbetahouse45/how-to-run-jupyter-notebooks-on-remote-server-part-1-ssh-a2be0232c533
+frank@frank-laptop:~$ ssh ffacundo@gpu.enst.fr -NL 1234:localhost:1234
+[ffacundo@gpu1 ~]$ jupyter notebook --no-browser --port 1234
+put in browser : http://localhost:1234/?token=*******************************
+
+
+frank@frank-laptop:~$ ssh ffacundo@lame23.enst.fr -NL 1235:localhost:1235
+
+
+ffacundo@lame23: cd envFrank
+ffacundo@lame23: source bin/activate
+ffacundo@lame23: source bin/activate/pip install seaborn
+
+to install libraries in gpu : 
+https://github.com/googlesamples/assistant-sdk-python/issues/236
+
+to understand python -m
+https://docs.python.org/3/using/cmdline.html
+
+to install notebook in servers :
+ffacundo@lame23: python3 -m pip install --user notebook
+
+(envFrank) ffacundo@lame23:~$ cd ~/.cache/
+(envFrank) ffacundo@lame23:~/.cache$ rm -r pip/
+
+
+*** TO PUT LIBRARY WITH PATH
+import sys
+print(sys.path)
+#sys.path.append('/cal/homes/ffacundo/.local/lib/python2.7/site-packages/')
+sys.path.append('/home/frank/anaconda3/pkgs/seaborn-0.9.0-py37_0/lib/python3.7/site-packages/')
+import seaborn as sns
+
+
+***Environnement Python
+
+Une fois connecté, si vous voulez utiliser un environnement Python, il vous faudra le mettre en place et installer les bibliothèques que vous désirez. 
+Pour cela, vous pouvez passer par virtualenv, en utilisant les commandes suivantes pour créer l’environnement Python 3 NOM_DE_VOTRE_ENVIRONNEMENT dans le répertoire courant :
+
+	python3 -m pip install virtualenv --user
+	virtualenv NOM_DE_VOTRE_ENVIRONNEMENT --python=python3
+
+Puis chargez cet environnement (à faire à chaque fois que vous vous connecter au serveur et que vous voudrez vous en servir) :
+
+	cd NOM_DE_VOTRE_ENVIRONNEMENT
+	source bin/activate
+
+Vous pouvez bien sûr créer plusieurs environnements ! Pour sortir de votre environnement, utilisez la commande deactivate.
+
+*** To link environments to jupyter
+$ python -m venv [projectname]
+$ source [projectname]/bin/activate
+(venv) $ pip install ipykernel
+(venv) $ ipython kernel install --user --name=[projectname]
+
+
+SSHFS:
+
+sudo apt-get install sshfs
+mkdir ~/Remote
+sshfs user@remotehost:/path/to/remote/folder ~/Remote
+sshfs ffacundo@lame23.enst.fr:/home/infres/ffacundo/Challenge ~/Remote
+//TO UNMOUNT
+sudo umount /home/<USER>/Remote
+sudo umount /home/frank/Remote
+
+***Passe files from server lame to my pc
+scp ffacundo@lame23:/home/infres/ffacundo/Challenge/SD210-other/keras_multithread-Copy1.ipynb  /media/frank/Docs/Escritorio/Télécom/2A/SD-Sciences_des_données/SD-TSIA-210-MachineLearning/Challenge/Frank
+
+
+
+TMUX
+
+Ctrl + b ;
+Toggle last active pane
+
+Ctrl + b %
+Split pane vertically
+
+Ctrl + b "
+Split pane horizontally
+
+Ctrl + b {
+Move the current pane left
+
+Ctrl + b }
+Move the current pane right
+
+Ctrl + b 
+Ctrl + b 
+Ctrl + b 
+Ctrl + b 
+
+%;

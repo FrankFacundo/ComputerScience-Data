@@ -1,0 +1,17 @@
+Route 53 					- register domains (franfacundo.com
+S3 						- save data (in my case the web page)
+Amazon Elastic Compute Cloud (EC2) 		- Amazon Web Service use to create and run virtual machines in the cloud
+codedeploy 					- 
+Lambda 						- running code without provisioning or managing servers (run calculs in python for exemple)
+Amazon Relational Database Service (RDS)	- Database
+Elastic Beanstalk 				- Run Web Server (PHP, Python, Node.js, etc)
+
+
+
+
+
+
+
+IAM 	: AWS Identity and Access Management 
+VPCs 	: Amazon Virtual Private Cloud 
+EB	: AWS Elastic Beanstalk

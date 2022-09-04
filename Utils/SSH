@@ -1,0 +1,3 @@
+scp file.txt 10.10.10.10:/root/
+
+scp -r foldername 10.10.10.10:/root/

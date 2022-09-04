@@ -1,0 +1,288 @@
+File
+New	Ctrl+N	Windows
+New Menu	Shift+Alt+N	Windows
+Close	Ctrl+W	Windows
+Close All	Shift+Ctrl+W	Windows
+Save	Ctrl+S	Windows
+Save All	Shift+Ctrl+S	Windows
+Rename	F2	Windows
+Refresh	F5	Windows
+Print	Ctrl+P	Windows
+Properties	Alt+Enter	Windows
+
+
+Edit
+Undo	Ctrl+Z	Dialogs, Windows
+Redo (on Windows)	Ctrl+Y	Dialogs, Windows
+Redo (on Linux)	Ctrl+Shift+Z 	Dialogs, Windows
+Cut	Ctrl+X	Dialogs, Windows
+Copy	Ctrl+C	Dialogs, Windows
+Paste	Ctrl+V	Dialogs, Windows
+Delete	Delete	Windows
+Select All	Ctrl+A	Dialogs, Windows
+Find and Replace	Ctrl+F	Windows
+Find Next	Ctrl+K	Editing Text
+Find Previous	Shift+Ctrl+K	Editing Text
+Incremental Find	Ctrl+J	Editing Text
+Reverse Incremental Find	Shift+Ctrl+J	Editing Text
+Toggle Smart Insert Mode	Shift+Ctrl+Insert	Editing Text
+Show Tooltip Description	F2	Editing Text
+Content Assist	Ctrl+Space	Dialogs, Windows
+Context Information	Shift+Ctrl+Space	Dialogs, Windows
+Word Completion	Alt+/	Editing Text
+Quick Fix	Ctrl+1	Dialogs, Windows
+Quick Diff Toggle	Shift+Ctrl+Q	Editing Text
+Toggle Block Selection	Shift+Alt+A	Editing Text
+Toggle Split Editor horizontal	Ctrl+_	Windows
+Toggle Split Editor vertical	Ctrl+{	Windows
+
+
+Search
+Open Search Dialog	Ctrl+H	Windows
+Search Text in Workspace	Ctrl+Alt+G	Windows
+Search References in Ws	Shift+Ctrl+G	Windows
+Search Declaration in Ws	Ctrl+G	Windows
+Search Occurrences in File	Shift+Ctrl+U	Windows
+
+
+Git
+Commit...	Ctrl+#	In Windows
+Copy Path to Clipboard	Ctrl+C	In Git Repo View
+Copy	Ctrl+C	In Git Reflog View
+Paste Repo Path or URI	Ctrl+V	In Git Repo View
+
+ 
+Text Editing – Navigation
+Cursor to Text Start	Ctrl+Home	Editing Text
+Cursor to Text End	Ctrl+End	Editing Text
+Cursor to Line Start	Home	Editing Text
+Cursor to Line End	End	Editing Text
+Cursor to Previous Word	Ctrl+Left	Editing Text
+Cursor to Next Word	Ctrl+Right	Editing Text
+Go to Line	Ctrl+L	Editing Text
+Scroll one Line Up	Ctrl+Up	Editing Text
+Scroll one Line Down	Ctrl+Down	Editing Text
+Toggle Folding	Ctrl+Num_/	Editing Text
+Collapse	Ctrl+Num_-	Editing Text
+Collapse All	Shift+Ctrl+Num_/	Editing Text
+Expand	Ctrl+Num_+	Editing Text
+Expand All	Ctrl+Num_*	Editing Text
+Reset Folding Structure	Shift+Ctrl+Num_*	Editing Text
+Show Ruler Context Menu	Ctrl+F10	Editing Text
+Toggle Word Wrap	Alt+Shift+Y	Editing Text
+Zoom In	Ctrl++	Editing Text
+Zoom In 	Ctrl+=	Editing Text
+Zoom Out 	Ctrl+-	Editing Text
+
+
+Text Editing – Selection
+Select to Line Start	Shift+Home	Editing Text
+Select to Line End	Shift+End	Editing Text
+Select Previous Word	Shift+Ctrl+Left	Editing Text
+Select Next Word	Shift+Ctrl+Right	Editing Text
+
+
+Text Editing – Modification
+Insert Line Above 	Shift+Ctrl+Enter	Editing Text
+Insert Line Below 	Shift+Enter	Editing Text
+Copy Lines Up	Ctrl+Alt+Up	Editing Text
+Copy Lines Down	Ctrl+Alt+Down	Editing Text
+Move Lines Up	Alt+Up	Editing Text
+Move Lines Down	Alt+Down	Editing Text
+Delete Line	Ctrl+D	Editing Text
+Delete Previous Word	Ctrl+Backspace	Editing Text
+Delete Next Word	Ctrl+Delete	Editing Text
+Delete to End of Line	Shift+Ctrl+Delete	Editing Text
+Join Lines	Ctrl+Alt+J	Editing Text
+Convert to Lower Case	Shift+Ctrl+Y	Editing Text
+Convert to Upper Case	Shift+Ctrl+X	Editing Text
+Toggle Overwrite	Insert	Editing Text
+
+
+Source Editing
+Show Source Menu	Shift+Alt+S	In Windows
+Toggle Comment	Ctrl+/	Editing Source
+Toggle Comment	Ctrl+7	Editing Source
+Toggle Comment	Shift+Ctrl+C	Editing Source
+Toggle Mark Occurrences	Shift+Alt+O	Editing Source
+Format	Shift+Ctrl+F	Editing Source
+Annotate Class File	Ctrl+1	Browse Att. Src.
+Open Hyperlink	F3	Editing Text
+
+Java Editing – Navigation
+Go to Previous Member	Shift+Ctrl+Up	Editing Java Src
+Go to Next Member	Shift+Ctrl+Down	Editing Java Src
+Go to Matching Bracket	Shift+Ctrl+P	Editing Java Src
+Open Declaration	F3	Windows
+Open Type Hierarchy	F4	Windows
+Open Call Hierarchy	Ctrl+Alt+H	Windows
+Open Attached Javadoc	Shift+F2	Windows
+Open Structure	Ctrl+F3	Editing Java Src
+Quick Hierarchy	Ctrl+T	Editing Java Src
+Quick Outline	Ctrl+O	Editing Java Src
+Show In Breadcrumb	Shift+Alt+B	Editing Java Src
+
+
+Java Editing – Selection
+Select Enclosing Element	Shift+Alt+Up	Editing Java Src
+Select Previous Element	Shift+Alt+Left	Editing Java Src
+Select Next Element	Shift+Alt+Right	Editing Java Src
+Restore Last Selection	Shift+Alt+Down	Editing Java Src
+Show Parameter Hints	Shift+Ctrl+Space	Editing Java Src
+
+
+Java Editing – Modification
+Add Block Comment	Shift+Ctrl+/	Editing Java Src
+Remove Block Comment	Shift+Ctrl+\	Editing Java Src
+Add Javadoc Comment	Shift+Alt+J	Editing Java Src
+Correct Indentation	Ctrl+I	Editing Java Src
+Add Import	Shift+Ctrl+M	Editing Java Src
+Organize Imports	Shift+Ctrl+O	In Windows
+Surround With Menu	Shift+Alt+Z	In Windows
+Remove Occurrence	Shift+Alt+U	Editing Java Src
+
+
+Java Quick Assist
+Assign to Local Variable	Ctrl+2 L	Editing Java Src
+Assign to Field	Ctrl+2 F	Editing Java Src
+Extract Method	Ctrl+2 M	Editing Java Src
+Rename in File	Ctrl+2 R	Editing Java Src
+
+Java Refactoring
+Show Refactor Menu	Shift+Alt+T	Windows
+Rename 	Shift+Alt+R	Windows
+Move 	Shift+Alt+V	Windows
+Change Method Signature	Shift+Alt+C	Windows
+Extract Method	Shift+Alt+M	Windows
+Extract Local Variable	Shift+Alt+L	Windows
+Inline	Shift+Alt+I	Windows
+
+
+Java Project
+Build All	Ctrl+B	Windows
+ 
+Run
+Run	Ctrl+F11	Windows
+Run Ant Build	Shift+Alt+X Q	Windows
+Run Eclipse Application	Shift+Alt+X E	Windows
+Run Java Applet	Shift+Alt+X A	Windows
+Run Java Application	Shift+Alt+X J	Windows
+Run JUnit Plug-in Test	Shift+Alt+X P	Windows
+Run JUnit Test	Shift+Alt+X T	Windows
+Run OSGi Framework	Shift+Alt+X O	Windows
+
+
+Debug
+Debug Ant Build	Shift+Alt+D Q	Windows
+Debug Eclipse Application	Shift+Alt+D E	Windows
+Debug Java Applet	Shift+Alt+D A	Windows
+Debug Java Application	Shift+Alt+D J	Windows
+Debug JUnit Plug-in Test	Shift+Alt+D P	Windows
+Debug JUnit Test	Shift+Alt+D T	Windows
+Debug OSGi Framework	Shift+Alt+D O	Windows
+
+
+Debugging
+Toggle Breakpoint	Shift+Ctrl+B	Windows
+Resume	F8	Debugging
+Terminate	Ctrl+F2	Debugging
+Step Into	F5	Debugging
+Step Into Selection	Ctrl+F5	Debugging
+Step Over	F6	Debugging
+Step Return	F7	Debugging
+Force Return	Shift+Alt+F	Windows
+Run to Line	Ctrl+R	Debugging
+Use Step Filters	Shift+F5	Windows
+View all Instances	Shift+Ctrl+N	Windows
+Inspect	Shift+Ctrl+I	Dialogs, Windows
+Display	Shift+Ctrl+D	Dialogs, Windows
+Display	Shift+Ctrl+V	Dialogs, Windows
+Execute	Ctrl+U	Windows
+Java Breakpoint Properties	Alt+Enter	Breakpoints View
+Undo	Ctrl+Z	Breakpoints View
+Add Memory Block	Ctrl+Alt+M	Memory View
+Close Rendering	Ctrl+W	Memory View
+Toggle Memory Monitors	Ctrl+T	Memory View
+New Rendering	Ctrl+N	Memory View
+Next Memory Monitor	Ctrl+Alt+N	Memory View
+Next Page of Memory	Shift+Ctrl+.	Table Memory
+Previous Page Memory	Shift+Ctrl+,	Table Memory
+Go to Address	Ctrl+G	Table Memory
+EOF	Ctrl+D	I/O Console
+Skip All Breakpoints	Ctrl+Alt+B	Windows
+
+ 
+Navigate
+Open Type	Shift+Ctrl+T	Windows
+Open Type in Hierarchy	Shift+Ctrl+H	Windows
+Open Resource	Shift+Ctrl+R	Windows
+Open from Clipboard	Ctrl+Shift+V	Windows
+Show In Breadcrumb	Shift+Alt+B	Editor Breadcrumb
+Show In...	Shift+Alt+W	Windows
+Next	Ctrl+.	Windows
+Previous	Ctrl+,	Windows
+Last Edit Location	Ctrl+Q	Windows
+Backward History	Alt+Left	Windows
+Forward History	Alt+Right	Windows
+Go to Next Editor Page	Alt+F7	Windows
+Go to Prev. Editor Page	Shift+Alt+F7	Windows
+Go to Next Editor Sub-Tab	Alt+PageDown	Dialogs, Windows
+Go to Prev. Editor Sub-Tab	Alt+PageUp	Dialogs, Windows
+Next Tab	Ctrl+PageDown	Dialogs, Windows
+Previous Tab	Ctrl+PageUp	Dialogs, Windows
+
+
+Window
+Quick Access	Ctrl+3	Windows
+Activate Editor	F12	Windows
+Quick Switch Editor	Ctrl+E	Windows
+Switch to Editor	Shift+Ctrl+E	Windows
+Previous Editor	Shift+Ctrl+F6	Windows
+Next Editor	Ctrl+F6	Windows
+Maximize View or Editor	Ctrl+M	Windows
+Previous View	Shift+Ctrl+F7	Windows
+Next View	Ctrl+F7	Windows
+Show View Menu	Ctrl+F10	Dialogs, Windows
+Previous Perspective	Shift+Ctrl+F8	Windows
+Next Perspective	Ctrl+F8	Windows
+Show Key Assist	Shift+Ctrl+L	Dialogs, Windows
+Show System Menu	Alt+-	Windows
+Toggle Full Screen	Alt+F11	Windows
+
+
+Views
+Open Show View Dialog	Shift+Alt+Q Q	Windows
+Show View: Breakpoints	Shift+Alt+Q B	Windows
+Show View: Cheat Sheets	Shift+Alt+Q H	Windows
+Show View: Console	Shift+Alt+Q C	Windows
+Show View: Declaration	Shift+Alt+Q D	Windows
+Show View: Error Log	Shift+Alt+Q L	Windows
+Show View: History	Shift+Alt+Q Z	Windows
+Show View: Javadoc	Shift+Alt+Q J	Windows
+Show View: Outline	Shift+Alt+Q O	Windows
+Show View: Package Expl.	Shift+Alt+Q P	Windows
+Show View: Problems	Shift+Alt+Q X	Windows
+Show View: Search	Shift+Alt+Q S	Windows
+Show View: Synchronize	Shift+Alt+Q Y	Windows
+Show View: Type Hierarchy	Shift+Alt+Q T	Windows
+Show View: Variables	Shift+Alt+Q V	Windows
+
+
+Ant Editing
+Open External Doc.	Shift+F2	Editing Ant Files
+Rename In File	Shift+Alt+R	Editing Ant Files
+
+
+Plug-in Development
+Open Plug-in Artifact	Shift+Ctrl+A	Windows
+Add to Target Platform	Shift+Ctrl+Alt+A	Windows
+Open Manifest	Shift+Ctrl+Alt+M	Windows
+Format Source	Shift+Ctrl+F	Manifest Editor
+Quick Outline	Ctrl+O	Manifest Editor
+
+
+Plug-in Spy
+Plug-in Selection Spy	Shift+Alt+F1	Dialogs, Windows
+Plug-in Menu Spy	Shift+Alt+F2	Dialogs, Windows
+Show Contrib. Plug-in	Shift+Alt+F3 	Dialogs, Windows
+Layout Spy	Ctrl+Alt+Shift+F9	Dialogs, Windows

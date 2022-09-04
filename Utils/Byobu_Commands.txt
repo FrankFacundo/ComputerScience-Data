@@ -1,0 +1,112 @@
+
+Byobu Commands
+==============
+
+        byobu                              Screen manager
+
+
+Level 0 Commands (Quick Start)
+------------------------------
+
+        <F2>                               Create a new window
+        <F3>                               Go to the previous window
+        <F4>                               Go to the next window
+        exit                               Close the current window
+        
+
+Level 1 Commands
+----------------
+
+        <ctrl> a S (capital S, please!)    Split   the  current   region
+                                           horizontally  into   two  new
+                                           ones
+        <ctrl> a |                         Split   the  current  region
+                                           vertically into two new ones
+        <ctrl> a <tab>                     Go  to  the  next region
+        <ctrl> a X (capital X, please!)    Close the current region
+        <ctrl> a                           Resize the current  region using the
+                                           options given below:
+                 :resize +N                Increase the  height of  the current
+                                           region by N
+                 :resize -N                Decrease the  height of  the current
+                                           region by N
+                 :resize N                 Set the height of the current region
+                                           to N
+                 :resize =                 Make all regions equally high
+                 :resize max               Maximize the  height of  the current
+                                           region
+                 :resize min               Minimize the  height of  the current
+                                           region
+        <ctrl> a x                         Lock the terminal
+        <F8>                               Rename the current window
+
+
+Level 2 Commands (Faster Alternatives)
+--------------------------------------
+
+        <ctrl> a \                         Kill all  the windows  and terminate
+                                           the session
+                                           This  is  an alternative  to  typing
+                                           "exit" in each window
+        <ctrl> a <N>                       Go to window number N
+                                           This is  an alternative to  the <F3>
+                                           and <F4> commands
+        <ctrl> a "                         Present  a list  of all  windows for
+                                           selection
+                                           This is  an alternative to  the <F3>
+                                           and <F4> commands
+        <ctrl> a <ctrl> a                  Toggle  to the  previously displayed
+                                           window
+                                           This is  an alternative to  the <F3>
+                                           and <F4> commands
+        
+
+Help
+----
+
+        1) man screen
+        2) <ctrl> a ?
+        3) Press <F9>, then choose the "Help" option
+
+
+
+F Key Commands
+----
+
+F2: Create a new window
+
+F3: Move to the previous window
+
+F4: Move to the next window
+
+F5: Refresh all status notifications
+
+F6: Detach from the session and logout
+
+Shift-F6: Detach from the session, but do not logout
+
+F7: Enter scrollback/search mode
+
+F8: Rename the current window
+
+F9: Launch the Byobu Configuration Menu
+
+F12: GNU Screen's Escape Key
+
+Alt-Pageup: Scroll back through this window's history
+
+Alt-Pagedown: Scroll forward through this window's history
+
+Shift-F2: Split the screen horizontally
+
+Ctrl-F2: Split the screen vertically
+
+Shift-F3: Move focus to the next split
+
+Shift-F4: Move focus to the previous split
+
+Shift-F5: Collapse all splits
+
+Ctrl-F5: Reconnect any SSH/GPG sockets or agents
+
+Shift-F12: Toggle all of Byobu's keybindings on or off

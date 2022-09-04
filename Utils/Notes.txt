@@ -1,0 +1,7 @@
+Extensions Chrome:
+Google Translate 2.0.7
+Web Search Navigator 0.3.0
+Sci-Hub 0.1.0
+
+Soft:
+AutoHotKey

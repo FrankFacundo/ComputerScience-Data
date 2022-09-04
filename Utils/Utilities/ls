@@ -1,0 +1,25 @@
+Long Output Format
+The output from ls -l summarizes all the most important information about the file on one line. If the specified pathname is a directory, ls displays information on every file in that directory (one file per line). It precedes this list with a status line that indicates the total number of file system blocks (512 byte units) occupied by the files in that directory. Here is a sample of the output along with an explanation.
+
+-rw-rw-rw- 1 root   dir 104 Dec 25 19:32 file
+The first character identifies the file type:
+
+-    Regular file
+b    Block special file
+c    Character special file
+d    Directory
+l    Symbolic link
+n    Network file
+p    FIFO
+s    Socket
+The next nine characters are in three groups of three; they describe the permissions on the file. The first group of three describes owner permissions; the second describes group permissions; the third describes other (or world) permissions. Because Windows systems do not support group and other permissions, these are copies of the owner's permissions. Characters that may appear are:
+
+r    Permission to read file
+w    Permission to write to file
+x    Permission to execute file
+a    Archive bit is on (file has not been backed up)
+c    Compressed file
+s    System file
+h    Hidden file
+t    Temporary file
+

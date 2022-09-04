@@ -1,0 +1,97 @@
+Shortcut	Action
+Ctrl + N	Start a New network.
+Ctrl + O	Open an existing network.
+Ctrl + Shift + T	Open Samples.
+Ctrl + S	Save the current network.
+Ctrl + Shift + S	Save the current network to a different name and/or directory (Save As).
+Ctrl + Alt + Z	Ctrl + Alt + Z.
+Ctrl + P	Print the current network.
+Alt + F4	Exit Packet Tracer.
+Ctrl + C	Copy the selected items.
+Ctrl + V	Paste the selected items.
+Ctrl + Z	Undo the previous action.
+Ctrl + Shift + Z	Redo the previous action.
+Ctrl + R	View Preferences.
+Ctrl + Shift + U	Open the User Profile dialog.
+Ctrl + Shift + M	Open the Algorithm Settings dialog.
+Ctrl + I	Zoom In to the workspace.
+Ctrl + T	Reset the zoom of the workspace.
+Ctrl + U	Zoom Out of the workspace.
+Ctrl + Shift + A	Open/Close Main Toolbar.
+Ctrl + Shift + R	Open/Close Right Toolbar.
+Ctrl + Shift + B	Open/Close Bottom Toolbar
+Ctrl + W	Run the Activity Wizard.
+Ctrl + Alt + L	For Multiuser Extensions, do Listen.
+Ctrl + Alt + P	For Multiuser Extensions, do Port Visibility.
+Ctrl + Alt + Y	For Multiuser Extensions, do Options.
+Ctrl + Alt + G	For Multiuser Extensions, do Save Offline Copy As.
+Ctrl + Shift + C	For IPC, do Config Apps.
+Ctrl + Shift + Q	For IPC, do Show Active Apps.
+Ctrl + Shift + J	For IPC, do Options.
+Ctrl + Shift + K	For IPC, do Log.
+F1	Open the Help Files.
+F11	Open the Tutorials.
+F12	Open the About page.
+Shift + L	Switch to Logical Workspace.
+Shift + P	Switch to Physical Workspace.
+Shift + R	Switch to Realtime Mode.
+Shift + S	Switch to Simulation Mode.
+Ctrl + F5	For Logical Workspace, click [Root] button.
+Shift + U	For Logical Workspace, click New Cluster button.
+Shift + M	For Logical Workspace, click Move Object button.
+Shift + I	For Logical Workspace, click Set Tiled Background button.
+Shift + V	For Logical Workspace, click Viewport button.
+Shift + N	For Physical Workspace, open Navigation Panel.
+Shift + C	For Physical Workspace, create New City.
+Shift + B	For Physical Workspace, create New Building.
+Shift + W	For Physical Workspace, create New Closet.
+Shift + G	For Physical Workspace, show Grid.
+Shift + H	For Physical Workspace, open Working Closet.
+Alt+S	Click the Power Cycle Devices button.
+Alt+D	Click the Fast Forward Time button.
+Alt + B	In Simulation mode, click Back button.
+Alt + P	In Simulation mode, click AutoCapture/Play button.
+Alt + C	In Simulation mode, click Capture/Forward button.
+Alt + I	In Simulation mode, click Show Event List button.
+Ctrl + Alt + R	Show Router devices in the Device Specific Box.
+Ctrl + Alt + S	Show Switch devices in the Device Specific Box.
+Ctrl + Alt + U	Show Hub devices in the Device Specific Box.
+Ctrl + Alt + W	Show Wireless devices in the Device Specific Box.
+Ctrl + Alt + O	Show Connection types in the Device Specific Box.
+Ctrl + Alt + V	Show End Devices in the Device Specific Box.
+Ctrl + Alt + N	Show WAN Emulation devices in the Device Specific Box.
+Ctrl + Alt + T	Show Custom Made Devices in the Device Specific Box.
+Ctrl + Alt + M	Show Multiuser Connection in the Device Specific Box.
+Ctrl + Alt + i	Add the ith device in the Device Specific Box to the Workspace.
+Ctrl + Space	View rubber band rectangle to select.
+Up Arrow	Move rubber band rectangle upwards.
+Down Arrow	Move rubber band rectangle downwards.
+Right Arrow	Move rubber band rectangle right.
+Left Arrow	Move rubber band rectangle left.
+Space	Select device.
+Enter	Show Device Dialog for selected device.
+Ctrl + Up Arrow	Move selected devices upwards.
+Ctrl + Down Arrow	Move selected devices downwards.
+Ctrl + Right Arrow	Move selected devices right.
+Ctrl + Left Arrow	Move selected devices left.
+Ctrl + Shift + I	Open Scenario Description.
+Ctrl + Shift + N	New Scenario .
+Ctrl + Shift + D	Delete Scenario .
+Ctrl + Shift + O	Toggle PDU List Window.
+Ctrl + Insert	Copy text in CLI console/Cmd Prompt.
+Shift + Insert	Paste text in CLI console/Cmd Prompt.
+M	Choose the Move Layout tool.
+N	Choose the Place Note tool.
+Delete	Choose the Delete tool. If you have selected multiple objects, pressing Delete will delete them.
+I	Choose the Inspect tool.
+Alt+R	Choose the Resize tool.
+P	Click the Add Simple PDU button.
+C	Click the Add Complex PDU button.
+C	Choose Cancel in confirmation dialogues.
+N	Choose No in confirmation dialogues.
+Y	Choose Yes in confirmation dialogues.
+Ctrl + N	New Text Editor File (Valid in PC Desktop and Server Desktop).
+Ctrl + O	Open an existing Text Editor File (Valid in PC Desktop and Server Desktop).
+Ctrl + S	Save the current Text Editor File (Valid in PC Desktop and Server Desktop).
+Alt + F4	Exit Text Editor (Valid in PC Desktop and Server Desktop).
+Alt + S	Send Email from email client in PC.

@@ -1,0 +1,26 @@
+code cpu ram
+	>>sudo apt install indicator-multiload
+
+plusieurs bureau
+	vertical:
+		>>gsettings set org.compiz.core:/org/compiz/profiles/unity/plugings/core/ vsize <nombre>
+	horizontal:
+		>>gsettings set org.compiz.core:/org/compiz/profiles/unity/plugings/core/ hsize <nombre>
+
+Restart network (wifi,ethernet)
+	>>sudo service network-manager restart
+
+dernier commande 
+	>>!!	
+
+Commande X:
+	>>!X
+
+Directorio actual:
+	>>pwd
+
+Internet_Speed:
+	>>sudo apt install speedtest-cli
+	>>speedtest-cli
+Ressources:
+	>>htop

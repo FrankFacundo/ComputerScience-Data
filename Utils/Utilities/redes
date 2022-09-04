@@ -1,0 +1,12 @@
+networks commands:
+
+
+ifconfig
+	network local information 
+ip route
+	ip - show / manipulate routing, devices, policy routing and tunnels
+HOST
+
+WHOIS
+
+TRACEROUTE

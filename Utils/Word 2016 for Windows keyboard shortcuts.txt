@@ -1,0 +1,122 @@
+Keyboard shortcuts for Microsoft Word 2016 for Windows 
+This article shows all keyboard shortcuts for Microsoft Word 2016. 
+Notes:ÿ
+* If a shortcut requires two or more keys at the same time, the keys are separated by a plus sign (+). If you have to press one key immediately after another, the keys are separated by a comma (,).
+* The shortcuts in this article refer to the U.S. keyboard layout. Keys for other layouts might not correspond exactly to the keys on a U.S. keyboard.
+Frequently used shortcuts
+This table shows the most frequently used shortcuts in Microsoft Word.
+To do thisPressGo to "Tell me what you want to do"Alt+QOpenCtrl+OSaveCtrl+SCloseCtrl+WCutCtrl+XCopyCtrl+CPasteCtrl+VSelect allCtrl+ABoldCtrl+BItalicCtrl+IUnderlineCtrl+UDecrease font size 1 pointCtrl+[Increase font size 1 pointCtrl+]Center textCtrl+ELeft align textCtrl+LRight align textCtrl+RCancelEscUndoCtrl+ZRe-doCtrl+YZoomAlt+W, Q, then tab in Zoom dialog box to the value you want.Navigate the ribbon with only the keyboard
+The ribbon is the strip at the top of Word, organized by tabs. Each tab displays a different ribbon. Ribbons are made up of groups, and each group includes one or more commands. Every command in Word can be accessed by using shortcut. 
+Note:ÿAdd-ins and other programs may add new tabs to the ribbon and may provide access keys for those tabs.
+Access Keys for ribbon tabs
+There are two ways to navigate the tabs in the ribbon:
+* To go to the ribbon, press Alt, and then, to move between tabs, use the Right Arrow and Left Arrow keys. 
+* To go directly to a specific tab on the ribbon, use one of the following access keys:
+To do thisPressTo use Backstage view, open the File page. Alt+FTo use themes, colors, and effects, such as page borders, open the Design tab. Alt+GTo use common formatting commands, paragraph styles, or to use the Find tool. open Home tab.Alt+HTo manage Mail Merge tasks, or to work with envelopes and labels, open Mailings tab .Alt+MTo insert tables, pictures and shapes, headers, or text boxes, open Insert tab.Alt+NTo work with page margins, page orientation, indentation, and spacing, open Layout tab.Alt+PTo type a search term for Help content, open "Tell me" box on ribbon. Alt+Q, then enter the search termTo use Spell Check, set proofing languages, or to track and review changes to your document, open the Review tab.Alt+RTo add a table of contents, footnotes, or a table of citations, open the References tab.Alt+STo choose a document view or mode, such as Read Mode or Outline view, open the View tab. You can also set Zoom magnification and manage multiple windows of documents.Alt+WUse commands on a ribbon with the keyboard
+* To move to the list of ribbon tabs, press Alt; to go directly to a tab, press a keyboard shortcut. 
+* To move into the ribbon, press the Down Arrow key. (JAWS refers to this action as a move to the lower ribbon.)
+* To move between commands, press the Tab key or Shift+Tab. 
+* To move in the group that?s currently selected, press the Down Arrow key.
+* To move between groups on a ribbon, press Ctrl+Right Arrow or Ctrl+Left Arrow.
+Controls on the ribbon are activated in different ways, depending upon the type of control: 
+* If the selected command is a button, to activate it, press Spacebar or Enter.
+* If the selected command is a split button (that is, a button that opens a menu of additional options), to activate it, press Alt+Down Arrow. Tab through the options. To select the current option, press Spacebar or Enter. 
+* If the selected command is a list (such as the Font list), to open the list, press the Down Arrow key. Then, to move between items, use the Up Arrow or Down Arrow key.
+* If the selected command is a gallery, to select the command, press Spacebar or Enter. Then, tab through the items. 
+Tip:ÿIn galleries with more than one row of items, the Tab key moves from the beginning to the end of the current row and, when it reaches the end of the row, it moves to the beginning of the next one. Pressing the Right Arrow key at the end of the current row moves back to the beginning of the current row. 
+Use access keys when you can see the KeyTips 
+To use access keys:
+1. Press Alt.
+2. Press the letter shown in the square KeyTip that appears over the ribbon command that you want to use.
+Depending on which letter you press, you may be shown additional KeyTips, which are small images of a letter next to a command button on the tab that you picked. For example, if you press Alt+F, the Office Backstage opens on the Info page which has a different set of KeyTips. If you then press Alt again, KeyTips for navigating on this page appear. 
+Change the keyboard focus by using the keyboard without using the mouse
+The following table lists some ways to move the keyboard focus when using only the keyboard.
+To do this Press Select the active tab of the ribbon and activate the access keys.Alt or F10. Use access keys or arrow keys to move to a different tab.Move the focus to commands on the ribbon.Tab or Shift+TabMove the focus to each command on the ribbon, forward or backward, respectively.Tab or Shift+TabMove down, up, left, or right, respectively, among the items on the ribbon.Down Arrow, Up Arrow, Left Arrow, or Right ArrowExpand or collapse the ribbon.Ctrl+F1Display the shortcut menu for a selected item.Shift+F10Move the focus to a different pane of the window, such as the Format Picture pane, the Grammar pane, or the Selection pane .F6Activate a selected command or control on the ribbon.Spacebar or EnterOpen a selected menu or gallery on the ribbon.Spacebar or EnterFinish modifying a value in a control on the ribbon, and move focus back to the document.EnterKeyboard shortcut reference for Microsoft Word
+Create and edit documents 
+Create, view, and save documents
+To do this Press Create a new document.Ctrl+NOpen a document.Ctrl+OClose a document.Ctrl+WSplit the document window.Alt+Ctrl+SRemove the document window split.Alt+Shift+C or Alt+Ctrl+SSave a document.Ctrl+SWork with web content and hyperlinks
+To do this Press Insert a hyperlink.Ctrl+KGo back one page.Alt+Left ArrowGo forward one page.Alt+Right ArrowRefresh.F9Print and preview documents
+To do this Press Print a document.Ctrl+PSwitch to print preview.Alt+Ctrl+IMove around the preview page when zoomed in.Arrow keysMove by one preview page when zoomed out.Page Up or Page DownMove to the first preview page when zoomed out.Ctrl+HomeMove to the last preview page when zoomed out.Ctrl+EndCheck spelling and review changes in a document
+To do this Press Insert a comment (in the Revision task pane).Alt+R, CTurn change tracking on or off.Ctrl+Shift+EClose the Reviewing Pane if it is open.Alt+Shift+CSelect Review tab on ribbon.Alt+R, then Down Arrow to move to commands on this tab.Select Spelling & Grammar Alt+R, SFind, replace, and go to specific items in the document
+To do this Press Open the search box in the Navigation task pane.Ctrl+FReplace text, specific formatting, and special items.Ctrl+HGo to a page, bookmark, footnote, table, comment, graphic, or other location.Ctrl+GSwitch between the last four places that you have edited.Alt+Ctrl+ZMove around in a document using the keyboard
+To move Press One character to the leftLeft ArrowOne character to the rightRight ArrowOne word to the leftCtrl+Left ArrowOne word to the rightCtrl+Right ArrowOne paragraph upCtrl+Up ArrowOne paragraph downCtrl+Down ArrowOne cell to the left (in a table)Shift+TabOne cell to the right (in a table)TabUp one lineUp ArrowDown one lineDown ArrowTo the end of a lineEndTo the beginning of a lineHomeTo the top of the windowAlt+Ctrl+Page UpTo the end of the windowAlt+Ctrl+Page DownUp one screen (scrolling)Page UpDown one screen (scrolling)Page DownTo the top of the next pageCtrl+Page DownTo the top of the previous pageCtrl+Page UpTo the end of a documentCtrl+EndTo the beginning of a documentCtrl+HomeTo a previous revisionShift+F5After opening a document, to the location you were working in when the document was last closedShift+F5Insert or mark Table of Contents, footnotes, and citations
+To do this Press Mark a table of contents entry.Alt+Shift+OMark a table of authorities entry (citation).Alt+Shift+IMark an index entry.Alt+Shift+XInsert a footnote.Alt+Ctrl+FInsert an endnote.Alt+Ctrl+DGo to next footnote (in Word 2016).Alt+Shift+>Go to previous footnote (in Word 2016).Alt+Shift+<Go to "Tell me what you want to do" and Smart Lookup (in Word 2016).Alt+QWork with documents in different views
+Word offers several different views of a document. Each view makes it easier to do certain tasks. For example, Read Mode enables you to present two pages of the document side by side, and to use an arrow navigation to move to the next page.
+Switch to another view of the document
+To do this Press Switch to Read Mode viewAlt+W, FSwitch to Print Layout view.Alt+Ctrl+PSwitch to Outline view.Alt+Ctrl+OSwitch to Draft view.Alt+Ctrl+NWork with headings in Outline view
+These shortcuts only apply if a document is in Outline view.
+To do this Press Promote a paragraph.Alt+Shift+Left ArrowDemote a paragraph.Alt+Shift+Right ArrowDemote to body text.Ctrl+Shift+NMove selected paragraphs up.Alt+Shift+Up ArrowMove selected paragraphs down.Alt+Shift+Down ArrowExpand text under a heading.Alt+Shift+Plus SignCollapse text under a heading.Alt+Shift+Minus SignExpand or collapse all text or headings.Alt+Shift+AHide or display character formatting.The slash (/) key on the numeric keypadShow the first line of text or all text.Alt+Shift+LShow all headings with the Heading 1 style.Alt+Shift+1Show all headings up to Heading n.Alt+Shift+nInsert a tab character.Ctrl+TabNavigate in Read Mode view
+To do this Press Go to beginning of document.HomeGo to end of document.EndGo to page n.n (n is the page number you want to go to), EnterExit Read mode.EscEdit and move text and graphics
+Select text and graphics
+* Select text by holding down Shift and using the arrow keys to move the cursor
+Extend a selection
+To do this Press Turn extend mode on.F8Select the nearest character.F8, and then press Left Arrow or Right ArrowIncrease the size of a selection.F8 (press once to select a word, twice to select a sentence, and so on)Reduce the size of a selection.Shift+F8Turn extend mode off.EscExtend a selection one character to the right.Shift+Right ArrowExtend a selection one character to the left.Shift+Left ArrowExtend a selection to the end of a word.Ctrl+Shift+Right ArrowExtend a selection to the beginning of a word.Ctrl+Shift+Left ArrowExtend a selection to the end of a line.Shift+EndExtend a selection to the beginning of a line.Shift+HomeExtend a selection one line down.Shift+Down ArrowExtend a selection one line up.Shift+Up ArrowExtend a selection to the end of a paragraph.Ctrl+Shift+Down ArrowExtend a selection to the beginning of a paragraph.Ctrl+Shift+Up ArrowExtend a selection one screen down.Shift+Page DownExtend a selection one screen up.Shift+Page UpExtend a selection to the beginning of a document.Ctrl+Shift+HomeExtend a selection to the end of a document.Ctrl+Shift+EndExtend a selection to the end of a window.Alt+Ctrl+Shift+Page DownExtend a selection to include the entire document.Ctrl+ASelect a vertical block of text.Ctrl+Shift+F8, and then use the arrow keys; press Esc to cancel selection modeExtend a selection to a specific location in a document.F8+arrow keys; press Esc to cancel selection modeDelete text and graphics
+To do this Press Delete one character to the left.BackspaceDelete one word to the left.Ctrl+BackspaceDelete one character to the right.DeleteDelete one word to the right.Ctrl+DeleteCut selected text to the Office Clipboard.Ctrl+XUndo the last action.Ctrl+ZCut to the Spike. (Spike is a feature that allows you to collect groups of text from different locations and paste them in another location).Ctrl+F3Copy and move text and graphics
+To do this Press Open the Office ClipboardPress Alt+H to move to the Home tab, and then press F,O.Copy selected text or graphics to the Office Clipboard.Ctrl+CCut selected text or graphics to the Office Clipboard.Ctrl+XPaste the most recent addition or pasted item from the Office Clipboard.Ctrl+VMove text or graphics once.F2 (then move the cursor and press Enter)Copy text or graphics once.Shift+F2 (then move the cursor and press Enter)When text or an object is selected, open the Create New Building Block dialog box. Alt+F3When the building blockÿ? for example, a SmartArt graphicÿ? is selected, display the shortcut menu that is associated with it.Shift+F10Cut to the Spike.Ctrl+F3Paste the Spike contents.Ctrl+Shift+F3Copy the header or footer used in the previous section of the document.Alt+Shift+REdit and navigate tables
+Select text and graphics in a table
+To do this Press Select the next cell's contents.TabSelect the preceding cell's contents.Shift+TabExtend a selection to adjacent cells.Hold down Shift and press an arrow key repeatedlySelect a column.Use the arrow keys to move to the column's top or bottom cell, and then do one of the following:Press Shift+Alt+Page Down to select the column from top to bottom.Press Shift+Alt+Page Up to select the column from bottom to top.Select an entire rowUse arrow keys to move to end of the row, either the first cell (leftmost) in the row or to the last cell (rightmost) in the row.From the first cell in the row, press Shift+Alt+End to select the row from left to right.From the last cell in the row, press Shift+Alt+Home to select the row from right to left.Extend a selection (or block).Ctrl+Shift+F8, and then use the arrow keys; press Esc to cancel selection modeSelect an entire table.Alt+5 on the numeric keypad (with Num Lock off)Move around in a table
+To move Press To the next cell in a rowTabTo the previous cell in a rowShift+TabTo the first cell in a rowAlt+HomeTo the last cell in a rowAlt+EndTo the first cell in a columnAlt+Page UpTo the last cell in a columnAlt+Page DownTo the previous rowUp ArrowTo the next rowDown ArrowRow upAlt+Shift+Up ArrowRow downAlt+Shift+Down ArrowInsert paragraphs and tab characters in a table
+To insert Press New paragraphs in a cellEnterTab characters in a cellCtrl+TabFormat characters and paragraphs
+Format characters
+To do this Press Open the Font dialog box to change the formatting of characters.Ctrl+DChange the case of letters.Shift+F3Format all letters as capitals.Ctrl+Shift+AApply bold formatting.Ctrl+BApply an underline.Ctrl+UUnderline words but not spaces.Ctrl+Shift+WDouble-underline text.Ctrl+Shift+DApply hidden text formatting.Ctrl+Shift+HApply italic formatting.Ctrl+IFormat letters as small capitals.Ctrl+Shift+KApply subscript formatting (automatic spacing).Ctrl+Equal SignApply superscript formatting (automatic spacing).Ctrl+Shift+Plus SignRemove manual character formatting.Ctrl+SpacebarChange the selection to the Symbol font.Ctrl+Shift+QChange or re-size the font
+To do this Press Open the Font dialog box to change the font.Ctrl+Shift+FIncrease the font size.Ctrl+Shift+>Decrease the font size.Ctrl+Shift+<Increase the font size by 1 point.Ctrl+]Decrease the font size by 1 point.Ctrl+[Copy formatting
+To do this Press Copy formatting from text.Ctrl+Shift+CApply copied formatting to text.Ctrl+Shift+VChange paragraph alignment
+To do this Press Switch a paragraph between centered and left-aligned.Ctrl+ESwitch a paragraph between justified and left-aligned.Ctrl+JSwitch a paragraph between right-aligned and left-aligned.Ctrl+RLeft align a paragraph.Ctrl+LIndent a paragraph from the left.Ctrl+MRemove a paragraph indent from the left.Ctrl+Shift+MCreate a hanging indent.Ctrl+TReduce a hanging indent.Ctrl+Shift+TRemove paragraph formatting.Ctrl+QCopy and review text formats
+To do this Press Display nonprinting characters.Ctrl+Shift+* (asterisk on numeric keypad does not work)Review text formatting.Shift+F1 (then click the text with the formatting you want to review)Copy formats.Ctrl+Shift+CPaste formats.Ctrl+Shift+VSet line spacing
+To do this Press Single-space lines.Ctrl+1Double-space lines.Ctrl+2Set 1.5-line spacing.Ctrl+5Add or remove one line space preceding a paragraph.Ctrl+0 (zero)Apply Styles to paragraphs
+To do this Press Open Apply Styles task pane.Ctrl+Shift+SOpen Styles task pane.Alt+Ctrl+Shift+SStart AutoFormat.Alt+Ctrl+KApply the Normal style.Ctrl+Shift+NApply the Heading 1 style.Alt+Ctrl+1Apply the Heading 2 style.Alt+Ctrl+2Apply the Heading 3 style.Alt+Ctrl+3To close the Styles task pane
+1. If the Styles task pane is not selected, press F6 to select it.
+2. Press Ctrl+Spacebar.
+3. Use the arrow keys to select Close, and then press Enter.
+Insert special characters
+To insert this Press A fieldCtrl+F9A line breakShift+EnterA page breakCtrl+EnterA column breakCtrl+Shift+EnterAn em dashAlt+Ctrl+Minus Sign (on the numeric keypad)An en dashCtrl+Minus Sign (on the numeric keypad)An optional hyphenCtrl+HyphenA nonbreaking hyphenCtrl+Shift+HyphenA nonbreaking spaceCtrl+Shift+SpacebarThe copyright symbolAlt+Ctrl+CThe registered trademark symbolAlt+Ctrl+RThe trademark symbolAlt+Ctrl+TAn ellipsisAlt+Ctrl+PeriodA single opening quotation markCtrl+`(single quotation mark), `(single quotation mark)A single closing quotation markCtrl+' (single quotation mark), ' (single quotation mark)Double opening quotation marksCtrl+` (single quotation mark), Shift+' (single quotation mark)Double closing quotation marksCtrl+' (single quotation mark), Shift+' (single quotation mark)An AutoText entryEnter (after you type the first few characters of the AutoText entry name and when the ScreenTip appears)Insert characters by using character codes
+To do this Press Insert the Unicode character for the specified Unicode (hexadecimal) character code. For example, to insert the euro currency symbol ( ), type 20AC, and then hold down Alt and press X.The character code, Alt+XFind out the Unicode character code for the selected characterAlt+XInsert the ANSI character for the specified ANSI (decimal) character code. For example, to insert the euro currency symbol, hold down Alt and press 0128 on the numeric keypad.Alt+the character code (on the numeric keypad)Insert and edit objects
+Insert an object
+1. Press Alt, N, J, and then J to open the Object dialog box.
+2. Do one of the following.
+o Press Down Arrow to select an object type, and then press Enter to create an object.
+o Press Ctrl+Tab to switch to the Create from File tab, press Tab, and then type the file name of the object that you want to insert or browse to the file.
+Edit an object
+1. With the cursor positioned to the left of the object in your document, select the object by pressing Shift+Right Arrow.
+2. Press Shift+F10.
+3. Press the Tab key to get to Object name, press Enter, and then press Enter again.
+Insert SmartArt graphics
+1. Press and release Alt, N, and then M to select SmartArt. 
+2. Press the arrow keys to select the type of graphic that you want.
+3. Press Tab, and then press the arrow keys to select the graphic that you want to insert.
+4. Press Enter.
+Insert WordArt
+1. Press and release Alt, N, and then W to select WordArt. 
+2. Press the arrow keys to select the WordArt style that you want, and then press Enter.
+3. Type the text that you want.
+4. Press Esc to select the WordArt object, and then use the arrow keys to move the object.
+5. Press Esc again to return to return to the document.
+Mail merge and fields
+Note:ÿYou must press Alt+M, or click Mailings, to use these keyboard shortcuts.
+Perform a mail merge
+To do this Press Preview a mail merge.Alt+Shift+KMerge a document.Alt+Shift+NPrint the merged document.Alt+Shift+MEdit a mail-merge data document.Alt+Shift+EInsert a merge field.Alt+Shift+FWork with fields
+To do this Press Insert a DATE field.Alt+Shift+DInsert a LISTNUM field.Alt+Ctrl+LInsert a Page field.Alt+Shift+PInsert a TIME field.Alt+Shift+TInsert an empty field.Ctrl+F9Update linked information in a Microsoft Word source document.Ctrl+Shift+F7Update selected fields.F9Unlink a field.Ctrl+Shift+F9Switch between a selected field code and its result.Shift+F9Switch between all field codes and their results.Alt+F9Run GOTOBUTTON or MACROBUTTON from the field that displays the field results.Alt+Shift+F9Go to the next field.F11Go to the previous field.Shift+F11Lock a field.Ctrl+F11Unlock a field.Ctrl+Shift+F11Language Bar
+Set proofing language
+Every document has a default language, typically the same default language as your computer's operating system. But If your document also contains words or phrases in a different language, it's a good idea to set the proofing language for those words. This not only makes it possible to check spelling and grammar for those phrases, it makes it possible for assistive technologies like screen readers to handle them. 
+To do thisPressOpen the Set Proofing Language dialog boxAlt+R, U, LReview list of proofing languagesDown ArrowSet default languagesAlt+R, LTurn on East Asian Input Method Editors
+To do thisPressTurn Japanese Input Method Editor (IME) on 101 keyboard on or off.Alt+~Turn Korean Input Method Editor (IME) on 101 keyboard on or off.Right AltTurn Chinese Input Method Editor (IME) on 101 keyboard on or off.Ctrl+SpacebarFunction key reference
+Function keys
+To do this Press Get Help or visit Office.com.F1Move text or graphics.F2Repeat the last action.F4Choose the Go To command (Home tab).F5Go to the next pane or frame.F6Choose the Spelling command (Review tab).F7Extend a selection.F8Update the selected fields.F9Show KeyTips.F10Go to the next field.F11Choose the Save As command.F12Shift+Function keys
+To do this Press Start context-sensitive Help or reveal formatting.Shift+F1Copy text.Shift+F2Change the case of letters.Shift+F3Repeat a Find or Go To action.Shift+F4Move to the last change.Shift+F5Go to the previous pane or frame (after pressing F6).Shift+F6Choose the Thesaurus command (Review tab, Proofing group).Shift+F7Reduce the size of a selection.Shift+F8Switch between a field code and its result.Shift+F9Display a shortcut menu.Shift+F10Go to the previous field.Shift+F11Choose the Save command.Shift+F12Ctrl+Function keys
+To do this Press Expand or collapse the ribbon.Ctrl+F1Choose the Print Preview command.Ctrl+F2Cut to the Spike.Ctrl+F3Close the window.Ctrl+F4Go to the next window.Ctrl+F6Insert an empty field.Ctrl+F9Maximize the document window.Ctrl+F10Lock a field.Ctrl+F11Choose the Open command.Ctrl+F12Ctrl+Shift+Function keys
+To do this Press Insert the contents of the Spike.Ctrl+Shift+F3Edit a bookmark.Ctrl+Shift+F5Go to the previous window.Ctrl+Shift+F6Update linked information in a Word source document.Ctrl+Shift+F7Extend a selection or block.Ctrl+Shift+F8, and then press an arrow keyUnlink a field.Ctrl+Shift+F9Unlock a field.Ctrl+Shift+F11Choose the Print command.Ctrl+Shift+F12Alt+Function keys
+To do this Press Go to the next field.Alt+F1Create a new Building Block.Alt+F3Exit Word.Alt+F4Restore the program window size.Alt+F5Move from an open dialog box back to the document, for dialog boxes that support this behavior.Alt+F6Find the next misspelling or grammatical error. Alt+F7Run a macro.Alt+F8Switch between all field codes and their results.Alt+F9Display the Selection task pane.Alt+F10Display Microsoft Visual Basic code.Alt+F11Alt+Shift+Function keys
+To do this Press Go to the previous field.Alt+Shift+F1Choose the Save command.Alt+Shift+F2Run GOTOBUTTON or MACROBUTTON from the field that displays the field results.Alt+Shift+F9Display a menu or message for an available action.Alt+Shift+F10Choose Table of Contents button in the Table of Contents container when the container is active.Alt+Shift+F12Ctrl+Alt+Function keys
+To do this Press Display Microsoft System Information.Ctrl+Alt+F1Choose the Open command.Ctrl+Alt+F2
+
+
+
+
+
+
+
+
+
+
+
+
