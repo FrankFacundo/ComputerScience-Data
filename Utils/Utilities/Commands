@@ -83,3 +83,5 @@ nmap -sP [IP]/[mask(ex:24)]		//scan devices connected in a local network
 conda info --envs 			//list all environments installed
 conda create -n myenv python=3.9	//create conda environment
 printenv 				// print all environement variables
+
+sed -i -e 's/\r$//' file.sh             //convert windows file format to linux format 
