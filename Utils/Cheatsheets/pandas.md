@@ -1,0 +1,147 @@
+# Pandas
+
+## Import data
+
+## Info dataframe
+
+## Create dataframe
+
+## Reshaping Data
+
+## Iteration
+
+## Indexing
+
+## Duplicate Data
+
+## Group Data
+
+### Aggregation & transform
+
+consider the dataframe `df`
+
+```python
+df = pd.DataFrame(dict(A=list('aabb'), B=[1, 2, 3, 4], C=[0, 9, 0, 9]))
+```
+
+![pandas_grouping](../media/pandas_grouping1.png)
+
+---
+groupby is the standard use aggregater
+
+```python
+df.groupby('A').mean()
+```
+
+![pandas_grouping](../media/pandas_grouping2.png)
+
+---
+Maybe you want these values broadcast across the whole group and return something with the same index as what you started with.
+
+use transform
+```python
+df.groupby('A').transform('mean')
+```
+![pandas_grouping](../media/pandas_grouping3.png)
+
+```python
+df.set_index('A').groupby(level='A').transform('mean')
+```
+![pandas_grouping](../media/pandas_grouping4.png)
+
+
+---
+
+agg is used when you have specific things you want to run for different columns or more than one thing run on the same column.
+
+```python
+df.groupby('A').agg(['mean', 'std'])
+```
+
+
+![pandas_grouping](../media/pandas_grouping5.png)
+
+```python
+df.groupby('A').agg(dict(B='sum', C=['mean', 'prod']))
+```
+
+![pandas_grouping](../media/pandas_grouping6.png)
+
+
+---
+
+aggregation selecting one column.
+
+```python
+df.groupby(
+    [df['date'].dt.year.rename('year'), 
+    df['date'].dt.month_name().rename('month')]
+    )['rides'].sum().reset_index()
+```
+
+aggregation selecting many columns.
+
+```python
+big_table.groupby('year')['amount', 'quantity'].agg(
+    dict(amount='sum', quantity='count')
+)
+```
+
+## Missing Data
+
+## Combining Data
+
+It is better to merge instead of join, because merge allows to select the column key for each dataframe.
+
+### Merge
+
+```python
+new_df = pd.merge(A_df, B_df,  how='left', left_on=['A_c1','c2'], right_on = ['B_c1','c2'])
+```
+
+```python
+big_table = pd.merge(orders_df, customers_df, how="left", on="customer_id")
+```
+
+### Join
+
+Join over the index
+
+```python
+
+joined_df = left.join(right, lsuffix='_')
+print(joined_df)
+```
+
+Join over columns index, it adds the suffix '_' when a column name is duplicated.
+
+```python
+joined_df2 = left.join(right, on='index', lsuffix='_')
+print(joined_df2)
+```
+
+## Dates
+
+Format:
+
+- %Y - Year   - 2021
+- %m - Month  - 03
+- %b - Month  - Mar
+- %d - Day    - 05
+- %H - Hour   - 20
+- %M - Minute - 30
+- %S - Second - 59
+
+```python
+# For format 12/1/2010 8:26
+big_table['transacion_date'] = pd.to_datetime(big_table['transacion_date'], format='%d/%m/%Y %H:%M')
+
+```
+
+Get year in one column
+
+```python
+big_table['year'] = big_table['transacion_date'].dt.year
+```
+
+## Visualization
