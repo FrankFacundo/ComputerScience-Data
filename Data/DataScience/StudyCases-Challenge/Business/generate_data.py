@@ -55,8 +55,6 @@ def generate_customer_dataframe(number_rows=10):
 def generate_order_dataframe(number_rows=10):
     return
 
-
-
 def generate_random_number_orders():
     number_of_orders = np.minimum(int(np.random.exponential(scale=1.0)+1), 5)
     return number_of_orders
@@ -76,8 +74,6 @@ def get_list_number_orders_by_customer(rows_in_orders=100):
         if total_orders + number_of_orders > rows_in_orders:
             list_number_orders_by_customer.append(rows_in_orders - total_orders)
             return list_number_orders_by_customer
-
-
 
 def generate_customers_id_for_sales(customers_id, rows_in_orders=100):
     list_number_orders_by_customer = get_list_number_orders_by_customer(rows_in_orders)
@@ -112,17 +108,17 @@ def generate_orders_dataframe(rows=100):
     orders_id = [generate_id() for i in range(len(sales))]
     sales[ORDERS_ID] = orders_id
 
-    customers = generate_customer_dataframe(10)
+    customers = generate_customer_dataframe(300)
     customers_id = customers[CUSTOMER_ID].tolist()
 
     customers_id_orders = generate_customers_id_for_sales(customers_id, rows)
 
     sales[CUSTOMER_ID] = customers_id_orders
 
-    return sales
+    return customers, sales
 
-customer_table = generate_customer_dataframe()
-orders_table = generate_orders_dataframe(300)
+# customer_table = generate_customer_dataframe()
+customer_table, orders_table = generate_orders_dataframe(9000)
 
 customer_table.to_csv("customer_data.csv", index=False)
 orders_table.to_csv("order_data.csv", index=False)

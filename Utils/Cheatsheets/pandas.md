@@ -8,9 +8,38 @@
 
 ## Reshaping Data
 
+Cast columns
+
+```python
+df['col'].astype("int32")
+```
+
 ## Iteration
 
 ## Indexing
+
+### Where
+
+```python
+df.where((df.col>=1981) & (df.col<=1996))
+```
+
+### Query
+
+### Useful select
+
+```python
+df['column'].unique()
+```
+
+```python
+df[['column', 'quantity']].unique()
+```
+
+```python
+df.sort_values(by=['quantity'], ascending=False)
+```
+
 
 ## Duplicate Data
 
@@ -88,6 +117,18 @@ big_table.groupby('year')['amount', 'quantity'].agg(
 ```
 
 ## Missing Data
+
+Drop NaN values in current dataframe.
+
+```python
+df.dropna(inplace=True)
+```
+
+Fill NaN with a predetermined value.
+
+```python
+df.dropna(inplace=True)
+```
 
 ## Combining Data
 
