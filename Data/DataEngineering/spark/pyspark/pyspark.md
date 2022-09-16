@@ -94,13 +94,11 @@ data.printSchema()
 
 * `%`: equivalent to `*` in regex
 
-
 ### Select
 
 ```python
 df.select('*').where(df['col1'] == 'TEST').show()
 ```
-
 
 ### Filtering
 
@@ -122,7 +120,20 @@ df.filter(
 )
 ```
 
-I
+### Useful
+
+Show distinct values.
+ 
+```python
+df.distinct()
+```
+
+Show 20 rows and it does not truncate results.
+
+```python
+n = 20
+df.show(n, truncate=False)
+```
 
 ## Cast columns in Dataframes
 
