@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import Response
 from pydantic import BaseModel
 
-from services.services import translate
+from services.traductor import translate
 
 class PredictPayload(BaseModel):
     text: str
