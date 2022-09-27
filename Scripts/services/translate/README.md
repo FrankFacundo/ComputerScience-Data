@@ -15,7 +15,7 @@ sudo docker run -it --mount type=bind,source="$(pwd)",target=/app -p 1611:1611 t
 Test:
 
 ```bash
-curl -X POST "http://localhost:1611/api/frank/traductor/translate/" \
+curl -X POST "http://localhost:1611/translate" \
   -d '{"text": "Hello World"}' \
   -H "Content-Type: application/json"
 ```
