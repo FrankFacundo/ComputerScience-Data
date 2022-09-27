@@ -16,6 +16,6 @@ Test:
 
 ```bash
 curl -X POST "http://localhost:1611/translate" \
-  -d '{"text": "Hello World"}' \
+  -d '{"text": "Hello World", "src": "en", "dst": "es"}' \
   -H "Content-Type: application/json"
 ```
