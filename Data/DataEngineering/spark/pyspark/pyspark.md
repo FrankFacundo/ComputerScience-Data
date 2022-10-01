@@ -98,6 +98,7 @@ data.printSchema()
 
 ```python
 df.select('*').where(df['col1'] == 'TEST').show()
+df.select('*').where(df['col1'].isNotNull()).show()
 df.select(df.col1, df.col2).show()
 df.select(df['col1'], df['col2']).show()
 ```
