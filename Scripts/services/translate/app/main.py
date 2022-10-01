@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import Response
 
 from services.traductor import TranslatePayload, translate
