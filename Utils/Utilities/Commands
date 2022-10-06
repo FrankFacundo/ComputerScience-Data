@@ -77,6 +77,7 @@ feh [image_filename]			//show a file image
 echo $0							//show interpreter of shell
 
 du -h [directory]				//show the size of a directory 
+df -hl                                     //show filesystem disk usage
 
 nmap -sP [IP]/[mask(ex:24)]		//scan devices connected in a local network
 
