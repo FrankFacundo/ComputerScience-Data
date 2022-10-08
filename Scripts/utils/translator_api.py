@@ -1,3 +1,6 @@
+'''
+WARNING: googletrans is now not working well, please use tranlate-shell instead.
+'''
 import pandas as pd
 import googletrans
 import pprint
