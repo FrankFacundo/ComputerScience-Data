@@ -29,5 +29,5 @@ print (
   "Humidity (inside/outside): {} / {} %\n".format(lastData['Indoor']['Humidity'],
               lastData['Outdoor']['Humidity']),
   "CO2: {}ppm\n".format(lastData['Indoor']['CO2']),
-  "Noise Indoor: {}dB".format(lastData['Indoor']['CO2']),
+  "Noise Indoor: {}dB".format(lastData['Indoor']['Noise']),
 )
