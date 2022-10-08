@@ -1,0 +1,23 @@
+[
+  {
+    "page": 1,
+    "pages": 1,
+    "per_page": 50,
+    "total": 1,
+    "sourceid": "2",
+    "sourcename": "World Development Indicators",
+    "lastupdated": "2022-09-16"
+  },
+  [
+    {
+      "indicator": { "id": "NY.GDP.MKTP.CD", "value": "GDP (current US$)" },
+      "country": { "id": "SN", "value": "Senegal" },
+      "countryiso3code": "SEN",
+      "date": "2019",
+      "value": 23398811423.578,
+      "unit": "",
+      "obs_status": "",
+      "decimal": 0
+    }
+  ]
+]

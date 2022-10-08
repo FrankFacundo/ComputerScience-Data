@@ -1,0 +1,1901 @@
+[
+    {
+        "name": "Aruba",
+        "id": "ABW",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Oranjestad"
+    },
+    {
+        "name": "Afghanistan",
+        "id": "AFG",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Kabul"
+    },
+    {
+        "name": "Angola",
+        "id": "AGO",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Luanda"
+    },
+    {
+        "name": "Albania",
+        "id": "ALB",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Tirane"
+    },
+    {
+        "name": "Andorra",
+        "id": "AND",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Andorra la Vella"
+    },
+    {
+        "name": "United Arab Emirates",
+        "id": "ARE",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Abu Dhabi"
+    },
+    {
+        "name": "Argentina",
+        "id": "ARG",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Buenos Aires"
+    },
+    {
+        "name": "Armenia",
+        "id": "ARM",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Yerevan"
+    },
+    {
+        "name": "American Samoa",
+        "id": "ASM",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Not classified",
+        "capitalCity": "Pago Pago"
+    },
+    {
+        "name": "Antigua and Barbuda",
+        "id": "ATG",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Saint John's"
+    },
+    {
+        "name": "Australia",
+        "id": "AUS",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Canberra"
+    },
+    {
+        "name": "Austria",
+        "id": "AUT",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Vienna"
+    },
+    {
+        "name": "Azerbaijan",
+        "id": "AZE",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Baku"
+    },
+    {
+        "name": "Burundi",
+        "id": "BDI",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Bujumbura"
+    },
+    {
+        "name": "Belgium",
+        "id": "BEL",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Brussels"
+    },
+    {
+        "name": "Benin",
+        "id": "BEN",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Porto-Novo"
+    },
+    {
+        "name": "Burkina Faso",
+        "id": "BFA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Ouagadougou"
+    },
+    {
+        "name": "Bangladesh",
+        "id": "BGD",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Dhaka"
+    },
+    {
+        "name": "Bulgaria",
+        "id": "BGR",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Sofia"
+    },
+    {
+        "name": "Bahrain",
+        "id": "BHR",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Manama"
+    },
+    {
+        "name": "Bahamas, The",
+        "id": "BHS",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Nassau"
+    },
+    {
+        "name": "Bosnia and Herzegovina",
+        "id": "BIH",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Sarajevo"
+    },
+    {
+        "name": "Belarus",
+        "id": "BLR",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Minsk"
+    },
+    {
+        "name": "Belize",
+        "id": "BLZ",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Belmopan"
+    },
+    {
+        "name": "Bermuda",
+        "id": "BMU",
+        "region": "North America",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Hamilton"
+    },
+    {
+        "name": "Bolivia",
+        "id": "BOL",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "La Paz"
+    },
+    {
+        "name": "Brazil",
+        "id": "BRA",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Brasilia"
+    },
+    {
+        "name": "Barbados",
+        "id": "BRB",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Bridgetown"
+    },
+    {
+        "name": "Brunei Darussalam",
+        "id": "BRN",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Bandar Seri Begawan"
+    },
+    {
+        "name": "Bhutan",
+        "id": "BTN",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Thimphu"
+    },
+    {
+        "name": "Botswana",
+        "id": "BWA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Gaborone"
+    },
+    {
+        "name": "Central African Republic",
+        "id": "CAF",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Bangui"
+    },
+    {
+        "name": "Canada",
+        "id": "CAN",
+        "region": "North America",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Ottawa"
+    },
+    {
+        "name": "Switzerland",
+        "id": "CHE",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Bern"
+    },
+    {
+        "name": "Chile",
+        "id": "CHL",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Santiago"
+    },
+    {
+        "name": "China",
+        "id": "CHN",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Beijing"
+    },
+    {
+        "name": "Cote d'Ivoire",
+        "id": "CIV",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Yamoussoukro"
+    },
+    {
+        "name": "Cameroon",
+        "id": "CMR",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Yaounde"
+    },
+    {
+        "name": "Congo, Dem. Rep.",
+        "id": "COD",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Kinshasa"
+    },
+    {
+        "name": "Congo, Rep.",
+        "id": "COG",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Brazzaville"
+    },
+    {
+        "name": "Colombia",
+        "id": "COL",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Bogota"
+    },
+    {
+        "name": "Comoros",
+        "id": "COM",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Moroni"
+    },
+    {
+        "name": "Cabo Verde",
+        "id": "CPV",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Praia"
+    },
+    {
+        "name": "Costa Rica",
+        "id": "CRI",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "San Jose"
+    },
+    {
+        "name": "Cuba",
+        "id": "CUB",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Not classified",
+        "capitalCity": "Havana"
+    },
+    {
+        "name": "Curacao",
+        "id": "CUW",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Willemstad"
+    },
+    {
+        "name": "Cayman Islands",
+        "id": "CYM",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "George Town"
+    },
+    {
+        "name": "Cyprus",
+        "id": "CYP",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Nicosia"
+    },
+    {
+        "name": "Czechia",
+        "id": "CZE",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Prague"
+    },
+    {
+        "name": "Germany",
+        "id": "DEU",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Berlin"
+    },
+    {
+        "name": "Djibouti",
+        "id": "DJI",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Djibouti"
+    },
+    {
+        "name": "Dominica",
+        "id": "DMA",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Roseau"
+    },
+    {
+        "name": "Denmark",
+        "id": "DNK",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Copenhagen"
+    },
+    {
+        "name": "Dominican Republic",
+        "id": "DOM",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Santo Domingo"
+    },
+    {
+        "name": "Algeria",
+        "id": "DZA",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Algiers"
+    },
+    {
+        "name": "Ecuador",
+        "id": "ECU",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Quito"
+    },
+    {
+        "name": "Egypt, Arab Rep.",
+        "id": "EGY",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Cairo"
+    },
+    {
+        "name": "Eritrea",
+        "id": "ERI",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Asmara"
+    },
+    {
+        "name": "Spain",
+        "id": "ESP",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Madrid"
+    },
+    {
+        "name": "Estonia",
+        "id": "EST",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Tallinn"
+    },
+    {
+        "name": "Ethiopia",
+        "id": "ETH",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Addis Ababa"
+    },
+    {
+        "name": "Finland",
+        "id": "FIN",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Helsinki"
+    },
+    {
+        "name": "Fiji",
+        "id": "FJI",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Suva"
+    },
+    {
+        "name": "France",
+        "id": "FRA",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Paris"
+    },
+    {
+        "name": "Faroe Islands",
+        "id": "FRO",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Torshavn"
+    },
+    {
+        "name": "Micronesia, Fed. Sts.",
+        "id": "FSM",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Palikir"
+    },
+    {
+        "name": "Gabon",
+        "id": "GAB",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Libreville"
+    },
+    {
+        "name": "United Kingdom",
+        "id": "GBR",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "London"
+    },
+    {
+        "name": "Georgia",
+        "id": "GEO",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Tbilisi"
+    },
+    {
+        "name": "Ghana",
+        "id": "GHA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Accra"
+    },
+    {
+        "name": "Guinea",
+        "id": "GIN",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Conakry"
+    },
+    {
+        "name": "Gambia, The",
+        "id": "GMB",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Banjul"
+    },
+    {
+        "name": "Guinea-Bissau",
+        "id": "GNB",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Bissau"
+    },
+    {
+        "name": "Equatorial Guinea",
+        "id": "GNQ",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Malabo"
+    },
+    {
+        "name": "Greece",
+        "id": "GRC",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Athens"
+    },
+    {
+        "name": "Grenada",
+        "id": "GRD",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Saint George's"
+    },
+    {
+        "name": "Greenland",
+        "id": "GRL",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Nuuk"
+    },
+    {
+        "name": "Guatemala",
+        "id": "GTM",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Guatemala City"
+    },
+    {
+        "name": "Guam",
+        "id": "GUM",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Agana"
+    },
+    {
+        "name": "Guyana",
+        "id": "GUY",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Georgetown"
+    },
+    {
+        "name": "Honduras",
+        "id": "HND",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Tegucigalpa"
+    },
+    {
+        "name": "Croatia",
+        "id": "HRV",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Zagreb"
+    },
+    {
+        "name": "Haiti",
+        "id": "HTI",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Port-au-Prince"
+    },
+    {
+        "name": "Hungary",
+        "id": "HUN",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Budapest"
+    },
+    {
+        "name": "Indonesia",
+        "id": "IDN",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Jakarta"
+    },
+    {
+        "name": "Isle of Man",
+        "id": "IMN",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Douglas"
+    },
+    {
+        "name": "India",
+        "id": "IND",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "New Delhi"
+    },
+    {
+        "name": "Ireland",
+        "id": "IRL",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Dublin"
+    },
+    {
+        "name": "Iran, Islamic Rep.",
+        "id": "IRN",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Tehran"
+    },
+    {
+        "name": "Iraq",
+        "id": "IRQ",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Baghdad"
+    },
+    {
+        "name": "Iceland",
+        "id": "ISL",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Reykjavik"
+    },
+    {
+        "name": "Italy",
+        "id": "ITA",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Rome"
+    },
+    {
+        "name": "Jamaica",
+        "id": "JAM",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Kingston"
+    },
+    {
+        "name": "Jordan",
+        "id": "JOR",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Amman"
+    },
+    {
+        "name": "Japan",
+        "id": "JPN",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Tokyo"
+    },
+    {
+        "name": "Kazakhstan",
+        "id": "KAZ",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Astana"
+    },
+    {
+        "name": "Kenya",
+        "id": "KEN",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Nairobi"
+    },
+    {
+        "name": "Kyrgyz Republic",
+        "id": "KGZ",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Bishkek"
+    },
+    {
+        "name": "Cambodia",
+        "id": "KHM",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Phnom Penh"
+    },
+    {
+        "name": "Kiribati",
+        "id": "KIR",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Tarawa"
+    },
+    {
+        "name": "St. Kitts and Nevis",
+        "id": "KNA",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Basseterre"
+    },
+    {
+        "name": "Korea, Rep.",
+        "id": "KOR",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Seoul"
+    },
+    {
+        "name": "Kuwait",
+        "id": "KWT",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Kuwait City"
+    },
+    {
+        "name": "Lao PDR",
+        "id": "LAO",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Vientiane"
+    },
+    {
+        "name": "Lebanon",
+        "id": "LBN",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Beirut"
+    },
+    {
+        "name": "Liberia",
+        "id": "LBR",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Monrovia"
+    },
+    {
+        "name": "Libya",
+        "id": "LBY",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Tripoli"
+    },
+    {
+        "name": "St. Lucia",
+        "id": "LCA",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Castries"
+    },
+    {
+        "name": "Liechtenstein",
+        "id": "LIE",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Vaduz"
+    },
+    {
+        "name": "Sri Lanka",
+        "id": "LKA",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Colombo"
+    },
+    {
+        "name": "Lesotho",
+        "id": "LSO",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Maseru"
+    },
+    {
+        "name": "Lithuania",
+        "id": "LTU",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Vilnius"
+    },
+    {
+        "name": "Luxembourg",
+        "id": "LUX",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Luxembourg"
+    },
+    {
+        "name": "Latvia",
+        "id": "LVA",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Riga"
+    },
+    {
+        "name": "St. Martin (French part)",
+        "id": "MAF",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Marigot"
+    },
+    {
+        "name": "Morocco",
+        "id": "MAR",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Rabat"
+    },
+    {
+        "name": "Monaco",
+        "id": "MCO",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Monaco"
+    },
+    {
+        "name": "Moldova",
+        "id": "MDA",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Chisinau"
+    },
+    {
+        "name": "Madagascar",
+        "id": "MDG",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Antananarivo"
+    },
+    {
+        "name": "Maldives",
+        "id": "MDV",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Male"
+    },
+    {
+        "name": "Mexico",
+        "id": "MEX",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Mexico City"
+    },
+    {
+        "name": "Marshall Islands",
+        "id": "MHL",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Majuro"
+    },
+    {
+        "name": "North Macedonia",
+        "id": "MKD",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Skopje"
+    },
+    {
+        "name": "Mali",
+        "id": "MLI",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Bamako"
+    },
+    {
+        "name": "Malta",
+        "id": "MLT",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Valletta"
+    },
+    {
+        "name": "Myanmar",
+        "id": "MMR",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Naypyidaw"
+    },
+    {
+        "name": "Montenegro",
+        "id": "MNE",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Podgorica"
+    },
+    {
+        "name": "Mongolia",
+        "id": "MNG",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Ulaanbaatar"
+    },
+    {
+        "name": "Northern Mariana Islands",
+        "id": "MNP",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Saipan"
+    },
+    {
+        "name": "Mozambique",
+        "id": "MOZ",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Maputo"
+    },
+    {
+        "name": "Mauritania",
+        "id": "MRT",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Nouakchott"
+    },
+    {
+        "name": "Mauritius",
+        "id": "MUS",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Port Louis"
+    },
+    {
+        "name": "Malawi",
+        "id": "MWI",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Lilongwe"
+    },
+    {
+        "name": "Malaysia",
+        "id": "MYS",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Kuala Lumpur"
+    },
+    {
+        "name": "Namibia",
+        "id": "NAM",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Windhoek"
+    },
+    {
+        "name": "New Caledonia",
+        "id": "NCL",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Noum'ea"
+    },
+    {
+        "name": "Niger",
+        "id": "NER",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Niamey"
+    },
+    {
+        "name": "Nigeria",
+        "id": "NGA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Abuja"
+    },
+    {
+        "name": "Nicaragua",
+        "id": "NIC",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Managua"
+    },
+    {
+        "name": "Netherlands",
+        "id": "NLD",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Amsterdam"
+    },
+    {
+        "name": "Norway",
+        "id": "NOR",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Oslo"
+    },
+    {
+        "name": "Nepal",
+        "id": "NPL",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Kathmandu"
+    },
+    {
+        "name": "Nauru",
+        "id": "NRU",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Yaren District"
+    },
+    {
+        "name": "New Zealand",
+        "id": "NZL",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Wellington"
+    },
+    {
+        "name": "Oman",
+        "id": "OMN",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Muscat"
+    },
+    {
+        "name": "Pakistan",
+        "id": "PAK",
+        "region": "South Asia",
+        "adminregion": "South Asia",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Islamabad"
+    },
+    {
+        "name": "Panama",
+        "id": "PAN",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Panama City"
+    },
+    {
+        "name": "Peru",
+        "id": "PER",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Lima"
+    },
+    {
+        "name": "Philippines",
+        "id": "PHL",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Manila"
+    },
+    {
+        "name": "Palau",
+        "id": "PLW",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Koror"
+    },
+    {
+        "name": "Papua New Guinea",
+        "id": "PNG",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Port Moresby"
+    },
+    {
+        "name": "Poland",
+        "id": "POL",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Warsaw"
+    },
+    {
+        "name": "Puerto Rico",
+        "id": "PRI",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "San Juan"
+    },
+    {
+        "name": "Korea, Dem. People's Rep.",
+        "id": "PRK",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "Not classified",
+        "capitalCity": "Pyongyang"
+    },
+    {
+        "name": "Portugal",
+        "id": "PRT",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Lisbon"
+    },
+    {
+        "name": "Paraguay",
+        "id": "PRY",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Asuncion"
+    },
+    {
+        "name": "French Polynesia",
+        "id": "PYF",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Papeete"
+    },
+    {
+        "name": "Qatar",
+        "id": "QAT",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Doha"
+    },
+    {
+        "name": "Romania",
+        "id": "ROU",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Bucharest"
+    },
+    {
+        "name": "Russian Federation",
+        "id": "RUS",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Moscow"
+    },
+    {
+        "name": "Rwanda",
+        "id": "RWA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Kigali"
+    },
+    {
+        "name": "Saudi Arabia",
+        "id": "SAU",
+        "region": "Middle East & North Africa",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Riyadh"
+    },
+    {
+        "name": "Sudan",
+        "id": "SDN",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Khartoum"
+    },
+    {
+        "name": "Senegal",
+        "id": "SEN",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Dakar"
+    },
+    {
+        "name": "Singapore",
+        "id": "SGP",
+        "region": "East Asia & Pacific",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Singapore"
+    },
+    {
+        "name": "Solomon Islands",
+        "id": "SLB",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Honiara"
+    },
+    {
+        "name": "Sierra Leone",
+        "id": "SLE",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Freetown"
+    },
+    {
+        "name": "El Salvador",
+        "id": "SLV",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "San Salvador"
+    },
+    {
+        "name": "San Marino",
+        "id": "SMR",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "San Marino"
+    },
+    {
+        "name": "Somalia",
+        "id": "SOM",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Mogadishu"
+    },
+    {
+        "name": "Serbia",
+        "id": "SRB",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Belgrade"
+    },
+    {
+        "name": "South Sudan",
+        "id": "SSD",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Juba"
+    },
+    {
+        "name": "Sao Tome and Principe",
+        "id": "STP",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Sao Tome"
+    },
+    {
+        "name": "Suriname",
+        "id": "SUR",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Paramaribo"
+    },
+    {
+        "name": "Slovak Republic",
+        "id": "SVK",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Bratislava"
+    },
+    {
+        "name": "Slovenia",
+        "id": "SVN",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Ljubljana"
+    },
+    {
+        "name": "Sweden",
+        "id": "SWE",
+        "region": "Europe & Central Asia",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Stockholm"
+    },
+    {
+        "name": "Eswatini",
+        "id": "SWZ",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Mbabane"
+    },
+    {
+        "name": "Sint Maarten (Dutch part)",
+        "id": "SXM",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Philipsburg"
+    },
+    {
+        "name": "Seychelles",
+        "id": "SYC",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Victoria"
+    },
+    {
+        "name": "Syrian Arab Republic",
+        "id": "SYR",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Damascus"
+    },
+    {
+        "name": "Turks and Caicos Islands",
+        "id": "TCA",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Grand Turk"
+    },
+    {
+        "name": "Chad",
+        "id": "TCD",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "N'Djamena"
+    },
+    {
+        "name": "Togo",
+        "id": "TGO",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Lome"
+    },
+    {
+        "name": "Thailand",
+        "id": "THA",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Bangkok"
+    },
+    {
+        "name": "Tajikistan",
+        "id": "TJK",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Dushanbe"
+    },
+    {
+        "name": "Turkmenistan",
+        "id": "TKM",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Ashgabat"
+    },
+    {
+        "name": "Timor-Leste",
+        "id": "TLS",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Dili"
+    },
+    {
+        "name": "Tonga",
+        "id": "TON",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Nuku'alofa"
+    },
+    {
+        "name": "Trinidad and Tobago",
+        "id": "TTO",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Port-of-Spain"
+    },
+    {
+        "name": "Tunisia",
+        "id": "TUN",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Tunis"
+    },
+    {
+        "name": "Turkiye",
+        "id": "TUR",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Ankara"
+    },
+    {
+        "name": "Tuvalu",
+        "id": "TUV",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Funafuti"
+    },
+    {
+        "name": "Tanzania",
+        "id": "TZA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Dodoma"
+    },
+    {
+        "name": "Uganda",
+        "id": "UGA",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Kampala"
+    },
+    {
+        "name": "Ukraine",
+        "id": "UKR",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Kiev"
+    },
+    {
+        "name": "Uruguay",
+        "id": "URY",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "IBRD",
+        "capitalCity": "Montevideo"
+    },
+    {
+        "name": "United States",
+        "id": "USA",
+        "region": "North America",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Washington D.C."
+    },
+    {
+        "name": "Uzbekistan",
+        "id": "UZB",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Tashkent"
+    },
+    {
+        "name": "St. Vincent and the Grenadines",
+        "id": "VCT",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "Latin America & Caribbean (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Kingstown"
+    },
+    {
+        "name": "Venezuela, RB",
+        "id": "VEN",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "Not classified",
+        "lendingType": "IBRD",
+        "capitalCity": "Caracas"
+    },
+    {
+        "name": "British Virgin Islands",
+        "id": "VGB",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Road Town"
+    },
+    {
+        "name": "Virgin Islands (U.S.)",
+        "id": "VIR",
+        "region": "Latin America & Caribbean ",
+        "adminregion": "",
+        "incomeLevel": "High income",
+        "lendingType": "Not classified",
+        "capitalCity": "Charlotte Amalie"
+    },
+    {
+        "name": "Vietnam",
+        "id": "VNM",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Hanoi"
+    },
+    {
+        "name": "Vanuatu",
+        "id": "VUT",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Port-Vila"
+    },
+    {
+        "name": "Samoa",
+        "id": "WSM",
+        "region": "East Asia & Pacific",
+        "adminregion": "East Asia & Pacific (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Apia"
+    },
+    {
+        "name": "Kosovo",
+        "id": "XKX",
+        "region": "Europe & Central Asia",
+        "adminregion": "Europe & Central Asia (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IDA",
+        "capitalCity": "Pristina"
+    },
+    {
+        "name": "Yemen, Rep.",
+        "id": "YEM",
+        "region": "Middle East & North Africa",
+        "adminregion": "Middle East & North Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Sana'a"
+    },
+    {
+        "name": "South Africa",
+        "id": "ZAF",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Upper middle income",
+        "lendingType": "IBRD",
+        "capitalCity": "Pretoria"
+    },
+    {
+        "name": "Zambia",
+        "id": "ZMB",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Low income",
+        "lendingType": "IDA",
+        "capitalCity": "Lusaka"
+    },
+    {
+        "name": "Zimbabwe",
+        "id": "ZWE",
+        "region": "Sub-Saharan Africa ",
+        "adminregion": "Sub-Saharan Africa (excluding high income)",
+        "incomeLevel": "Lower middle income",
+        "lendingType": "Blend",
+        "capitalCity": "Harare"
+    }
+]

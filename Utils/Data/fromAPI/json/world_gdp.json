@@ -1,0 +1,302 @@
+[
+    {
+        "country": "Africa Eastern and Southern",
+        "indicator": "GDP (current US$)",
+        "value": 0.997534042075187,
+        "scale": "trillion"
+    },
+    {
+        "country": "Africa Western and Central",
+        "indicator": "GDP (current US$)",
+        "value": 0.7945430459001099,
+        "scale": "trillion"
+    },
+    {
+        "country": "Arab World",
+        "indicator": "GDP (current US$)",
+        "value": 2.8080997645780297,
+        "scale": "trillion"
+    },
+    {
+        "country": "Caribbean small states",
+        "indicator": "GDP (current US$)",
+        "value": 0.07702381812074899,
+        "scale": "trillion"
+    },
+    {
+        "country": "Central Europe and the Baltics",
+        "indicator": "GDP (current US$)",
+        "value": 1.67386331097542,
+        "scale": "trillion"
+    },
+    {
+        "country": "Early-demographic dividend",
+        "indicator": "GDP (current US$)",
+        "value": 11.643791832112301,
+        "scale": "trillion"
+    },
+    {
+        "country": "East Asia & Pacific",
+        "indicator": "GDP (current US$)",
+        "value": 27.0240797639322,
+        "scale": "trillion"
+    },
+    {
+        "country": "East Asia & Pacific (excluding high income)",
+        "indicator": "GDP (current US$)",
+        "value": 17.203906511529,
+        "scale": "trillion"
+    },
+    {
+        "country": "East Asia & Pacific (IDA & IBRD countries)",
+        "indicator": "GDP (current US$)",
+        "value": 17.1817870221582,
+        "scale": "trillion"
+    },
+    {
+        "country": "Euro area",
+        "indicator": "GDP (current US$)",
+        "value": 13.4160612705753,
+        "scale": "trillion"
+    },
+    {
+        "country": "Europe & Central Asia",
+        "indicator": "GDP (current US$)",
+        "value": 22.941556433612103,
+        "scale": "trillion"
+    },
+    {
+        "country": "Europe & Central Asia (excluding high income)",
+        "indicator": "GDP (current US$)",
+        "value": 3.2497055818469103,
+        "scale": "trillion"
+    },
+    {
+        "country": "Europe & Central Asia (IDA & IBRD countries)",
+        "indicator": "GDP (current US$)",
+        "value": 4.15911394515709,
+        "scale": "trillion"
+    },
+    {
+        "country": "European Union",
+        "indicator": "GDP (current US$)",
+        "value": 15.691850452107301,
+        "scale": "trillion"
+    },
+    {
+        "country": "Fragile and conflict affected situations",
+        "indicator": "GDP (current US$)",
+        "value": 1.79140802866002,
+        "scale": "trillion"
+    },
+    {
+        "country": "Heavily indebted poor countries (HIPC)",
+        "indicator": "GDP (current US$)",
+        "value": 0.797617929913554,
+        "scale": "trillion"
+    },
+    {
+        "country": "High income",
+        "indicator": "GDP (current US$)",
+        "value": 55.2892375890717,
+        "scale": "trillion"
+    },
+    {
+        "country": "IBRD only",
+        "indicator": "GDP (current US$)",
+        "value": 31.2441542785437,
+        "scale": "trillion"
+    },
+    {
+        "country": "IDA & IBRD total",
+        "indicator": "GDP (current US$)",
+        "value": 33.5816893733104,
+        "scale": "trillion"
+    },
+    {
+        "country": "IDA blend",
+        "indicator": "GDP (current US$)",
+        "value": 1.04015426185799,
+        "scale": "trillion"
+    },
+    {
+        "country": "IDA only",
+        "indicator": "GDP (current US$)",
+        "value": 1.29733788638731,
+        "scale": "trillion"
+    },
+    {
+        "country": "IDA total",
+        "indicator": "GDP (current US$)",
+        "value": 2.3374921482452997,
+        "scale": "trillion"
+    },
+    {
+        "country": "Late-demographic dividend",
+        "indicator": "GDP (current US$)",
+        "value": 23.0263547745473,
+        "scale": "trillion"
+    },
+    {
+        "country": "Latin America & Caribbean",
+        "indicator": "GDP (current US$)",
+        "value": 5.62360684140031,
+        "scale": "trillion"
+    },
+    {
+        "country": "Latin America & Caribbean (excluding high income)",
+        "indicator": "GDP (current US$)",
+        "value": 4.77883689407421,
+        "scale": "trillion"
+    },
+    {
+        "country": "Latin America & the Caribbean (IDA & IBRD countries)",
+        "indicator": "GDP (current US$)",
+        "value": 5.372623255716849,
+        "scale": "trillion"
+    },
+    {
+        "country": "Least developed countries: UN classification",
+        "indicator": "GDP (current US$)",
+        "value": 1.1423041214305,
+        "scale": "trillion"
+    },
+    {
+        "country": "Low & middle income",
+        "indicator": "GDP (current US$)",
+        "value": 32.0613363235297,
+        "scale": "trillion"
+    },
+    {
+        "country": "Low income",
+        "indicator": "GDP (current US$)",
+        "value": 0.47964267970874597,
+        "scale": "trillion"
+    },
+    {
+        "country": "Lower middle income",
+        "indicator": "GDP (current US$)",
+        "value": 7.8947616323947,
+        "scale": "trillion"
+    },
+    {
+        "country": "Middle East & North Africa",
+        "indicator": "GDP (current US$)",
+        "value": 3.46521735018681,
+        "scale": "trillion"
+    },
+    {
+        "country": "Middle East & North Africa (excluding high income)",
+        "indicator": "GDP (current US$)",
+        "value": 1.39198294048958,
+        "scale": "trillion"
+    },
+    {
+        "country": "Middle East & North Africa (IDA & IBRD countries)",
+        "indicator": "GDP (current US$)",
+        "value": 1.3748494404895801,
+        "scale": "trillion"
+    },
+    {
+        "country": "Middle income",
+        "indicator": "GDP (current US$)",
+        "value": 31.5810537566068,
+        "scale": "trillion"
+    },
+    {
+        "country": "North America",
+        "indicator": "GDP (current US$)",
+        "value": 23.122010947482302,
+        "scale": "trillion"
+    },
+    {
+        "country": "Not classified",
+        "indicator": "GDP (current US$)",
+        "value": null,
+        "scale": "trillion"
+    },
+    {
+        "country": "OECD members",
+        "indicator": "GDP (current US$)",
+        "value": 53.8987406871882,
+        "scale": "trillion"
+    },
+    {
+        "country": "Other small states",
+        "indicator": "GDP (current US$)",
+        "value": 0.432762687769924,
+        "scale": "trillion"
+    },
+    {
+        "country": "Pacific island small states",
+        "indicator": "GDP (current US$)",
+        "value": 0.0106442656123514,
+        "scale": "trillion"
+    },
+    {
+        "country": "Post-demographic dividend",
+        "indicator": "GDP (current US$)",
+        "value": 50.901911073586604,
+        "scale": "trillion"
+    },
+    {
+        "country": "Pre-demographic dividend",
+        "indicator": "GDP (current US$)",
+        "value": 1.39356508222182,
+        "scale": "trillion"
+    },
+    {
+        "country": "Small states",
+        "indicator": "GDP (current US$)",
+        "value": 0.520430771503024,
+        "scale": "trillion"
+    },
+    {
+        "country": "South Asia",
+        "indicator": "GDP (current US$)",
+        "value": 3.64873178616825,
+        "scale": "trillion"
+    },
+    {
+        "country": "South Asia (IDA & IBRD)",
+        "indicator": "GDP (current US$)",
+        "value": 3.64873178616825,
+        "scale": "trillion"
+    },
+    {
+        "country": "Sub-Saharan Africa",
+        "indicator": "GDP (current US$)",
+        "value": 1.7920770879753,
+        "scale": "trillion"
+    },
+    {
+        "country": "Sub-Saharan Africa (excluding high income)",
+        "indicator": "GDP (current US$)",
+        "value": 1.79039285944662,
+        "scale": "trillion"
+    },
+    {
+        "country": "Sub-Saharan Africa (IDA & IBRD countries)",
+        "indicator": "GDP (current US$)",
+        "value": 1.7920770879753,
+        "scale": "trillion"
+    },
+    {
+        "country": "Upper middle income",
+        "indicator": "GDP (current US$)",
+        "value": 23.686292124212102,
+        "scale": "trillion"
+    },
+    {
+        "country": "World",
+        "indicator": "GDP (current US$)",
+        "value": 87.6528632159926,
+        "scale": "trillion"
+    },
+    {
+        "country": "Afghanistan",
+        "indicator": "GDP (current US$)",
+        "value": 0.0187994507427823,
+        "scale": "trillion"
+    }
+]
