@@ -14,6 +14,8 @@ msck repair table dbname.tablename
 
 ALTER TABLE dbname.tablename ADD COLUMNS (new_col type);
 
+ALTER TABLE dbname.tablename ADD IF NOT EXISTS PARTITION (col_partition type);
+
 ALTER TABLE dbname.tablename PARTITION (col_partition type) SET LOCATION "hdfs://hdp1234/path";
 
 ALTER TABLE dbname.tablename REPLACE COLUMNS (col1 type, col2 type) CASCADE;
@@ -26,7 +28,7 @@ DESCRIBE dbname.tablename
 
 DESCRIBE FORMATTED dbname.tablename
 
-DESCRIBE FORMATTED dbname.tablename (col_partition='value');
+DESCRIBE FORMATTED dbname.tablename PARTITION (col_partition='value');
 
 DROP TABLE IF EXISTS dbname.tablename;
 
