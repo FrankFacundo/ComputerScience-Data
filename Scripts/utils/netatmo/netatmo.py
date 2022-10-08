@@ -3,6 +3,7 @@ import lnetatmo
 import os
 
 # 1 : Authenticate
+# To get ID go to https://dev.netatmo.com/apps/
 clientId=os.getenv('CLIENT_ID')
 clientSecret=os.getenv('CLIENT_SECRET')
 username=os.getenv('EMAIL')
