@@ -33,7 +33,7 @@ df_countries.to_csv("csv/countries.csv", index=False)
 
 ############
 
-# directory = os.path.dirname(os.path.abspath(__file__))
-# filepath = os.path.join(directory, "json", "country_list.json")
-# with open(filepath, "w", encoding='utf8') as outfile:
-#     json.dump(result, outfile, indent=4, ensure_ascii=False)
+directory = os.path.dirname(os.path.abspath(__file__))
+filepath = os.path.join(directory, "json", "country_list.json")
+with open(filepath, "w", encoding='utf8') as outfile:
+    json.dump(result, outfile, indent=4, ensure_ascii=False)
