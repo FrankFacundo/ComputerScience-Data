@@ -12,4 +12,8 @@
 - Households -> https://www.un.org/development/desa/pd/data/household-size-and-composition
 
 # API
-OECD : https://github.com/FrankVolpe/OECD/blob/master/src/calling_data.py
+OECD : 
+https://github.com/FrankVolpe/OECD/blob/master/src/calling_data.py
+https://data.oecd.org/fr/api/
+https://data.oecd.org/fr/api/sdmx-json-documentation/
+https://stats.oecd.org/sdmx-json/data/HH_DASH
