@@ -4,7 +4,19 @@
 
 ## Info dataframe
 
+### Get type columns
+
+```python
+df.dtypes
+```
+
 ## Create dataframe
+
+## Modify dataframe
+
+```python
+df['col'] = df['col'].replace('value1','value2')
+```
 
 ## Reshaping Data
 
@@ -12,6 +24,10 @@ Cast columns
 
 ```python
 df['col'].astype("int32")
+```
+
+```python
+df.drop(["col"], axis=1)
 ```
 
 ## Iteration
@@ -40,6 +56,9 @@ df[['column', 'quantity']].unique()
 df.sort_values(by=['quantity'], ascending=False)
 ```
 
+```python
+df.drop_duplicates()
+```
 
 ## Duplicate Data
 
@@ -116,6 +135,13 @@ big_table.groupby('year')['amount', 'quantity'].agg(
 )
 ```
 
+keep all columns after aggregation:
+
+```python
+idx = big_table.groupby('Country')["year"].transform(max) == big_table["year"]
+big_table = big_table[idx]
+```
+
 ## Missing Data
 
 Drop NaN values in current dataframe.
@@ -132,7 +158,8 @@ df.dropna(inplace=True)
 
 ## Combining Data
 
-It is better to merge instead of join, because merge allows to select the column key for each dataframe.
+It is better to merge instead of join, because merge allows to select the column key for each dataframe,
+however join is faster than merge.
 
 ### Merge
 

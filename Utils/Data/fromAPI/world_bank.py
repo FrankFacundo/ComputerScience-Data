@@ -64,6 +64,7 @@ class WorldBankAPI(object):
         self.country_list = self.get_filtered_country_list()
         self.save_json_by_default = False
         self.save_csv_by_default = False
+        self.default_year = 2020
 
     def get_request(self,
                     request_args: RequestArgs,
@@ -85,6 +86,10 @@ class WorldBankAPI(object):
         return request
 
     def format_indicator(self, indicator: Indicator):
+        if indicator.extensions is None:
+            return "{}.{}.{}".format(indicator.topic,
+                                     indicator.general_subject,
+                                     indicator.specific_subject)
         return "{}.{}.{}.{}".format(indicator.topic, indicator.general_subject,
                                     indicator.specific_subject,
                                     indicator.extensions)
@@ -278,12 +283,19 @@ class WorldBankAPI(object):
         data = self.request(request)
 
         result = [{
-            "country": data_point["country"]["value"],
-            "indicator": data_point["indicator"]["value"],
-            "value": data_point["value"],
-            "scale": "years",
-            "year": data_point["date"],
-            "region": self.country_list_with_country_id_key[data_point["countryiso3code"]]["region"],
+            "country":
+            data_point["country"]["value"],
+            "indicator":
+            data_point["indicator"]["value"],
+            "value":
+            data_point["value"],
+            "scale":
+            "years",
+            "year":
+            data_point["date"],
+            "region":
+            self.country_list_with_country_id_key[
+                data_point["countryiso3code"]]["region"],
         } for data_point in data]
 
         if len(result) == 1:
@@ -296,6 +308,79 @@ class WorldBankAPI(object):
 
         return result
 
+    def get_population(self, country_id="all", year=2020):
+        """
+        """
+        topic = "SP"  # Social: population
+        general_subject = "POP"  # Population
+        specific_subject = "TOTL"  # Total
+
+        if country_id == 'all':
+            country_id = self.country_id_list_for_request("all")
+
+        if year is not None:
+            optional_args = {"date": year}
+        else:
+            optional_args = None
+
+        indicator = WorldBankAPI.Indicator(topic=topic,
+                                           general_subject=general_subject,
+                                           specific_subject=specific_subject,
+                                           extensions=None)
+
+        request_args = WorldBankAPI.RequestArgs(
+            aggregation=Aggregation.COUNTRY,
+            id=country_id,
+            format=self.format,
+            indicator=self.format_indicator(indicator))
+
+        request = self.get_request(request_args, optional_args)
+        data = self.request(request)
+
+        number_scale = NumberScale.MILLION
+
+        result = [{
+            "country":
+            data_point["country"]["value"],
+            "indicator":
+            data_point["indicator"]["value"],
+            "value":
+            self.change_scale(value=data_point["value"],
+                              number_scale=number_scale),
+            "scale":
+            number_scale,
+            "year":
+            data_point["date"],
+            "region":
+            self.country_list_with_country_id_key[
+                data_point["countryiso3code"]]["region"],
+        } for data_point in data]
+
+        result_json = {data_point["country"]["value"]: {
+            "indicator":
+            data_point["indicator"]["value"],
+            "value":
+            self.change_scale(value=data_point["value"],
+                              number_scale=number_scale),
+            "scale":
+            number_scale,
+            "year":
+            data_point["date"],
+            "region":
+            self.country_list_with_country_id_key[
+                data_point["countryiso3code"]]["region"],
+        } for data_point in data}
+
+        if len(result) == 1:
+            result = result[0]
+
+        if self.save_json_by_default:
+            self.save_json(result_json, "population_{}.json".format(year))
+        if self.save_csv_by_default:
+            self.save_csv(result, "population_{}.csv".format(year))
+
+        return result
+
 
 api_client = WorldBankAPI(verbose=True)
 api_client.save_json_by_default = True
@@ -304,6 +389,6 @@ api_client.save_csv_by_default = True
 # response = api_client.get_gdp(country_id="all", date=2019)
 # api_client.save_json(response, "country_info.json")
 
-response = api_client.get_life_expectancy(year=2020)
+response = api_client.get_population(year=2020)
 print(response)
 # api_client.save_json(response, "life_expectancy.json")

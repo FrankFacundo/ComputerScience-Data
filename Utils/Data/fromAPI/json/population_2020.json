@@ -1,0 +1,1479 @@
+{
+    "Aruba": {
+        "indicator": "Population, total",
+        "value": 0.106766,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Afghanistan": {
+        "indicator": "Population, total",
+        "value": 38.928341,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Angola": {
+        "indicator": "Population, total",
+        "value": 32.866268,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Albania": {
+        "indicator": "Population, total",
+        "value": 2.837849,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Andorra": {
+        "indicator": "Population, total",
+        "value": 0.077265,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "United Arab Emirates": {
+        "indicator": "Population, total",
+        "value": 9.8904,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Argentina": {
+        "indicator": "Population, total",
+        "value": 45.376763,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Armenia": {
+        "indicator": "Population, total",
+        "value": 2.963234,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "American Samoa": {
+        "indicator": "Population, total",
+        "value": 0.055197,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Antigua and Barbuda": {
+        "indicator": "Population, total",
+        "value": 0.097928,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Australia": {
+        "indicator": "Population, total",
+        "value": 25.693267,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Austria": {
+        "indicator": "Population, total",
+        "value": 8.916864,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Azerbaijan": {
+        "indicator": "Population, total",
+        "value": 10.093121,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Burundi": {
+        "indicator": "Population, total",
+        "value": 11.890781,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Belgium": {
+        "indicator": "Population, total",
+        "value": 11.544241,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Benin": {
+        "indicator": "Population, total",
+        "value": 12.123198,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Burkina Faso": {
+        "indicator": "Population, total",
+        "value": 20.903278,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Bangladesh": {
+        "indicator": "Population, total",
+        "value": 164.689383,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Bulgaria": {
+        "indicator": "Population, total",
+        "value": 6.934015,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Bahrain": {
+        "indicator": "Population, total",
+        "value": 1.701583,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Bahamas, The": {
+        "indicator": "Population, total",
+        "value": 0.393248,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Bosnia and Herzegovina": {
+        "indicator": "Population, total",
+        "value": 3.280815,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Belarus": {
+        "indicator": "Population, total",
+        "value": 9.379952,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Belize": {
+        "indicator": "Population, total",
+        "value": 0.397621,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Bermuda": {
+        "indicator": "Population, total",
+        "value": 0.063893,
+        "scale": "million",
+        "year": "2020",
+        "region": "North America"
+    },
+    "Bolivia": {
+        "indicator": "Population, total",
+        "value": 11.673029,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Brazil": {
+        "indicator": "Population, total",
+        "value": 212.559409,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Barbados": {
+        "indicator": "Population, total",
+        "value": 0.287371,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Brunei Darussalam": {
+        "indicator": "Population, total",
+        "value": 0.437483,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Bhutan": {
+        "indicator": "Population, total",
+        "value": 0.771612,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Botswana": {
+        "indicator": "Population, total",
+        "value": 2.351625,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Central African Republic": {
+        "indicator": "Population, total",
+        "value": 4.829764,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Canada": {
+        "indicator": "Population, total",
+        "value": 38.037204,
+        "scale": "million",
+        "year": "2020",
+        "region": "North America"
+    },
+    "Switzerland": {
+        "indicator": "Population, total",
+        "value": 8.636561,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Chile": {
+        "indicator": "Population, total",
+        "value": 19.116209,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "China": {
+        "indicator": "Population, total",
+        "value": 1411.1,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Cote d'Ivoire": {
+        "indicator": "Population, total",
+        "value": 26.378275,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Cameroon": {
+        "indicator": "Population, total",
+        "value": 26.545864,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Congo, Dem. Rep.": {
+        "indicator": "Population, total",
+        "value": 89.561404,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Congo, Rep.": {
+        "indicator": "Population, total",
+        "value": 5.518092,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Colombia": {
+        "indicator": "Population, total",
+        "value": 50.882884,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Comoros": {
+        "indicator": "Population, total",
+        "value": 0.869595,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Cabo Verde": {
+        "indicator": "Population, total",
+        "value": 0.555988,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Costa Rica": {
+        "indicator": "Population, total",
+        "value": 5.094114,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Cuba": {
+        "indicator": "Population, total",
+        "value": 11.326616,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Curacao": {
+        "indicator": "Population, total",
+        "value": 0.154947,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Cayman Islands": {
+        "indicator": "Population, total",
+        "value": 0.06572,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Cyprus": {
+        "indicator": "Population, total",
+        "value": 1.207361,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Czechia": {
+        "indicator": "Population, total",
+        "value": 10.697858,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Germany": {
+        "indicator": "Population, total",
+        "value": 83.160871,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Djibouti": {
+        "indicator": "Population, total",
+        "value": 0.988002,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Dominica": {
+        "indicator": "Population, total",
+        "value": 0.071991,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Denmark": {
+        "indicator": "Population, total",
+        "value": 5.831404,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Dominican Republic": {
+        "indicator": "Population, total",
+        "value": 10.847904,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Algeria": {
+        "indicator": "Population, total",
+        "value": 43.851043,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Ecuador": {
+        "indicator": "Population, total",
+        "value": 17.64306,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Egypt, Arab Rep.": {
+        "indicator": "Population, total",
+        "value": 102.334403,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Eritrea": {
+        "indicator": "Population, total",
+        "value": null,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Spain": {
+        "indicator": "Population, total",
+        "value": 47.363419,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Estonia": {
+        "indicator": "Population, total",
+        "value": 1.329479,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Ethiopia": {
+        "indicator": "Population, total",
+        "value": 114.963583,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Finland": {
+        "indicator": "Population, total",
+        "value": 5.529543,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Fiji": {
+        "indicator": "Population, total",
+        "value": 0.896444,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "France": {
+        "indicator": "Population, total",
+        "value": 67.379908,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Faroe Islands": {
+        "indicator": "Population, total",
+        "value": 0.048865,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Micronesia, Fed. Sts.": {
+        "indicator": "Population, total",
+        "value": 0.115021,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Gabon": {
+        "indicator": "Population, total",
+        "value": 2.225728,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "United Kingdom": {
+        "indicator": "Population, total",
+        "value": 67.081,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Georgia": {
+        "indicator": "Population, total",
+        "value": 3.722716,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Ghana": {
+        "indicator": "Population, total",
+        "value": 31.072945,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Guinea": {
+        "indicator": "Population, total",
+        "value": 13.132792,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Gambia, The": {
+        "indicator": "Population, total",
+        "value": 2.416664,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Guinea-Bissau": {
+        "indicator": "Population, total",
+        "value": 1.967998,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Equatorial Guinea": {
+        "indicator": "Population, total",
+        "value": 1.402985,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Greece": {
+        "indicator": "Population, total",
+        "value": 10.700556,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Grenada": {
+        "indicator": "Population, total",
+        "value": 0.112519,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Greenland": {
+        "indicator": "Population, total",
+        "value": 0.056367,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Guatemala": {
+        "indicator": "Population, total",
+        "value": 16.858333,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Guam": {
+        "indicator": "Population, total",
+        "value": 0.168783,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Guyana": {
+        "indicator": "Population, total",
+        "value": 0.786559,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Honduras": {
+        "indicator": "Population, total",
+        "value": 9.904608,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Croatia": {
+        "indicator": "Population, total",
+        "value": 4.04768,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Haiti": {
+        "indicator": "Population, total",
+        "value": 11.402533,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Hungary": {
+        "indicator": "Population, total",
+        "value": 9.750149,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Indonesia": {
+        "indicator": "Population, total",
+        "value": 273.523621,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Isle of Man": {
+        "indicator": "Population, total",
+        "value": 0.085032,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "India": {
+        "indicator": "Population, total",
+        "value": 1380.004385,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Ireland": {
+        "indicator": "Population, total",
+        "value": 4.985674,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Iran, Islamic Rep.": {
+        "indicator": "Population, total",
+        "value": 83.992953,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Iraq": {
+        "indicator": "Population, total",
+        "value": 40.222503,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Iceland": {
+        "indicator": "Population, total",
+        "value": 0.366463,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Italy": {
+        "indicator": "Population, total",
+        "value": 59.449527,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Jamaica": {
+        "indicator": "Population, total",
+        "value": 2.961161,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Jordan": {
+        "indicator": "Population, total",
+        "value": 10.20314,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Japan": {
+        "indicator": "Population, total",
+        "value": 126.261,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Kazakhstan": {
+        "indicator": "Population, total",
+        "value": 18.755666,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Kenya": {
+        "indicator": "Population, total",
+        "value": 53.7713,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Kyrgyz Republic": {
+        "indicator": "Population, total",
+        "value": 6.5799,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Cambodia": {
+        "indicator": "Population, total",
+        "value": 16.718971,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Kiribati": {
+        "indicator": "Population, total",
+        "value": 0.119446,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "St. Kitts and Nevis": {
+        "indicator": "Population, total",
+        "value": 0.053192,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Korea, Rep.": {
+        "indicator": "Population, total",
+        "value": 51.836239,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Kuwait": {
+        "indicator": "Population, total",
+        "value": 4.270563,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Lao PDR": {
+        "indicator": "Population, total",
+        "value": 7.275556,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Lebanon": {
+        "indicator": "Population, total",
+        "value": 6.825442,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Liberia": {
+        "indicator": "Population, total",
+        "value": 5.057677,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Libya": {
+        "indicator": "Population, total",
+        "value": 6.871287,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "St. Lucia": {
+        "indicator": "Population, total",
+        "value": 0.183629,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Liechtenstein": {
+        "indicator": "Population, total",
+        "value": 0.038137,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Sri Lanka": {
+        "indicator": "Population, total",
+        "value": 21.919,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Lesotho": {
+        "indicator": "Population, total",
+        "value": 2.142252,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Lithuania": {
+        "indicator": "Population, total",
+        "value": 2.794885,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Luxembourg": {
+        "indicator": "Population, total",
+        "value": 0.630419,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Latvia": {
+        "indicator": "Population, total",
+        "value": 1.900449,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "St. Martin (French part)": {
+        "indicator": "Population, total",
+        "value": 0.038659,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Morocco": {
+        "indicator": "Population, total",
+        "value": 36.910558,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Monaco": {
+        "indicator": "Population, total",
+        "value": 0.039244,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Moldova": {
+        "indicator": "Population, total",
+        "value": 2.620495,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Madagascar": {
+        "indicator": "Population, total",
+        "value": 27.691019,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Maldives": {
+        "indicator": "Population, total",
+        "value": 0.540542,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Mexico": {
+        "indicator": "Population, total",
+        "value": 128.932753,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Marshall Islands": {
+        "indicator": "Population, total",
+        "value": 0.059194,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "North Macedonia": {
+        "indicator": "Population, total",
+        "value": 2.072531,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Mali": {
+        "indicator": "Population, total",
+        "value": 20.250834,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Malta": {
+        "indicator": "Population, total",
+        "value": 0.515332,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Myanmar": {
+        "indicator": "Population, total",
+        "value": 54.409794,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Montenegro": {
+        "indicator": "Population, total",
+        "value": 0.621306,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Mongolia": {
+        "indicator": "Population, total",
+        "value": 3.278292,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Northern Mariana Islands": {
+        "indicator": "Population, total",
+        "value": 0.057557,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Mozambique": {
+        "indicator": "Population, total",
+        "value": 31.255435,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Mauritania": {
+        "indicator": "Population, total",
+        "value": 4.64966,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Mauritius": {
+        "indicator": "Population, total",
+        "value": 1.26574,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Malawi": {
+        "indicator": "Population, total",
+        "value": 19.129955,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Malaysia": {
+        "indicator": "Population, total",
+        "value": 32.365998,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Namibia": {
+        "indicator": "Population, total",
+        "value": 2.540916,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "New Caledonia": {
+        "indicator": "Population, total",
+        "value": 0.27196,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Niger": {
+        "indicator": "Population, total",
+        "value": 24.206636,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Nigeria": {
+        "indicator": "Population, total",
+        "value": 206.139587,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Nicaragua": {
+        "indicator": "Population, total",
+        "value": 6.624554,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Netherlands": {
+        "indicator": "Population, total",
+        "value": 17.4415,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Norway": {
+        "indicator": "Population, total",
+        "value": 5.379475,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Nepal": {
+        "indicator": "Population, total",
+        "value": 29.136808,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Nauru": {
+        "indicator": "Population, total",
+        "value": 0.010834,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "New Zealand": {
+        "indicator": "Population, total",
+        "value": 5.0902,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Oman": {
+        "indicator": "Population, total",
+        "value": 5.106622,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Pakistan": {
+        "indicator": "Population, total",
+        "value": 220.892331,
+        "scale": "million",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    "Panama": {
+        "indicator": "Population, total",
+        "value": 4.314768,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Peru": {
+        "indicator": "Population, total",
+        "value": 32.971846,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Philippines": {
+        "indicator": "Population, total",
+        "value": 109.581085,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Palau": {
+        "indicator": "Population, total",
+        "value": 0.018092,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Papua New Guinea": {
+        "indicator": "Population, total",
+        "value": 8.947027,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Poland": {
+        "indicator": "Population, total",
+        "value": 37.89907,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Puerto Rico": {
+        "indicator": "Population, total",
+        "value": 3.281538,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Korea, Dem. People's Rep.": {
+        "indicator": "Population, total",
+        "value": 25.778815,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Portugal": {
+        "indicator": "Population, total",
+        "value": 10.297081,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Paraguay": {
+        "indicator": "Population, total",
+        "value": 7.13253,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "French Polynesia": {
+        "indicator": "Population, total",
+        "value": 0.280904,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Qatar": {
+        "indicator": "Population, total",
+        "value": 2.88106,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Romania": {
+        "indicator": "Population, total",
+        "value": 19.25752,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Russian Federation": {
+        "indicator": "Population, total",
+        "value": 144.073139,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Rwanda": {
+        "indicator": "Population, total",
+        "value": 12.952209,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Saudi Arabia": {
+        "indicator": "Population, total",
+        "value": 34.813867,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Sudan": {
+        "indicator": "Population, total",
+        "value": 43.849269,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Senegal": {
+        "indicator": "Population, total",
+        "value": 16.74393,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Singapore": {
+        "indicator": "Population, total",
+        "value": 5.685807,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Solomon Islands": {
+        "indicator": "Population, total",
+        "value": 0.686878,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Sierra Leone": {
+        "indicator": "Population, total",
+        "value": 7.976985,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "El Salvador": {
+        "indicator": "Population, total",
+        "value": 6.486201,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "San Marino": {
+        "indicator": "Population, total",
+        "value": 0.033938,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Somalia": {
+        "indicator": "Population, total",
+        "value": 15.893219,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Serbia": {
+        "indicator": "Population, total",
+        "value": 6.899126,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "South Sudan": {
+        "indicator": "Population, total",
+        "value": 11.193729,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Sao Tome and Principe": {
+        "indicator": "Population, total",
+        "value": 0.219161,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Suriname": {
+        "indicator": "Population, total",
+        "value": 0.586634,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Slovak Republic": {
+        "indicator": "Population, total",
+        "value": 5.458827,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Slovenia": {
+        "indicator": "Population, total",
+        "value": 2.102419,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Sweden": {
+        "indicator": "Population, total",
+        "value": 10.353442,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Eswatini": {
+        "indicator": "Population, total",
+        "value": 1.160164,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Sint Maarten (Dutch part)": {
+        "indicator": "Population, total",
+        "value": 0.04231,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Seychelles": {
+        "indicator": "Population, total",
+        "value": 0.098462,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Syrian Arab Republic": {
+        "indicator": "Population, total",
+        "value": 17.500657,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Turks and Caicos Islands": {
+        "indicator": "Population, total",
+        "value": 0.038718,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Chad": {
+        "indicator": "Population, total",
+        "value": 16.425859,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Togo": {
+        "indicator": "Population, total",
+        "value": 8.278737,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Thailand": {
+        "indicator": "Population, total",
+        "value": 69.799978,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Tajikistan": {
+        "indicator": "Population, total",
+        "value": 9.537642,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Turkmenistan": {
+        "indicator": "Population, total",
+        "value": 6.031187,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Timor-Leste": {
+        "indicator": "Population, total",
+        "value": 1.318442,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Tonga": {
+        "indicator": "Population, total",
+        "value": 0.105697,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Trinidad and Tobago": {
+        "indicator": "Population, total",
+        "value": 1.399491,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Tunisia": {
+        "indicator": "Population, total",
+        "value": 11.818618,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "Turkiye": {
+        "indicator": "Population, total",
+        "value": 84.339067,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Tuvalu": {
+        "indicator": "Population, total",
+        "value": 0.011792,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Tanzania": {
+        "indicator": "Population, total",
+        "value": 59.734213,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Uganda": {
+        "indicator": "Population, total",
+        "value": 45.741,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Ukraine": {
+        "indicator": "Population, total",
+        "value": 44.132049,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Uruguay": {
+        "indicator": "Population, total",
+        "value": 3.473727,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "United States": {
+        "indicator": "Population, total",
+        "value": 331.50108,
+        "scale": "million",
+        "year": "2020",
+        "region": "North America"
+    },
+    "Uzbekistan": {
+        "indicator": "Population, total",
+        "value": 34.23205,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "St. Vincent and the Grenadines": {
+        "indicator": "Population, total",
+        "value": 0.110947,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Venezuela, RB": {
+        "indicator": "Population, total",
+        "value": 28.435943,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "British Virgin Islands": {
+        "indicator": "Population, total",
+        "value": 0.030237,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Virgin Islands (U.S.)": {
+        "indicator": "Population, total",
+        "value": 0.10629,
+        "scale": "million",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    "Vietnam": {
+        "indicator": "Population, total",
+        "value": 97.338583,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Vanuatu": {
+        "indicator": "Population, total",
+        "value": 0.30715,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Samoa": {
+        "indicator": "Population, total",
+        "value": 0.19841,
+        "scale": "million",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    "Kosovo": {
+        "indicator": "Population, total",
+        "value": 1.790133,
+        "scale": "million",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    "Yemen, Rep.": {
+        "indicator": "Population, total",
+        "value": 29.825968,
+        "scale": "million",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    "South Africa": {
+        "indicator": "Population, total",
+        "value": 59.30869,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Zambia": {
+        "indicator": "Population, total",
+        "value": 18.383956,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    "Zimbabwe": {
+        "indicator": "Population, total",
+        "value": 14.862927,
+        "scale": "million",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    }
+}
