@@ -36,7 +36,9 @@ class WorldBankAPI(object):
     Extensions (2 digits each)
 
     Check WDI_CETS.csv CATALOG.pdf and to check possibilities.
-    Another interactive page is https://datatopics.worldbank.org/world-development-indicators.
+    Other pages are 
+    - https://datatopics.worldbank.org/world-development-indicators.
+    - https://data.worldbank.org/indicator/
 
     For example: 
     DT.DIS.PRVT.CD would read 
