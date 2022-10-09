@@ -60,6 +60,7 @@ class WorldBankAPI(object):
 
         self.format = default_format if default_format is not None else FormatFile.JSON
         self.verbose = verbose
+        self.country_list_with_country_id_key = None
         self.country_list = self.get_filtered_country_list()
         self.save_json_by_default = False
         self.save_csv_by_default = False
@@ -115,14 +116,14 @@ class WorldBankAPI(object):
             print(e)
             raise
 
-    def save_json(self, dictionary: dict, filename:str):
+    def save_json(self, dictionary: dict, filename: str):
         directory = os.path.dirname(os.path.abspath(__file__))
         filepath = os.path.join(directory, "json", filename)
 
         with open(filepath, "w", encoding='utf8') as outfile:
             json.dump(dictionary, outfile, indent=4, ensure_ascii=False)
 
-    def save_csv(self, dictionary:dict, filename:str):
+    def save_csv(self, dictionary: dict, filename: str):
         dataframe = pd.DataFrame.from_dict(dictionary)
         dataframe.to_csv("csv/{}".format(filename), index=False)
 
@@ -151,17 +152,25 @@ class WorldBankAPI(object):
         with open('json/country_info.json', 'r', encoding='utf8') as f:
             countries_data = json.load(f)
 
-        result = [{
-            "name": country_data["name"],
-            "id": country_data["id"],
-            "region": country_data["region"]["value"],
-            "adminregion": country_data["adminregion"]["value"],
-            "incomeLevel": country_data["incomeLevel"]["value"],
-            "lendingType": country_data["lendingType"]["value"],
-            "capitalCity": country_data["capitalCity"],
-        } for country_data in countries_data
-                  if country_data["capitalCity"] != ""]
-        return result
+        country_list = []
+        country_list_with_key = {}
+        for country_data in countries_data:
+            if country_data["capitalCity"] != "":
+                item = {
+                    "name": country_data["name"],
+                    "region": country_data["region"]["value"],
+                    "adminregion": country_data["adminregion"]["value"],
+                    "incomeLevel": country_data["incomeLevel"]["value"],
+                    "lendingType": country_data["lendingType"]["value"],
+                    "capitalCity": country_data["capitalCity"],
+                }
+                country_list_with_key[country_data["id"]] = item
+                item_with_id = item.copy()
+                item_with_id["id"] = country_data["id"]
+                country_list.append(item_with_id)
+        self.country_list_with_country_id_key = country_list_with_key
+
+        return country_list
 
     def country_id_list_for_request(self, countries_id="all"):
         if countries_id == "all":
@@ -274,13 +283,16 @@ class WorldBankAPI(object):
             "value": data_point["value"],
             "scale": "years",
             "year": data_point["date"],
+            "region": self.country_list_with_country_id_key[data_point["countryiso3code"]]["region"],
         } for data_point in data]
 
         if len(result) == 1:
             result = result[0]
 
-        if self.save_json_by_default: self.save_json(result, "life_expectancy_{}.json".format(year))
-        if self.save_csv_by_default: self.save_csv(result, "life_expectancy_{}.csv".format(year))
+        if self.save_json_by_default:
+            self.save_json(result, "life_expectancy_{}.json".format(year))
+        if self.save_csv_by_default:
+            self.save_csv(result, "life_expectancy_{}.csv".format(year))
 
         return result
 
