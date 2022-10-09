@@ -1,0 +1,1690 @@
+[
+    {
+        "country": "Aruba",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.434,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Afghanistan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 65.173,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Angola",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.487,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Albania",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.686,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Andorra",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "United Arab Emirates",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.12,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Argentina",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.813,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Armenia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.224,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "American Samoa",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Antigua and Barbuda",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.146,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Australia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.2,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Austria",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.1926829268293,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Azerbaijan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.123,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Burundi",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.916,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Belgium",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.7951219512195,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Benin",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 62.077,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Burkina Faso",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.981,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Bangladesh",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.868,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Bulgaria",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.6073170731707,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Bahrain",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.419,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Bahamas, The",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.053,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Bosnia and Herzegovina",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.545,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Belarus",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.2268292682927,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Belize",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.754,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Bermuda",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.0560975609756,
+        "scale": "years",
+        "year": "2020",
+        "region": "North America"
+    },
+    {
+        "country": "Bolivia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.771,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Brazil",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.084,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Barbados",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 79.308,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Brunei Darussalam",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.998,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Bhutan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.08,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Botswana",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 69.793,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Central African Republic",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 53.679,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Canada",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.7487804878049,
+        "scale": "years",
+        "year": "2020",
+        "region": "North America"
+    },
+    {
+        "country": "Switzerland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.1,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Chile",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.329,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "China",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.097,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Cote d'Ivoire",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 58.104,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Cameroon",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 59.626,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Congo, Dem. Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 60.971,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Congo, Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.804,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Colombia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.46,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Comoros",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.525,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Cabo Verde",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.166,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Costa Rica",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.465,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Cuba",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.892,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Curacao",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Cayman Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Cyprus",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.135,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Czechia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.2268292682927,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Germany",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.9414634146342,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Djibouti",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 67.49,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Dominica",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Denmark",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.5512195121951,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Dominican Republic",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.257,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Algeria",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.063,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Ecuador",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.216,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Egypt, Arab Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.15,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Eritrea",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 66.679,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Spain",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.3341463414634,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Estonia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.3463414634146,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Ethiopia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 66.953,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Finland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.1317073170732,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Fiji",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 67.561,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "France",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.1756097560976,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Faroe Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.0926829268293,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Micronesia, Fed. Sts.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 68.002,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Gabon",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 66.69,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "United Kingdom",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.9024390243903,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Georgia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.919,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Ghana",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.347,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Guinea",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.962,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Gambia, The",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 62.383,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Guinea-Bissau",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 58.634,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Equatorial Guinea",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 59.057,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Greece",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.0878048780488,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Grenada",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.426,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Greenland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.4046341463415,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Guatemala",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.529,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Guam",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.277,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Guyana",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.023,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Honduras",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.448,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Croatia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.7243902439024,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Haiti",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.315,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Hungary",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.6170731707317,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Indonesia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.908,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Isle of Man",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "India",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 69.887,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Ireland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.2048780487805,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Iran, Islamic Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.87,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Iraq",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.748,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Iceland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.0658536585366,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Italy",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.3439024390244,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Jamaica",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.586,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Jordan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.655,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Japan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 84.6156097560976,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Kazakhstan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.37,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Kenya",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 66.991,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Kyrgyz Republic",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.8,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Cambodia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.054,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Kiribati",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 68.611,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "St. Kitts and Nevis",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Korea, Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.4268292682927,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Kuwait",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.586,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Lao PDR",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 68.219,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Lebanon",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 79.004,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Liberia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.423,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Libya",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.082,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "St. Lucia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.343,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Liechtenstein",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.8073170731707,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Sri Lanka",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.144,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Lesotho",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 54.836,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Lithuania",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.9292682926829,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Luxembourg",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.7414634146342,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Latvia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.3878048780488,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "St. Martin (French part)",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.1219512195122,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Morocco",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.901,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Monaco",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Moldova",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.006,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Madagascar",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 67.39,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Maldives",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 79.208,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Mexico",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.131,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Marshall Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "North Macedonia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.6931707317073,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Mali",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 59.692,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Malta",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.6536585365854,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Myanmar",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 67.363,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Montenegro",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.9317073170732,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Mongolia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.056,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Northern Mariana Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Mozambique",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.387,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Mauritania",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 65.129,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Mauritius",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.1770731707317,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Malawi",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.694,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Malaysia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.306,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Namibia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.045,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "New Caledonia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.7711707317073,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Niger",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 62.792,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Nigeria",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 55.018,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Nicaragua",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.697,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Netherlands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 81.409756097561,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Norway",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.209756097561,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Nepal",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.067,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Nauru",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "New Zealand",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.0560975609756,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Oman",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.078,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Pakistan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 67.428,
+        "scale": "years",
+        "year": "2020",
+        "region": "South Asia"
+    },
+    {
+        "country": "Panama",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.68,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Peru",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.947,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Philippines",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.36,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Palau",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Papua New Guinea",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.725,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Poland",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.6,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Puerto Rico",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.0874634146342,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Korea, Dem. People's Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.453,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Portugal",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.9756097560976,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Paraguay",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.363,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "French Polynesia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.836,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Qatar",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.363,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Romania",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.3536585365854,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Russian Federation",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.3387804878049,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Rwanda",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 69.329,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Saudi Arabia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.28,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Sudan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 65.53,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Senegal",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 68.213,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Singapore",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 83.7439024390244,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Solomon Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.132,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Sierra Leone",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 55.066,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "El Salvador",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.533,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "San Marino",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Somalia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 57.697,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Serbia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 74.2292682926829,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "South Sudan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 58.095,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Sao Tome and Principe",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.583,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Suriname",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.802,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Slovak Republic",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.8658536585366,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Slovenia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 80.5317073170732,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Sweden",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 82.4073170731707,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Eswatini",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 60.721,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Sint Maarten (Dutch part)",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Seychelles",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.2365853658537,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Syrian Arab Republic",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.651,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Turks and Caicos Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Chad",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 54.505,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Togo",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.34,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Thailand",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.344,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Tajikistan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.301,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Turkmenistan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 68.313,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Timor-Leste",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 69.712,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Tonga",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.018,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Trinidad and Tobago",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.628,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Tunisia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 76.891,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "Turkiye",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.928,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Tuvalu",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Tanzania",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 65.815,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Uganda",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 63.713,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Ukraine",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.1851219512195,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Uruguay",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 78.056,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "United States",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 77.2804878048781,
+        "scale": "years",
+        "year": "2020",
+        "region": "North America"
+    },
+    {
+        "country": "Uzbekistan",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.848,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "St. Vincent and the Grenadines",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.658,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Venezuela, RB",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 72.066,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "British Virgin Islands",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": null,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Virgin Islands (U.S.)",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 79.819512195122,
+        "scale": "years",
+        "year": "2020",
+        "region": "Latin America & Caribbean "
+    },
+    {
+        "country": "Vietnam",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 75.493,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Vanuatu",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 70.623,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Samoa",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 73.45,
+        "scale": "years",
+        "year": "2020",
+        "region": "East Asia & Pacific"
+    },
+    {
+        "country": "Kosovo",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 71.0878048780488,
+        "scale": "years",
+        "year": "2020",
+        "region": "Europe & Central Asia"
+    },
+    {
+        "country": "Yemen, Rep.",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 66.181,
+        "scale": "years",
+        "year": "2020",
+        "region": "Middle East & North Africa"
+    },
+    {
+        "country": "South Africa",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.379,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Zambia",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 64.194,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    },
+    {
+        "country": "Zimbabwe",
+        "indicator": "Life expectancy at birth, total (years)",
+        "value": 61.738,
+        "scale": "years",
+        "year": "2020",
+        "region": "Sub-Saharan Africa "
+    }
+]

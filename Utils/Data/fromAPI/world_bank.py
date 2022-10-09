@@ -3,6 +3,7 @@ import os
 from collections import namedtuple
 from typing import Final
 
+import pandas as pd
 import pprint
 import requests
 
@@ -59,6 +60,10 @@ class WorldBankAPI(object):
 
         self.format = default_format if default_format is not None else FormatFile.JSON
         self.verbose = verbose
+        self.country_list_with_country_id_key = None
+        self.country_list = self.get_filtered_country_list()
+        self.save_json_by_default = False
+        self.save_csv_by_default = False
 
     def get_request(self,
                     request_args: RequestArgs,
@@ -100,7 +105,9 @@ class WorldBankAPI(object):
                     response_by_page = self.request((request_intermediate),
                                                     is_first_iteration=False)
                     response = response + response_by_page
-                if self.verbose: print("Number of results (element in json) : {}".format(len(response)))
+                if self.verbose:
+                    print("Number of results (element in json) : {}".format(
+                        len(response)))
             else:
                 response = response[self.data_reponse_index]
             return response
@@ -109,12 +116,16 @@ class WorldBankAPI(object):
             print(e)
             raise
 
-    def save_json(self, dictionary: dict, filename):
+    def save_json(self, dictionary: dict, filename: str):
         directory = os.path.dirname(os.path.abspath(__file__))
         filepath = os.path.join(directory, "json", filename)
 
         with open(filepath, "w", encoding='utf8') as outfile:
             json.dump(dictionary, outfile, indent=4, ensure_ascii=False)
+
+    def save_csv(self, dictionary: dict, filename: str):
+        dataframe = pd.DataFrame.from_dict(dictionary)
+        dataframe.to_csv("csv/{}".format(filename), index=False)
 
     def process_response(self, response: dict):
         error_message = response[0].get("message")
@@ -133,6 +144,41 @@ class WorldBankAPI(object):
             return (value / (10**9))
         if number_scale == NumberScale.TRILLION:
             return (value / (10**12))
+
+    def get_filtered_country_list(self):
+        """
+        This filter country aggregations as "Europe" or "Africa" for example.
+        """
+        with open('json/country_info.json', 'r', encoding='utf8') as f:
+            countries_data = json.load(f)
+
+        country_list = []
+        country_list_with_key = {}
+        for country_data in countries_data:
+            if country_data["capitalCity"] != "":
+                item = {
+                    "name": country_data["name"],
+                    "region": country_data["region"]["value"],
+                    "adminregion": country_data["adminregion"]["value"],
+                    "incomeLevel": country_data["incomeLevel"]["value"],
+                    "lendingType": country_data["lendingType"]["value"],
+                    "capitalCity": country_data["capitalCity"],
+                }
+                country_list_with_key[country_data["id"]] = item
+                item_with_id = item.copy()
+                item_with_id["id"] = country_data["id"]
+                country_list.append(item_with_id)
+        self.country_list_with_country_id_key = country_list_with_key
+
+        return country_list
+
+    def country_id_list_for_request(self, countries_id="all"):
+        if countries_id == "all":
+            country_list_id = [country["id"] for country in self.country_list]
+        else:
+            country_list_id = countries_id
+        country_list_req = ";".join(country_list_id)
+        return country_list_req
 
     def get_country_info(self, country_id="all"):
         """
@@ -182,7 +228,7 @@ class WorldBankAPI(object):
         data = self.request(request)
 
         number_scale = NumberScale.TRILLION
-        
+
         result = [{
             "country":
             data_point["country"]["value"],
@@ -196,12 +242,68 @@ class WorldBankAPI(object):
         } for data_point in data]
 
         if len(result) == 1:
-            data = data[0]
+            result = result[0]
+
+        return result
+
+    def get_life_expectancy(self, country_id="all", year=2020):
+        """
+        date is a year: Ex. 2021
+        """
+        topic = "SP"  # Social: population
+        general_subject = "DYN"  # Dynamic
+        specific_subject = "LE00"  # Life expectancy at birth
+        extensions = "IN"  # Interpolated
+
+        if country_id == 'all':
+            country_id = self.country_id_list_for_request("all")
+
+        if year is not None:
+            optional_args = {"date": year}
+        else:
+            optional_args = None
+
+        indicator = WorldBankAPI.Indicator(topic=topic,
+                                           general_subject=general_subject,
+                                           specific_subject=specific_subject,
+                                           extensions=extensions)
+
+        request_args = WorldBankAPI.RequestArgs(
+            aggregation=Aggregation.COUNTRY,
+            id=country_id,
+            format=self.format,
+            indicator=self.format_indicator(indicator))
+
+        request = self.get_request(request_args, optional_args)
+        data = self.request(request)
+
+        result = [{
+            "country": data_point["country"]["value"],
+            "indicator": data_point["indicator"]["value"],
+            "value": data_point["value"],
+            "scale": "years",
+            "year": data_point["date"],
+            "region": self.country_list_with_country_id_key[data_point["countryiso3code"]]["region"],
+        } for data_point in data]
+
+        if len(result) == 1:
+            result = result[0]
+
+        if self.save_json_by_default:
+            self.save_json(result, "life_expectancy_{}.json".format(year))
+        if self.save_csv_by_default:
+            self.save_csv(result, "life_expectancy_{}.csv".format(year))
 
         return result
 
 
-# api_client = WorldBankAPI(verbose=True)
+api_client = WorldBankAPI(verbose=True)
+api_client.save_json_by_default = True
+api_client.save_csv_by_default = True
 # response = api_client.get_country_info(country_id="ALL")
 # response = api_client.get_gdp(country_id="all", date=2019)
 # api_client.save_json(response, "country_info.json")
+
+response = api_client.get_life_expectancy(year=2020)
+print(response)
+# api_client.save_json(response, "life_expectancy.json")
