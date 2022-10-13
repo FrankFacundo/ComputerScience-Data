@@ -34,6 +34,12 @@ index-url = [link source pypi]
 cert = [path of certificate file]
 ```
 
+- Check path
+```python
+import sys
+print(sys.executable)
+```
+
 ## Tools
 
 Formatters: Yapf (modulable), Black (static)
