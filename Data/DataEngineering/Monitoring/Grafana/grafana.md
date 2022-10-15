@@ -8,4 +8,7 @@ To publish as web page: https://cloudinfrastructureservices.co.uk/how-to-install
 
 Restart: sudo systemctl restart grafana-server
 
-To stop server: sudo /etc/init.d/apache2 stop
+To stop server apache: sudo /etc/init.d/apache2 stop
+
+To stop server nginx: systemctl stop nginx
+Check status of nginx: systemctl status nginx
