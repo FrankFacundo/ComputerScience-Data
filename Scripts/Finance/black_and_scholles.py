@@ -23,13 +23,15 @@ class BlackScholes():
     def compute(self, call_put_flag, S, K, t, r, s):
         """
         call_put_flag = European option type
+
         S = Current stock price
-        t = Time until option exercise (years to maturity)
         K = Option striking price - price of stock for buying/selling when maturity arrives 
+        t = Time until option exercise (years to maturity)
         r = Risk-free interest rate
+        s = St. Deviation (volatility)
+        
         N = Cumulative standard normal distribution
         e = Exponential term
-        s = St. Deviation (volatility)
         Ln = NaturalLog
         """
         d1 = (log(S/K) + (r + (s ** 2)/2) * t)/(s * sqrt(t))
