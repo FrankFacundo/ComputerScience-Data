@@ -1,3 +1,4 @@
 .vscode/settings.json
 *__pycache__
+Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data

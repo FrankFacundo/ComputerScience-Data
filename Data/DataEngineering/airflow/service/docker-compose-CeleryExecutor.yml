@@ -1,0 +1,122 @@
+version: '2.2'
+services:
+    redis:
+        image: 'redis:5.0.5'
+        command: [
+            "bash", "-c",
+            '
+            docker-entrypoint.sh
+            --requirepass $${REDIS_PASSWORD}
+            '
+        ]
+        restart: always
+        env_file:
+            - secrets/redis.env
+
+    postgres:
+        image: postgres:9.6
+        restart: always
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+            - PGDATA=${DB_VOLUME_CONTAINER}
+        env_file:
+            - secrets/postgres.env
+        volumes:
+            - "db:${DB_VOLUME_CONTAINER}"
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    webserver:
+        image: ednarb29/docker-airflow:2.2.3
+        restart: always
+        depends_on:
+            - postgres
+            - redis
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Celery
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+        env_file:
+            - secrets/fernet_key.env
+            - secrets/redis.env
+            - secrets/postgres.env
+        volumes:
+            - "./dags:${AIRFLOW_DAG_DIR}"
+            # - "./plugins:${AIRFLOW_PLUGINS_DIR}"
+            - "./files:${AIRFLOW_FILES_DIR}"
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    flower:
+        image: ednarb29/docker-airflow:2.2.3
+        restart: always
+        depends_on:
+            - redis
+        environment:
+            - EXECUTOR=Celery
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+        env_file:
+            - secrets/redis.env
+            - secrets/postgres.env
+        ports:
+            - "5555:5555"
+        command: celery flower
+
+    scheduler:
+        image: ednarb29/docker-airflow:2.2.3
+        restart: always
+        depends_on:
+            - webserver
+        volumes:
+            - "./dags:${AIRFLOW_DAG_DIR}"
+            # - "./plugins:${AIRFLOW_PLUGINS_DIR}"
+            - "./files:${AIRFLOW_FILES_DIR}"
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Celery
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+        env_file:
+            - secrets/fernet_key.env
+            - secrets/redis.env
+            - secrets/postgres.env
+        command: scheduler
+
+    worker:
+        image: ednarb29/docker-airflow:2.2.3
+        restart: always
+        depends_on:
+            - scheduler
+        volumes:
+            - "./dags:${AIRFLOW_DAG_DIR}"
+            # - "./plugins:${AIRFLOW_PLUGINS_DIR}"
+            - "./files:${AIRFLOW_FILES_DIR}"
+        environment:
+            - EXECUTOR=Celery
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+        env_file:
+            - secrets/fernet_key.env
+            - secrets/redis.env
+            - secrets/postgres.env
+        command: celery worker
+
+volumes:
+  db:
+
+# networks:
+  # default:
+    # external:
+      # name: "${DOCKER_NETWORK_NAME}"
