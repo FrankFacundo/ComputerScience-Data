@@ -1,0 +1,1 @@
+**CI/CD** or **CICD** generally refers to the combined practices of [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration "Continuous integration") and either [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery "Continuous delivery") or [continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment).
