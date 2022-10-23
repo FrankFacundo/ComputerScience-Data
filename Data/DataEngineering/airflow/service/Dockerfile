@@ -2,7 +2,7 @@
 # AUTHOR: Frank Facundo
 # DESCRIPTION: Basic Airflow container
 # BUILD: docker build --rm -t airflow2 .
-# RUN: docker-compose -f docker-compose-LocalExecutor.yml up
+# RUN: sudo docker-compose -f docker-compose-LocalExecutor.yml up (init docker-desktop first)
 # BASED ON: https://github.com/puckel/docker-airflow (Matthieu "Puckel_" Roisil)
 
 FROM python:3.8-slim-buster
