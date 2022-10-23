@@ -80,6 +80,7 @@ du -h [directory]				//show the size of a directory
 df -hl                                     //show filesystem disk usage
 
 nmap -sP [IP]/[mask(ex:24)]		//scan devices connected in a local network
+nmap -p [port] [IP]				//ping a specific port
 
 conda info --envs 			//list all environments installed
 conda create -n myenv python=3.9	//create conda environment
