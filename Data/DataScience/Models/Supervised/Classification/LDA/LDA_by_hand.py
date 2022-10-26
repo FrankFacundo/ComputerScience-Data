@@ -1,79 +1,109 @@
-"""
-LDA
+# coding: utf-8
 
-https://machinelearningmastery.com/linear-discriminant-analysis-for-machine-learning/
-"""
+# In[ ]:
 
-# Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from numpy import linalg as lg 
 
-# Importing the dataset
-dataset = pd.read_csv('Wine.csv')
-X = dataset.iloc[:, 0:13].values
-y = dataset.iloc[:, 13].values
+get_ipython().magic(u'matplotlib inline')
 
-# Splitting the dataset into the Training set and Test set
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-# Feature Scaling
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
+df = pd.read_csv('SCLC.csv',header=None)
 
-# Applying LDA
+df1 = df.drop(df.index[0])
+
+df2 = df1.drop(df.columns[0], axis=1)
+
+df3 = df2
+
+df3_1 = df2.values[0:20,:]
+df3_2 = df2.values[20:, : ]
+
+m_1 = df3_1.mean(axis = 0)
+m_2 = df3_2.mean(axis = 0)
+mean_all = df2.mean(axis = 0)
+
+mean_1 = m_1.reshape(1,19)
+mean_1 = np.repeat(mean_1,20,axis = 0)
+
+mean_2 = m_2.reshape(1,19)
+mean_2 = np.repeat(mean_2,20,axis = 0)
+
+within_class_scatter = np.zeros((19,19))
+wcs_1 = np.zeros((19,19))
+wcs_1 = np.matmul((np.transpose(df3_1 - mean_1 )), (df3_1 - mean_1))
+
+wcs_2 = np.zeros((19,19))
+wcs_2 = np.matmul((np.transpose(df3_2 - mean_2 )), (df3_2 - mean_2))
+
+within_class_scatter = np.add(wcs_1,wcs_2)
+
+bcs_1 = np.multiply(len(df3_1),np.outer((m_1 - mean_all),(m_1 - mean_all)))
+bcs_2 = np.multiply(len(df3_2),np.outer((m_2 - mean_all),(m_2 - mean_all)))
+
+between_class_scatter = np.add(bcs_1,bcs_2)
+
+e_val, e_vector = np.linalg.eig(np.dot(lg.inv(within_class_scatter),between_class_scatter))
+for e, _ in enumerate(e_val):
+    e_scatter = e_vector[:,e].reshape(19,1)
+    print(e_val[e].real)
+
+print(between_class_scatter)
+
+
+eig_pairs = [(np.abs(e_val[i]).real, e_vector[:,i].real) for i in range(len(e_val))]
+
+
+eig_pairs = sorted(eig_pairs, key=lambda k: k[0], reverse=True)
+
+
+
+print('Eigenvalues in decreasing order:\n')
+for i in eig_pairs:
+    print(i[0])
+
+W= eig_pairs[0][1].reshape(19,1)
+
+W
+
+lda_project = np.dot(df2,W)
+
+lda_project
+
+
+# In[177]:
+
+#plot
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+ax.set_title('LDA')
+ax.plot(lda_project[0:20], np.zeros(20), linestyle='None', marker='o', color='blue', label='NSCLC')
+ax.plot(lda_project[20:40], np.zeros(20), linestyle='None', marker='o', color='red', label='SCLC')
+fig.show()
+
+
+# In[185]:
+
+y1_ = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] 
+
+# LDA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-lda = LDA(n_components = 2)
-X_train = lda.fit_transform(X_train, y_train)
-X_test = lda.transform(X_test)
+sklearn_lda = LDA(n_components=1)
+X_lda_sklearn = sklearn_lda.fit_transform(df2, y1_)
 
-# Fitting Logistic Regression to the Training set
-from sklearn.linear_model import LogisticRegression
-classifier = LogisticRegression(random_state = 0)
-classifier.fit(X_train, y_train)
+X_lda_sklearn= -X_lda_sklearn
 
-# Predicting the Test set results
-y_pred = classifier.predict(X_test)
+print(X_lda_sklearn)
 
-# Making the Confusion Matrix
-from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
+#plot
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+ax.set_title('LDA')
+ax.plot(X_lda_sklearn[0:20], np.zeros(20), linestyle='None', marker='o', color='blue', label='NSCLC')
+ax.plot(X_lda_sklearn[20:40], np.zeros(20), linestyle='None', marker='o', color='red', label='SCLC')
+fig.show()
 
-# Visualising the Training set results
-from matplotlib.colors import ListedColormap
-X_set, y_set = X_train, y_train
-X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
-                     np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
-plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
-             alpha = 0.75, cmap = ListedColormap(('red', 'green', 'blue')))
-plt.xlim(X1.min(), X1.max())
-plt.ylim(X2.min(), X2.max())
-for i, j in enumerate(np.unique(y_set)):
-    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
-                c = ListedColormap(('red', 'green', 'blue'))(i), label = j)
-plt.title('Logistic Regression (Training set)')
-plt.xlabel('LD1')
-plt.ylabel('LD2')
-plt.legend()
-plt.show()
 
-# Visualising the Test set results
-from matplotlib.colors import ListedColormap
-X_set, y_set = X_test, y_test
-X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
-                     np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
-plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
-             alpha = 0.75, cmap = ListedColormap(('red', 'green', 'blue')))
-plt.xlim(X1.min(), X1.max())
-plt.ylim(X2.min(), X2.max())
-for i, j in enumerate(np.unique(y_set)):
-    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
-                c = ListedColormap(('red', 'green', 'blue'))(i), label = j)
-plt.title('Logistic Regression (Test set)')
-plt.xlabel('LD1')
-plt.ylabel('LD2')
-plt.legend()
-plt.show()
+# %%
