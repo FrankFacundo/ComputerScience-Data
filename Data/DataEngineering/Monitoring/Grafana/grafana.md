@@ -7,6 +7,7 @@ Start: sudo systemctl start grafana-server
 To publish as web page: https://cloudinfrastructureservices.co.uk/how-to-install-grafana-server-on-ubuntu-20-04/
 
 Restart: sudo systemctl restart grafana-server
+stop grafana: sudo systemctl stop grafana-server
 
 To stop server apache: sudo /etc/init.d/apache2 stop
 
