@@ -4,6 +4,12 @@
 
 ## Info dataframe
 
+### Get name columns
+
+```python
+print(df.columns)
+```
+
 ### Get type columns
 
 ```python
