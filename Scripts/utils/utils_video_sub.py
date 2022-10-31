@@ -9,7 +9,7 @@ SUBTITLE_SUFFIX = ' (merged)'
 VIDEO_OUTPUT_SUFFIX = '_double_sub.'
 
 def convert_string_to_command(text: str) -> str:
-    space_leftparenthesis_rightparenthesis_regex = r'(\s|\(|\))'
+    space_leftparenthesis_rightparenthesis_regex = r'(\s|\(|\)|\')'
     bachslash_with_capture_regex = r'\\\1'
     return re.sub(space_leftparenthesis_rightparenthesis_regex, bachslash_with_capture_regex, text)
 
