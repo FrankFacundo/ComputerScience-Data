@@ -46,7 +46,33 @@ df.drop(["col"], axis=1)
 df.where((df.col>=1981) & (df.col<=1996))
 ```
 
-### Query
+### Query not indexed
+
+```python
+df.loc[(df['col1'] == 'val1') & (df['col2'] == 'val2'), 'result_column']
+```
+
+To get a default value:
+Ex. with None default value. Then return first result, `values` return a numpy ndarray.
+
+```python
+df.loc[(df['col1'] == 'val1') & (df['col2'] == 'val2')].get('result_column', None).values[0]
+```
+
+### Indexed
+
+```python
+df.loc[('index_val1', 'index_val2'), 'result_column']
+```
+
+With default value
+
+```python
+try:
+    val = df.loc[('index_val1', 'index_val2'), 'result_column']
+except KeyError:
+    val = default_value
+```
 
 ### Useful select
 
