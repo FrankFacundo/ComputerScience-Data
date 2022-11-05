@@ -1,7 +1,9 @@
 import numpy as np
-import uuid
-import re
 import pandas as pd
+import re
+import uuid
+from tqdm import tqdm
+
 
 def random_acquisition_channel():
     channels = ["TV" , 'Radio', 'Web', 'Billboard']
@@ -41,7 +43,7 @@ def generate_customer_dataframe(number_rows=10):
     cols = ['customer_id', 'birth_date', 'acquisition_channel']
     # df = pd.DataFrame(columns=cols)
     rows = []
-    for i in range(number_rows):
+    for i in tqdm(range(number_rows)):
         row = [generate_id(), generate_random_date_hour(), random_acquisition_channel()]
         rows.append(row)
     df = pd.DataFrame(rows, columns=cols)
@@ -60,19 +62,22 @@ def generate_random_number_orders():
     return number_of_orders
 
 def get_list_number_orders_by_customer(rows_in_orders=100):
-    finished = False
     total_orders = 0
     list_number_orders_by_customer = []
-    while finished == False:
+    pbar = tqdm(total=rows_in_orders)
+    while True:
         number_of_orders = generate_random_number_orders()
+        pbar.update(number_of_orders)
         if total_orders + number_of_orders < rows_in_orders:
             total_orders += number_of_orders
             list_number_orders_by_customer.append(number_of_orders)
         if total_orders + number_of_orders == rows_in_orders:
             list_number_orders_by_customer.append(number_of_orders)
+            pbar.close()
             return list_number_orders_by_customer
         if total_orders + number_of_orders > rows_in_orders:
             list_number_orders_by_customer.append(rows_in_orders - total_orders)
+            pbar.close()
             return list_number_orders_by_customer
 
 def generate_customers_id_for_sales(customers_id, rows_in_orders=100):
@@ -82,17 +87,16 @@ def generate_customers_id_for_sales(customers_id, rows_in_orders=100):
     # Generar lista de customers id con la ayuda de list_number_orders_by_customer
     # Agregar esa lista como columna CUSTOMER_ID en la tabla sales_50
 
-    finished = False
     customers_id_orders = []
     i = 0
 
-    for number_of_orders in list_number_orders_by_customer:
+    for number_of_orders in tqdm(list_number_orders_by_customer):
         to_add = [customers_id[i%len(customers_id)]] * number_of_orders
         customers_id_orders = customers_id_orders + to_add
         i+=1
     return customers_id_orders
 
-def generate_orders_dataframe(rows=100):
+def generate_orders_dataframe(rows=None):
     TRANSACTION_DATE = "transacion_date"
     PRODUCT = "product"
     PRICE = "price"
@@ -101,14 +105,19 @@ def generate_orders_dataframe(rows=100):
     CUSTOMER_ID = "customer_id"
 
     sales = pd.read_csv("Year-2010-2011.csv", encoding='unicode_escape')
-    sales = sales.head(rows)
+    if rows:
+        sales = sales.head(rows)
+    rows = len(sales)
     sales.rename(columns={"InvoiceDate": TRANSACTION_DATE,
                     "Description": PRODUCT, "Price": PRICE, "Quantity": QUANTITY}, inplace=True)
     sales = sales[[TRANSACTION_DATE, PRODUCT, PRICE, QUANTITY]]
+    sales[TRANSACTION_DATE] = pd.to_datetime(sales[TRANSACTION_DATE], format='%m/%d/%Y %H:%M')
+    # print(sales[TRANSACTION_DATE])
+    sales[TRANSACTION_DATE] = sales[TRANSACTION_DATE].apply(lambda x: x.replace(year = np.random.choice([2016, 2017, 2018])))
     orders_id = [generate_id() for i in range(len(sales))]
     sales[ORDERS_ID] = orders_id
 
-    customers = generate_customer_dataframe(300)
+    customers = generate_customer_dataframe(int(rows/10))
     customers_id = customers[CUSTOMER_ID].tolist()
 
     customers_id_orders = generate_customers_id_for_sales(customers_id, rows)
@@ -118,7 +127,7 @@ def generate_orders_dataframe(rows=100):
     return customers, sales
 
 # customer_table = generate_customer_dataframe()
-customer_table, orders_table = generate_orders_dataframe(9000)
+customer_table, orders_table = generate_orders_dataframe()
 
 customer_table.to_csv("customer_data.csv", index=False)
 orders_table.to_csv("order_data.csv", index=False)
