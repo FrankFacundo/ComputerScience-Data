@@ -14,6 +14,9 @@
 # Requests: 
 - Presto
 - Hive - External mode table
+## OLAP (sub-second queries):
+    - Apache Druid
+    - Apache Kylin
 # UI for requests: 
 - Yanagishima
 # Streaming message:
