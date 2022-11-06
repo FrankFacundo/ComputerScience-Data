@@ -6,80 +6,85 @@
 import math
 from typing import List, Set, Dict, Tuple, Optional
 
+INDEX_ATTR_A = 0
+INDEX_ATTR_B = 1
+INDEX_ATTR_C = 2
+
 
 class Node:
     def __init__(self, attribute=None, value=None, typeNode=None, level=None, infoGain=None, constraint=None):
         """
-        p : (Node) parent node
-        l : (Node) left node
-        r : (Node) right node
+        p : :Node: parent node
+        l : :Node: left node
+        r : :Node: right node
 
-        a : (String) attribute (A or B) *if is a leave, attribute = None*
-        v : (int) if is a leave, value takes C value, it means 0 or 1
+        a : :String: attribute (A or B) *if is a leave, attribute = None*
+        v : :int: if is a leave, value takes C value, it means 0 or 1
 
-        cv: (List[2] of int ex: [0, 2]) First value is the number of C=0 and the second is the number of C=1
-        n : (int) number of records
-        c : (int) constraint of the node
-        d : (list with values of the attributes) data
+        cv: :List[2] of int ex: [0, 2]: First value is the number of C=0 and the second is the number of C=1
+        n : :int: number of records
+        c : :int: constraint of the node
+        d : :list with values of the attributes: data
 
-        t : (String) type of node -> root(R), Intermediate(I), Leaf(L)
-        lv: (int) level ex: level root = 1
-        i : (float) Information gain
+        t : :String: type of node -> root(R), Intermediate(I), Leaf(L)
+        lv: :int: level ex: level root = 1
+        i : :float: Information gain
         """
         self.id = None
         self.p = None
-        "(Node) parent node"
+        ":Node: parent node"
         self.l = None
-        "(Node) left node"
+        ":Node: left node"
         self.r = None
-        "(Node) right node"
+        ":Node: right node"
         self.a = attribute
-        "(String) attribute (A or B) *if is a leave, attribute = None*"
+        ":String: attribute (A or B) *if is a leave, attribute = None*"
         self.v = value
-        "(int) if is a leave, value takes C value, it means 0 or 1"
+        ":int: if is a leave, value takes C value, it means 0 or 1"
         self.c = constraint
-        "(int) constraint of the node"
+        ":int: constraint of the node"
+        self.cv = None
+        ":List[int]: Number of elements for each class"
         self.n = 0
-        "(int) number of records"
+        ":int: number of records"
         self.t = typeNode
-        "(String) type of node -> root(R), Intermediate(I), Leaf(L)"
+        ":String: type of node -> root(R), Intermediate(I), Leaf(L)"
         self.lv = level
-        "(int) level ex: level root = 1"
+        ":int: level ex: level root = 1"
         self.i = infoGain
-        "(float) Information gain"
+        ":float: Information gain"
         self.d = None
-        "(list with values of the attributes) data"
+        ":list with values of the attributes: data"
         self.x = 0
 
 
-"""
-Build a decision tree
-
--minNum -> minimum number of record per node
-BuildDecisionTree(D, A, minNum, alpha, d)
-– create a root node
-– T=Build(D, A, minNum, root, d)
-– T=PostPrune(T,alpha, minNum, d)
-– return T 
-"""
-
-
 class BuildDecisionTreeClass:
+    """
+    Build a decision tree
+
+    -minNum -> minimum number of record per node
+    BuildDecisionTree(D, A, minNum, alpha, d)
+    - create a root node
+    - T=Build(D, A, minNum, root, d)
+    - T=PostPrune(T,alpha, minNum, d)
+    - return T 
+    """
+
     def __init__(self, file="file1.txt", minNum=2, data=None, default=0):
-        self.file = file
-        self.minNum = minNum
-        "minimum number of records per node"
-        self.default = default
+        self.Attr = ["A", "B"]
         self.A_Domain = [0, 1, 2, 3]
         self.B_Domain = [0, 1, 2]
         self.C_Domain = [0, 1]
-        self.Attr = ["A", "B"]
         self.count = 0
-        self.Result = ""
-        self.Process = ""
-        self.root = Node()
+        self.data = data if data else self.getTable(file)
+        self.default = default
         self.dict_tree = {}
-        self.data = data if data else self.getTable()
+        self.file = file
+        self.minNum = minNum
+        "minimum number of records per node"
+        self.Process = ""
+        self.Result = ""
+        self.root = Node()
 
         self.buildRoot()
         self.build(self.data, self.Attr, self.root)
@@ -93,8 +98,8 @@ class BuildDecisionTreeClass:
         text = f.read()
         return text
 
-    def getTable(self):
-        with open(self.file, 'r') as f:
+    def getTable(self, file):
+        with open(file, 'r') as f:
             self.data = [line.split() for line in f]
 
         for line in self.data:
@@ -113,9 +118,12 @@ class BuildDecisionTreeClass:
         return self.root
 
     def countFct(self, data: List[List[int]]):
+        """
+        Count the number of elements in each class {0, 1} 
+        """
         x = 0
         for line in data:
-            if line[2] == 0:
+            if line[INDEX_ATTR_A] == 0:
                 x = x+1
         y = len(data)-x
         self.count = [x, y]
@@ -470,9 +478,9 @@ class BuildDecisionTreeClass:
 
 def BuildDecisionTree(file, minNum):
     TreeObject = BuildDecisionTreeClass(file, minNum)
-    # TreeObject.Print_(process=1)
+    TreeObject.Print_(process=1)
     result_tree = TreeObject.Print()
-    # print('####################\n')
+    print('####################\n')
     print(result_tree)
 
 
@@ -480,4 +488,4 @@ def BuildDecisionTree(file, minNum):
 Function to execute
 """
 
-# BuildDecisionTree(file="file1.txt", minNum=2)
+BuildDecisionTree(file="file1.txt", minNum=2)
