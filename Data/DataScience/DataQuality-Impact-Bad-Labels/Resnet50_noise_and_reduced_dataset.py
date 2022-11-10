@@ -11,7 +11,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 import tensorflow as tf
 config = tf.compat.v1.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.5
+# config.gpu_options.per_process_gpu_memory_fraction = 0.5
 session = tf.compat.v1.Session(config=config)
 
 import argparse
