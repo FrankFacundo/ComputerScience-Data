@@ -22,3 +22,10 @@ https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-22-10.
 For RTX 3090 : 515.76
 Cuda 11.2
 CuDNN: 8.1
+
+---
+Pytorch
+# https://github.com/pytorch/pytorch/issues/30664
+- For pytorch it is recommended to compile binaries (it could takes a couple of hours)
+- https://github.com/pytorch/pytorch#from-source
+- Python version: Python 3.7 or later (for Linux, Python 3.7.6+ or 3.8.1+ is needed)
