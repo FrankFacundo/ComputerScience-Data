@@ -26,6 +26,10 @@ CuDNN: 8.1
 ---
 Pytorch
 # https://github.com/pytorch/pytorch/issues/30664
-- For pytorch it is recommended to compile binaries (it could takes a couple of hours)
+- For pytorch it is recommended to compile binaries because of the problems of compatibility with CUDA. (it could takes a couple of hours)
 - https://github.com/pytorch/pytorch#from-source
 - Python version: Python 3.7 or later (for Linux, Python 3.7.6+ or 3.8.1+ is needed)
+- Then package it with `setup.py bdist_wheel`. https://discuss.pytorch.org/t/how-to-build-pytorch-from-source-and-get-a-pip-wheel/3285
+- Save the file `.whl`
+- To reinstall later make `pip install some-package.whl`
+
