@@ -1,0 +1,1 @@
+To execute whisper you will need in a long video you will need a GPU.
