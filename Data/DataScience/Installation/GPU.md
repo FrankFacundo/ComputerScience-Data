@@ -32,4 +32,3 @@ Pytorch
 - Then package it with `setup.py bdist_wheel`. https://discuss.pytorch.org/t/how-to-build-pytorch-from-source-and-get-a-pip-wheel/3285
 - Save the file `.whl`
 - To reinstall later make `pip install some-package.whl`
-
