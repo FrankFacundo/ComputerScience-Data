@@ -4,6 +4,18 @@
 
 ## Info dataframe
 
+### Stats view
+
+```python
+df.describe()
+```
+
+### Types and non null features
+
+```python
+df.info()
+```
+
 ### Get name columns
 
 ```python
@@ -22,6 +34,12 @@ df.dtypes
 
 ```python
 df['col'] = df['col'].replace('value1','value2')
+```
+
+### Rename columns
+
+```python
+df.rename(columns={"A": "a", "B": "c"})
 ```
 
 ## Reshaping Data
@@ -174,6 +192,23 @@ idx = big_table.groupby('Country')["year"].transform(max) == big_table["year"]
 big_table = big_table[idx]
 ```
 
+### List of aggregations
+
+    GroupBy.count()
+    GroupBy.first()
+    GroupBy.max()
+    GroupBy.mean()
+    GroupBy.min()
+    GroupBy.ngroup([ascending])	Number each group from 0 to the number of groups - 1.
+    GroupBy.ohlc()	Compute sum of values, excluding missing values
+    GroupBy.prod()
+    GroupBy.std([ddof])
+    GroupBy.sum()
+    GroupBy.var([ddof])
+
+Exhaustive list:
+https://pandas.pydata.org/pandas-docs/version/0.22/api.html#id41
+
 ## Missing Data
 
 Drop NaN values in current dataframe.
@@ -185,7 +220,7 @@ df.dropna(inplace=True)
 Fill NaN with a predetermined value.
 
 ```python
-df.dropna(inplace=True)
+df["col1"].fillna(0.0)
 ```
 
 ## Combining Data
