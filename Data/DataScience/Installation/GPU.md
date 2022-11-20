@@ -3,6 +3,14 @@ RTX TUF 3090
     Driver from 450+
     Cuda from 11.0
 
+* Easy installation PyTorch
+    CUDA v11.3
+    cuDNN 8.2 
+    Ubuntu 20.04 
+    PyTorch 1.12
+    -> https://gist.github.com/Mahedi-61/2a2f1579d4271717d421065168ce6a73?permalink_comment_id=3587118
+    -> check file `install_pytorch.sh` in this repo.
+
 ########################################################################
 Tuto1: https://medium.com/@dun.chwong/the-simple-guide-deep-learning-with-rtx-3090-cuda-cudnn-tensorflow-keras-pytorch-e88a2a8249bc
 ########################################################################
@@ -14,6 +22,7 @@ https://www.nvidia.com/fr-fr/geforce/drivers/
 
 Install many CUDA versions.
 https://towardsdatascience.com/installing-multiple-cuda-cudnn-versions-in-ubuntu-fcb6aa5194e2
+11.3: https://developer.nvidia.com/cuda-11.3.0-download-archive
 
 Cuda and tensorflow compatibility:
 https://www.tensorflow.org/install/source#gpu
