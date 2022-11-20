@@ -21,6 +21,10 @@ ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
 ```shell
 ffmpeg -i input_filename.avi -c:v copy -c:a copy -y output_filename.mp4
 ```
+## Convert aac to mp3
+```shell
+ffmpeg -i output-audio.aac -c:a libmp3lame -ac 2 -q:a 2 outputfile.mp3
+```
 
 ## Extra package
 
