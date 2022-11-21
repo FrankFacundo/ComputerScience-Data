@@ -3,6 +3,7 @@
 import json
 import os
 import timestr
+from glob import glob
 
 def write_into_subtitle(response, output_path):
     result_srt = ""
@@ -18,34 +19,41 @@ def write_into_subtitle(response, output_path):
         str_segment += segment["text"]
         str_segment += '\n\n'
         i+=1
-        print(str_segment)
+        # print(str_segment)
         result_srt += str_segment
     
-    with open(output_path + 'transcript-subtitle.srt', 'w') as f:
+    with open(output_path, 'w') as f:
         f.write(result_srt)
     print(result_srt)
     return
 
 
-def main():
+def main(directory):
     # arg = sys.argv[1]
     output_path = './output/'
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
-    whisper_result = "whisper_result.json"
-    with open(whisper_result, 'r', encoding='utf8') as f:
-        response = json.load(f)
+    for file in glob(directory + "/*.json"):
+        print("file", file)
+        path_output = file[:-5] + ".srt"
+        print("path_output", path_output)
+        response = None
+        whisper_result = file
+        with open(whisper_result, 'r', encoding='utf8') as f:
+            response = json.load(f)
 
-    # write into subtitle
-    try:
-        write_into_subtitle(response, output_path)
-        print("Write into subtitle successfully!")
-    except BaseException as e:
-        print(e)
-        print('error: Write into subtitle failed!')
-        exit(1)
+        # write into subtitle
+        try:
+            write_into_subtitle(response, path_output)
+            print("Write into subtitle successfully!")
+        except BaseException as e:
+            print(e)
+            print('error: Write into subtitle failed!')
+            exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    directory = "video"
+    main(directory)
+
