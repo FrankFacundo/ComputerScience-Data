@@ -8,12 +8,14 @@ SUBTITLE_EXTENSION = '.srt'
 SUBTITLE_SUFFIX = ' (merged)'
 VIDEO_OUTPUT_SUFFIX = '_double_sub.'
 
+FORMAT_MP4 = "mp4"
+
 def convert_string_to_command(text: str) -> str:
     space_leftparenthesis_rightparenthesis_regex = r'(\s|\(|\)|\')'
     bachslash_with_capture_regex = r'\\\1'
     return re.sub(space_leftparenthesis_rightparenthesis_regex, bachslash_with_capture_regex, text)
 
-def merge_video_with_subtitle(video_extension = "mp4", languages = "EN:ES"):
+def merge_video_with_subtitle(video_extension = FORMAT_MP4, languages = "EN:ES"):
     print('DIR_PATH : {}'.format(DIR_PATH))
     if DIR_PATH is None:
         print("None DIR_PATH, please declare the environment variable.")
@@ -31,7 +33,7 @@ def merge_video_with_subtitle(video_extension = "mp4", languages = "EN:ES"):
             video_output = video_input_without_extension + VIDEO_OUTPUT_SUFFIX + video_extension
             print('Video output : {}'.format(video_output))
 
-            if video_extension == "mp4":
+            if video_extension == FORMAT_MP4:
                 params = "-c copy -c:s mov_text"
             elif video_extension == "mkv":
                 params = '-map 0 -map 1 -c copy -metadata:s:s:1 title="{}"'.format(languages)
