@@ -31,3 +31,21 @@ ffmpeg -i output-audio.aac -c:a libmp3lame -ac 2 -q:a 2 outputfile.mp3
 ```shell
 mediainfo video.mp4
 ```
+
+## Merge audio with image
+```shell
+ffmpeg -r 1 -loop 1 -y -i black.jpg -i 21-FlashFlash.aac -c:a copy -r 1 -vcodec libx264 -shortest out.mp4
+```
+
+## Merge audio with image and subtitle
+```shell
+ffmpeg -r 1 -loop 1 -y -i black.jpg -i 21-FlashFlash.aac -i 21.srt -c:s mov_text -c:a copy -r 1 -vcodec libx264 -shortest out.mp4
+```
+
+## Convert aax to mp3
+
+To get activation_bytes of Audible check https://github.com/inAudible-NG/tables
+
+```shell
+ffmpeg -y -activation_bytes $AB -i book.aax -c:a copy -vn book.m4a
+```
