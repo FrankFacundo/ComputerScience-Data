@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+This is an adapted Python3 version of 
+https://github.com/valekhz/m4b-converter
+"""
+
 import argparse
 import ctypes
 import datetime
@@ -348,4 +353,10 @@ def main():
         split(args, log, output_dir, encoded_file, chapters)
 
 if __name__ == '__main__':
+    """
+    Example command
+    python m4b.py GoodtoGreat.m4a --skip-encoding --no-mp4v2 --output-dir PATH
+    Check documentation: 
+    https://github.com/valekhz/m4b-converter
+    """
     main()
