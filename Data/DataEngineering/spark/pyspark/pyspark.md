@@ -47,6 +47,10 @@ df = sqlContext.sql("SELECT * FROM orc.`path_orc_or_directory` WHERE col1 = 'val
 df = spark.read.csv('csv_path', sep=';', header=True)
 ```
 
+```python
+df = spark.read.format("csv").load('csv_path', sep=';', header=True)
+```
+
 ### Write
 
 * coalesce define the number of partitions for a dataframe. In this example df is stocked in a single file.
