@@ -4,3 +4,4 @@ Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data
 Data/DataScience/StudyCases-Challenge/Business/customer_lifetime_value/online_retail_II.xlsx
 Data/DataScience/Models/TimeSeries/data
+Data/DataEngineering/spark/pyspark/data/*
