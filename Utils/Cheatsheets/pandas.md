@@ -2,6 +2,20 @@
 
 ## Import data
 
+### CSV Import
+```python
+df = pd.read_csv('file_path.csv', sep=',', header="infer")
+```
+
+- header is the list of column name 
+
+### EXCEL Import
+```python
+df = pd.read_excel('file_path.xlsx', sheet_name=0, header=0)
+```
+
+- header is the row where it starts read. 
+
 ## Info dataframe
 
 ### Stats view
