@@ -74,10 +74,18 @@
     \setlength{\columnsep}{2pt}
     % --------------------------------------------------------------
     \section{Concepts}
-    \textbf{Correct} - A process is correct if it takes infinitely many steps.
-    \textbf{Progress} - Completes infinitely many operations.
     \textbf{Liveness} - The operation eventually returns something.
+    
     \textbf{Safety} - The operation never returns anything incorrect (an ad-hoc rule).
+    
+    \textbf{Correct} - Safety and Liveness
+    \begin{itemize}[label={--},leftmargin=4mm]
+        \vspace{-1mm}
+        \itemsep -.4mm
+        \item In out context: A process that never \textbf{fails} (stops taking steps) in the middle of middle of its operation is called \textbf{correct}. We tipically assume that a correct process invokes infinitely many operations, so a process is correct if it takes infinitely many steps.
+
+    \end{itemize}
+    \textbf{Progress} - Non blocked, process completes operations in a finite amount of time.
 
     \subsection{Liveness Properties}
     \textbf{Deadlock-free (DF)} - If every process is correct, some process makes progress.
@@ -103,6 +111,17 @@
             \hline
         \end{tabular}
     \end{center}
+    \textbf{Independent}: Independent of concurrency.
+
+    \textbf{Non-blocking}: At least one proccess make progress.
+
+    \textbf{Independent non-blocking}: Even in concurrency, at least one proccess make progress.
+
+    \textbf{Dependent non-blocking}: When there is no concurrency, at least one proccess make progress.
+
+    \textbf{Dependent blocking}: When there is no concurrency, it is not guaranteed that at least one proccess make progress.
+
+
 
     \subsection{Relations between liveness properties}
     \smallskip
