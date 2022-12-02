@@ -1,0 +1,10 @@
+python >= 3.8
+os
+aiohttp
+fastapi
+matplotlib
+pillow
+pandas 
+scipy
+scikit-learn
+lightgbm
