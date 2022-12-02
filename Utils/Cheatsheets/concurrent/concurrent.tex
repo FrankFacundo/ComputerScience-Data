@@ -149,6 +149,27 @@
 
     \end{itemize}
 
+    \section{Python}
+
+    \subsection{Library: threading}
+    Objects: 
+    \begin{itemize}[label={--},leftmargin=4mm]
+        \vspace{-1mm}
+        \itemsep -.4mm
+        \item Thread: Methods: start(), run(), join() \# join wait a thread to be finished to continue. 
+        \item Lock: Methods: acquire() [block if already acquired], release(), locked()
+        \item RLock: Rentrant lock, recurtion over the same thread.
+        \item Condition: Inherits from Lock. Work as synchronized in Java. Methods: acquire(), release(), wait(), notify(), notify\_all()
+        \item Semaphore: Inherits from Condition. Classic Dijkstra semaphore. Methods: acquire(), release()
+        \item Event: Inherits from Condition. Communication mechanism for threads. Methods: is\_set(), set(), clear(), wait()
+        \item Timer: t = Timer(30.0, print\_hello); t.start() \# After 30 seconds hello will be printed.
+        \item Barrier: b = Barrier(n) \# b.wait will be blocked until n instances are waiting.
+
+    \end{itemize}
+
+    Which one use? check \href{https://www.laurentluce.com/posts/python-threads-synchronization-locks-rlocks-semaphores-conditions-events-and-queues/}{this link}
+
+    \subsection{Library: syncio}
 \end{multicols}
 
 \end{document}
