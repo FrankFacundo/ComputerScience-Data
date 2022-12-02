@@ -42,9 +42,9 @@ public class Philosophe extends Thread {
 	}
 
 	public void leaveFork() {
-		this.forkRight.leaveFork();
-		this.forkLeft.leaveFork();
-		this.io.print("The philosopher " + this.index + " has released both forks.");
+		this.forkRight.leaveFork(this);
+		this.forkLeft.leaveFork(this);
+		// this.io.print("The philosopher " + this.index + " has released both forks.");
 	}
 
 	public void writeMeals() {
@@ -59,7 +59,9 @@ public class Philosophe extends Thread {
 		long startTime = System.nanoTime();
 		long endTime = System.nanoTime();
 
-		while (endTime - startTime < 1000000000 * 10) {
+		long SECOND = 1000000000;
+
+		while (endTime - startTime < 10 * SECOND) {
 			this.think();
 			this.takeForkLeft();
 			this.takeForkRight();
