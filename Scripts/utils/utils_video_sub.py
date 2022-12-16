@@ -5,8 +5,8 @@ import subprocess
 
 DIR_PATH = os.getenv('VIDEO_DIR')
 SUBTITLE_EXTENSION = '.srt'
-SUBTITLE_SUFFIX = ' (merged)'
-VIDEO_OUTPUT_SUFFIX = '_double_sub.'
+SUBTITLE_SUFFIX = '_merged'
+VIDEO_OUTPUT_SUFFIX = '_sub.'
 
 FORMAT_MP4 = "mp4"
 
