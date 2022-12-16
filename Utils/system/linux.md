@@ -1,5 +1,6 @@
 
 In shell often is shown:
+
 user_name@static_hostname
 
 - Command to get user name: `who` or `whoami`
@@ -8,3 +9,20 @@ user_name@static_hostname
         - Check [this link](https://devconnected.com/how-to-list-users-and-groups-on-linux/#:~:text=In%20order%20to%20list%20users,navigate%20within%20the%20username%20list.) for more details.
 - Command to get hostname : `hostname`
     - When making SSH, this is the IP adress.
+
+
+---
+
+Groups and User:
+
+- Check [this link](https://devconnected.com/how-to-list-users-and-groups-on-linux/#:~:text=In%20order%20to%20list%20users,navigate%20within%20the%20username%20list.) for more details.
+
+- list groups:
+
+cat /etc/group
+
+
+---
+
+Increase swap:
+https://www.cloudsigma.com/adding-swap-space-on-ubuntu-20-04-a-tutorial/
