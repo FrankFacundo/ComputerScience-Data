@@ -5,8 +5,8 @@ RTX TUF 3090
 
 * Easy installation PyTorch
     CUDA v11.3
-    cuDNN 8.2 
-    Ubuntu 20.04 
+    cuDNN 8.2
+    Ubuntu 20.04
     PyTorch 1.12
     -> https://gist.github.com/Mahedi-61/2a2f1579d4271717d421065168ce6a73?permalink_comment_id=3587118
     -> check file `install_pytorch.sh` in this repo.
