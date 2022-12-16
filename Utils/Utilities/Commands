@@ -90,3 +90,5 @@ conda create -n myenv python=3.9	//create conda environment
 printenv 				// print all environement variables
 
 sed -i -e 's/\r$//' file.sh             //convert windows file format to linux format 
+
+watch -n 0.1 nvidia-smi
