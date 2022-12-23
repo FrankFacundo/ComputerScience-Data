@@ -7,3 +7,6 @@ Data/DataScience/Models/TimeSeries/data
 Data/DataEngineering/spark/pyspark/data/*
 Scripts/concurrent2/*
 Scripts/concurrent/philosophers_dining/bin/*
+Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter/*
+Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter.zip
+Data/DataScience/Frameworks/Tensorflow/Transformer/translator/*
