@@ -61,7 +61,7 @@ This is additional learning so that you stay aware of key terminologies of Docke
 
 ### Docker or Kubernetes ?
 In short, Docker and Kubernetes do not pursue the same objective: Docker allows you to develop, deploy and therefore iterate faster on your product, while Kubernetes is the solution for the safe "runner" in production.
-A equivalent of Kebernetes in Docker is Docker Swarm.
+A equivalent of Kubernetes in Docker is Docker Swarm. Otherwise usually Kubernetes is used together with Docker.
 
 ### Docker Desktop (Windows and Mac)
 https://docs.docker.com/desktop/
