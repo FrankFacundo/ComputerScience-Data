@@ -75,6 +75,15 @@ df1 = spark.createDataFrame(data=arrayData, schema = ['name','knownLanguages','p
 
 ```
 
+```python
+from pyspark.sql.types import *
+schema = StructType([
+   StructField("name", StringType(), True),
+   StructField("age", IntegerType(), True)])
+
+df = spark.createDataFrame(data=arrayData, schema)
+```
+
 ## DAG
 
 To check Schema.
