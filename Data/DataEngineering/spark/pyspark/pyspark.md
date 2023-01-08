@@ -84,6 +84,20 @@ schema = StructType([
 df = spark.createDataFrame(data=arrayData, schema)
 ```
 
+## Add data
+
+```python
+new_data = [
+        ('James',['Java','Scala'], [20,21]),
+        ('Michael',['Spark','Java',"Python"], [15,16,17]),
+        ('Robert',['CSharp','Go'], [10,11]),
+        ('Juan',["CPP"],[1]),
+        ('Jefferson',['R','Scala'],[2, 4])]
+
+df_new_rows = spark.createDataFrame(data=new_data, schema=df_source.schema)
+df_new = df_source.union(df_new_rows)
+```
+
 ## DAG
 
 To check Schema.
