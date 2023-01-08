@@ -57,3 +57,14 @@ print(result)
 ## For exhaustive information:
 # res = jsons.dump(account)
 # pprint(res)
+
+transactions = backend.iter_history(account)
+results = []
+for transaction in transactions:
+    results.append([
+        transaction.date,
+        transaction.category,
+        transaction.label,
+        float(transaction.amount),
+    ])
+pprint(results)
