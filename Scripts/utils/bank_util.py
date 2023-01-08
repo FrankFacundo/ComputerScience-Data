@@ -1,6 +1,11 @@
-# Inspired by 
-# https://github.com/kresusapp/kresus/blob/f6e2a03a5c2e3f936b4500be66e3dfd3123b941b/server/providers/woob/py/main.py#L493
-# https://github.com/KDE/kmymoney/blob/65165330f65453e7f4fdb9604a6f5bbc8cfd2f31/kmymoney/plugins/woob/interface/kmymoneywoob.py#L78
+'''
+Inspired by 
+- https://github.com/kresusapp/kresus/blob/f6e2a03a5c2e3f936b4500be66e3dfd3123b941b/server/providers/woob/py/main.py#L493
+- https://github.com/KDE/kmymoney/blob/65165330f65453e7f4fdb9604a6f5bbc8cfd2f31/kmymoney/plugins/woob/interface/kmymoneywoob.py#L78
+
+Documentation
+- https://dev.woob.tech/
+'''
 
 import os
 
