@@ -15,3 +15,8 @@ Data/DataScience/StudyCases-Challenge/Hickaton/my_work/encoding.json
 
 Scripts/concurrent/philosophers_dining/bin/*
 Scripts/concurrent2/*
+
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.png
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.pth
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/diffprocess/*
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/MNIST/*
