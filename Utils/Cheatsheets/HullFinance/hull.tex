@@ -1,0 +1,188 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{calc}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{makecell}
+\graphicspath{ {./images/} }
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{titlesec}
+\usepackage[landscape]{geometry}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+%------------------------------------
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.4in,left=.5in,right=.5in,bottom=.4in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{fancy}
+\fancyhf{}
+% Remove line
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\fontsize{9pt}{11pt}\selectfont Frank Facundo}
+\setlength{\footskip}{16pt} % amount to move footer by
+% Remember to call your parents and tell them you love them!
+
+% Define smaller plus sign
+\newcommand{\plus}{\raisebox{.3\height}{\scalebox{.7}{+}}}
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+% ----------------------------------------------------
+
+\title{Derivatives - Hull}
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{center}
+    \vspace{-50mm}
+    \Large{\vspace{-15mm}\textbf{Derivatives - Hull}} \\
+    \footnotesize{Last Updated \today}
+    \vspace{-.4mm}
+\end{center}
+\begin{multicols}{3}
+    \setlength{\premulticols}{1pt}
+    \setlength{\postmulticols}{1pt}
+    \setlength{\multicolsep}{1pt}
+    \setlength{\columnsep}{2pt}
+    % --------------------------------------------------------------
+    \section{Concepts}
+    \textbf{Maturity} - The end of the life of a contract.
+    
+    \textbf{Short} - Short position = Seller position
+    
+    \textbf{Long} - Long position = Buyer position
+    
+    \textbf{Risk factor} - Source of uncertainty.
+    \begin{itemize}[label={--},leftmargin=4mm]
+        \vspace{-1mm}
+        \itemsep -.4mm
+        \item IR: Interest Rate
+            \subitem - Yield Curves: Rate curves given by countries
+            \subitem - Reference rate curves: EURIBOR, LIBOR, SOFR
+            \subitem - CDS curves
+        \item FX: Foreign Exchange. ex. EUR/USD
+        \item Equity: ex. BNP equity.
+        \item Commodities: ex. Oil price.
+
+    \end{itemize}
+
+    \textbf{Spot Price} - The price for immediate delivery.
+    \textbf{OTC Market} - Over-the-counter. A market where traders deal directly with each other or through an interdealer broker. The traders are usually financial institutions, corporations, and fund managers.
+    
+    \textbf{Exchange-traded markets} - A derivatives exchange is a market where individuals and companies trade standardized contracts that have been defined by the exchange. Contrary to OTC
+    
+    \section{Notation}
+    \textbf{S} - Stock price, more generally underlying asset price.
+    
+    \textbf{$\Delta$} - Variation
+    
+    \textbf{t} - Time
+
+    \textbf{$\phi$} - Normal distribution
+    
+    \textbf{$\sigma$} - Volatility
+
+    \textbf{r} - Interest rate
+
+    \textbf{c,f} - Price of option
+    % ----------------------------------------------------------------
+    \smallskip
+    \smallskip
+    \smallskip
+    \smallskip
+
+    \section{Assets}
+
+
+    \subsection{Commodities} - 
+    \subsection{Real State} - 
+    \subsection{Intellectual properties} - 
+    \subsection{Pollution emission rights} - 
+    \subsection{Stocks} - 
+    \subsection{Bonds} - 
+    \subsection{Currencies} -
+    \columnbreak
+    \section{Derivatives}
+    A derivative involves two parties agreeing to a future transaction. Its value depends
+on (or derives from) the values of other underlying variables.
+    \subsection{Forward contracts}
+    - A contract that obligates the holder to buy or sell an asset for a predetermined delivery price at a predetermined future time.
+    
+    \subsection{Future contracts} 
+    - A contract that obligates the holder to buy or sell an asset at a predetermined delivery price during a specified future time period. The contract is settled daily.
+    
+    \subsection{Difference Forward and Future} - Future are traded in exchange markets whereas Forwards are OTC.
+
+    \subsection{Options} - 
+    \subsection{Swaps: Interest rate swap} - 
+    \subsection{Swaps: Currency swap} - 
+    \subsection{Swaps: CDS(Credit default swap) } - 
+    \subsection{Swaps: Quanto } - 
+    \columnbreak
+    \section{Black and Scholles}
+    \subsection{Assumptions}
+    \begin{itemize}[label={--},leftmargin=4mm]
+        \vspace{-1mm}
+        \itemsep -.4mm
+        \item Stock price assumes that percentage changes in very short period of time are normally distributed.
+        $$\frac{\Delta S}{S} \backsim \phi(\mu\Delta t, \Delta t)$$
+
+    \subsection{Equation}
+    $$\frac{\partial f}{\partial t} + rS\frac{\partial f}{\partial S} + \frac{1}{2} \sigma^2 S^2\frac{\partial ^2 f}{\partial S^2} = rf$$
+
+    \end{itemize}
+
+    \section{Risk}
+    \subsection{Greeks or Risk sensitivities}
+    \begin{center}
+        \footnotesize
+        \begin{tabular}{ |c|c|c|c| }
+            \hline
+            Greek       & Symbol               & Measures  & Definition              \\
+            \hline
+            Delta & $\Delta = \frac{\partial c}{\partial S}$ & \thead{Underlying variable\\ (S) exposure} & \thead{Change in option price \\due to spot}\\
+            Gamma & $\Gamma = \frac{\partial ^2 c}{\partial S^2}$ & \thead{Underlying variable\\ (S) convexity} & \thead{Curvature of option price \\with respect to spot}\\
+            Theta & $\Theta = \frac{\partial c}{\partial t}$ & \thead{Time decay} & \thead{Change in option price \\due to time passing}\\
+            Vega & $\upsilon = \frac{\partial c}{\partial \sigma}$ & \thead{Volatility exposure} & \thead{Change in option price \\due to volatility}\\
+            Rho & $\rho = \frac{\partial c}{\partial r}$ & \thead{Interest rate exposure} & \thead{Change in option price \\due to interest rates}\\
+            Volga & $\frac{\partial ^2 c}{\partial \sigma ^2}$ & \thead{Volatility convexity} & \thead{Curvature of option price \\with respect to spot}\\
+            Vanna & $\frac{\partial c}{\partial S \partial t }$ & \thead{} & \thead{Change in Delta \\due to Volatility}\\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    \subsection{VaR \& ES}
+
+    \subsection{PnL}
+
+\end{multicols}
+
+\end{document}
