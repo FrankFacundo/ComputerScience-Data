@@ -7,7 +7,8 @@
 
 ## Kubernetes in local
 
-https://www.padok.fr/en/blog/minikube-kubeadm-kind-k3s
+Options: https://www.padok.fr/en/blog/minikube-kubeadm-kind-k3s
+Minikube install: https://kubernetes.io/fr/docs/tasks/tools/install-minikube/
 
 ## First deploy
 
@@ -16,3 +17,9 @@ https://medium.com/google-cloud/kubernetes-110-your-first-deployment-bf123c1d3f8
 ## If working with Google Cloud, to connect a database with cluster
 
 https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine?hl=fr#proxy-with-workload-identity
+
+## List images
+
+```shell
+minikube image ls --format table
+```
