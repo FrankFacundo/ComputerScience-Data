@@ -120,16 +120,59 @@
     \smallskip
     \smallskip
 
+    \columnbreak
     \section{Assets}
+    Most known:
+    \subsection{- Commodities} 
+    \subsection{- Real State} 
+    \subsection{- Currencies} 
+    \subsection{- Stocks} 
+    \subsection{- Future contracts} 
+    \subsection{- Bonds}
+    Types of bonds:
+    Zero coupon bond, Coupon bond, Convertible bond, Callable bond
+    \begin{itemize}[label={--},leftmargin=4mm]
+        \vspace{-1mm}
+        \itemsep -.4mm
+        \item Zero coupon bond: Only has one face value payment at maturity.
+        \item Coupon bond: It has multiple coupon payments and one face value payment.
+            $\text{Coupon rate} = (k*n)/N, k:$ number of coupons per year.
+        \item Convertible bond: Only convert to stock when market price of the bond < value of the stock.
+        \item Callable bond: Have to return the bonds for the company at a fixed price when the company decides to call it back.
+    \end{itemize}
 
+    \textbf{Pricing:}
+    
+    - Zero coupon bond:
+    $$P=\frac{N}{(1+r_T)^T}$$
+    - Coupon bond:
+    
+    
+    $\Rightarrow$ Method 1:
+    
+    Continuously compounded and compounded once per annum:
+    $$P=Ne^{-r_TT} + \sum_{i=i_0}^T Ce^{-ir_i}, P=\frac{N}{(1+r_T)^T} + \sum_{i=i_0}^T \frac{C}{(1+r_i)^i}$$
 
-    \subsection{Commodities} - 
-    \subsection{Real State} - 
-    \subsection{Intellectual properties} - 
-    \subsection{Pollution emission rights} - 
-    \subsection{Stocks} - 
-    \subsection{Bonds} - 
-    \subsection{Currencies} -
+    $\Rightarrow$ Method 2 (Yield):
+    
+    Continuously compounded and compounded once per annum:
+    $$P=Ne^{-yT} + \sum_{i=i_0}^T Ce^{-iy}, P=\frac{N}{(1+y)^T} + \sum_{i=i_0}^T \frac{C}{(1+y)^{i}}$$
+
+    $P:$ Bond price
+    
+    $N:$ Principal / face value / value
+
+    $C:$ Coupon
+
+    $i_0:$ Time for receiving first coupon with years as unit. Ex: 1/2 year, 1 year, etc. 
+    
+    $i:$ Time. The difference between two consecutives $i$ is $i_0$
+    
+    $r_i:$ Rate interest at time $i$
+
+    $T:$ Maturity
+
+    $y:$ Yield
     \columnbreak
     \section{Derivatives}
     A derivative involves two parties agreeing to a future transaction. Its value depends
@@ -161,6 +204,7 @@ on (or derives from) the values of other underlying variables.
 
     \end{itemize}
 
+    \columnbreak
     \section{Risk}
     \subsection{Greeks or Risk sensitivities}
     \begin{center}
@@ -169,12 +213,12 @@ on (or derives from) the values of other underlying variables.
             \hline
             Greek       & Symbol               & Measures  & Definition              \\
             \hline
-            Delta & $\Delta = \frac{\partial c}{\partial S}$ & \thead{Underlying \\variable\\ (S) exposure} & \thead{Change in option price \\due to spot}\\
-            Gamma & $\Gamma = \frac{\partial ^2 c}{\partial S^2}$ & \thead{Underlying \\variable\\ (S) convexity} & \thead{Curvature of option price \\with respect to spot}\\
-            Theta & $\Theta = \frac{\partial c}{\partial t}$ & \thead{Time decay} & \thead{Change in option price \\due to time passing}\\
-            Vega & $\upsilon = \frac{\partial c}{\partial \sigma}$ & \thead{Volatility \\ exposure} & \thead{Change in option price \\due to volatility}\\
-            Rho & $\rho = \frac{\partial c}{\partial r}$ & \thead{Interest rate \\ exposure} & \thead{Change in option price \\due to interest rates}\\
-            Volga & $\frac{\partial ^2 c}{\partial \sigma ^2}$ & \thead{Volatility \\ convexity} & \thead{Curvature of option price \\with respect to spot}\\
+            Delta & $\Delta = \frac{\partial c}{\partial S}$ & \thead{Underlying \\variable\\ (S) exposure} & \thead{Change in \\option price \\due to spot}\\
+            Gamma & $\Gamma = \frac{\partial ^2 c}{\partial S^2}$ & \thead{Underlying \\variable\\ (S) convexity} & \thead{Curvature of \\option price \\with respect to spot}\\
+            Theta & $\Theta = \frac{\partial c}{\partial t}$ & \thead{Time decay} & \thead{Change in \\option price \\due to time passing}\\
+            Vega & $\upsilon = \frac{\partial c}{\partial \sigma}$ & \thead{Volatility \\ exposure} & \thead{Change in \\option price \\due to volatility}\\
+            Rho & $\rho = \frac{\partial c}{\partial r}$ & \thead{Interest rate \\ exposure} & \thead{Change in \\option price \\due to interest rates}\\
+            Volga & $\frac{\partial ^2 c}{\partial \sigma ^2}$ & \thead{Volatility \\ convexity} & \thead{Curvature of \\option price \\with respect to spot}\\
             Vanna & $\frac{\partial c}{\partial S \partial t }$ & \thead{} & \thead{Change in Delta \\due to Volatility}\\
             \hline
         \end{tabular}
