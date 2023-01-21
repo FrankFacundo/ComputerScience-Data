@@ -102,7 +102,8 @@
     
     \columnbreak
 
-    \section{Least Squares}
+    \section{Projection \& Least Squares}
+    \subsection{Projection}
     \smallskip
     \begin{center}
         \vspace{-1mm}
@@ -123,6 +124,20 @@
     $$\Leftrightarrow y = A(A^TA)^{-1}A^Tb$$
     $$\Leftrightarrow \rho = A(A^TA)^{-1}A^T$$
     $$\rho \text{ being the projection matrix}$$
+
+    \subsection{Least Squares}
+
+    Let $A$ be a matrix of $m\times n$, $x\in \mathbb{R}^n$, $b\in \mathbb{R}^m$, where m is the number of samples and n is the number of dimension/features.
+    The dimension of $Ax$, which is the $span(A)$, is at maximum $n$, and $b$ have dimension $m$. 
+    
+    Usually $m>n$ because there are more samples than features, so $dim(span(A))<dim(b)$, in that case it is not guaranteed that it can be found a $x$ that satified the equation:
+    $$Ax=b$$
+    
+    That is why the make a projection of $b$ over $span(A)$ to have the closest $Ax$ to $b$.
+    Taking the equations from projection section:
+    $$x = (A^TA)^{-1}A^Tb$$
+
+
 
     \columnbreak
 
