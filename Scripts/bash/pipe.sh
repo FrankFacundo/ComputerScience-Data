@@ -7,6 +7,6 @@ source ${SCRIPT_BASE_PATH}/pipe2.sh
 echo pid current1 $$
 echo pid current1 $BASHPID
 
-fct_infinity $$ &
+copyLogsWatcher $$ &
 sleep 30
 echo END
