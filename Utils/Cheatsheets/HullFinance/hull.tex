@@ -73,8 +73,12 @@
     \setlength{\multicolsep}{1pt}
     \setlength{\columnsep}{2pt}
     % --------------------------------------------------------------
-    \section{Concepts}
+    \section{1. Concepts}
     \textbf{Maturity} - The end of the life of a contract.
+
+    \textbf{Arbitrage} - The simultaneous purchase and sale of the same asset in different markets in order to profit from tiny differences in the asset's listed price.
+
+    \textbf{Market to Market (MtM)} - Price of an asset/product at the present moment.
     
     \textbf{Short} - Short position = Seller position
     
@@ -100,7 +104,7 @@
     
     \textbf{Exchange-traded markets} - A derivatives exchange is a market where individuals and companies trade standardized contracts that have been defined by the exchange. Contrary to OTC
     
-    \section{Notation}
+    \section{2. Notation}
     \textbf{$S$} - Stock price, more generally underlying asset price.
     
     \textbf{$\Delta$} - Variation
@@ -120,15 +124,15 @@
     \smallskip
     \smallskip
 
-    \columnbreak
-    \section{Assets}
+    % \columnbreak
+    \section{3. Assets}
     Most known:
-    \subsection{- Commodities} 
-    \subsection{- Real State} 
-    \subsection{- Currencies} 
-    \subsection{- Stocks} 
-    \subsection{- Future contracts} 
-    \subsection{- Bonds}
+    \subsection{- \underline{Commodities}}
+    \subsection{- \underline{Real State}} 
+    \subsection{- \underline{Currencies}} 
+    \subsection{- \underline{Stocks}} 
+    \subsection{- \underline{Future contracts}} 
+    \subsection{- \underline{Bonds}}
     Types of bonds:
     Zero coupon bond, Coupon bond, Convertible bond, Callable bond
     \begin{itemize}[label={--},leftmargin=4mm]
@@ -137,7 +141,7 @@
         \item Zero coupon bond: Only has one face value payment at maturity.
         \item Coupon bond: It has multiple coupon payments and one face value payment.
             $\text{Coupon rate} = (k*n)/N, k:$ number of coupons per year.
-        \item Convertible bond: Only convert to stock when market price of the bond < value of the stock.
+        \item Convertible bond: Only convert to stock when market price of the bond $<$ value of the stock.
         \item Callable bond: Have to return the bonds for the company at a fixed price when the company decides to call it back.
     \end{itemize}
 
@@ -173,40 +177,73 @@
     $T:$ Maturity
 
     $y:$ Yield
-    \columnbreak
-    \section{Derivatives}
+    % \columnbreak
+    \section{4. Derivatives}
     A derivative involves two parties agreeing to a future transaction. Its value depends
 on (or derives from) the values of other underlying variables.
-    \subsection{Forward contracts}
+    \subsection{\underline{Forward contracts}}
     - A contract that obligates the holder to buy or sell an asset for a predetermined delivery price at a predetermined future time.
+    The contract has a virtual zero cost at time zero.
     
-    \subsection{Future contracts} 
+    - \textbf{Forward's delivery price when created}
+
+    $$F_0 = S_0e^{rT}$$
+
+    $F_0:$ Forward delivery price
+    
+    $S_0:$ Price of underlying asset 
+    
+    $T:$ Time to maturity 
+    
+    $r:$ Risk-free rate 
+
+    $\Rightarrow $\textbf{Assumptions}: 
+
+    - The gain is the free-risk rate
+
+    - Not coupon neither yield from underlying asset.  
+
+    \vspace{2mm}
+    - \textbf{MtM of a Forward} (Payoff)
+
+    $$f = (F_0-K)e^{-rT}$$
+    
+    $f:$ MtM of Forward
+
+    $F_0:$ Forward price at present time (if it was created at present time). Formula is above.
+    
+    $K:$ Delivery price for a contract that was negotiated some time ago. ($F_0$ when forward was created.)
+
+    $T:$ Time to maturity 
+    
+    $r:$ Risk-free rate 
+
+    
+    \subsection{\underline{Future contracts}}
     - A contract that obligates the holder to buy or sell an asset at a predetermined delivery price during a specified future time period. The contract is settled daily.
     
     \subsection{Difference Forward and Future} - Future are traded in exchange markets whereas Forwards are OTC.
 
-    \subsection{Options} - 
-    \subsection{Swaps: Interest rate swap} - 
-    \subsection{Swaps: Currency swap} - 
-    \subsection{Swaps: CDS(Credit default swap) } - 
-    \subsection{Swaps: Quanto } - 
-    \columnbreak
-    \section{Black and Scholles}
-    \subsection{Assumptions}
+    \subsection{\underline{Options}} - 
+    \subsection{\underline{Swaps: Interest rate swap}} - 
+    \subsection{\underline{Swaps: Currency swap}} - 
+    \subsection{\underline{Swaps: CDS(Credit default swap) }} - 
+    \subsection{\underline{Swaps: Quanto }} - 
+    % \columnbreak
+    \section{5. Black and Scholles}
+    \subsection{\underline{Assumptions}}
     \begin{itemize}[label={--},leftmargin=4mm]
         \vspace{-1mm}
         \itemsep -.4mm
         \item Stock price assumes that percentage changes in very short period of time are normally distributed.
         $$\frac{\Delta S}{S} \backsim \phi(\mu\Delta t, \Delta t)$$
-
-    \subsection{Equation}
+    \end{itemize}
+    \subsection{\underline{Equation}}
     $$\frac{\partial f}{\partial t} + rS\frac{\partial f}{\partial S} + \frac{1}{2} \sigma^2 S^2\frac{\partial ^2 f}{\partial S^2} = rf$$
 
-    \end{itemize}
-
-    \columnbreak
-    \section{Risk}
-    \subsection{Greeks or Risk sensitivities}
+    % \columnbreak
+    \section{6. Risk}
+    \subsection{\underline{Greeks or Risk sensitivities}}
     \begin{center}
         \footnotesize
         \begin{tabular}{ |c|c|c|c| }
@@ -224,9 +261,9 @@ on (or derives from) the values of other underlying variables.
         \end{tabular}
     \end{center}
 
-    \subsection{VaR \& ES}
+    \subsection{\underline{VaR \& ES}}
 
-    \subsection{PnL}
+    \subsection{\underline{PnL}}
 
 \end{multicols}
 
