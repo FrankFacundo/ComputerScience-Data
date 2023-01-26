@@ -25,7 +25,6 @@ function copyLogsWatcher() {
                 copyLogs
             fi
         else
-            echo PID OF PUB SUB API DOES NOT EXISTS ANYMORE. MAKING LAST COPY.
             copy_logs
             break
         fi
