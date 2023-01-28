@@ -36,13 +36,14 @@ def merge_video_with_subtitle(video_extension = FORMAT_MP4, languages = "EN:ES")
             if video_extension == FORMAT_MP4:
                 params = "-c copy -c:s mov_text"
             elif video_extension == "mkv":
-                params = '-map 0 -map 1 -c copy -metadata:s:s:1 title="{}"'.format(languages)
+                params = '-map 0:0 -map 0:1 -map 1:0 -c:v copy -c:a copy -c:s srt -metadata:s:s:0 title="{}"'.format(languages)
+                # params = '-map 0 -map 1 -c copy -metadata:s:s:1 title="{}"'.format(languages)
             else:
                 print("Unknown format to add subtitles")
                 raise Exception
             # Check documentation for subtitles:
             # https://en.wikibooks.org/wiki/FFMPEG_An_Intermediate_Guide/subtitle_options
-            command = "ffmpeg -i {} -i {} {} {}".format(
+            command = "ffmpeg -i {} -f srt -i {} {} {}".format(
                 convert_string_to_command(video_input),
                 convert_string_to_command(subtitle),
                 params,
