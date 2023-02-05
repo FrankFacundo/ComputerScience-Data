@@ -28,4 +28,6 @@ https://askubuntu.com/questions/742487/sharing-an-external-hard-drive-between-us
 For ntfs: 
 > sudo nano /etc/fstab
 Put at the end:
-UUID=0000000000000000 /media/new_drive ntfs-3g defaults,umask=0022 0 0
+UUID=0000000000000000 /media/new_drive ntfs-3g defaults,uid=1000,umask=0022 0 0
+
+Check "linux.md" to get more details about groups.
