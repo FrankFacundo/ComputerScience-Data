@@ -31,3 +31,8 @@ Put at the end:
 UUID=0000000000000000 /media/new_drive ntfs-3g defaults,uid=1000,umask=0022 0 0
 
 Check "linux.md" to get more details about groups.
+
+---
+
+Mount a directory of a hard drive into another directory to share it.
+mount --bind -o ro /media/datadrive/Media /home/media_family/Media

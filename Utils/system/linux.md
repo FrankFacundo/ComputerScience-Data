@@ -17,6 +17,9 @@ Groups and User:
 
 - Check [this link](https://devconnected.com/how-to-list-users-and-groups-on-linux/#:~:text=In%20order%20to%20list%20users,navigate%20within%20the%20username%20list.) for more details.
 
+- list users:
+cat /etc/passwd
+
 - list groups:
 
 cat /etc/group
