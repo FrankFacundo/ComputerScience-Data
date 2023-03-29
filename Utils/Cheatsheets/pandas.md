@@ -18,6 +18,10 @@ df = pd.read_excel('file_path.xlsx', sheet_name=0, header=0)
 
 ## Info dataframe
 
+```python
+df.head()
+```
+
 ### Stats view
 
 ```python
