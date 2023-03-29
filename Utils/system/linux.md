@@ -29,3 +29,10 @@ cat /etc/group
 
 Increase swap:
 https://www.cloudsigma.com/adding-swap-space-on-ubuntu-20-04-a-tutorial/
+
+---
+
+open ports:
+
+sudo lsof -i -P -n | grep LISTEN
+ 
