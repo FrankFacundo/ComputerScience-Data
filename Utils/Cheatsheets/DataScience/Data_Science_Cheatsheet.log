@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.12.1)  13 APR 2023 11:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.12.1)  13 APR 2023 18:21
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -681,7 +681,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <images/CART.JPG, id=163, 2038.61626pt x 749.80125pt>
 File: images/CART.JPG Graphic file (type jpg)
 <use images/CART.JPG>
-Package pdftex.def Info: images/CART.JPG  used on input line 280.
+Package pdftex.def Info: images/CART.JPG  used on input line 282.
 (pdftex.def)             Requested size: 163.09264pt x 59.98532pt.
  [1
 
@@ -689,74 +689,74 @@ Package pdftex.def Info: images/CART.JPG  used on input line 280.
 <images/svmNew2.JPG, id=186, 956.07187pt x 453.94594pt>
 File: images/svmNew2.JPG Graphic file (type jpg)
 <use images/svmNew2.JPG>
-Package pdftex.def Info: images/svmNew2.JPG  used on input line 334.
+Package pdftex.def Info: images/svmNew2.JPG  used on input line 336.
 (pdftex.def)             Requested size: 219.8919pt x 104.40536pt.
 <images/hingeloss3.JPG, id=187, 1689.31125pt x 730.22812pt>
 File: images/hingeloss3.JPG Graphic file (type jpg)
 <use images/hingeloss3.JPG>
-Package pdftex.def Info: images/hingeloss3.JPG  used on input line 352.
+Package pdftex.def Info: images/hingeloss3.JPG  used on input line 354.
 (pdftex.def)             Requested size: 177.37003pt x 76.67064pt.
 <images/dendroedit3.JPG, id=188, 2158.31343pt x 1285.80376pt>
 File: images/dendroedit3.JPG Graphic file (type jpg)
 <use images/dendroedit3.JPG>
-Package pdftex.def Info: images/dendroedit3.JPG  used on input line 424.
+Package pdftex.def Info: images/dendroedit3.JPG  used on input line 426.
 (pdftex.def)             Requested size: 215.84398pt x 128.5879pt.
  [2 </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/svmNew2.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/hingeloss3.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/dendroedit3.JPG>]
 <images/factorNew1.JPG, id=207, 2028.07687pt x 682.80093pt>
 File: images/factorNew1.JPG Graphic file (type jpg)
 <use images/factorNew1.JPG>
-Package pdftex.def Info: images/factorNew1.JPG  used on input line 475.
+Package pdftex.def Info: images/factorNew1.JPG  used on input line 477.
 (pdftex.def)             Requested size: 202.81956pt x 68.28409pt.
 <images/nn3.JPG, id=208, 1857.18843pt x 455.45157pt>
 File: images/nn3.JPG Graphic file (type jpg)
 <use images/nn3.JPG>
-Package pdftex.def Info: images/nn3.JPG  used on input line 545.
+Package pdftex.def Info: images/nn3.JPG  used on input line 547.
 (pdftex.def)             Requested size: 204.29135pt x 50.09982pt.
 <images/sigmoid1.JPG, id=209, 1236.11812pt x 1153.30875pt>
 File: images/sigmoid1.JPG Graphic file (type jpg)
 <use images/sigmoid1.JPG>
-Package pdftex.def Info: images/sigmoid1.JPG  used on input line 562.
+Package pdftex.def Info: images/sigmoid1.JPG  used on input line 564.
 (pdftex.def)             Requested size: 58.09378pt x 54.202pt.
 <images/relu.JPG, id=210, 1190.19656pt x 1149.5447pt>
 File: images/relu.JPG Graphic file (type jpg)
 <use images/relu.JPG>
-Package pdftex.def Info: images/relu.JPG  used on input line 563.
+Package pdftex.def Info: images/relu.JPG  used on input line 565.
 (pdftex.def)             Requested size: 55.93561pt x 54.0251pt.
 <images/tanh.JPG, id=211, 1178.15157pt x 1139.75812pt>
 File: images/tanh.JPG Graphic file (type jpg)
 <use images/tanh.JPG>
-Package pdftex.def Info: images/tanh.JPG  used on input line 564.
+Package pdftex.def Info: images/tanh.JPG  used on input line 566.
 (pdftex.def)             Requested size: 55.36952pt x 53.56516pt.
 <images/windowCNNNew.JPG, id=212, 1915.9078pt x 1010.27437pt>
 File: images/windowCNNNew.JPG Graphic file (type jpg)
 <use images/windowCNNNew.JPG>
-Package pdftex.def Info: images/windowCNNNew.JPG  used on input line 609.
+Package pdftex.def Info: images/windowCNNNew.JPG  used on input line 611.
 (pdftex.def)             Requested size: 114.94951pt x 60.61385pt.
 <images/rnn1.JPG, id=213, 2177.13374pt x 1029.09468pt>
 File: images/rnn1.JPG Graphic file (type jpg)
 <use images/rnn1.JPG>
-Package pdftex.def Info: images/rnn1.JPG  used on input line 625.
+Package pdftex.def Info: images/rnn1.JPG  used on input line 627.
 (pdftex.def)             Requested size: 152.41493pt x 72.04398pt.
  [3 </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/factorNew1.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/nn3.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/sigmoid1.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/relu.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/tanh.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/windowCNNNew.JPG>]
 <images/reinforcement4.JPG, id=227, 2182.40344pt x 785.93625pt>
 File: images/reinforcement4.JPG Graphic file (type jpg)
 <use images/reinforcement4.JPG>
-Package pdftex.def Info: images/reinforcement4.JPG  used on input line 728.
+Package pdftex.def Info: images/reinforcement4.JPG  used on input line 730.
 (pdftex.def)             Requested size: 185.5185pt x 66.8097pt.
 <images/autoencodeer3.JPG, id=228, 764.8575pt x 540.51938pt>
 File: images/autoencodeer3.JPG Graphic file (type jpg)
 <use images/autoencodeer3.JPG>
-Package pdftex.def Info: images/autoencodeer3.JPG  used on input line 803.
+Package pdftex.def Info: images/autoencodeer3.JPG  used on input line 805.
 (pdftex.def)             Requested size: 145.32443pt x 102.69974pt.
  [4 </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/rnn1.JPG> </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/reinforcement4.JPG>] [5 </home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/images/autoencodeer3.JPG>] [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1031.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1031.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1033.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1033.
  (/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/Data_Science_Cheatsheet.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1031.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1031.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1033.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1033.
 Package rerunfilecheck Info: File `Data_Science_Cheatsheet.out' has not changed.
 (rerunfilecheck)             Checksum: 909D428C1BE2B9A356DA59C333C8C1B9;2282.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1031.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1033.
  ) 
 Here is how much of TeX's memory you used:
  18649 strings out of 483090
@@ -767,7 +767,7 @@ Here is how much of TeX's memory you used:
  61 hyphenation exceptions out of 8191
  60i,15n,60p,533b,639s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb>
-Output written on /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/Data_Science_Cheatsheet.pdf (6 pages, 1758738 bytes).
+Output written on /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/DataScience/Data_Science_Cheatsheet.pdf (6 pages, 1758957 bytes).
 PDF statistics:
  354 PDF objects out of 1000 (max. 8388607)
  309 compressed objects within 4 object streams
