@@ -307,11 +307,11 @@
         $[[0],[1,2]], [[0,1],[2]], [[0,1,2],[]]$
 
     \subsection{Random Forest}
-    Trains an ensemble of trees that vote for the final prediction
+    Trains an ensemble of trees with a subset of \textbf{features} (columns) with replacement that vote for the final prediction 
+    $$f_{ens}=\frac{1}{T} \sum_{t}f_t(x)$$
+    \textbf{Bootstrapping} : \textbf{sampling} (rows) with replacement (will contain duplicates), until the sample is as large as the training set
 
-    \textbf{Bootstrapping} - sampling with replacement (will contain duplicates), until the sample is as large as the training set
-
-    \textbf{Bagging} - training independent models on different subsets of the data, which reduces variance. Each tree is trained on $\sim$63\% of the data, so the out-of-bag 37\% can estimate prediction error without resorting to CV.
+    \textbf{Bagging} : training independent models on different subsets of the data, which reduces variance. Each tree is trained on $\sim$63\% of the data, so the out-of-bag 37\% can estimate prediction error without resorting to CV.
 
     Deep trees may overfit, but adding more trees does not cause overfitting. Model bias is always equal to one of its individual trees.
 
