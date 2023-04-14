@@ -1,0 +1,1 @@
+docker run -p 8096:8096 -v /srv/jellyfin/config:/config -v /srv/jellyfin/cache:/cache -v /path/to/jellyfin_media:/media --net=bridge jellyfin/jellyfin:latest
