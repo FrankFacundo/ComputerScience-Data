@@ -52,7 +52,21 @@ Pytorch
 - Compiled versions: https://pytorch.org/get-started/previous-versions/
 # https://github.com/pytorch/pytorch/issues/30664
 - For pytorch it is recommended to compile binaries because of the problems of compatibility with CUDA. (it could takes a couple of hours)
-- https://github.com/pytorch/pytorch#from-source
+  
+  - To check codebase structure:
+    - https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md#codebase-structure
+
+  - https://github.com/pytorch/pytorch#from-source
+  - https://medium.com/repro-repo/build-pytorch-from-source-on-ubuntu-18-04-1c5556ca8fbf
+  - https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md#make-no-op-build-fast
+  - https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md
+  - https://gist.github.com/ax3l/9489132 (Cuda compilers)
+
+- Accelerate compilation
+  
+  - https://github.com/llvm/llvm-project/releases/tag/llvmorg-16.0.0
+  - https://releases.llvm.org/download.html
+
 - Change pytorch version with GIT (https://github.com/pytorch/pytorch/releases) (example for pytorch 1.12):
     git checkout origin/release/1.12 or git checkout tags/v1.12.1 -b master
     git log --oneline
