@@ -131,7 +131,6 @@
     \subsection{- \underline{Real State}} 
     \subsection{- \underline{Currencies}} 
     \subsection{- \underline{Stocks}} 
-    \subsection{- \underline{Future contracts}} 
     \subsection{- \underline{Bonds}}
     Types of bonds:
     Zero coupon bond, Coupon bond, Convertible bond, Callable bond
@@ -178,9 +177,41 @@
 
     $y:$ Yield
     % \columnbreak
-    \section{4. Derivatives}
+    \section{4. Credit Risk}
+    Probability of default by time $t$
+    $$Q(t) = 1 - e^{-\int_{0}^{t}\lambda(\tau)d \tau} = 1 - e^{-\overline{\lambda}(t)t}, \qquad \overline{\lambda}(T) = \frac{s(T)}{1-R}$$
+    $\lambda:$ Hazard rate
+
+    $s(T):$ Bond yield spread for a T-year bond.
+    
+    $R:$ Recovery rate. Percentage of the bond value that is recovered in case of default.
+    
+    $$Q(t) = 1 - e^{-\frac{s(T)}{1-R}t}$$
+    $$V(t) = e^{-\frac{s(T)}{1-R}t}$$
+
+    $V(t):$ Probability of non-default by time $t$.
+
+    \subsection{CVA and DVA}
+    CVA: Credit Value Adjustment. 
+    
+    DVA: Debt Value Adjustment.
+    $$CVA = \sum_{i=1}^{N}q_i v_i \qquad DVA = \sum_{i=1}^{N}q_i^* v_i^*$$
+    $q_i:$ Risk-neutral probability of default of counterparty during the $i$th interval.
+    
+    $v_i:$ Present value of the expected loss to the bank if the counterparty defaults during the $i$th interval.
+    
+    $q_i^*:$ Risk-neutral probability of default of the bank during the $i$th interval.
+    
+    $v_i^*:$ Present value of the expected loss to the counterparty if the bank defaults during the $i$th interval.
+    
+    $q_i = V(t_{i-1}) - V(t_{i})$
+    
+    $v_i = f_{nd}(1-R)$
+
+    \section{5. Derivatives}
     A derivative involves two parties agreeing to a future transaction. Its value depends
 on (or derives from) the values of other underlying variables.
+    
     \subsection{\underline{Forward contracts}}
     - A contract that obligates the holder to buy or sell an asset for a predetermined delivery price at a predetermined future time.
     The contract has a virtual zero cost at time zero.
@@ -230,7 +261,7 @@ on (or derives from) the values of other underlying variables.
     \subsection{\underline{Swaps: CDS(Credit default swap) }} - 
     \subsection{\underline{Swaps: Quanto }} - 
     % \columnbreak
-    \section{5. Black and Scholles}
+    \section{6. Black and Scholles}
     \subsection{\underline{Assumptions}}
     \begin{itemize}[label={--},leftmargin=4mm]
         \vspace{-1mm}
@@ -242,7 +273,7 @@ on (or derives from) the values of other underlying variables.
     $$\frac{\partial f}{\partial t} + rS\frac{\partial f}{\partial S} + \frac{1}{2} \sigma^2 S^2\frac{\partial ^2 f}{\partial S^2} = rf$$
 
     % \columnbreak
-    \section{6. Risk}
+    \section{7. Risk}
     \subsection{\underline{Greeks or Risk sensitivities}}
     \begin{center}
         \footnotesize
