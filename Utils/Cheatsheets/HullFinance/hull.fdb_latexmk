@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1684270067 "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.tex" "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.pdf" "hull" 1684270068
+["pdflatex"] 1684494872 "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.tex" "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.pdf" "hull" 1684494873
   "/etc/texmf/web2c/texmf.cnf" 1640133434 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.aux" 1684270068 3501 0e75909218664df351757d6ff547b794 ""
-  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.tex" 1684270067 11367 ecb3bf57ce137729b5cff05728446c5d ""
+  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.aux" 1684494873 3501 0e75909218664df351757d6ff547b794 ""
+  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.tex" 1684494872 11454 4785d748c2fe6fdb6e6b1c835a8a3177 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -183,13 +183,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1581979058 38841 ce3692aa899bb693b90b87eaa5d4d84e ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1669927960 165012 f177baa1c39a3ebd62c3096a43521a0d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1681467304 4881631 c32ee2e6d1c424419304d84779cd9fda ""
-  "hull.aux" 1684270068 3501 0e75909218664df351757d6ff547b794 "pdflatex"
-  "hull.out" 1684270068 1546 ccb7c6284871b93d863ba467f2d06b73 "pdflatex"
-  "hull.tex" 1684270067 11367 ecb3bf57ce137729b5cff05728446c5d ""
+  "hull.aux" 1684494873 3501 0e75909218664df351757d6ff547b794 "pdflatex"
+  "hull.out" 1684494873 1546 ccb7c6284871b93d863ba467f2d06b73 "pdflatex"
+  "hull.tex" 1684494872 11454 4785d748c2fe6fdb6e6b1c835a8a3177 ""
   (generated)
-  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.pdf"
   "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.log"
-  "hull.aux"
   "hull.pdf"
+  "hull.aux"
   "hull.out"
   "hull.log"
+  "/home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.pdf"
