@@ -275,12 +275,17 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
+INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/images/analyse_delta.jpeg
+INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/images/analyse_delta.jpeg
+INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/images/analyse_delta.jpeg
 INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.aux
 INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.out
 INPUT /home/frank/Code/ComputerScience-Data/Utils/Cheatsheets/HullFinance/hull.out
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb

@@ -77,6 +77,8 @@
     \textbf{Maturity} - The end of the life of a contract.
 
     \textbf{Arbitrage} - The simultaneous purchase and sale of the same asset in different markets in order to profit from tiny differences in the asset's listed price.
+    
+    \textbf{Risk-neutral} - This assumption means investors do not increase the expected return they require from an investment to compensate for increased risk. 
 
     \textbf{Market to Market (MtM)} - Price of an asset/product at the present moment.
     
@@ -111,6 +113,8 @@
     
     \textbf{$t$} - Time
 
+    \textbf{$T$} - Maturity. Time when contract is finished.
+
     \textbf{$\phi$} - Normal distribution
     
     \textbf{$\sigma$} - Volatility
@@ -118,6 +122,8 @@
     \textbf{$r$} - Interest rate
 
     \textbf{$c$,$f$} - Price of option
+
+    \textbf{$K$} - Strike price. Price to buy/sell the underlying asset.
     % ----------------------------------------------------------------
     \smallskip
     \smallskip
@@ -127,11 +133,11 @@
     % \columnbreak
     \section{3. Assets}
     Most known:
-    \subsection{- \underline{Commodities}} Gold, Oil, Corn, etc.
-    \subsection{- \underline{Real State}} Houses, buildings, lands, etc.
-    \subsection{- \underline{Currencies}} EUR, USD, GBP, etc.
-    \subsection{- \underline{Stocks}} BNP, Apple, etc.
-    \subsection{- \underline{Bonds}}
+    \subsection{3.1 \underline{Commodities}} Gold, Oil, Corn, etc.
+    \subsection{3.2 \underline{Real State}} Houses, buildings, lands, etc.
+    \subsection{3.3 \underline{Currencies}} EUR, USD, GBP, etc.
+    \subsection{3.4 \underline{Stocks}} BNP, Apple, etc.
+    \subsection{3.5 \underline{Bonds}}
     Types of bonds:
     Zero coupon bond, Coupon bond, Convertible bond, Callable bond
     \begin{itemize}[label={--},leftmargin=4mm]
@@ -212,7 +218,7 @@
     A derivative involves two parties agreeing to a future transaction. Its value depends
 on (or derives from) the values of other underlying variables.
     
-    \subsection{\underline{Forward contracts}}
+    \subsection{5.1 \underline{Forward contracts}}
     - A contract that obligates the holder to buy or sell an asset for a predetermined delivery price at a predetermined future time.
     The contract has a virtual zero cost at time zero.
     
@@ -250,21 +256,60 @@ on (or derives from) the values of other underlying variables.
     $r:$ Risk-free rate 
 
     
-    \subsection{\underline{Future contracts}}
+    \subsection{5.2 \underline{Future contracts}}
     - A contract that obligates the holder to buy or sell an asset at a predetermined delivery price during a specified future time period. The contract is settled daily.
     
     \subsection{Difference Forward and Future} - Future are traded in exchange markets whereas Forwards are OTC.
+    \columnbreak
+    \subsection{5.3 \underline{Options}}
+    Call: Right to buy, Put: Right to sell
+        \subsubsection*{Spot options}
+            Assumptions:
+                \begin{itemize}[label={--},leftmargin=8mm]
+                    \vspace{-1mm}
+                    \itemsep -.4mm
+                    \item 1. There are no transaction costs.
+                    \item 2. All trading profits (net of trading losses) are subject to the same tax rate. 
+                    \item 3. Borrowing and lending are possible at the risk-free interest rate.
+            
+                \end{itemize}
+                
+            Analyse Delta:
+            \begin{center}
+                \vspace{-2mm}
+                \includegraphics[scale = .19]{images/analyse_delta.jpeg}
+                \vspace{-2mm}
+            \end{center}
+            European call option:
+            
+            * Stochastic because $S_T$ is stochastic
 
-    \subsection{\underline{Options}} - 
-    \subsection{\underline{Swaps: Interest rate swap}} - 
-    \subsection{\underline{Swaps: Currency swap}} - 
-    \subsection{\underline{Swaps: CDS(Credit default swap) }} - 
-    \subsection{\underline{Swaps: Quanto }} - 
+            $$c = e^{-rT} \hat{E}[max(S_T - K, 0)]$$
+            $$\text{Applying Black \& Scholles:}$$
+            $$c = S N(d_1) - Ke^{-rT} N(d_2)$$
+            European put option
+            $$p = e^{-rT} \hat{E}[max(K - S_T, 0)]$$
+            $$p = Ke^{-rT} N(-d_2) - S N(-d_1)$$
+            
+            Where
+            $$d_1 = \frac{ln(S/K) + (r + \sigma ^2 /2)(T-t)}{\sigma \sqrt{T-t}}$$
+            $$d_2 = d_1 - \sigma \sqrt{T-t}$$
+            $$N: \text{Normal quantile function}$$
+            $$\hat{E}: \text{Expectation}$$
+
+            American call option
+            
+            American put option
+        \subsubsection*{Future options}
+    \subsection{5.4 \underline{Swaps: Interest rate swap}} - 
+    \subsection{5.5 \underline{Swaps: Currency swap}} - 
+    \subsection{5.6 \underline{Swaps: CDS(Credit default swap) }} - 
+    \subsection{5.7 \underline{Swaps: Quanto }} - 
     % \columnbreak
     \section{6. Black and Scholles}
+    
     \subsection{\underline{Assumptions}}
     \begin{itemize}[label={--},leftmargin=4mm]
-        \vspace{-1mm}
         \itemsep -.4mm
         \item Stock price assumes that percentage changes in very short period of time are normally distributed.
         $$\frac{\Delta S}{S} \backsim \phi(\mu\Delta t, \Delta t)$$
@@ -274,7 +319,7 @@ on (or derives from) the values of other underlying variables.
 
     % \columnbreak
     \section{7. Risk}
-    \subsection{\underline{Greeks or Risk sensitivities}}
+    \subsection{7.1 \underline{Greeks or Risk sensitivities}}
     \begin{center}
         \footnotesize
         \begin{tabular}{ |c|c|c|c| }
@@ -292,9 +337,9 @@ on (or derives from) the values of other underlying variables.
         \end{tabular}
     \end{center}
 
-    \subsection{\underline{VaR \& ES}}
+    \subsection{7.2 \underline{VaR \& ES}}
 
-    \subsection{\underline{PnL}}
+    \subsection{7.3 \underline{PnL}}
 
 \end{multicols}
 
