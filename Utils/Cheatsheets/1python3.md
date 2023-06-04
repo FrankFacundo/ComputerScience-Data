@@ -51,8 +51,10 @@ def custom_sum(num1, num2):
     return addition
 
 
-print(custom_sum())
-print(custom_sum.__name__)
+print(custom_sum(4, 5)) # Output: 9
+print(custom_sum()) # Output: 3
+print(custom_sum.__name__) # Output: custom_sum (This is thanks to the line "@functools.wraps(func)")
+
 
 ```
 
