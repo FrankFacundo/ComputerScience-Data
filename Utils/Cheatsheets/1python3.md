@@ -21,7 +21,7 @@ BAZ = os.environ['BAZ'] # KeyError: key does not exist.
 
 ## Decorators
 
-Decorators are useful for logging,timing, Authentication and Authorization, Input Validation, Caching, Rate Limiting. 
+Decorators are useful for logging, timing, Authentication and Authorization, Input Validation, Caching, Rate Limiting.
 
 ```python
 import functools
