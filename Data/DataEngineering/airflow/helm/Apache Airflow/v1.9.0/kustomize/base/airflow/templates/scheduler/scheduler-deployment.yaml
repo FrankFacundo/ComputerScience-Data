@@ -55,7 +55,7 @@ spec:
         checksum/metadata-secret: d00c88667f9a60327ca789c73a2cc9eb6a7e7454f5245afc1b002ea58aeaa994
         checksum/result-backend-secret: 74e3e99feee51248d44224665d60fab543dd6b25ba95f04e6fcb0e5758342056
         checksum/pgbouncer-config-secret: da52bd1edfe820f0ddfacdebb20a4cc6407d296ee45bcb500a6407e2261a5ba2
-        checksum/airflow-config: 383cab58c145c51e95f7584cfc03b575e55964ed6b078d8fdc4152c1714eacc4
+        checksum/airflow-config: b7975aac0e8e1733553bfeeb57388e19f4b31ed12a46577d3ae30deafddf9ca3
         checksum/extra-configmaps: 2e44e493035e2f6a255d08f8104087ff10d30aef6f63176f1b18f75f73295598
         checksum/extra-secrets: bb91ef06ddc31c0c5a29973832163d8b0b597812a793ef911d33b622bc9d1655
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
@@ -140,6 +140,38 @@ spec:
                 secretKeyRef:
                   name: masai-broker-url
                   key: connection
+        
+        - name: git-sync-init
+          image: registry.k8s.io/git-sync/git-sync:v3.6.3
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65533
+          env:
+            - name: GIT_SYNC_REV
+              value: "HEAD"
+            - name: GIT_SYNC_BRANCH
+              value: "master"
+            - name: GIT_SYNC_REPO
+              value: "https://github.com/FrankFacundo/ComputerScience-Data.git"
+            - name: GIT_SYNC_DEPTH
+              value: "1"
+            - name: GIT_SYNC_ROOT
+              value: "/git"
+            - name: GIT_SYNC_DEST
+              value: "repo"
+            - name: GIT_SYNC_ADD_USER
+              value: "true"
+            - name: GIT_SYNC_WAIT
+              value: "5"
+            - name: GIT_SYNC_MAX_SYNC_FAILURES
+              value: "0"
+            - name: GIT_SYNC_ONE_TIME
+              value: "true"
+          resources: 
+              {}
+          volumeMounts:
+          - name: dags
+            mountPath: /git
       containers:
         # Always run the main scheduler container.
         - name: scheduler
@@ -216,6 +248,38 @@ spec:
               mountPath: "/opt/airflow/config/airflow_local_settings.py"
               subPath: airflow_local_settings.py
               readOnly: true
+            - name: dags
+              mountPath: /opt/airflow/dags
+              readOnly: True        
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v3.6.3
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65533
+          env:
+            - name: GIT_SYNC_REV
+              value: "HEAD"
+            - name: GIT_SYNC_BRANCH
+              value: "master"
+            - name: GIT_SYNC_REPO
+              value: "https://github.com/FrankFacundo/ComputerScience-Data.git"
+            - name: GIT_SYNC_DEPTH
+              value: "1"
+            - name: GIT_SYNC_ROOT
+              value: "/git"
+            - name: GIT_SYNC_DEST
+              value: "repo"
+            - name: GIT_SYNC_ADD_USER
+              value: "true"
+            - name: GIT_SYNC_WAIT
+              value: "5"
+            - name: GIT_SYNC_MAX_SYNC_FAILURES
+              value: "0"
+          resources: 
+              {}
+          volumeMounts:
+          - name: dags
+            mountPath: /git
         - name: scheduler-log-groomer
           resources:
             {}
@@ -234,5 +298,7 @@ spec:
         - name: config
           configMap:
             name: masai-airflow-config
+        - name: dags
+          emptyDir: {}
         - name: logs
           emptyDir: {}
