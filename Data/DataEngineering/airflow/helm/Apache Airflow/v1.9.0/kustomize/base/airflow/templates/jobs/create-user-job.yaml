@@ -30,10 +30,6 @@ metadata:
     release: masai
     chart: "airflow-1.9.0"
     heritage: Helm
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-    helm.sh/hook-weight: "2"
 spec:
   ttlSecondsAfterFinished: 300
   template:
@@ -80,12 +76,7 @@ spec:
             - 'user'
             - -p
             - 'admin'
-          envFrom:          
-            []
           env:          
-            # Dynamically created environment variables
-            # Dynamically created secret envs
-            # Extra env          
             # Hard Coded Airflow Envs
             - name: AIRFLOW__CORE__FERNET_KEY
               valueFrom:
