@@ -48,9 +48,9 @@ spec:
         checksum/metadata-secret: d00c88667f9a60327ca789c73a2cc9eb6a7e7454f5245afc1b002ea58aeaa994
         checksum/result-backend-secret: 74e3e99feee51248d44224665d60fab543dd6b25ba95f04e6fcb0e5758342056
         checksum/pgbouncer-config-secret: da52bd1edfe820f0ddfacdebb20a4cc6407d296ee45bcb500a6407e2261a5ba2
-        checksum/webserver-secret-key: cad1121d1993fd7cdd4c29b35c1dd0fd96cceea4357dcd885d1065f46711862a
+        checksum/webserver-secret-key: 1ad513772f50672fae349b4aedbf7193823b6d1d2e64aad5f0baf72ac922e611
         checksum/kerberos-keytab: 87d73ac9ac60a7e336c654e4e36a762013adcc7bf0b39d550a084228a4fa0c0a
-        checksum/airflow-config: b7975aac0e8e1733553bfeeb57388e19f4b31ed12a46577d3ae30deafddf9ca3
+        checksum/airflow-config: b39f5a72e6f6f22342c5dd4a1a3f0bea87e9a65f25afbfdacccfa0925d183465
         checksum/extra-configmaps: 2e44e493035e2f6a255d08f8104087ff10d30aef6f63176f1b18f75f73295598
         checksum/extra-secrets: bb91ef06ddc31c0c5a29973832163d8b0b597812a793ef911d33b622bc9d1655
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"

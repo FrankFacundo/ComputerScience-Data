@@ -42,7 +42,7 @@ data:
     
     [core]
     colored_console_log = False
-    dags_folder = /opt/airflow/dags/repo/Data/DataEngineering/airflow/helm/Apache Airflow/v1.9.0/dags
+    dags_folder = /opt/airflow/dags/repo/Data/DataEngineering/airflow/helm/ApacheAirflow/v1.9.0/dags
     executor = CeleryExecutor
     load_examples = False
     remote_logging = False
