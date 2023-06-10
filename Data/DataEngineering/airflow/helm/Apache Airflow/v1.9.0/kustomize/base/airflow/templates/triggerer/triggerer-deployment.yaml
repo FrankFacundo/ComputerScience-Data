@@ -1,0 +1,229 @@
+---
+# Source: airflow/templates/triggerer/triggerer-deployment.yaml
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+################################
+## Airflow Triggerer Deployment
+#################################
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: masai-triggerer
+  labels:
+    tier: airflow
+    component: triggerer
+    release: masai
+    chart: "airflow-1.9.0"
+    heritage: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: airflow
+      component: triggerer
+      release: masai
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        tier: airflow
+        component: triggerer
+        release: masai
+      annotations:
+        checksum/metadata-secret: d00c88667f9a60327ca789c73a2cc9eb6a7e7454f5245afc1b002ea58aeaa994
+        checksum/pgbouncer-config-secret: da52bd1edfe820f0ddfacdebb20a4cc6407d296ee45bcb500a6407e2261a5ba2
+        checksum/airflow-config: 383cab58c145c51e95f7584cfc03b575e55964ed6b078d8fdc4152c1714eacc4
+        checksum/extra-configmaps: 2e44e493035e2f6a255d08f8104087ff10d30aef6f63176f1b18f75f73295598
+        checksum/extra-secrets: bb91ef06ddc31c0c5a29973832163d8b0b597812a793ef911d33b622bc9d1655
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    spec:
+      nodeSelector:
+        {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  component: triggerer
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      tolerations:
+        []
+      topologySpreadConstraints:
+        []
+      terminationGracePeriodSeconds: 60
+      restartPolicy: Always
+      serviceAccountName: masai-airflow-triggerer
+      securityContext: 
+        
+        runAsUser: 50000
+        fsGroup: 0
+      initContainers:
+        - name: wait-for-airflow-migrations
+          resources:
+            {}
+          image: apache/airflow:2.5.3
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: "/opt/airflow/airflow.cfg"
+              subPath: airflow.cfg
+              readOnly: true
+            - name: config
+              mountPath: "/opt/airflow/config/airflow_local_settings.py"
+              subPath: airflow_local_settings.py
+              readOnly: true
+          args:          
+            - airflow
+            - db
+            - check-migrations
+            - --migration-wait-timeout=60
+          envFrom:          
+            []
+          env:          
+            # Dynamically created environment variables
+            # Dynamically created secret envs
+            # Extra env          
+            # Hard Coded Airflow Envs
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-fernet-key
+                  key: fernet-key
+            # For Airflow <2.3, backward compatibility; moved to [database] in 2.3
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW_CONN_AIRFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__WEBSERVER__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-webserver-secret-key
+                  key: webserver-secret-key
+            - name: AIRFLOW__CELERY__BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: masai-broker-url
+                  key: connection
+      containers:
+        - name: triggerer
+          image: apache/airflow:2.5.3
+          imagePullPolicy: IfNotPresent
+          args: 
+            - bash
+            - -c
+            - exec airflow triggerer
+          resources:
+            {}
+          volumeMounts:
+            - name: logs
+              mountPath: "/opt/airflow/logs"
+            - name: config
+              mountPath: "/opt/airflow/airflow.cfg"
+              subPath: airflow.cfg
+              readOnly: true
+            - name: config
+              mountPath: "/opt/airflow/config/airflow_local_settings.py"
+              subPath: airflow_local_settings.py
+              readOnly: true
+          envFrom:          
+            []
+          env:          
+            # Dynamically created environment variables
+            # Dynamically created secret envs
+            # Extra env          
+            # Hard Coded Airflow Envs
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-fernet-key
+                  key: fernet-key
+            # For Airflow <2.3, backward compatibility; moved to [database] in 2.3
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW_CONN_AIRFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__WEBSERVER__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-webserver-secret-key
+                  key: webserver-secret-key
+            - name: AIRFLOW__CELERY__BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: masai-broker-url
+                  key: connection
+          
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 20
+            failureThreshold: 5
+            periodSeconds: 60
+            exec:
+              command:              
+                - sh
+                - -c
+                - |
+                  CONNECTION_CHECK_MAX_COUNT=0 AIRFLOW__LOGGING__LOGGING_LEVEL=ERROR exec /entrypoint \
+                  airflow jobs check --job-type TriggererJob --local
+        - name: triggerer-log-groomer
+          resources:
+            {}
+          image: apache/airflow:2.5.3
+          imagePullPolicy: IfNotPresent
+          args:
+            - bash
+            - /clean-logs
+          env:
+            - name: AIRFLOW__LOG_RETENTION_DAYS
+              value: "15"
+          volumeMounts:
+            - name: logs
+              mountPath: "/opt/airflow/logs"
+      volumes:
+        - name: config
+          configMap:
+            name: masai-airflow-config
+        - name: logs
+          emptyDir: {}

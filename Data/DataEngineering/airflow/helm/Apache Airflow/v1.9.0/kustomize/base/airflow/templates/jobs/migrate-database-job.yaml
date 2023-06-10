@@ -1,0 +1,124 @@
+---
+# Source: airflow/templates/jobs/migrate-database-job.yaml
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+################################
+## Airflow Run Migrations
+#################################
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: masai-run-airflow-migrations
+  labels:
+    tier: airflow
+    component: run-airflow-migrations
+    release: masai
+    chart: "airflow-1.9.0"
+    heritage: Helm
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    helm.sh/hook-weight: "1"
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        tier: airflow
+        component: run-airflow-migrations
+        release: masai
+    spec:
+      securityContext: 
+        
+        runAsUser: 50000
+        fsGroup: 0
+      restartPolicy: OnFailure
+      nodeSelector:
+        {}
+      affinity:
+        {}
+      tolerations:
+        []
+      topologySpreadConstraints:
+        []
+      serviceAccountName: masai-airflow-migrate-database-job
+      containers:
+        - name: run-airflow-migrations
+          image: apache/airflow:2.5.3
+          imagePullPolicy: IfNotPresent
+          args:
+            - bash
+            - -c
+            - |-
+              exec \
+              airflow db upgrade
+          envFrom:          
+            []
+          env:          
+            # Dynamically created environment variables
+            # Dynamically created secret envs
+            # Extra env
+            - name: PYTHONUNBUFFERED
+              value: "1"          
+            # Hard Coded Airflow Envs
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-fernet-key
+                  key: fernet-key
+            # For Airflow <2.3, backward compatibility; moved to [database] in 2.3
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW_CONN_AIRFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: masai-airflow-metadata
+                  key: connection
+            - name: AIRFLOW__WEBSERVER__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: masai-webserver-secret-key
+                  key: webserver-secret-key
+            - name: AIRFLOW__CELERY__BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: masai-broker-url
+                  key: connection
+          resources:
+            {}
+          volumeMounts:
+            - name: config
+              mountPath: "/opt/airflow/airflow.cfg"
+              subPath: airflow.cfg
+              readOnly: true
+            - name: config
+              mountPath: "/opt/airflow/config/airflow_local_settings.py"
+              subPath: airflow_local_settings.py
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: masai-airflow-config
