@@ -6,6 +6,7 @@ The yaml files on this kustomize repertory were been generated with `helm templa
 
 ```bash
 minikube start --vm-driver kvm2 --disk-size 20GB
+kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.4/manifests/install.yaml
 kubectl get all -n argocd
 kubectl port-forward svc/argocd-server -n argocd 8090:443
