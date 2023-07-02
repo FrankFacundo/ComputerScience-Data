@@ -2,9 +2,9 @@ SFTP:
 
 0. config: https://linuxhint.com/setup-sftp-server-ubuntu/
 
-1. First share hard drice with other users (see below).x
+1. First share hard drive with other users (see below).x
 
-2. change default directory: 
+2. change default directory:
 https://community.jaguar-network.com/restreindre-lacces-sftp-dun-utilisateur-chroot/
 
 vim /etc/ssh/sshd_config
