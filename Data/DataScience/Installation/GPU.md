@@ -46,6 +46,8 @@ For RTX 3090 : 515.76
 Cuda 11.3
 CuDNN: 8.1
 
+	CUDA 11.8, CUDNN 8.7.0.84
+
 ---
 Pytorch
 
@@ -81,3 +83,18 @@ Pytorch
 
 Domain Version Compatibility Matrix for PyTorch
 https://github.com/pytorch/pytorch/wiki/PyTorch-Versions
+
+---
+https://xcat-docs.readthedocs.io/en/stable/advanced/gpu/nvidia/verify_cuda_install.html
+
+https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/running.html
+https://docs.nvidia.com/deeplearning/frameworks/preparing-containers/index.html
+https://github.com/xuan-wei/nvidia-pytorch-tensorflow-conda-jupyter-ssh/blob/main/Dockerfile.base_nvidia.pt_as_default_with_codeserver
+
+
+https://horovod.readthedocs.io/en/stable/conda_include.html
+
+https://docs.nvidia.com/deploy/cuda-compatibility/index.html
+https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix
+
+https://docs.nvidia.com/nsight-visual-studio-code-edition/cuda-debugger/index.html
