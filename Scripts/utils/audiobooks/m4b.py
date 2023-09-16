@@ -179,9 +179,9 @@ def ffmpeg_metadata(args, log, filename):
     re_chapter = re.compile('^#[\d\:]+: start ([\d|\.]+), end ([\d|\.]+)[\s]+Metadata:[\s]+title[\s]+: (.*)')
     n = 1
     for raw_chapter in raw_chapters:
-        print(raw_chapter, "\nhehei hehei\n\n")
-        print(raw_chapter.strip(), "\nhehei hehei\n\n")
-        print(re_chapter, "\nhehei hehei\n\n")
+        print(raw_chapter, "\n\n")
+        print(raw_chapter.strip(), "\n\n")
+        print(re_chapter, "\n\n")
         m = re.match(re_chapter, raw_chapter.strip())
         print("m:", m)
         start = float(m.group(1)) * 1000
@@ -315,10 +315,11 @@ def split(args, log, output_dir, encoded_file, chapters):
         values = dict(ffmpeg=args.ffmpeg, duration=str(chapter.duration()),
             start=str(chapter.start), outfile=encoded_file, infile=fname)
         # split_cmd = '%(ffmpeg)s -y -acodec copy -t %(duration)s -ss %(start)s -i %(outfile)s %(infile)s'
-        split_cmd = '%(ffmpeg)s -t %(duration)s -ss %(start)s -i %(outfile)s -c copy %(infile)s'
+        split_cmd = '%(ffmpeg)s -ss %(start)s -i %(outfile)s -t %(duration)s -acodec copy %(infile)s'
 
         log.info("Splitting chapter %2d/%2d '%s'..." % (chapter.num, len(chapters), chapter_name))
         log.debug('Splitting with command: %s' % (split_cmd % values))
+        print(split_cmd % values)
 
         run_command(log, split_cmd, values, 'splitting audio file', stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
