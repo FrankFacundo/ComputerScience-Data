@@ -1,5 +1,7 @@
 .vscode/settings.json
 *__pycache__
+**/.cache
+**/node_modules/**
 
 Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data
@@ -8,15 +10,18 @@ Data/DataEngineering/spark/pyspark/data/*
 Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter.zip
 Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter/*
 Data/DataScience/Frameworks/Tensorflow/Transformer/translator/*
+Data/DataScience/MLOps/MLflow/mlruns/**
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.png
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.pth
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/diffprocess/*
+Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/MNIST/*
 Data/DataScience/Models/TimeSeries/data
 Data/DataScience/StudyCases-Challenge/Business/customer_lifetime_value/online_retail_II.xlsx
+Data/DataScience/StudyCases-Challenge/Business/tx_classification/dataset/*
 Data/DataScience/StudyCases-Challenge/Hickaton/hfactory_magic_folders/hi__paris_hackaton/building_energy_efficiency/dataset/*
 Data/DataScience/StudyCases-Challenge/Hickaton/my_work/encoding.json
 
 Scripts/concurrent/philosophers_dining/bin/*
 Scripts/concurrent2/*
-
-Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.png
-Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.pth
-Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/diffprocess/*
-Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/MNIST/*
+Scripts/python/spotify/music.json
+Scripts/python/spotify/song_list.pkl
