@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{calc}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{titlesec}
+\usepackage[landscape]{geometry}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+%------------------------------------
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.4in,left=.5in,right=.5in,bottom=.4in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{fancy}
+\fancyhf{}
+% Remove line
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\fontsize{9pt}{11pt}\selectfont Aaron Wang}
+\setlength{\footskip}{16pt} % amount to move footer by
+% Remember to call your parents and tell them you love them!
+
+% Define smaller plus sign
+\newcommand{\plus}{\raisebox{.3\height}{\scalebox{.7}{+}}}
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+% ----------------------------------------------------
+
+\title{Data Science Cheatsheet}
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{center}
+    \vspace{-50mm}
+    \Large{\vspace{-15mm}\textbf{Pytorch Cheatsheet}} \\
+    \footnotesize{Last Updated \today}
+    \vspace{-.4mm}
+\end{center}
+\begin{multicols}{3}
+    \setlength{\premulticols}{1pt}
+    \setlength{\postmulticols}{1pt}
+    \setlength{\multicolsep}{1pt}
+    \setlength{\columnsep}{2pt}
+    % --------------------------------------------------------------
+    % -------------------------------------------------
+    \section{Python API - Torch NN}
+    % -----------------------------------------------
+    \subsection{Normalization layers}
+    \textbf{LayerNorm}: Layer Normalization is a technique to normalize the activations of neurons in a layer. It ensures that the activations have a mean of zero and a standard deviation of one. This helps in stabilizing the learning process.
+     \url{https://pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html#torch.nn.LayerNorm}
+    \vspace{.1em}
+
+
+
+
+
+
+    % ----------------------------------------------------------------
+
+        \newpage
+\end{multicols}
+
+\end{document}
