@@ -116,8 +116,36 @@ class MyMusic:
                     genres=genres)
         return song_list
 
+    def search_song(self, song_name):
+        search_results = {}
+        songs = self.sp.search(q=song_name, type="track")["tracks"]["items"]
+        for song in songs:
+            artists = OrderedDict()
+            genres = []
+            for artist in song['artists']:
+                artist_genres = self.get_artist_details(artist["uri"])
 
-# my_music = MyMusic()
+                genres = genres + artist_genres
+                artists[artist["name"]] = artist_genres
+            # print(genres)
+            top_genre = genres[0] if genres else "Unclassified"
+
+            search_results[song['uri']] = Song(
+                uri=song['uri'],
+                name=song['name'],
+                artists=artists,
+                album=song["album"]["name"],
+                year=song["album"]["release_date"],
+                top_genre=top_genre,
+                genres=genres)
+        return search_results
+
+
+my_music = MyMusic()
+search_results = my_music.search_song("honda costumbres")
+print(len(search_results))
+pprint(search_results)
+
 # song_list = my_music.get_tracks_liked()
 # print(len(song_list))
 # print(song_list)
