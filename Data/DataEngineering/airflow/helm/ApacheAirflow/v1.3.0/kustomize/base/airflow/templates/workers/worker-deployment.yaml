@@ -48,7 +48,7 @@ spec:
         checksum/metadata-secret: 91345ba42fdad2155f7c905af5e5db24c60f5459ac080d86deee4075c83a1576
         checksum/result-backend-secret: ca515c054bb032b14b6809f70c35de1966b1a3a1980d89a494fee60e08a6f3ba
         checksum/pgbouncer-config-secret: da52bd1edfe820f0ddfacdebb20a4cc6407d296ee45bcb500a6407e2261a5ba2
-        checksum/webserver-secret-key: 93c652bb778c64a95c3ee638eb1584e0360d377560c11d02a4bf9f4f3c01fcaf
+        checksum/webserver-secret-key: 4ed92af53f94cadeaa79eee7dbaff919fbfa99d7733fd0359745409158aff2b9
         checksum/airflow-config: 274fcc0bd5373fd7b7851791d725dba15e942b510e41e3364c64c8660f80507a
         checksum/extra-configmaps: 2e44e493035e2f6a255d08f8104087ff10d30aef6f63176f1b18f75f73295598
         checksum/extra-secrets: bb91ef06ddc31c0c5a29973832163d8b0b597812a793ef911d33b622bc9d1655
@@ -187,6 +187,9 @@ spec:
               mountPath: "/opt/airflow/config/airflow_local_settings.py"
               subPath: airflow_local_settings.py
               readOnly: true
+            - name: dags
+              mountPath: /opt/airflow/dags
+              readOnly: False
           envFrom:          
             []
           env:
@@ -251,6 +254,9 @@ spec:
         - name: config
           configMap:
             name: masai-airflow-config
+        - name: dags
+          persistentVolumeClaim:
+            claimName: masai-dags
   volumeClaimTemplates:
     - metadata:
         name: logs

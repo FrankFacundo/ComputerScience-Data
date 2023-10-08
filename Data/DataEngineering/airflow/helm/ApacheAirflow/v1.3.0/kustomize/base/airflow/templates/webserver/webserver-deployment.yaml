@@ -58,7 +58,7 @@ spec:
       annotations:
         checksum/metadata-secret: 91345ba42fdad2155f7c905af5e5db24c60f5459ac080d86deee4075c83a1576
         checksum/pgbouncer-config-secret: da52bd1edfe820f0ddfacdebb20a4cc6407d296ee45bcb500a6407e2261a5ba2
-        checksum/webserver-secret-key: 438ecb915724f811627c996f32bfd423c8c2d474c5cdedc58b0ebce213621c1e
+        checksum/webserver-secret-key: fa984918f1ab14030acc6f31f2c4430f265ec382a13e66c6be3c7c7d77b1209a
         checksum/airflow-config: 274fcc0bd5373fd7b7851791d725dba15e942b510e41e3364c64c8660f80507a
         checksum/webserver-config: 4a2281a4e3ed0cc5e89f07aba3c1bb314ea51c17cb5d2b41e9b045054a6b5c72
         checksum/extra-configmaps: 2e44e493035e2f6a255d08f8104087ff10d30aef6f63176f1b18f75f73295598

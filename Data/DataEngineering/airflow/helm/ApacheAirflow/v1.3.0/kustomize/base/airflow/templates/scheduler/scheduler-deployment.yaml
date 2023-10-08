@@ -260,6 +260,9 @@ spec:
               mountPath: "/opt/airflow/config/airflow_local_settings.py"
               subPath: airflow_local_settings.py
               readOnly: true
+            - name: dags
+              mountPath: /opt/airflow/dags
+              readOnly: False
         - name: scheduler-log-groomer
           resources:
             {}
@@ -279,5 +282,8 @@ spec:
         - name: config
           configMap:
             name: masai-airflow-config
+        - name: dags
+          persistentVolumeClaim:
+            claimName: masai-dags
         - name: logs
           emptyDir: {}
