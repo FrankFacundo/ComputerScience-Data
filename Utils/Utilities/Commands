@@ -60,6 +60,8 @@ avahi-browse -alr				//get information about local devices with mDNS activated
 service avahi-daemon status		//show status of avahi-daemon
 
 ssh -R 52698:localhost:52698 pi@ip-rpi // remote connect to RPI in VSCode
+ssh -L local_port:localhost:remote_port username@ip // port-forward
+
 rcode [file]					//open remote file in vscode
 
 source ~/anaconda3/bin/activate [environnement ex:root]	//activate commands for anaconda
