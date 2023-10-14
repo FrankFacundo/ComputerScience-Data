@@ -49,6 +49,10 @@ CuDNN: 8.1
 	CUDA 11.8, CUDNN 8.7.0.84
 
 ---
+Driver and CUDA compatibility
+https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#cuda-major-component-versions
+
+---
 Pytorch
 
 - Compiled versions: https://pytorch.org/get-started/previous-versions/
