@@ -1,7 +1,16 @@
 RTX TUF 3090
     Data from Tuto1
-    Driver from 450+
-    Cuda from 11.0
+    Driver 515
+    Docker working images:
+      pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
+    Docker not working images:
+      pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
+
+Docker GPU in Ubuntu:
+- Install Driver: 515 for 3090 : https://gist.github.com/Mahedi-61/2a2f1579d4271717d421065168ce6a73?permalink_comment_id=3587118
+- Install Container-toolkit: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+- Docker Command: sudo docker run -ti --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all <pytorch_image>
+
 
 * Easy installation PyTorch
     CUDA v11.3
