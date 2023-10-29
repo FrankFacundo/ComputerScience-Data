@@ -18,13 +18,6 @@ RUN apt-get install -y \
     python3-dev \
     python3-venv
 
-# RUN curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh \
-#     && chmod 500 nsolid_setup_deb.sh \
-#     && ./nsolid_setup_deb.sh 21 \
-#     && apt-get install nodejs -y
-
-# RUN npm install xterm
-
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
