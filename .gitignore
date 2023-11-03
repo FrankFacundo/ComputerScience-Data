@@ -5,6 +5,7 @@
 
 Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data
+Data/DataEngineering/Docker/images/workstation/code-server/extensions/*
 Data/DataEngineering/spark/pyspark/data/*
 
 Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter.zip
