@@ -2,6 +2,9 @@
 # This entrypoint use minikube and hyperviseur kvm2
 set -e
 
+image=$2
+echo $image
+
 kubectl="minikube kubectl --"
 
 function start_minikube_cluster() {
@@ -18,12 +21,22 @@ function stop_minikube_cluster(){
 }
 
 function deploy(){
-    $kubectl apply -f simple-app.yaml
+    $kubectl apply -f $image.yaml
+    
+    # grab the name of your active pod
+    PODNAME=$(kubectl get pods --output=template \
+        --template="{{with index .items 0}}{{.metadata.name}}{{end}}")
+    echo $PODNAME
+    
+    # # # open a port-forward session to the pod
+    # kubectl port-forward $PODNAME 4242:4242
+    minikube service 192.168.39.78:30148
     # kubectl get pods
 }
 
 function stop_deploy(){
-    $kubectl delete -f simple-app.yaml
+    $kubectl delete -f $image.yaml
+    # minikube image rm $image
 }
 
 if [[ "$1" == 'start' ]]; then

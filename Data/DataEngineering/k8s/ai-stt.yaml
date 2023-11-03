@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-stt-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-stt
+  template:
+    metadata:
+      labels:
+        app: ai-stt
+    spec:
+      containers:
+        - name: ai-stt-container
+          image: docker.io/library/ai-stt:1.0
+          ports:
+          - containerPort: 4242
+            name: http  
+
+---
+kind: Service
+apiVersion: v1       
+metadata:            
+  name: ai-stt-service
+spec:                
+  selector:          
+    app: ai-stt     
+  ports:    
+  - protocol: TCP 
+    targetPort: 4242
+    port: 80
+    name: http     
+  type: LoadBalancer

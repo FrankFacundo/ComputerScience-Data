@@ -6,6 +6,7 @@
 - https://medium.com/google-cloud/kubernetes-110-your-first-deployment-bf123c1d3f8
 - https://medium.com/google-cloud/kubernetes-120-networking-basics-3b903f13093a
 - https://medium.com/faun/understanding-nodes-pods-containers-and-clusters-778dbd56ade8#:~:text=Each%20pod%20has%20a%20unique,Pod%2C%20they%20expose%20a%20port.&text=A%20Node%20is%20a%20worker,contains%20services%20to%20run%20pods.
+- https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
 
 ## Kubernetes in local
 
@@ -40,7 +41,14 @@ kubectl describe pod simple-deployment-85db6cd64c-rjhrj
 
 ## Logs
 ```shell
-kubectl logs pod simple-deployment-85db6cd64c-rjhrj
+kubectl logs simple-deployment-85db6cd64c-rjhrj
+```
+
+## Forward port
+
+```shell
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/masai-webserver -n airflow 8070:8080
 ```
 
 ## Yamel Structure
