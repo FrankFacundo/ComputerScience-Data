@@ -1,1 +1,1 @@
-python app/energy_tracker.py
+nohup python app/energy_tracker.py 192.168.1.205 &

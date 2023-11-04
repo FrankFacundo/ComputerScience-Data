@@ -6,6 +6,7 @@ import asyncio
 import csv
 import os
 import re
+import sys
 import time
 
 from datetime import datetime
@@ -65,7 +66,8 @@ class EnergyTracker:
                 smart_plug_real_time_data['total'],
                 smart_plug_real_time_data['err_code']
             ]
-            self.save(current_date, new_csv_line)
+            filename = f"{self.ip_device}_{current_date}"
+            self.save(filename, new_csv_line)
             time.sleep(self.frequency_mesure)
 
     async def get_daily_mesures(self):
@@ -98,5 +100,8 @@ class EnergyTracker:
 
 
 if __name__ == "__main__":
-    energy_tracker = EnergyTracker()
+    ip_device_tracker = None
+    if len(sys.argv) > 1:
+        ip_device_tracker = sys.argv[1]
+    energy_tracker = EnergyTracker(ip_device=ip_device_tracker)
     asyncio.run(energy_tracker.run_real_time())
