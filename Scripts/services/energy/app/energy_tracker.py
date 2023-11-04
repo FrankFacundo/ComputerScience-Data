@@ -12,21 +12,27 @@ from datetime import datetime
 
 from kasa import SmartPlug
 
+from tools import execute_command
+
+
 class EnergyTracker:
     """
     A class that tracks energy usage and saves data to a CSV file.
     """
-    IP_DEVICE = os.environ['ENERGY_TRACKER_IP_DESK']
     columns = [
         "Date", "Time", "Current", "Voltage", "Power", "Total", "ErrorCode"
     ]
 
     def __init__(self, ip_device=None, frequency_mesure=1):
         if ip_device is None:
-            if EnergyTracker.IP_DEVICE is None:
-                raise ValueError('Please put a valid IP adress for your TP-Link energy tracker device.')
-            ip_device = EnergyTracker.IP_DEVICE
+            ip_devices = self.get_tp_link_ips()
+            if not ip_devices:
+                raise ValueError(
+                    'Please put a valid IP address for your TP-Link energy tracker device.'
+                )
+            ip_device = ip_devices[0]
         self.ip_device = ip_device
+        print(f'IP Device: {self.ip_device}')
         self.frequency_mesure = frequency_mesure
 
     def save(self, filename, line_csv):
@@ -52,9 +58,12 @@ class EnergyTracker:
             current_date, current_time = re.split(
                 " ", now.strftime("%d-%m-%Y %H:%M:%S"))
             new_csv_line = [
-                current_date, current_time, smart_plug_real_time_data['current'],
-                smart_plug_real_time_data['voltage'], smart_plug_real_time_data['power'],
-                smart_plug_real_time_data['total'], smart_plug_real_time_data['err_code']
+                current_date, current_time,
+                smart_plug_real_time_data['current'],
+                smart_plug_real_time_data['voltage'],
+                smart_plug_real_time_data['power'],
+                smart_plug_real_time_data['total'],
+                smart_plug_real_time_data['err_code']
             ]
             self.save(current_date, new_csv_line)
             time.sleep(self.frequency_mesure)
@@ -72,6 +81,20 @@ class EnergyTracker:
         smart_plug_monthly_data = await smart_plug.get_emeter_monthly()
         print(smart_plug_monthly_data)
         return smart_plug_monthly_data
+
+    def get_tp_link_ips(self):
+        command = "nmap -sP 192.168.1.0/24"
+        nmap_info = execute_command(command, use_sudo=True)
+
+        tp_link_pattern = re.compile(
+            r'Nmap scan report for (\d+\.\d+\.\d+\.\d+).*?MAC Address: ((?:[0-9A-F]{2}:){5}[0-9A-F]{2}) \((.*?)\)',
+            re.DOTALL)
+        matches = tp_link_pattern.findall(nmap_info)
+        tp_link_ips = [
+            ip for ip, mac, company in matches
+            if 'Tp-link Technologies' in company
+        ]
+        return tp_link_ips
 
 
 if __name__ == "__main__":
