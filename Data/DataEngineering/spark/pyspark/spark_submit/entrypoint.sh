@@ -4,4 +4,4 @@ set -x
 # if the port does not work, check the master process with `ps ax | grep spark`
 start-master.sh
 # This will create the local worker.
-start-worker.sh spark://$HOSTNAME:7077
+start-worker.sh spark://$(hostname):7077
