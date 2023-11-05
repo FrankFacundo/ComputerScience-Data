@@ -6,9 +6,9 @@ https://phoenixnap.com/kb/install-spark-on-ubuntu
 When finish check versions:
 
 - Java: java --version
-- Scala: scala
+- Scala: scala -version
 - Spark: spark-shell
-- Pyspark: pip show pyspark
+- Pyspark: pyspark / pip show pyspark
 
 and check env variables:
 
