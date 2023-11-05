@@ -14,6 +14,9 @@ $sort mon_fichier.txt -k2				//va afficher le contenu de mon_fichier.txt, trié 
 
 find							// shows absolute path
 	ex : sudo find ~ | grep _hat.py 
+	find / -name torch 2>/dev/null
+	find / -type d -name 'pytorch-*' 2>/dev/null
+	find / -type f -name 'pytorch-*' 2>/dev/null
 	find / 2>/dev/null | kafka			// if not access to all directories, it filters message "Permission denied".
 
 locate 							// search for a file or directory
