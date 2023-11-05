@@ -1,3 +1,6 @@
+For installation:
+https://phoenixnap.com/kb/install-spark-on-ubuntu
+
 To start Spark execute:
     start-master.sh
     This will create a server on http://127.0.0.1:8080/
