@@ -1,7 +1,5 @@
 FROM ubuntu:23.04
 
-USER root
-
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TERM=xterm-256color
 
@@ -12,24 +10,57 @@ RUN apt-get update && apt-get install -y \
     curl \
     byobu \
     htop \
+    mlocate \
     fonts-powerline \
     fontconfig \
+    iputils-ping \
+    nano \
+    vim \
+    net-tools \
+    tldr \
     build-essential \
     python3 \
     python3-pip \
     python3-dev \
-    python3-venv
+    python3-venv \
+    openjdk-11-jdk
+
+# Install Scala
+RUN apt-get update && \
+    apt-get install -y wget && \
+    wget https://downloads.lightbend.com/scala/2.13.8/scala-2.13.8.deb && \
+    dpkg -i scala-2.13.8.deb && \
+    apt-get install -f && \
+    rm scala-2.13.8.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set Scala and Java paths
+ENV SCALA_HOME=/usr/share/scala
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
 
 # Set up virtual environment
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Install Spark
+ENV SPARK_VERSION=3.5.0
+ENV HADOOP_VERSION=3
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+RUN wget -qO- "https://dlcdn.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION.tgz" | tar -xz -C /opt/ \
+    && mv /opt/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION $SPARK_HOME
+
+# # Configure Spark
+# COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+# COPY log4j.properties $SPARK_HOME/conf/log4j.properties
+
 # Install Oh My Zsh and themes
+# p10k configure
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 COPY fonts/ /usr/share/fonts/
-# Visual Studio Code: Open File → Preferences → Settings, 
-# enter "terminal.integrated.fontFamily" in the search box and set the value to "MesloLGS NF".
-# p10k configure
 RUN fc-cache -fv
 ADD powerlevel10k /powerlevel10k
 RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
@@ -46,7 +77,6 @@ ENV PATH="/opt/conda/bin:$PATH"
 SHELL ["/usr/bin/zsh", "-c"]
 
 # Clone the Zsh plugins
-# Clone the desired Zsh plugins
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting && \
     git clone https://github.com/agkozak/zsh-z.git ~/.zsh/zsh-z && \
@@ -62,6 +92,7 @@ RUN echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 # Install Code Server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
+ADD settings.json /root/.local/share/code-server/User/settings.json
 WORKDIR /workspace
 
 COPY extensions /extensions
@@ -73,8 +104,12 @@ RUN code-server --install-extension /extensions/ms-toolsai.jupyter-renderers-1.0
 RUN code-server --install-extension /extensions/ms-toolsai.vscode-jupyter-cell-tags-0.1.8.vsix
 RUN code-server --install-extension /extensions/ms-toolsai.vscode-jupyter-slideshow-0.1.5.vsix
 RUN code-server --install-extension /extensions/ms-python.pylint-2023.9.12961008.vsix
+RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.44.0@linux-x64.vsix
 RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
 RUN code-server --install-extension /extensions/eeyore.yapf-0.1.13.vsix
+
+# Expose Spark UI port
+EXPOSE 8080
 
 # Expose the default port for Code Server
 EXPOSE 40000
