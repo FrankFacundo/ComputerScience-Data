@@ -108,8 +108,9 @@ RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.44.0@lin
 RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
 RUN code-server --install-extension /extensions/eeyore.yapf-0.1.13.vsix
 
-# Expose Spark UI port
+# Expose Spark UI port (master and worker)
 EXPOSE 8080
+EXPOSE 8081
 
 # Expose the default port for Code Server
 EXPOSE 40000
