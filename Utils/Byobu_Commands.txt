@@ -17,6 +17,8 @@ Level 0 Commands (Quick Start)
 Level 1 Commands
 ----------------
 
+        shift "rows"                       Change terminal selection
+        shift alt "rows"                   Change size of terminal
         <ctrl> a S (capital S, please!)    Split   the  current   region
                                            horizontally  into   two  new
                                            ones
