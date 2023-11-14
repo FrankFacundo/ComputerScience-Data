@@ -1,7 +1,7 @@
 import os
 
 import spotipy
-import pickle
+# import pickle
 
 from dataclasses import dataclass
 from typing import List
@@ -18,14 +18,16 @@ class Song:
     album: str = ""
     artists: List[str] = ""
     year: str = ""
+    # Chosen by Spotify
     top_genre: str = ""
+    # Assigned after some processing
+    genre: str = ""
     genres: List[str] = ""
 
 
 class MyMusic:
 
     def __init__(self):
-
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
             client_id=os.environ["SPOTIFY_CLIENT_ID"],
             client_secret=os.environ["SPOTIFY_CLIENT_SECRET"],
@@ -33,7 +35,6 @@ class MyMusic:
             scope=
             "playlist-read-private playlist-read-collaborative user-follow-read user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-private"
         ))
-
         # Get current user info
         user = self.sp.current_user()
         # pprint(user)
@@ -41,6 +42,7 @@ class MyMusic:
         user_country = user["country"]
         print("Username:", user_name)
         print("Country:", user_country, "\n")
+        return
 
     def get_top_tracks(self):
         # Get top 1 tracks
@@ -141,10 +143,10 @@ class MyMusic:
         return search_results
 
 
-my_music = MyMusic()
-search_results = my_music.search_song("honda costumbres")
-print(len(search_results))
-pprint(search_results)
+# my_music = MyMusic()
+# search_results = my_music.search_song("honda costumbres")
+# print(len(search_results))
+# pprint(search_results)
 
 # song_list = my_music.get_tracks_liked()
 # print(len(song_list))
