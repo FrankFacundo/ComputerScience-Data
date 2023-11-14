@@ -1,4 +1,6 @@
 {
+    "editor.defaultFormatter": "eeyore.yapf",
+    "editor.formatOnSave": true,
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "workbench.colorTheme": "Visual Studio Dark"
 }

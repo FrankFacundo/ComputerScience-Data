@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     vim \
     net-tools \
     tldr \
+    zip \
+    tree \
+    procps \
     build-essential \
     python3 \
     python3-pip \
@@ -96,8 +99,9 @@ ADD settings.json /root/.local/share/code-server/User/settings.json
 WORKDIR /workspace
 
 COPY extensions /extensions
-RUN code-server --install-extension /extensions/eamodio.gitlens-2023.10.3105.vsix
+RUN code-server --install-extension /extensions/eamodio.gitlens-2023.11.1404.vsix
 RUN code-server --install-extension /extensions/ms-python.python-2023.21.13041006.vsix
+RUN code-server --install-extension /extensions/ms-python.vscode-pylance-2023.11.12.vsix
 RUN code-server --install-extension /extensions/ms-toolsai.jupyter-2023.10.1003011100@linux-x64.vsix
 RUN code-server --install-extension /extensions/ms-toolsai.jupyter-keymap-1.1.2.vsix
 RUN code-server --install-extension /extensions/ms-toolsai.jupyter-renderers-1.0.17.vsix
@@ -107,6 +111,25 @@ RUN code-server --install-extension /extensions/ms-python.pylint-2023.9.12961008
 RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.44.0@linux-x64.vsix
 RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
 RUN code-server --install-extension /extensions/eeyore.yapf-0.1.13.vsix
+RUN code-server --install-extension /extensions/mechatroner.rainbow-csv-3.8.0.vsix
+RUN code-server --install-extension /extensions/vscode-icons-team.vscode-icons-12.6.0.vsix
+RUN code-server --install-extension /extensions/ms-vscode.cpptools-1.18.3@linux-x64.vsix
+RUN code-server --install-extension /extensions/ms-python.isort-2023.11.13101013.vsix
+RUN code-server --install-extension /extensions/ms-azuretools.vscode-docker-1.28.0.vsix
+
+# Install Docker
+RUN apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common lsb-release gnupg
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Adding your user to the Docker group (Optional, depends on your use case)
+RUN usermod -aG docker root
+
+# Expose Docker socket
+# This allows the container to communicate with the host's Docker daemon.
+# Note: This will be mounted when running the container using the `-v /var/run/docker.sock:/var/run/docker.sock` flag.
+VOLUME ["/var/run/docker.sock"]
 
 # Expose Spark UI port (master and worker)
 EXPOSE 8080
