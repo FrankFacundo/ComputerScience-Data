@@ -2,5 +2,12 @@
     "editor.defaultFormatter": "eeyore.yapf",
     "editor.formatOnSave": true,
     "terminal.integrated.fontFamily": "MesloLGS NF",
-    "workbench.colorTheme": "Visual Studio Dark"
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.iconTheme": "vscode-icons",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
