@@ -76,6 +76,7 @@ gedit ~/.bashrc					//edit alias and others
 
 ip route						//get gateway
 
+tar -c --xz -f file.tar.xz /path/to/compress //compress tar xz
 tar xf [archive].tar.xz			//decompress tar xz
 
 stat [file_name]				//properties of a file
