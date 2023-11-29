@@ -111,4 +111,6 @@ Shift-F5: Collapse all splits
 
 Ctrl-F5: Reconnect any SSH/GPG sockets or agents
 
+Shift-F11: Maximize current pane
+
 Shift-F12: Toggle all of Byobu's keybindings on or off
