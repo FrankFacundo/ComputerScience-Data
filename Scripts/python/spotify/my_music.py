@@ -33,15 +33,15 @@ class MyMusic:
             client_secret=os.environ["SPOTIFY_CLIENT_SECRET"],
             redirect_uri=os.environ["SPOTIFY_REDIRECT_URI"],
             scope=
-            "playlist-read-private playlist-read-collaborative user-follow-read user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-private"
+            "playlist-read-private playlist-read-collaborative user-follow-read user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-private playlist-modify-private playlist-modify-public"
         ))
         # Get current user info
-        user = self.sp.current_user()
+        self.user = self.sp.current_user()
         # pprint(user)
-        user_name = user["display_name"]
-        user_country = user["country"]
-        print("Username:", user_name)
-        print("Country:", user_country, "\n")
+        self.user_name = self.user["display_name"]
+        self.user_country = self.user["country"]
+        print("Username:", self.user_name)
+        print("Country:", self.user_country, "\n")
         return
 
     def get_top_tracks(self):
@@ -142,6 +142,45 @@ class MyMusic:
                 genres=genres)
         return search_results
 
+    def create_playlist(self, playlist_name):
+        playlist = self.sp.user_playlist_create(user=self.user["id"],
+                                                name=playlist_name,
+                                                public=True)
+        playlist_id = playlist["id"]
+        self.sp.playlist_add_items(playlist_id=playlist_id,
+                                   items=['1vW12BfxjOQKYElBm9ttW9'])
+
+    def list_playlists(self):
+
+        owner_playlists = []
+
+        total = float('inf')
+        offset = 0
+        # step = 3
+        step = 50
+        while total > offset:
+            print(f"Offset: {offset}, step: {step}, total: {total}")
+            page_playlists = self.sp.current_user_playlists(limit=step,
+                                                            offset=offset)
+            offset = offset + step
+
+            total = page_playlists["total"]
+
+            for playlist in page_playlists['items']:
+                if playlist['owner']['id'] == 'frankfacundo1002177':
+                    playlist_item = {}
+                    playlist_item['external_urls'] = playlist['external_urls']
+                    playlist_item['name'] = playlist['name']
+                    # playlist_item['tracks'] = playlist['tracks']
+                    owner_playlists.append(playlist_item)
+        return owner_playlists
+
+
+my_music = MyMusic()
+# my_music.create_playlist("ff_test")
+playlists = my_music.list_playlists()
+pprint(playlists)
+print(len(playlists))
 
 # my_music = MyMusic()
 # search_results = my_music.search_song("honda costumbres")
