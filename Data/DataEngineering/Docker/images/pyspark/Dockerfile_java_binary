@@ -1,0 +1,20 @@
+FROM python:3.9
+
+# Copy the OpenJDK package into the Docker image
+COPY openjdk-8u43-linux-x64.tar.gz /tmp/openjdk-8u43-linux-x64.tar.gz
+
+# Install OpenJDK
+RUN tar -xzf /tmp/openjdk-8u43-linux-x64.tar.gz -C /opt && \
+    rm /tmp/openjdk-8u43-linux-x64.tar.gz
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME /opt/java-se-8u43-ri
+ENV PATH $JAVA_HOME/bin:$PATH
+
+RUN pip install pyspark
+
+# Copy the PySpark script into the container
+COPY simple_script.py /simple_script.py
+
+# Set the entry point to run the PySpark script within the Conda environment
+ENTRYPOINT ["python", "/simple_script.py"]
