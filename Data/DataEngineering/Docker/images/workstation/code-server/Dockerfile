@@ -28,6 +28,14 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     openjdk-11-jdk
 
+# Set up virtual environment
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 # Install Scala
 RUN apt-get update && \
     apt-get install -y wget && \
@@ -42,10 +50,6 @@ RUN apt-get update && \
 ENV SCALA_HOME=/usr/share/scala
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
-
-# Set up virtual environment
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Spark
 ENV SPARK_VERSION=3.5.0
@@ -71,7 +75,7 @@ RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
     && chsh -s $(which zsh)
 
 # Install Anaconda
-ENV ANACONDA_VERSION=2023.10
+ENV ANACONDA_VERSION=2023.09
 RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-0-Linux-x86_64.sh -O /tmp/anaconda.sh \
     && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
     && rm /tmp/anaconda.sh
@@ -99,22 +103,14 @@ ADD settings.json /root/.local/share/code-server/User/settings.json
 WORKDIR /workspace
 
 COPY extensions /extensions
-RUN code-server --install-extension /extensions/eamodio.gitlens-2023.11.1404.vsix
-RUN code-server --install-extension /extensions/ms-python.python-2023.21.13041006.vsix
-RUN code-server --install-extension /extensions/ms-python.vscode-pylance-2023.11.12.vsix
-RUN code-server --install-extension /extensions/ms-toolsai.jupyter-2023.10.1003011100@linux-x64.vsix
-RUN code-server --install-extension /extensions/ms-toolsai.jupyter-keymap-1.1.2.vsix
-RUN code-server --install-extension /extensions/ms-toolsai.jupyter-renderers-1.0.17.vsix
-RUN code-server --install-extension /extensions/ms-toolsai.vscode-jupyter-cell-tags-0.1.8.vsix
-RUN code-server --install-extension /extensions/ms-toolsai.vscode-jupyter-slideshow-0.1.5.vsix
-RUN code-server --install-extension /extensions/ms-python.pylint-2023.9.12961008.vsix
-RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.44.0@linux-x64.vsix
+RUN code-server --install-extension /extensions/eamodio.gitlens-2023.12.904.vsix
+RUN code-server --install-extension /extensions/ms-python.python-2023.23.13391009.vsix
+RUN code-server --install-extension /extensions/ms-python.vscode-pylance-2023.11.104.vsix
+RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.50.0@linux-x64.vsix
 RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
-RUN code-server --install-extension /extensions/eeyore.yapf-0.1.13.vsix
 RUN code-server --install-extension /extensions/mechatroner.rainbow-csv-3.8.0.vsix
 RUN code-server --install-extension /extensions/vscode-icons-team.vscode-icons-12.6.0.vsix
 RUN code-server --install-extension /extensions/ms-vscode.cpptools-1.18.3@linux-x64.vsix
-RUN code-server --install-extension /extensions/ms-python.isort-2023.11.13101013.vsix
 RUN code-server --install-extension /extensions/ms-azuretools.vscode-docker-1.28.0.vsix
 
 # Install Docker
