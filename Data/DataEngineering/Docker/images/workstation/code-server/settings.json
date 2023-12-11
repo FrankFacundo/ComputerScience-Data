@@ -5,7 +5,8 @@
           "source.fixAll": true,
           "source.organizeImports": true
         },
-        "editor.defaultFormatter": "charliermarsh.ruff"
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "languageServer": "Jedi"
     },
     "notebook.formatOnSave.enabled": true,
     "terminal.integrated.fontFamily": "MesloLGS NF",

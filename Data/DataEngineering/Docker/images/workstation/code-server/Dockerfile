@@ -63,6 +63,8 @@ RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-0-Linux
     && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
     && rm /tmp/anaconda.sh
 ENV PATH="/opt/conda/bin:$PATH"
+RUN conda init zsh
+RUN zsh -l
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
