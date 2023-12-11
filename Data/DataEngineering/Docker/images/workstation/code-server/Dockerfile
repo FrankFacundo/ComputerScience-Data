@@ -32,6 +32,38 @@ RUN apt-get update && apt-get install -y \
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Install Oh My Zsh and themes
+# p10k configure
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+COPY fonts/ /usr/share/fonts/
+RUN fc-cache -fv
+ADD powerlevel10k /powerlevel10k
+RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
+    && sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc \
+    && chsh -s $(which zsh)
+
+SHELL ["/usr/bin/zsh", "-c"]
+
+# Clone the Zsh plugins
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting && \
+    git clone https://github.com/agkozak/zsh-z.git ~/.zsh/zsh-z && \
+    git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
+
+# Add the plugin's source to .zshrc
+RUN echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc && \
+    echo "source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc && \
+    echo "source ~/.zsh/zsh-z/zsh-z.plugin.zsh" >> ~/.zshrc && \
+    echo "fpath+=(~/.zsh/zsh-completions/src)" >> ~/.zshrc && \
+    echo "autoload -U compinit && compinit" >> ~/.zshrc
+
+# Install Anaconda
+ENV ANACONDA_VERSION=2023.09
+RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-0-Linux-x86_64.sh -O /tmp/anaconda.sh \
+    && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
+    && rm /tmp/anaconda.sh
+ENV PATH="/opt/conda/bin:$PATH"
+
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -64,38 +96,6 @@ RUN wget -qO- "https://dlcdn.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_
 # COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 # COPY log4j.properties $SPARK_HOME/conf/log4j.properties
 
-# Install Oh My Zsh and themes
-# p10k configure
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-COPY fonts/ /usr/share/fonts/
-RUN fc-cache -fv
-ADD powerlevel10k /powerlevel10k
-RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
-    && sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc \
-    && chsh -s $(which zsh)
-
-# Install Anaconda
-ENV ANACONDA_VERSION=2023.09
-RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-0-Linux-x86_64.sh -O /tmp/anaconda.sh \
-    && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
-    && rm /tmp/anaconda.sh
-ENV PATH="/opt/conda/bin:$PATH"
-
-SHELL ["/usr/bin/zsh", "-c"]
-
-# Clone the Zsh plugins
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions && \
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting && \
-    git clone https://github.com/agkozak/zsh-z.git ~/.zsh/zsh-z && \
-    git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
-
-# Add the plugin's source to .zshrc
-RUN echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc && \
-    echo "source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc && \
-    echo "source ~/.zsh/zsh-z/zsh-z.plugin.zsh" >> ~/.zshrc && \
-    echo "fpath+=(~/.zsh/zsh-completions/src)" >> ~/.zshrc && \
-    echo "autoload -U compinit && compinit" >> ~/.zshrc
-
 # Install Code Server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
@@ -105,7 +105,6 @@ WORKDIR /workspace
 COPY extensions /extensions
 RUN code-server --install-extension /extensions/eamodio.gitlens-2023.12.904.vsix
 RUN code-server --install-extension /extensions/ms-python.python-2023.23.13391009.vsix
-RUN code-server --install-extension /extensions/ms-python.vscode-pylance-2023.11.104.vsix
 RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.50.0@linux-x64.vsix
 RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
 RUN code-server --install-extension /extensions/mechatroner.rainbow-csv-3.8.0.vsix
