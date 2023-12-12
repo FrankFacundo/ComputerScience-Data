@@ -18,6 +18,9 @@ with torch.no_grad():
     output = model(**encoded_input)
     print(output)
     print(output.logits.shape)
+    # torch.Size([1, 9, 30522])
+    # 9 tokens
+    # 30522 is the size of WordPiece vocabulary
     logits = output.logits
 
 # Select predicted token

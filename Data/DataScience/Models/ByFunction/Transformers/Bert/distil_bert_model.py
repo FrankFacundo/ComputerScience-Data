@@ -9,3 +9,6 @@ output = model(**encoded_input)
 
 print(output.last_hidden_state)
 print(output.last_hidden_state.shape)
+# torch.Size([1, 9, 768])
+# 9 tokens
+# 768 is the dimention of bert model (d_model)
