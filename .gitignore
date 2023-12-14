@@ -26,3 +26,4 @@ Scripts/concurrent/philosophers_dining/bin/*
 Scripts/concurrent2/*
 Scripts/python/spotify/music.json
 Scripts/python/spotify/song_list.pkl
+Data/DataEngineering/elasticsearch/*.crt
