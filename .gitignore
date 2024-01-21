@@ -22,10 +22,12 @@ Data/DataScience/StudyCases-Challenge/Business/tx_classification/dataset/*
 Data/DataScience/StudyCases-Challenge/Hickaton/hfactory_magic_folders/hi__paris_hackaton/building_energy_efficiency/dataset/*
 Data/DataScience/StudyCases-Challenge/Hickaton/my_work/encoding.json
 
+
+Data/DataEngineering/elasticsearch/*.crt
+Data/DataScience/Models/ByFunction/LLM/mistral/pytorch/mistral-7B-v0.1/**
+Data/DataScience/Models/ByFunction/LLM/mistral/transformers/.locks/**
+Data/DataScience/Models/ByFunction/LLM/mistral/transformers/models**
 Scripts/concurrent/philosophers_dining/bin/*
 Scripts/concurrent2/*
 Scripts/python/spotify/music.json
 Scripts/python/spotify/song_list.pkl
-Data/DataEngineering/elasticsearch/*.crt
-Data/DataScience/Models/ByFunction/LLM/mistral/.locks/**
-Data/DataScience/Models/ByFunction/LLM/mistral/models**
