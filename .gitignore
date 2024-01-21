@@ -27,3 +27,5 @@ Scripts/concurrent2/*
 Scripts/python/spotify/music.json
 Scripts/python/spotify/song_list.pkl
 Data/DataEngineering/elasticsearch/*.crt
+Data/DataScience/Models/ByFunction/LLM/mistral/.locks/**
+Data/DataScience/Models/ByFunction/LLM/mistral/models**
