@@ -104,15 +104,18 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 ADD settings.json /root/.local/share/code-server/User/settings.json
 WORKDIR /workspace
 
-COPY extensions /extensions
-RUN code-server --install-extension /extensions/eamodio.gitlens-2023.12.904.vsix
-RUN code-server --install-extension /extensions/ms-python.python-2023.23.13391009.vsix
-RUN code-server --install-extension /extensions/charliermarsh.ruff-2023.50.0@linux-x64.vsix
-RUN code-server --install-extension /extensions/esbenp.prettier-vscode-10.1.0.vsix
-RUN code-server --install-extension /extensions/mechatroner.rainbow-csv-3.8.0.vsix
-RUN code-server --install-extension /extensions/vscode-icons-team.vscode-icons-12.6.0.vsix
-RUN code-server --install-extension /extensions/ms-vscode.cpptools-1.18.3@linux-x64.vsix
-RUN code-server --install-extension /extensions/ms-azuretools.vscode-docker-1.28.0.vsix
+RUN code-server --install-extension eamodio.gitlens
+RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension ms-toolsai.jupyter
+RUN code-server --install-extension charliermarsh.ruff
+RUN code-server --install-extension njpwerner.autodocstring
+RUN code-server --install-extension streetsidesoftware.code-spell-checker
+RUN code-server --install-extension esbenp.prettier-vscode
+RUN code-server --install-extension mechatroner.rainbow-csv
+RUN code-server --install-extension PKief.material-icon-theme
+RUN code-server --install-extension ms-vscode.cpptools
+RUN code-server --install-extension ms-azuretools.vscode-docker
+RUN code-server --install-extension zhuangtongfa.Material-theme
 
 # Install Docker
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common lsb-release gnupg
