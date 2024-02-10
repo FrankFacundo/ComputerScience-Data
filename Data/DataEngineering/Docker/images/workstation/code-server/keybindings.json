@@ -15,6 +15,15 @@
     {
       "key": "ctrl+alt+a",
       "command": "workbench.action.increaseViewHeight"
+    },
+    {
+      "key": "ctrl+;",
+      "command": "workbench.action.terminal.focus"
+    },
+    {
+      "key": "ctrl+;",
+      "command": "workbench.action.focusActiveEditorGroup",
+      "when": "terminalFocus"
     }
   ]
   
