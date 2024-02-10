@@ -1,0 +1,20 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+      "key": "ctrl+alt+s",
+      "command": "workbench.action.decreaseViewWidth"
+    },
+    {
+      "key": "ctrl+alt+q",
+      "command": "workbench.action.increaseViewWidth"
+    },
+    {
+      "key": "ctrl+alt+z",
+      "command": "workbench.action.decreaseViewHeight"
+    },
+    {
+      "key": "ctrl+alt+a",
+      "command": "workbench.action.increaseViewHeight"
+    }
+  ]
+  
