@@ -28,6 +28,8 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     openjdk-11-jdk
 
+RUN apt-get install -y nvidia-cuda-toolkit
+
 # Set up virtual environment
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -37,7 +39,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 COPY fonts/ /usr/share/fonts/
 RUN fc-cache -fv
-ADD powerlevel10k /powerlevel10k
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /powerlevel10k
 RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
     && sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc \
     && chsh -s $(which zsh)
@@ -86,7 +88,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
 
 # Install Spark
-ENV SPARK_VERSION=3.5.0
+ENV SPARK_VERSION=3.5.1
 ENV HADOOP_VERSION=3
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
@@ -116,6 +118,7 @@ RUN code-server --install-extension PKief.material-icon-theme
 RUN code-server --install-extension ms-vscode.cpptools
 RUN code-server --install-extension ms-azuretools.vscode-docker
 RUN code-server --install-extension zhuangtongfa.Material-theme
+RUN code-server --install-extension pomdtr.excalidraw-editor
 
 # Install Docker
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common lsb-release gnupg
