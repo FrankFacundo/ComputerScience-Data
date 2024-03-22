@@ -21,7 +21,10 @@ RUN apt-get update && apt-get install -y \
     zip \
     tree \
     procps \
+    nvtop \
     build-essential \
+    libssl-dev \
+    poppler-utils \
     python3 \
     python3-pip \
     python3-dev \
@@ -39,7 +42,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 COPY fonts/ /usr/share/fonts/
 RUN fc-cache -fv
-RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /powerlevel10k
+RUN git clone --depth=1 --recurse-submodules https://github.com/romkatv/powerlevel10k.git /powerlevel10k
 RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
     && sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc \
     && chsh -s $(which zsh)
@@ -114,11 +117,14 @@ RUN code-server --install-extension njpwerner.autodocstring
 RUN code-server --install-extension streetsidesoftware.code-spell-checker
 RUN code-server --install-extension esbenp.prettier-vscode
 RUN code-server --install-extension mechatroner.rainbow-csv
-RUN code-server --install-extension PKief.material-icon-theme
 RUN code-server --install-extension ms-vscode.cpptools
 RUN code-server --install-extension ms-azuretools.vscode-docker
 RUN code-server --install-extension zhuangtongfa.Material-theme
+RUN code-server --install-extension PKief.material-icon-theme
 RUN code-server --install-extension pomdtr.excalidraw-editor
+RUN code-server --install-extension ms-python.debugpy
+RUN code-server --install-extension mathematic.vscode-pdf
+
 
 # Install Docker
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common lsb-release gnupg
