@@ -16,20 +16,20 @@ spec:
         - name: ai-stt-container
           image: docker.io/library/ai-stt:1.0
           ports:
-          - containerPort: 4242
-            name: http  
+            - containerPort: 4242
+              name: http
 
 ---
 kind: Service
-apiVersion: v1       
-metadata:            
+apiVersion: v1
+metadata:
   name: ai-stt-service
-spec:                
-  selector:          
-    app: ai-stt     
-  ports:    
-  - protocol: TCP 
-    targetPort: 4242
-    port: 80
-    name: http     
+spec:
+  selector:
+    app: ai-stt
+  ports:
+    - protocol: TCP
+      targetPort: 4242
+      port: 80
+      name: http
   type: LoadBalancer
