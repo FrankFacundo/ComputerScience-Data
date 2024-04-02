@@ -91,6 +91,8 @@ df -hl                                     //show filesystem disk usage
 nmap -sP [IP]/[mask(ex:24)]		//scan devices connected in a local network
 nmap -p [port] [IP]				//ping a specific port
 
+sudo lsof -i -P -n | grep LISTEN // check open ports
+
 nslookup google.com				//get IP from Domain name / hostname
 nslookup 142.250.179.35			//get domain name from IP
 
