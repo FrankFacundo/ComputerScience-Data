@@ -103,3 +103,27 @@ printenv 				// print all environement variables
 sed -i -e 's/\r$//' file.sh             //convert windows file format to linux format 
 
 watch -n 0.1 nvidia-smi
+
+TMPDIR=/your/tmp/path pip install -r requirements.txt
+
+conda create --prefix /your/prefix/path python=3.11
+conda activate /your/prefix/path
+
+du -sh */ | sort -hr
+du -sh {.[!.],..?}* | sort -hr
+du -sh {.[!.],}* | sort -hr
+
+
+chown -R user_number:group_number /my/path
+chown -R 30000:30000 /my/path
+
+id -u ${USER}
+id -g ${USER}
+
+kill -9 $(lsof -t -t:port_to_kill)
+kill -9 $(lsof -t -t:30000)
+
+ps aux | grep code-server
+tar -czvf new_compress_file.tar.gz path_dir/
+tar -xzvf file_to_compress.tar.gz
+
