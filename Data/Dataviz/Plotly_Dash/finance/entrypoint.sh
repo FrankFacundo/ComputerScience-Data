@@ -1,1 +1,1 @@
-streamlit run dash_streamlit.py
+streamlit run streamlit_dashboard.py

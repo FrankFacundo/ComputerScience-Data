@@ -1,4 +1,12 @@
 yfinance==0.2.38
 dash>=0.38.0
 plotly_express
+pandas_ta
 streamlit
+streamlit_lightweight_charts
+streamlit_highcharts
+
+highcharts-core>=1.0.0
+highcharts-stock>=1.0.0
+highcharts-maps>=1.0.0
+highcharts_gantt>=1.0.0
