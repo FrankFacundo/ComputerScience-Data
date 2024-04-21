@@ -1,0 +1,4 @@
+yfinance==0.2.38
+dash>=0.38.0
+plotly_express
+streamlit
