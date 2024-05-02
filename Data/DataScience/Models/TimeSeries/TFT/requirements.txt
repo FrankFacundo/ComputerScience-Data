@@ -1,0 +1,9 @@
+# As of 28/04 python 3.11 not compatible because of dependency scikit-learn < "1.2" -> 1.0.2. Take python 3.10
+# Not working with last version of Optuna: https://github.com/jdb78/pytorch-forecasting/issues/1468
+torch==2.1.0
+optuna==3.4
+pytorch-lightning==2.2.3
+pytorch-forecasting==1.0.0
+optuna-integration==3.6.0
+requests==2.31.0
+pyarrow==16.0.0
