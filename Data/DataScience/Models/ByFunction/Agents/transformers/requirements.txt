@@ -1,0 +1,10 @@
+transformers==4.40.1
+openai==1.25.1
+huggingface_hub
+diffusers
+accelerate
+datasets
+torch
+soundfile
+sentencepiece
+opencv-python
