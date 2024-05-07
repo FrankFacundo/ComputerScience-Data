@@ -1,7 +1,7 @@
 FROM ubuntu:23.04
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm-256color
+ENV DEBIAN_FRONTEND=noninteractive \
+    TERM=xterm-256color
 
 RUN apt-get update && apt-get install -y \
     zsh \
@@ -29,7 +29,9 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-dev \
     python3-venv \
-    openjdk-11-jdk
+    openjdk-11-jdk \
+    postgresql \
+    postgresql-contrib
 
 RUN apt-get install -y nvidia-cuda-toolkit
 
@@ -63,8 +65,8 @@ RUN echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
     echo "autoload -U compinit && compinit" >> ~/.zshrc
 
 # Install Anaconda
-ENV ANACONDA_VERSION=2023.09
-RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-0-Linux-x86_64.sh -O /tmp/anaconda.sh \
+ENV ANACONDA_VERSION=2024.02-1
+RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-Linux-x86_64.sh -O /tmp/anaconda.sh \
     && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
     && rm /tmp/anaconda.sh
 ENV PATH="/opt/conda/bin:$PATH"
@@ -103,28 +105,6 @@ RUN wget -qO- "https://dlcdn.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_
 # COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 # COPY log4j.properties $SPARK_HOME/conf/log4j.properties
 
-# Install Code Server
-RUN curl -fsSL https://code-server.dev/install.sh | sh
-
-ADD settings.json /root/.local/share/code-server/User/settings.json
-WORKDIR /workspace
-
-RUN code-server --install-extension eamodio.gitlens
-RUN code-server --install-extension ms-python.python
-RUN code-server --install-extension ms-toolsai.jupyter
-RUN code-server --install-extension charliermarsh.ruff
-RUN code-server --install-extension njpwerner.autodocstring
-RUN code-server --install-extension streetsidesoftware.code-spell-checker
-RUN code-server --install-extension esbenp.prettier-vscode
-RUN code-server --install-extension mechatroner.rainbow-csv
-RUN code-server --install-extension ms-vscode.cpptools
-RUN code-server --install-extension ms-azuretools.vscode-docker
-RUN code-server --install-extension zhuangtongfa.Material-theme
-RUN code-server --install-extension PKief.material-icon-theme
-RUN code-server --install-extension pomdtr.excalidraw-editor
-RUN code-server --install-extension ms-python.debugpy
-RUN code-server --install-extension mathematic.vscode-pdf
-
 
 # Install Docker
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common lsb-release gnupg
@@ -140,12 +120,33 @@ RUN usermod -aG docker root
 # Note: This will be mounted when running the container using the `-v /var/run/docker.sock:/var/run/docker.sock` flag.
 VOLUME ["/var/run/docker.sock"]
 
-# Expose Spark UI port (master and worker)
-EXPOSE 8080
-EXPOSE 8081
+# Install Code Server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Expose the default port for Code Server
-EXPOSE 40000
+ADD settings.json /root/.local/share/code-server/User/settings.json
+WORKDIR /workspace
+
+RUN code-server --install-extension eamodio.gitlens
+RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension ms-toolsai.jupyter
+RUN code-server --install-extension charliermarsh.ruff
+RUN code-server --install-extension njpwerner.autodocstring
+RUN code-server --install-extension streetsidesoftware.code-spell-checker
+RUN code-server --install-extension esbenp.prettier-vscode
+RUN code-server --install-extension mechatroner.rainbow-csv
+# RUN code-server --install-extension ms-vscode.cpptools
+RUN code-server --install-extension ms-azuretools.vscode-docker
+RUN code-server --install-extension zhuangtongfa.Material-theme
+RUN code-server --install-extension PKief.material-icon-theme
+RUN code-server --install-extension pomdtr.excalidraw-editor
+RUN code-server --install-extension ms-python.debugpy
+# RUN code-server --install-extension mathematic.vscode-pdf
+RUN code-server --install-extension Continue.continue
+
+RUN rm -rf /var/lib/apt/lists/*
+
+# Expose Spark UI port (master and worker) and Code server
+EXPOSE 8080 8081 40000
 
 # Command to run Code Server
 CMD ["code-server", "--bind-addr", "0.0.0.0:40000", "--auth", "none"]
