@@ -7,3 +7,4 @@ pytorch-forecasting==1.0.0
 optuna-integration==3.6.0
 requests==2.31.0
 pyarrow==16.0.0
+transformers==4.40.2
