@@ -3,11 +3,20 @@
   "configurations": [
     {
       "name": "Python: Current File",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
       "justMyCode": false
+    },
+    {
+      "name": "Python: TFT",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/Data/DataScience/Models/TimeSeries/TFT/by_hand/"
     }
   ]
 }
