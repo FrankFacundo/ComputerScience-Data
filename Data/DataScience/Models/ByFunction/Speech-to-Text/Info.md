@@ -1,6 +1,7 @@
 https://medium.com/@nick.nagari/comparing-4-popular-open-source-speech-to-text-neural-network-models-92676a9f9265
 
 Best: whisper open-ai
+
 - https://opennmt.net/CTranslate2/python/ctranslate2.models.Whisper.html
 - https://alphacephei.com/nsh/2022/10/22/whisper.html
 - openai whisper: https://www.assemblyai.com/blog/how-to-run-openais-whisper-speech-recognition-model/

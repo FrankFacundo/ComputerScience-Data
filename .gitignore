@@ -17,6 +17,7 @@ Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.pth
 Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/diffprocess/*
 Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/MNIST/*
 Data/DataScience/Models/TimeSeries/basics/data
+Data/DataScience/Models/TimeSeries/LSTM/household_power_consumption.zip
 Data/DataScience/Models/TimeSeries/TFT/by_hand/data/*.csv
 Data/DataScience/Models/TimeSeries/TFT/by_hand/data/*.txt*
 Data/DataScience/StudyCases-Challenge/Business/customer_lifetime_value/online_retail_II.xlsx
