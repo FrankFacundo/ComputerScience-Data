@@ -1,3 +1,6 @@
+import os
+from datetime import datetime, timedelta
+
 from jose import jwt
 from jose.constants import ALGORITHMS
 
@@ -20,7 +23,9 @@ def verify_jwt(token, public_key_path):
 
     # Verify the JWT
     try:
-        payload = jwt.decode(token, public_key, algorithms=[ALGORITHMS.RS256])
+        payload = jwt.decode(
+            token, public_key, algorithms=[ALGORITHMS.RS256], audience="test"
+        )
         print("Verified JWT payload:", payload)
         return payload
     except jwt.JWTError as e:
@@ -28,12 +33,21 @@ def verify_jwt(token, public_key_path):
         return None
 
 
-payload = {"sub": "1234567890", "name": "John Doe", "admin": True}
+expire = datetime.utcnow() + timedelta(days=1)
+payload = {
+    # "aud": ["one", "two"],
+    "aud": ["test", "test2"],
+    "exp": expire,
+    "iss": "issuer_test",
+    "name": "John Doe",
+    "admin": True,
+    "sub": "1234567890",
+}
 
 # Sign the JWT
-private_key_path = "private_key.pem"
+private_key_path = os.path.join(os.path.dirname(__file__), "private_key.pem")
 token = sign_jwt(payload, private_key_path)
 
 # Verify the JWT
-public_key_path = "public_key.pem"
+public_key_path = os.path.join(os.path.dirname(__file__), "public_key.pem")
 verified_payload = verify_jwt(token, public_key_path)

@@ -1,3 +1,5 @@
+import os
+
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 
@@ -6,8 +8,10 @@ def generate_and_save_keys():
     # Generate private key
     private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
 
+    private_key_filepath = os.path.join(os.path.dirname(__file__), "private_key.pem")
+
     # Save private key to a file
-    with open("private_key.pem", "wb") as private_key_file:
+    with open(private_key_filepath, "wb") as private_key_file:
         private_key_file.write(
             private_key.private_bytes(
                 encoding=serialization.Encoding.PEM,
@@ -19,8 +23,10 @@ def generate_and_save_keys():
     # Generate public key
     public_key = private_key.public_key()
 
+    public_key_filepath = os.path.join(os.path.dirname(__file__), "public_key.pem")
+
     # Save public key to a file
-    with open("public_key.pem", "wb") as public_key_file:
+    with open(public_key_filepath, "wb") as public_key_file:
         public_key_file.write(
             public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
@@ -31,7 +37,9 @@ def generate_and_save_keys():
 
 def encrypt_phrase(phrase):
     # Load public key from a file
-    with open("public_key.pem", "rb") as public_key_file:
+    public_key_filepath = os.path.join(os.path.dirname(__file__), "public_key.pem")
+
+    with open(public_key_filepath, "rb") as public_key_file:
         public_key = serialization.load_pem_public_key(public_key_file.read())
 
     # Encrypt the phrase
@@ -50,7 +58,9 @@ def encrypt_phrase(phrase):
 
 def decrypt_phrase(encrypted_phrase):
     # Load private key from a file
-    with open("private_key.pem", "rb") as private_key_file:
+    public_key_filepath = os.path.join(os.path.dirname(__file__), "private_key.pem")
+
+    with open(public_key_filepath, "rb") as private_key_file:
         private_key = serialization.load_pem_private_key(
             private_key_file.read(), password=None
         )
