@@ -2,6 +2,7 @@
 *__pycache__
 **/.cache
 **/node_modules/**
+**/*.pem
 
 Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data
