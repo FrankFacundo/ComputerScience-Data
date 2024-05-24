@@ -130,7 +130,7 @@ RUN code-server --install-extension eamodio.gitlens
 RUN code-server --install-extension ms-python.python
 RUN code-server --install-extension ms-toolsai.jupyter
 RUN code-server --install-extension charliermarsh.ruff
-RUN code-server --install-extension njpwerner.autodocstring
+# RUN code-server --install-extension njpwerner.autodocstring
 RUN code-server --install-extension streetsidesoftware.code-spell-checker
 RUN code-server --install-extension esbenp.prettier-vscode
 RUN code-server --install-extension mechatroner.rainbow-csv
@@ -142,6 +142,7 @@ RUN code-server --install-extension pomdtr.excalidraw-editor
 RUN code-server --install-extension ms-python.debugpy
 # RUN code-server --install-extension mathematic.vscode-pdf
 RUN code-server --install-extension Continue.continue
+RUN code-server --install-extension GitHub.github-vscode-theme
 
 RUN rm -rf /var/lib/apt/lists/*
 
