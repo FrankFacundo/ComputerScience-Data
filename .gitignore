@@ -7,12 +7,17 @@
 Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data
 Data/DataEngineering/Docker/images/workstation/code-server/extensions/*
+Data/DataEngineering/elasticsearch/*.crt
 Data/DataEngineering/spark/pyspark/data/*
 
 Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter.zip
 Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_converter/*
 Data/DataScience/Frameworks/Tensorflow/Transformer/translator/*
+Data/DataScience/Graphs/course_2_altegrad/Lecture 2/tp2/for_moodle/models/*
 Data/DataScience/MLOps/MLflow/mlruns/**
+Data/DataScience/Models/ByFunction/LLM/mistral/pytorch/mistral-7B-v0.1/**
+Data/DataScience/Models/ByFunction/LLM/mistral/transformers/.locks/**
+Data/DataScience/Models/ByFunction/LLM/mistral/transformers/models**
 Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.png
 Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/*.pth
 Data/DataScience/Models/ByFunction/Text2Img/StableDiffusion/diffprocess/*
@@ -27,10 +32,6 @@ Data/DataScience/StudyCases-Challenge/Hickaton/hfactory_magic_folders/hi__paris_
 Data/DataScience/StudyCases-Challenge/Hickaton/my_work/encoding.json
 
 
-Data/DataEngineering/elasticsearch/*.crt
-Data/DataScience/Models/ByFunction/LLM/mistral/pytorch/mistral-7B-v0.1/**
-Data/DataScience/Models/ByFunction/LLM/mistral/transformers/.locks/**
-Data/DataScience/Models/ByFunction/LLM/mistral/transformers/models**
 Scripts/concurrent/philosophers_dining/bin/*
 Scripts/concurrent2/*
 Scripts/python/spotify/music.json
