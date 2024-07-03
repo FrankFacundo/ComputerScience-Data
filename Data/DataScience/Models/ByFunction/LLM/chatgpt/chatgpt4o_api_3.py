@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import os
+import time
 
 import httpx
 
@@ -73,7 +74,10 @@ if __name__ == "__main__":
     image_path = "el_jardin_de_las_delicias.jpg"
     base64_image = encode_image(image_path)
 
+    start_time = time.time()
     results = asyncio.run(launch_tasks(base64_image, prompts))
+    end_time = time.time()
+    print(f"Time elapsed: {end_time - start_time}")  # About 10 seconds
 
     for result in results:
         print(result)
