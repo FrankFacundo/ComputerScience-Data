@@ -1,0 +1,15 @@
+# RTX 3090
+# Ubuntu 20.04
+# Python 3.10.13
+# nvidia-smi: 
+#    Driver Version: 535.183.01   CUDA Version: 12.2
+# nvcc- V:
+#    Cuda compilation tools, release 12.2, V12.2.140
+#    Build cuda_12.2.r12.2/compiler.33191640_0
+
+torch==2.3.1
+transformers==4.38.2
+einops==0.8.0
+flash_attn==2.6.1
+timm==1.0.7
+accelerate==0.32.1
