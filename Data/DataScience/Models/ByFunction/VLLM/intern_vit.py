@@ -5,7 +5,6 @@ from PIL import Image
 from transformers import AutoModel, CLIPImageProcessor
 
 local_path = "your_path"
-local_path = "/media/frank/My Passport/DL_models"
 hf_path = "OpenGVLab/InternViT-6B-448px-V1-5"
 
 
