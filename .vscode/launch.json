@@ -7,7 +7,8 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "justMyCode": false
+      "justMyCode": false,
+      "cwd": "${fileDirname}"
     },
     {
       "name": "Python: TFT",
