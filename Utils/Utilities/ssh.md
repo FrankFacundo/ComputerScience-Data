@@ -22,3 +22,10 @@ Host gitlab.com
   User git
   IdentityFile ~/.ssh/id_rsa_gitlab
 ```
+
+Then you can use the following command to add the keys to the ssh-agent:
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa_gitlab
+```
