@@ -63,3 +63,9 @@ def cross_entropy_loss_numpy(epsilon=1e-12):
 
 cross_entropy_loss_torch()
 cross_entropy_loss_numpy()
+
+"""
+Output:
+Cross-Entropy Loss Torch: 0.3326704204082489
+Cross-Entropy Loss Numpy: 0.3326704178956424
+"""
