@@ -23,31 +23,120 @@ https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine?hl=fr#proxy
 
 ## List images
 
-```shell
+```bash
 minikube image ls --format table
+
+# or
+
+minikube ssh
+docker images
 ```
 
 ## Pods
 
-```shell
+```bash
 kubectl get pods
+```
+
+## Deployments
+
+```bash
+kubectl get deployments
+```
+
+## Services
+
+```bash
+kubectl get services
+```
+
+## Persistent Volumes
+
+```bash
+kubectl get pv
+```
+
+## Persistent Volumes Claims
+
+```bash
+kubectl get pvc
+```
+
+## Config Maps
+
+```bash
+kubectl get configmaps
+```
+
+## All
+
+```bash
+kubectl get all --all-namespaces
+```
+
+```bash
+kubectl get all -n <namespace>
 ```
 
 ## Describe
 
-```shell
+```bash
 kubectl describe pod simple-deployment-85db6cd64c-rjhrj
 ```
 
 ## Logs
-```shell
+
+```bash
 kubectl logs simple-deployment-85db6cd64c-rjhrj
+```
+
+```bash
+watch -n 0.1 "minikube kubectl -- logs backend-6bc44965d7-2dzff"
+```
+
+## Exec
+
+```bash
+kubectl exec -it simple-deployment-85db6cd64c-rjhrj -- /bin/bash
+```
+
+## Apply
+
+```bash
+kubectl apply -f simple-deployment.yaml
+```
+
+```bash
+kubectl apply -n <namespace> -f simple-deployment.yaml
+```
+
+```bash
+kubectl apply -n <namespace> -f simple-deployment.yaml --cluster your_cluster_name
+```
+
+## Delete deployments
+
+```bash
+kubectl delete deployment simple-deployment
+```
+
+## Delete pods
+
+```bash
+kubectl delete pod simple-deployment-85db6cd64c-rjhrj
+```
+
+## Delete services
+
+```bash
+kubectl delete service simple-service
 ```
 
 ## Forward port
 
-```shell
+```bash
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/frontend 8070:80
 kubectl port-forward svc/masai-webserver -n airflow 8070:8080
 ```
 
@@ -61,8 +150,7 @@ kind: <type of Kubernetes object, e.g. Deployment, Service, Pod>
 metadata:
   name: <name of the object>
   labels: <key-value pairs used for labeling and organization>
-spec:
-  <object-specific configuration details>
+spec: <object-specific configuration details>
 ```
 
 For example, here's a YAML file for a Deployment in Kubernetes:

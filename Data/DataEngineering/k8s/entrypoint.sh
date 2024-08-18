@@ -20,6 +20,12 @@ function stop_minikube_cluster(){
     minikube stop
 }
 
+function delete_minikube_cluster(){
+    minikube delete
+    sudo rm -rf ~/.minikube
+}
+
+
 function deploy(){
     $kubectl apply -f $image.yaml
     
@@ -30,7 +36,7 @@ function deploy(){
     
     # # # open a port-forward session to the pod
     # kubectl port-forward $PODNAME 4242:4242
-    minikube service 192.168.39.78:30148
+    # minikube service ai-stt-service
     # kubectl get pods
 }
 
@@ -49,5 +55,7 @@ elif [[ "$1" == 'stop_deploy' ]]; then
     stop_deploy
 
 elif [[ "$1" == 'stop' ]]; then
+    stop_minikube_cluster
+elif [[ "$1" == 'delete' ]]; then
     stop_minikube_cluster
 fi
