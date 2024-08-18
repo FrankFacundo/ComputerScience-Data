@@ -2,13 +2,15 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+input_logits = [[2.0, 0.5, 0.1], [0.5, 2.0, 0.3], [0.3, 0.5, 2.0]]
+
 
 def cross_entropy_loss_torch():
     # Initialize the loss function
     loss_fn = nn.CrossEntropyLoss()
 
     # Example data
-    logits = torch.tensor([[2.0, 0.5, 0.1], [0.5, 2.0, 0.3], [0.3, 0.5, 2.0]])
+    logits = torch.tensor(input_logits)
     labels = torch.tensor([0, 1, 2])  # True class indices
 
     # Calculate loss
@@ -44,7 +46,7 @@ def cross_entropy_loss_numpy(epsilon=1e-12):
     """
 
     # Example logits (same as in the torch example)
-    logits = np.array([[2.0, 0.5, 0.1], [0.5, 2.0, 0.3], [0.3, 0.5, 2.0]])
+    logits = np.array(input_logits)
 
     # Example targets (one-hot encoded)
     targets = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
