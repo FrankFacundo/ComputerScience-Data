@@ -45,6 +45,8 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 COPY fonts/ /usr/share/fonts/
 RUN fc-cache -fv
 RUN git clone --depth=1 --recurse-submodules https://github.com/romkatv/powerlevel10k.git /powerlevel10k
+RUN git -C /powerlevel10k submodule update --init --recursive --force
+# RUN git -C /powerlevel10k pull /powerlevel10k/gitstatus/install -f
 RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
     && sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc \
     && chsh -s $(which zsh)
@@ -63,6 +65,15 @@ RUN echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
     echo "source ~/.zsh/zsh-z/zsh-z.plugin.zsh" >> ~/.zshrc && \
     echo "fpath+=(~/.zsh/zsh-completions/src)" >> ~/.zshrc && \
     echo "autoload -U compinit && compinit" >> ~/.zshrc
+
+# Install Node
+ENV NVM_DIR=/root/.nvm
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash \
+    && bash -c "source $NVM_DIR/nvm.sh && nvm install 20 && nvm alias default 20"
+
+ENV PATH=$NVM_DIR/versions/node/v20.*/bin:$PATH
+RUN bash -c "source $NVM_DIR/nvm.sh && node -v && npm -v"
 
 # Install Anaconda
 ENV ANACONDA_VERSION=2024.02-1
@@ -93,7 +104,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
 
 # Install Spark
-ENV SPARK_VERSION=3.5.1
+ENV SPARK_VERSION=3.5.3
 ENV HADOOP_VERSION=3
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
@@ -143,6 +154,7 @@ RUN code-server --install-extension ms-python.debugpy
 # RUN code-server --install-extension mathematic.vscode-pdf
 RUN code-server --install-extension Continue.continue
 RUN code-server --install-extension GitHub.github-vscode-theme
+RUN code-server --install-extension mhutchie.git-graph
 
 RUN rm -rf /var/lib/apt/lists/*
 
