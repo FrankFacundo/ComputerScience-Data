@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     zsh \
     wget \
     git \
+    git-lfs \
     curl \
     byobu \
     htop \
@@ -45,6 +46,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 COPY fonts/ /usr/share/fonts/
 RUN fc-cache -fv
 RUN git clone --depth=1 --recurse-submodules https://github.com/romkatv/powerlevel10k.git /powerlevel10k
+RUN GITSTATUS_CACHE_DIR=/powerlevel10k/gitstatus/usrbin /powerlevel10k/gitstatus/install -f -s linux -m x86_64
 RUN git -C /powerlevel10k submodule update --init --recursive --force
 # RUN git -C /powerlevel10k pull /powerlevel10k/gitstatus/install -f
 RUN echo 'source /powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
@@ -123,8 +125,6 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# Adding your user to the Docker group (Optional, depends on your use case)
-RUN usermod -aG docker root
 
 # Expose Docker socket
 # This allows the container to communicate with the host's Docker daemon.
@@ -137,11 +137,13 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 ADD settings.json /root/.local/share/code-server/User/settings.json
 WORKDIR /workspace
 
+COPY extensions /extensions
+RUN code-server --install-extension /extensions/mathematic.vscode-pdf-0.0.6.vsix
 RUN code-server --install-extension eamodio.gitlens
 RUN code-server --install-extension ms-python.python
 RUN code-server --install-extension ms-toolsai.jupyter
 RUN code-server --install-extension charliermarsh.ruff
-# RUN code-server --install-extension njpwerner.autodocstring
+RUN code-server --install-extension njpwerner.autodocstring
 RUN code-server --install-extension streetsidesoftware.code-spell-checker
 RUN code-server --install-extension esbenp.prettier-vscode
 RUN code-server --install-extension mechatroner.rainbow-csv
@@ -151,12 +153,15 @@ RUN code-server --install-extension zhuangtongfa.Material-theme
 RUN code-server --install-extension PKief.material-icon-theme
 RUN code-server --install-extension pomdtr.excalidraw-editor
 RUN code-server --install-extension ms-python.debugpy
-# RUN code-server --install-extension mathematic.vscode-pdf
 RUN code-server --install-extension Continue.continue
 RUN code-server --install-extension GitHub.github-vscode-theme
 RUN code-server --install-extension mhutchie.git-graph
+RUN code-server --install-extension GrapeCity.gc-excelviewer
 
 RUN rm -rf /var/lib/apt/lists/*
+
+# Adding your user to the Docker group (Optional, depends on your use case)
+RUN usermod -aG docker root
 
 # Expose Spark UI port (master and worker) and Code server
 EXPOSE 8080 8081 40000

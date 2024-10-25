@@ -1,6 +1,6 @@
 # Commands
 
-IMAGE_VERSION=0.96.3
+IMAGE_VERSION=0.96.4
 
 docker build -t code-server-${IMAGE_VERSION} .
 
