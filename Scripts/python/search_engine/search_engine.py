@@ -2,14 +2,11 @@ import os
 import shutil
 from itertools import chain
 
-import nltk
 from nltk.corpus import wordnet
 from whoosh import index
 from whoosh.analysis import StemmingAnalyzer
 from whoosh.fields import TEXT, Schema
-from whoosh.qparser import FuzzyTermPlugin, QueryParser
-
-nltk.download("wordnet")
+from whoosh.query import FuzzyTerm, Or
 
 # Sample documents
 docs = [
@@ -63,23 +60,27 @@ def expand_query_with_synonyms(query_text):
     return " ".join(set(expanded_terms))
 
 
-# Search function with Fuzzy Matching and Synonyms
-def search(query_text, top_k=3, fuzzy_threshold=80):
+# Enhanced Search with Synonyms and Fuzzy Matching
+def search(
+    query_text, top_k=3, fuzzy_threshold=3
+):  # Lower threshold allows for more fuzzy matches
     with ix.searcher() as searcher:
         # Expand the query with synonyms
         expanded_query = expand_query_with_synonyms(query_text)
+        words = expanded_query.split()
 
-        # Initialize the parser with fuzzy term support
-        parser = QueryParser("content", ix.schema)
-        parser.add_plugin(FuzzyTermPlugin())  # Enable fuzzy matching
+        # Build fuzzy and term-based queries
+        query_terms = [
+            FuzzyTerm("content", word, maxdist=fuzzy_threshold) for word in words
+        ]
 
-        # Create a fuzzy search query
-        query = parser.parse(expanded_query)
+        # OR query for all terms (fuzzy and exact)
+        query = Or(query_terms)
 
         # Perform search
         results = searcher.search(query, limit=top_k)
 
-        # Display search results with fuzzy matching
+        # Collect and print search results
         output_results = []
         for hit in results:
             output_results.append({"title": hit["title"], "content": hit["content"]})
@@ -88,7 +89,7 @@ def search(query_text, top_k=3, fuzzy_threshold=80):
 
 
 # Example query with misspelling and synonyms
-query = "ElastikSearch"
+query = "Learn"
 print(f"Searching for: {query}")
 search_results = search(query)
 print(f"Found {len(search_results)} results.")

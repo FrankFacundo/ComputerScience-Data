@@ -15,6 +15,7 @@ Data/DataScience/Frameworks/Tensorflow/Transformer/ted_hrlr_translate_pt_en_conv
 Data/DataScience/Frameworks/Tensorflow/Transformer/translator/*
 Data/DataScience/Graphs/course_2_altegrad/Lecture 2/tp2/for_moodle/models/*
 Data/DataScience/MLOps/MLflow/mlruns/**
+Data/DataScience/Models/ByFunction/LLM/mistral/pixtral/model/*
 Data/DataScience/Models/ByFunction/LLM/mistral/pytorch/mistral-7B-v0.1/**
 Data/DataScience/Models/ByFunction/LLM/mistral/transformers/.locks/**
 Data/DataScience/Models/ByFunction/LLM/mistral/transformers/models**
