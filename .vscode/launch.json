@@ -5,7 +5,7 @@
       "name": "Python: Current File",
       "type": "debugpy",
       "request": "launch",
-      "program": "${file}",
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${fileDirname}"
@@ -18,6 +18,26 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${workspaceFolder}/Data/DataScience/Models/TimeSeries/TFT/by_hand/"
+    },
+    {
+      "name": "Debug with Makefile",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}", // Adjust to match the target output name
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build"
     }
   ]
 }
