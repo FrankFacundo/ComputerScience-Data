@@ -1,8 +1,8 @@
 # Commands
 
-IMAGE_VERSION=0.96.4
+IMAGE_VERSION=0.96.5
 
-docker build -t code-server-${IMAGE_VERSION} .
+docker build -t code-server-${IMAGE_VERSION} -f Dockerfile_miniforge .
 
 docker run -it --mount type=bind,source=/home/frank/Code/ComputerScience-Data,target=/workspace -p 40000:40000 code-server-${IMAGE_VERSION}
 
