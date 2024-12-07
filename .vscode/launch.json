@@ -5,7 +5,7 @@
       "name": "Python: Current File",
       "type": "debugpy",
       "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}",
+      "program": "${fileDirname}/${fileBasename}",
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${fileDirname}"
