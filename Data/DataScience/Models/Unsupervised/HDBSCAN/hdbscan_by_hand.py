@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def hdbscan_numpy(data, min_samples=5, min_cluster_size=5):
+def hdbscan_numpy(data, min_samples=5, min_cluster_size=2):
     # Step 1: Compute the pairwise distance matrix
     def compute_distances(X):
         return np.linalg.norm(X[:, None] - X[None, :], axis=2)
@@ -116,14 +116,37 @@ def generate_moons(n_samples, noise=0.1):
     return np.vstack([outer_circle, inner_circle])
 
 
-# Generate data and run the algorithm
-data = generate_moons(300, noise=0.05)
-clusters = hdbscan_numpy(data, min_samples=5, min_cluster_size=20)
+def generate_two_clusters(n_samples, separation=5):
+    np.random.seed(42)
+    cluster1 = np.random.randn(n_samples // 2, 2)
+    cluster2 = np.random.randn(n_samples // 2, 2) + separation
+    return np.vstack([cluster1, cluster2])
 
-# Visualize results
-plt.scatter(data[:, 0], data[:, 1], c=clusters, cmap="viridis", s=10)
+
+# # Generate data for the first example
+# data_moons = generate_moons(300, noise=0.05)
+# clusters_moons = hdbscan_numpy(data_moons, min_samples=5, min_cluster_size=20)
+
+# # Visualize the first example
+# plt.figure(figsize=(8, 4))
+# plt.scatter(data_moons[:, 0], data_moons[:, 1], c=clusters_moons, cmap="viridis", s=10)
+# plt.colorbar(label="Cluster Label")
+# plt.title("HDBSCAN Clustering Results - Moons Dataset")
+# plt.xlabel("Feature 1")
+# plt.ylabel("Feature 2")
+# plt.show()
+
+# Generate data for the second example (two well-separated clusters)
+data_clusters = generate_two_clusters(4, separation=8)
+clusters_clusters = hdbscan_numpy(data_clusters, min_samples=3, min_cluster_size=20)
+
+# Visualize the second example
+plt.figure(figsize=(8, 4))
+plt.scatter(
+    data_clusters[:, 0], data_clusters[:, 1], c=clusters_clusters, cmap="viridis", s=10
+)
 plt.colorbar(label="Cluster Label")
-plt.title("HDBSCAN Clustering Results (NumPy Only)")
+plt.title("HDBSCAN Clustering Results - Two Separated Clusters")
 plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
 plt.show()
