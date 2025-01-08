@@ -1,0 +1,4 @@
+torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
+numpy==2.2.1
+scipy==1.15.0
