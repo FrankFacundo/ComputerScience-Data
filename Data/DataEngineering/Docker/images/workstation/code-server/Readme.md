@@ -1,6 +1,6 @@
 # Commands
 
-IMAGE_VERSION=0.96.5
+IMAGE_VERSION=0.96.7
 
 docker build -t code-server-${IMAGE_VERSION} -f Dockerfile_miniforge .
 
