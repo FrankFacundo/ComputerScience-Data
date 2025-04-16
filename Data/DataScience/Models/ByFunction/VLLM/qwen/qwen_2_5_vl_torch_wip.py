@@ -1,6 +1,7 @@
 import io
 import math
 import os
+from dataclasses import dataclass  # <--- Import dataclass
 from typing import List, Optional, Tuple, Union
 
 import requests
@@ -14,6 +15,52 @@ from torch.nn import CrossEntropyLoss
 # Replicating the tokenizer from scratch is extremely complex.
 from transformers import AutoTokenizer  # Using HF just for the tokenizer
 from transformers.modeling_outputs import BaseModelOutputWithPast
+
+# Assume huggingface tokenizers is acceptable for loading the tokenizer itself
+# Replicating the tokenizer from scratch is extremely complex.
+# Import ModelOutput and BaseModelOutputWithPast
+from transformers.utils import ModelOutput  # <--- Import ModelOutput
+
+
+# ============================================================================
+# 0. Define Custom Output Class
+# ============================================================================
+@dataclass
+class Qwen2_5_VLCausalLMOutputWithPast(ModelOutput):
+    """
+    Base class for causal language model outputs with past key value states for Qwen2.5-VL.
+
+    Args:
+        loss (`Optional[torch.FloatTensor]` of shape `(1,)`):
+            Language modeling loss (for next-token prediction). Computed when `labels` are provided.
+        logits (`torch.FloatTensor` of shape `(batch_size, sequence_length, vocab_size)`):
+            Prediction scores of the language modeling head (scores for each vocabulary token before SoftMax).
+        past_key_values (`Optional[Tuple[Tuple[torch.FloatTensor]]]`):
+            Contains pre-computed hidden-states (key and values in the self-attention blocks) that can be used (see
+            `past_key_values` input) to speed up sequential decoding. The tuple contains one tuple for each layer of the
+            model. Each tuple contains two tensors of shape `(batch_size, num_heads, sequence_length, embed_size_per_head)`.
+        hidden_states (`Optional[Tuple[torch.FloatTensor]]`):
+            Tuple of `torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer) of
+            shape `(batch_size, sequence_length, hidden_size)`. Hidden-states of the model at the output of each layer
+            plus the initial embedding outputs. Returned when `output_hidden_states=True`.
+        attentions (`Optional[Tuple[torch.FloatTensor]]`):
+            Tuple of `torch.FloatTensor` (one for each layer) of shape `(batch_size, num_heads, sequence_length,
+            sequence_length)`. Attentions weights after the attention softmax, used to compute the weighted average in the
+            self-attention heads. Returned when `output_attentions=True`.
+        rope_deltas (`Optional[torch.Tensor]` of shape `(batch_size, 1)`):
+             The calculated mRoPE position deltas, which might be useful for managing position IDs during
+             complex generation scenarios. Calculated internally when `position_ids` is not provided to the forward pass.
+    """
+
+    loss: Optional[torch.FloatTensor] = None
+    logits: torch.FloatTensor = None
+    past_key_values: Optional[Tuple[Tuple[torch.Tensor]]] = (
+        None  # Note: HF often uses torch.Tensor here
+    )
+    hidden_states: Optional[Tuple[torch.FloatTensor]] = None
+    attentions: Optional[Tuple[torch.FloatTensor]] = None
+    rope_deltas: Optional[torch.Tensor] = None  # Add the custom output
+
 
 # ============================================================================
 # 1. Model Configuration (Manually Defined or Loaded from config.json)
