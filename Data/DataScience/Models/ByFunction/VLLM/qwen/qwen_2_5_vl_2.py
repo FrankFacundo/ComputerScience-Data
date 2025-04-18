@@ -1,39 +1,11 @@
-from collections import OrderedDict
-
-from accelerate import dispatch_model
 from model import get_model
 from processor import get_processor
-from transformers.generation.configuration_utils import GenerationConfig
 from vision_process import process_vision_info
 
 path_model = "/home/frank/Datalake/models/Qwen/Qwen2.5-VL-3B-Instruct"
 
 processor = get_processor()
 model = get_model()
-
-
-model.generation_config = GenerationConfig.from_pretrained(
-    path_model,
-    cache_dir=None,
-    force_download=False,
-    proxies=None,
-    local_files_only=False,
-    token=None,
-    revision="main",
-    subfolder="",
-    _from_auto=False,
-    _from_pipeline=None,
-)
-
-device_map_kwargs = {
-    "device_map": OrderedDict([("", 0)]),
-    "offload_dir": None,
-    "offload_index": None,
-    "offload_buffers": False,
-    "skip_keys": "past_key_values",
-}
-
-dispatch_model(model, **device_map_kwargs)
 
 messages = [
     {

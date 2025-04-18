@@ -5,6 +5,8 @@ from contextlib import ExitStack
 from typing import ContextManager, Dict, List, Optional, Tuple, Union
 
 import torch
+from accelerate import dispatch_model
+from transformers.generation.configuration_utils import GenerationConfig
 from transformers.models.qwen2_5_vl.configuration_qwen2_5_vl import Qwen2_5_VLConfig
 from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import (
     Qwen2_5_VLForConditionalGeneration,
@@ -134,4 +136,28 @@ def get_model():
     )
     model.tie_weights()
     model.eval()
+
+    model.generation_config = GenerationConfig.from_pretrained(
+        path_model,
+        cache_dir=None,
+        force_download=False,
+        proxies=None,
+        local_files_only=False,
+        token=None,
+        revision="main",
+        subfolder="",
+        _from_auto=False,
+        _from_pipeline=None,
+    )
+
+    device_map_kwargs = {
+        "device_map": OrderedDict([("", 0)]),
+        "offload_dir": None,
+        "offload_index": None,
+        "offload_buffers": False,
+        "skip_keys": "past_key_values",
+    }
+
+    dispatch_model(model, **device_map_kwargs)
+
     return model
