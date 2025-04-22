@@ -120,12 +120,28 @@
     \section{Value Functions \& Optimality}
     Evaluating how good states and policies are.
 
-    \textbf{Return} (Discounted Sum of Rewards): Total discounted reward from time $t$.
-    $$ G_t = \sum_{k=0}^\infty \gamma^k R_{t+k} $$
+    $$ G^\pi_t(s) = \sum\limits_{k = 0}^\infty \gamma^k R_{t+k} \quad 
+    \Bigg| \quad 
+    \begin{array}{l}S_0 = s,
+        \\ A_{t+k} \sim \pi_{t+k},
+        \\ S_{t+k+1}\sim p(\cdot|S_{t+k},A_{t+k}),
+        \\R_{t+k} = r(S_{t+k},A_{t+k},S_{t+k+1}).
+    \end{array}$$
+
+    if $t=0$ (and rename $k$ by $t$)
+
+    $$ G^\pi(s) = \sum\limits_{t = 0}^\infty \gamma^t R_{t} \quad 
+    \Bigg| \quad 
+    \begin{array}{l}S_0 = s,
+        \\ A_{t} \sim \pi_{t},
+        \\ S_{t+1}\sim p(\cdot|S_{t},A_{t}),
+        \\R_{t} = r(S_{t},A_{t},S_{t+1}).
+    \end{array}$$
+
     This is a random variable depending on the policy and system dynamics.
 
     \textbf{State Value Function} $v^\pi(s)$: Expected return starting from state $s$ and following policy $\pi$.
-    $$ v^\pi(s) = \mathbb{E}_\pi [ G_t | S_t = s ] $$
+    $$ v^\pi(s) = \mathbb{E}_\pi [ G^\pi_t | S_t = s ] $$
     $$ v^\pi(s) = \mathbb{E}_\pi \left[ \sum_{k=0}^\infty \gamma^k R_{t+k} \bigg| S_t = s \right] $$
 
     \textbf{Policy Value / Objective Function} $J(\pi)$: Expected value starting from an initial state distribution $\rho_0$.
