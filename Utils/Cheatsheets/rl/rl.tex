@@ -1,0 +1,192 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{calc}
+% \usepackage{tikz} % Not needed for this content
+\usepackage{ifthen}
+\usepackage{textcomp}
+\usepackage{xcolor}
+% \usepackage{graphicx} % Not needed for this content
+% \usepackage{makecell} % Not needed for this content
+% \graphicspath{ {./images/} } % Not needed for this content
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{titlesec}
+\usepackage[landscape]{geometry}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+%------------------------------------
+% Adjust geometry for landscape A4 or Letter
+\ifthenelse{\lengthtest { \paperwidth = 11in}} % Letter paper
+    { \geometry{top=.4in,left=.5in,right=.5in,bottom=.4in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}} % A4 paper
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} } % Default fallback
+	}
+\pagestyle{fancy}
+\fancyhf{}
+% Remove header line
+\renewcommand{\headrulewidth}{0pt}
+% Add footer
+\cfoot{\fontsize{9pt}{11pt}\selectfont RL Cheatsheet - Generated from Notebooks}
+\setlength{\footskip}{16pt} % Adjust footer position if needed
+
+% Define smaller plus sign if needed (not used here)
+% \newcommand{\plus}{\raisebox{.3\height}{\scalebox{.7}{+}}}
+
+% Customize section headings for compactness
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0} % No section numbering
+\setlength{\parindent}{0pt} % No paragraph indent
+\setlength{\parskip}{0pt plus 0.5ex} % Minimal space between paragraphs/items
+% ----------------------------------------------------
+
+\begin{document}
+
+\raggedright % Better justification for narrow columns
+\footnotesize % Use small font for the entire document
+
+\begin{center}
+    % \vspace{-50mm} % Adjust vertical space if needed
+    \Large{\vspace{-15mm}\textbf{Reinforcement Learning Fundamentals: MDPs and Policies}} \\ % Title
+    \footnotesize{Last Updated \today}
+    \vspace{-.4mm}
+\end{center}
+\begin{multicols}{3} % Use 3 columns like the example
+    \setlength{\premulticols}{1pt}
+    \setlength{\postmulticols}{1pt}
+    \setlength{\multicolsep}{1pt}
+    \setlength{\columnsep}{2pt} % Minimal column separation
+    % --------------------------------------------------------------
+    \section{Markov Decision Process (MDP)}
+    An MDP models a sequential decision problem under uncertainty.
+    
+    \textbf{Definition}: An MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$.
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item $\mathcal{S}$: Set of states $s$.
+        \item $\mathcal{A}$: Set of actions $a$.
+        \item $p(s'|s,a)$: Transition probability kernel.
+              $$ p(s'|s,a) = \mathbb{P}(S_{t+1}=s' | S_t=s, A_t=a) $$
+        \item $r(s,a)$ or $r(s,a,s')$: Reward function.
+              $$ r(s,a) = \mathbb{E}[R_t | S_t=s, A_t=a] $$
+              $$ r(s,a,s') = \mathbb{E}[R_t | S_t=s, A_t=a, S_{t+1}=s'] $$
+              Note: $r(s,a) = \sum_{s'} p(s'|s,a) r(s,a,s')$.
+        \item $\gamma \in [0, 1)$: Discount factor.
+    \end{itemize}
+
+    \textbf{Markov Property}: The future depends only on the current state and action, not the past history.
+    $$ \mathbb{P}(S_{t+1}, R_t | S_t, A_t, S_{t-1}, \dots) = \mathbb{P}(S_{t+1}, R_t | S_t, A_t) $$
+
+    \section{Policies}
+    A policy specifies how an agent selects actions.
+    \textbf{Definition}: A policy $\pi$ is a sequence of decision rules $\pi_t$.
+    \textbf{Decision Rule} $\pi_t$: Determines the distribution of action $A_t$ given the history $H_t = (S_0, A_0, \dots, S_t)$.
+    $$ A_t \sim \pi_t(\cdot | H_t) $$
+
+    \subsection{Types of Policies}
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item \textbf{History-dependent}: $\pi_t(\cdot | H_t)$.
+        \item \textbf{Markovian} (Memoryless): Depends only on the current state $S_t$.
+              $$ \pi_t(\cdot | H_t) = \pi_t(\cdot | S_t) $$
+              Often written as $\pi_t(a|s)$.
+        \item \textbf{Stationary}: The decision rule is time-independent.
+              $$ \pi(\cdot | s) = \pi_t(\cdot | s) \quad \forall t $$
+              Often written as $\pi(a|s)$.
+        \item \textbf{Deterministic}: Maps each state (or history) to a single action.
+              $$ \pi(s) = a $$
+              Or $\pi_t(H_t) = a$.
+    \end{itemize}
+
+    \textbf{Induced Markov Chain}: Given an MDP and a fixed stationary policy $\pi$, the state sequence $(S_t)$ forms a Markov chain with transition kernel $p^\pi(s'|s)$:
+    $$ p^\pi(s'|s) = \sum_{a \in \mathcal{A}} \pi(a|s) p(s'|s,a) $$
+    If $\pi$ is deterministic, $p^\pi(s'|s) = p(s'|s,\pi(s))$.
+
+    \section{Value Functions \& Optimality}
+    Evaluating how good states and policies are.
+
+    \textbf{Return} (Discounted Sum of Rewards): Total discounted reward from time $t$.
+    $$ G_t = \sum_{k=0}^\infty \gamma^k R_{t+k} $$
+    This is a random variable depending on the policy and system dynamics.
+
+    \textbf{State Value Function} $v^\pi(s)$: Expected return starting from state $s$ and following policy $\pi$.
+    $$ v^\pi(s) = \mathbb{E}_\pi [ G_t | S_t = s ] $$
+    $$ v^\pi(s) = \mathbb{E}_\pi \left[ \sum_{k=0}^\infty \gamma^k R_{t+k} \bigg| S_t = s \right] $$
+
+    \textbf{Policy Value / Objective Function} $J(\pi)$: Expected value starting from an initial state distribution $\rho_0$.
+    $$ J(\pi) = \mathbb{E}_{S_0 \sim \rho_0} [ v^\pi(S_0) ] = \mathbb{E}_{S_0 \sim \rho_0, \pi} [ G_0 ] $$
+
+    \textbf{Optimal Value Function} $v^*(s)$: Maximum possible expected return from state $s$.
+    $$ v^*(s) = \max_\pi v^\pi(s) $$
+
+    \textbf{Optimal Policy} $\pi^*$: A policy achieving the optimal value function for all states.
+    $$ \pi^* \text{ is optimal } \iff v^{\pi^*}(s) = v^*(s) \quad \forall s \in \mathcal{S} $$
+    Equivalently:
+    $$ \pi^* \text{ is optimal } \iff v^{\pi^*}(s) \ge v^\pi(s) \quad \forall s \in \mathcal{S}, \forall \pi $$
+
+    \textbf{Policy Optimization Problem}: Find $\pi^*$ maximizing $J(\pi)$.
+    $$ \pi^* \in \argmax_\pi J(\pi) $$
+    If $\rho_0(s) > 0$ for all $s$, solving $\max_\pi J(\pi)$ is equivalent to finding a $\pi^*$ such that $v^{\pi^*}(s) = v^*(s)$ for all $s$.
+
+    \subsection{Existence of Optimal Policies}
+    \textbf{Theorem}: For any MDP with a $\gamma$-discounted criterion ($\gamma < 1$) and infinite horizon, there exists at least one optimal policy $\pi^*$ that is:
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item Stationary
+        \item Deterministic
+        \item Memoryless (Markovian)
+    \end{itemize}
+    This means we can search for optimal policies of the form $\pi: \mathcal{S} \to \mathcal{A}$.
+
+    \section{State Occupancy Measure}
+    Alternative view of policy value based on state visitation frequency.
+
+    \textbf{Expected Reward under $\pi$}:
+    $$ r^\pi(s) = \mathbb{E}_{a \sim \pi(\cdot|s), s' \sim p(\cdot|s,a)} [r(s,a,s')] $$
+    $$ r^\pi(s) = \sum_{a} \pi(a|s) \sum_{s'} p(s'|s,a) r(s,a,s') $$
+
+    \textbf{State Visitation Probability}:
+    $p(S_t=s | S_0 \sim \rho_0, \pi)$ is the probability of being in state $s$ at time $t$. For finite states, if $\rho_0$ is a row vector, this is the $s$-th element of $\rho_0 (p^\pi)^t$.
+
+    \textbf{Discounted State Occupancy Measure} $\rho^\pi_{\rho_0}(s)$: Expected total discounted time spent in state $s$.
+    $$ \rho^\pi_{\rho_0}(s) = \sum_{t=0}^\infty \gamma^t p(S_t=s | S_0 \sim \rho_0, \pi) $$
+    For finite states, $\rho^\pi_{\rho_0} = \rho_0 \sum_{t=0}^\infty (\gamma p^\pi)^t = \rho_0 (I - \gamma p^\pi)^{-1}$.
+
+    \textbf{Policy Value via Occupancy}:
+    $$ J(\pi) = \sum_{s \in \mathcal{S}} \rho^\pi_{\rho_0}(s) r^\pi(s) = \langle \rho^\pi_{\rho_0}, r^\pi \rangle $$
+
+    \textbf{Total Occupancy}: Summing over all states:
+    $$ \sum_{s \in \mathcal{S}} \rho^\pi_{\rho_0}(s) = \sum_{t=0}^\infty \gamma^t \sum_{s \in \mathcal{S}} p(S_t=s | \dots) = \sum_{t=0}^\infty \gamma^t = \frac{1}{1-\gamma} $$
+
+    \textbf{Normalized Occupancy Distribution}:
+    $$ d^\pi_{\rho_0}(s) = (1-\gamma) \rho^\pi_{\rho_0}(s) $$
+    This is a proper probability distribution ($\sum_s d^\pi_{\rho_0}(s) = 1$).
+    $$ J(\pi) = \frac{1}{1-\gamma} \sum_s d^\pi_{\rho_0}(s) r^\pi(s) = \frac{1}{1-\gamma} \mathbb{E}_{s \sim d^\pi_{\rho_0}} [r^\pi(s)] $$
+
+    \section{Interpretation of Discount Factor $\gamma$}
+    $\gamma$ can be seen as the probability of continuing the process at each step.
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item Consider an MDP where each transition has a probability $1-\gamma$ of ending in a terminal absorbing state (with 0 reward) and $\gamma$ of continuing according to $p$.
+        \item The probability of a trajectory lasting exactly $h$ steps is $(1-\gamma)\gamma^{h-1}$ (for $h \ge 1$).
+        \item The expected length of a trajectory (effective horizon) is $\frac{1}{1-\gamma}$.
+        \item The value $v^\pi_\gamma(s)$ in the original MDP (discounted) is related to the value $v^{\pi'}(s)$ in the modified MDP (total reward) by $v^{\pi'}(s) \approx \gamma v^\pi_\gamma(s)$.
+    \end{itemize}
+
+
+\end{multicols}
+
+\end{document}
