@@ -34,7 +34,8 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     openjdk-11-jdk \
     postgresql \
-    postgresql-contrib 
+    postgresql-contrib \
+    maven
 
 RUN apt-get install -y \
     ninja-build \
@@ -152,6 +153,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm --version \
     && node --version
+
+# Set Maven environment variables
+ENV MAVEN_HOME=/usr/share/maven
+ENV PATH=$PATH:$MAVEN_HOME/bin
 
 # # Configure Spark
 # COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
