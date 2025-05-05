@@ -106,7 +106,6 @@ def save_content(url, content, folder):
         print(f"File exists already: {file_path}")
 
 
-# Function to download and save a resource
 def download_resource(url, folder, driver):
     global csv_writer, csvfile_handle
     is_pdf = urlparse(url).path.lower().endswith(".pdf")
@@ -118,67 +117,100 @@ def download_resource(url, folder, driver):
         print(f"Begin to get URL: {url}")
         driver.get(url)
 
-        # --- Use Explicit Wait instead of time.sleep ---
         try:
-            # Option 1: Wait for the body tag to be present (good for most HTML)
-            # wait = WebDriverWait(driver, wait_timeout)
-            # wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
-            # Option 2: Wait for document.readyState to be 'complete' (more robust)
             WebDriverWait(driver, wait_timeout).until(
                 lambda d: d.execute_script("return document.readyState") == "complete"
             )
             print(f"Page loaded condition met for: {url}")
-
         except TimeoutException:
             print(
                 f"Timeout ({wait_timeout}s) waiting for page load condition for: {url}"
             )
-            # Decide how to handle timeout: skip, try saving anyway, log differently?
-            # For now, we'll try to proceed but log the timeout.
-            # Optionally, return None here if a timeout means failure:
-            # return None
+            # Log timeout and return None
+            if csv_writer and csvfile_handle:
+                csv_writer.writerow([url, "Failed: Page Load Condition Timeout"])
+                csvfile_handle.flush()
+            return None  # Indicate failure
         except Exception as e:
             print(f"Error during explicit wait for {url}: {e}")
-            # Optionally return None on other wait errors
-            # return None
-        # ----------------------------------------------
+            # Log error and return None
+            if csv_writer and csvfile_handle:
+                csv_writer.writerow([url, f"Failed: Wait Error ({e})"])
+                csvfile_handle.flush()
+            return None  # Indicate failure
 
-        final_url = driver.current_url  # Get final URL after potential redirects
+        final_url = driver.current_url
         print(f"Final url after loading: {final_url}")
 
-        # Re-check if the final URL is a PDF (due to redirects)
-        is_pdf = urlparse(final_url).path.lower().endswith(".pdf")
+        is_pdf = urlparse(final_url).path.lower().endswith(".pdf")  # Re-check final URL
 
-        # --- Logging & Flushing (Only for HTML/PDF attempts) ---
+        # --- Logging & Flushing (Log successful fetch attempt *before* content check) ---
+        # We log here tentatively; if it's a custom 404, we might log failure later
         if csv_writer and csvfile_handle:
-            csv_writer.writerow([url, final_url])
+            # Log initial fetch success before content validation
+            # We'll add a specific failure log if custom 404 detected below
+            csv_writer.writerow([url, final_url])  # Tentative success log
             csvfile_handle.flush()
         # -------------------------
 
         if is_pdf:
-            # Selenium still not ideal for PDFs. This saves an empty file.
-            # A robust solution uses requests.
             print(f"Identified as PDF (final URL): {final_url}. Saving placeholder.")
             content = b""  # Placeholder for PDF content
+            # Directly save the placeholder for PDF
+            save_content(final_url, content, folder)
+            return content  # Return placeholder bytes
         else:
             # Get HTML content if not identified as PDF
             content = driver.page_source  # This is a string
 
-        # Save content using the FINAL URL to determine path/filename
-        save_content(final_url, content, folder)
-        return content  # Return content for parsing (if HTML)
+            # --- >>> NEW: Custom 404 Content Check <<< ---
+            if isinstance(content, str) and content.strip():
+                try:
+                    # Quickly parse the HTML to check the title
+                    soup_check = BeautifulSoup(content, "lxml")
+                    title_tag = soup_check.find("title")
+                    # Check if title exists and contains "file not found" (case-insensitive)
+                    if (
+                        title_tag
+                        and "file not found" in title_tag.get_text(strip=True).lower()
+                    ):
+                        print(
+                            f"Detected custom 404 page (by title) for URL: {url} (Final: {final_url})"
+                        )
+                        # Log this specific failure type in CSV
+                        if csv_writer and csvfile_handle:
+                            # Overwrite previous tentative log with specific failure
+                            # Note: Appending might be better if you want full history,
+                            # but for simplicity, we'll assume one status per initial URL attempt.
+                            # You might need a more complex logging strategy if redirects are common.
+                            # Let's add a NEW row indicating failure for clarity:
+                            csv_writer.writerow(
+                                [
+                                    url,
+                                    f"Failed: Custom 404 Page Detected (Final URL: {final_url})",
+                                ]
+                            )
+                            csvfile_handle.flush()
+                        return None  # Signal failure: Do not save, do not parse
+                except Exception as parse_err:
+                    # Log if the quick parse fails, but proceed with saving cautiously
+                    print(
+                        f"Warning: Could not parse content to check for custom 404 ({url}): {parse_err}"
+                    )
+            # --- >>> End Custom 404 Content Check <<< ---
+
+            # If it wasn't a custom 404, proceed to save the HTML content
+            save_content(final_url, content, folder)
+            return content  # Return HTML string for parsing
 
     except TimeoutException:
-        # Catch potential TimeoutException from driver.get() itself if page load takes too long
         print(f"Page load timed out for {url} during driver.get()")
         if csv_writer and csvfile_handle:
-            csv_writer.writerow([url, "Failed: Page Load Timeout"])
+            csv_writer.writerow([url, "Failed: Page Load Timeout (driver.get)"])
             csvfile_handle.flush()
         return None
     except Exception as e:
         print(f"Failed to download or process {url}: {e}")
-        # Log failure if desired
         if csv_writer and csvfile_handle:
             csv_writer.writerow([url, f"Failed: {e}"])
             csvfile_handle.flush()
@@ -309,6 +341,7 @@ def crawl_webpage(base_url, folder, driver):
 if __name__ == "__main__":
     list_pages = {
         "particuliers": "https://www.bgl.lu/fr/particuliers.html",
+        "test": "https://bgl.lu/fr/particuliers/contact/localisateur-agences.html",
         # Add more starting points if needed
     }
 
