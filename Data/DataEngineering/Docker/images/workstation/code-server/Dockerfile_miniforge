@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     byobu \
     htop \
+    lsof \
     plocate \
     fonts-powerline \
     fontconfig \
