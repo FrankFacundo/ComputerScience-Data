@@ -7,7 +7,7 @@ from typing import ContextManager, Optional, Union
 import torch
 from accelerate import dispatch_model
 
-from transformers import AutoTokenizer, Qwen2Config as Qwen3Config, Qwen3ForCausalLM
+from transformers import AutoTokenizer, Qwen3Config, Qwen3ForCausalLM
 from transformers.tokenization_utils_base import BatchEncoding # For type checking
 from transformers.generation.configuration_utils import GenerationConfig
 
