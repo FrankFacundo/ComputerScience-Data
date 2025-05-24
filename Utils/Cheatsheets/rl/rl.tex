@@ -202,6 +202,53 @@
         \item The value $v^\pi_\gamma(s)$ in the original MDP (discounted) is related to the value $v^{\pi'}(s)$ in the modified MDP (total reward) by $v^{\pi'}(s) \approx \gamma v^\pi_\gamma(s)$.
     \end{itemize}
 
+    % --------------------------------------------------------------
+    \columnbreak
+    \section{Group Relative Policy Optimization (GRPO)}
+    A PPO-style policy gradient variant for large-scale RL that removes the critic network by using \emph{group-relative} baselines.
+
+    \subsection{Motivation}
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item Value-based baselines require an extra critic of similar size; costly for LLMs.
+        \item GRPO estimates the baseline from a \emph{group} of $G$ trajectories sampled from the old policy.
+        \item Retains PPO's stability tools (ratio clipping, KL to reference model) while lowering memory/compute.
+    \end{itemize}
+
+    \subsection{Group Advantage}
+    Given rewards $\{r_i\}_{i=1}^G$ for one prompt, normalise within the group:
+    \[
+        A_i = \frac{r_i - \operatorname{mean}(\{r_j\})}{\operatorname{std}(\{r_j\})}.
+    \]
+
+    \subsection{GRPO Objective}
+    Define the ratio $\rho_i = \dfrac{\pi_\theta(o_i|q)}{\pi_{\theta_{\text{old}}}(o_i|q)}$.
+    {\small%
+    \[
+    \begin{aligned}
+    J_{\text{GRPO}}(\theta)=\,
+    \mathbb{E}_{q,\{o_i\}}\frac{1}{G}\!
+    \sum_{i=1}^G\Big[
+    &\min\!\bigl(\rho_i A_i,\,
+    \operatorname{clip}(\rho_i,1-\varepsilon,1+\varepsilon)A_i\bigr)\\[2pt]
+    &-\beta\,D_{\mathrm{KL}}\!\bigl(\pi_\theta\;\|\;\pi_{\text{ref}}\bigr)
+    \Big].
+    \end{aligned}
+    \]
+    }
+
+    \subsection{Relation to PPO}
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item Replaces value-function baseline with group-relative $A_i$.
+        \item No extra critic; baseline adapts automatically as policy improves.
+        \item Same ratio clipping ($\varepsilon$) controls update step; KL term keeps policy close to reference.
+    \end{itemize}
+
+    \subsection{Practical Tips}
+    \begin{itemize}[label={--},leftmargin=4mm, itemsep=-.4mm]
+        \item Typical group size $G\!\in\![4,16]$; larger $G$ yields smoother baseline.
+        \item Advantage normalisation crucial for stability.
+        \item Combine accuracy rewards with format/language rewards for LLM alignment.
+    \end{itemize}
 
 \end{multicols}
 

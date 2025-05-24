@@ -12,12 +12,12 @@ import math
 
 from accelerate import dispatch_model
 
+from transformers.configuration_utils import PretrainedConfig
 from transformers import Qwen3Config
-from transformers.models.qwen2.tokenization_qwen2_fast import Qwen2TokenizerFast
+from transformers.models.qwen2.tokenization_qwen2 import Qwen2Tokenizer
 from transformers.tokenization_utils_base import BatchEncoding
 from transformers.generation.configuration_utils import GenerationConfig
 
-# Imports for CustomQwen3 classes
 from transformers.modeling_flash_attention_utils import FlashAttentionKwargs
 from transformers.modeling_utils import PreTrainedModel, ALL_ATTENTION_FUNCTIONS
 from transformers.processing_utils import Unpack
@@ -177,6 +177,62 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
+def _compute_default_rope_parameters(
+    config: Optional[PretrainedConfig] = None,
+    device: Optional["torch.device"] = None,
+    seq_len: Optional[int] = None,
+    **rope_kwargs,
+) -> tuple["torch.Tensor", float]:
+    """
+    Computes the inverse frequencies according to the original RoPE implementation
+    Args:
+        config ([`~transformers.PretrainedConfig`]):
+            The model configuration.
+        device (`torch.device`):
+            The device to use for initialization of the inverse frequencies.
+        seq_len (`int`, *optional*):
+            The current sequence length. Unused for this type of RoPE.
+        rope_kwargs (`Dict`, *optional*):
+            BC compatibility with the previous RoPE class instantiation, will be removed in v4.45.
+    Returns:
+        Tuple of (`torch.Tensor`, `float`), containing the inverse frequencies for the RoPE embeddings and the
+        post-processing scaling factor applied to the computed cos/sin (unused in this type of RoPE).
+    """
+    if config is not None and len(rope_kwargs) > 0:
+        raise ValueError(
+            "Unexpected arguments: `**rope_kwargs` and `config` are mutually exclusive in "
+            f"`_compute_default_rope_parameters`, got `rope_kwargs`={rope_kwargs} and `config`={config}"
+        )
+    if len(rope_kwargs) > 0:
+        base = rope_kwargs["base"]
+        dim = rope_kwargs["dim"]
+    elif config is not None:
+        base = config.rope_theta
+        partial_rotary_factor = (
+            config.partial_rotary_factor
+            if hasattr(config, "partial_rotary_factor")
+            else 1.0
+        )
+        head_dim = getattr(
+            config, "head_dim", config.hidden_size // config.num_attention_heads
+        )
+        dim = int(head_dim * partial_rotary_factor)
+
+    attention_factor = 1.0  # Unused in this type of RoPE
+
+    # Compute the inverse frequencies
+    inv_freq = 1.0 / (
+        base
+        ** (
+            torch.arange(0, dim, 2, dtype=torch.int64).to(
+                device=device, dtype=torch.float
+            )
+            / dim
+        )
+    )
+    return inv_freq, attention_factor
+
+
 class Qwen3Attention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -305,7 +361,8 @@ class Qwen3RotaryEmbedding(nn.Module):
         self.original_max_seq_len = config.max_position_embeddings
 
         self.config = config
-        self.rope_init_fn = ROPE_INIT_FUNCTIONS[self.rope_type]
+        # self.rope_init_fn = ROPE_INIT_FUNCTIONS[self.rope_type]
+        self.rope_init_fn = _compute_default_rope_parameters
 
         inv_freq, self.attention_scaling = self.rope_init_fn(self.config, device)
         self.register_buffer("inv_freq", inv_freq, persistent=False)
@@ -1024,9 +1081,9 @@ def get_model() -> Qwen3ForCausalLM:  # Changed return type
     # For sharded, `load_sharded_checkpoint` (a standalone func in modeling_utils) is used.
 
     # Reverting to a more direct way if the original was a bit off:
-    from accelerate.utils import get_balanced_memory, infer_auto_device_map
-    from accelerate.hooks import attach_align_device_hook_on_blocks
-    from accelerate import load_checkpoint_and_dispatch
+    # from accelerate.utils import get_balanced_memory, infer_auto_device_map
+    # from accelerate.hooks import attach_align_device_hook_on_blocks
+    # from accelerate import load_checkpoint_and_dispatch
 
     print("Loading checkpoint and dispatching with Accelerate...")
     # Create a dummy device_map if not using full auto, to specify GPU 0 or CPU
@@ -1162,7 +1219,7 @@ def get_model() -> Qwen3ForCausalLM:  # Changed return type
 def get_tokenizer(model_path_or_name: str):
     """Loads the tokenizer for the Qwen LLM."""
     print(f"Loading tokenizer from: {model_path_or_name}")
-    tokenizer = Qwen2TokenizerFast.from_pretrained(
+    tokenizer = Qwen2Tokenizer.from_pretrained(
         model_path_or_name, trust_remote_code=True, use_fast=True
     )
     if tokenizer.pad_token is None:
