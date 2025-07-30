@@ -4,8 +4,8 @@
 @author: Frank Facundo
 """
 import math
-from typing import List, Set, Dict, Tuple, Optional
 from collections import namedtuple
+from typing import Dict, List
 
 INDEX_ATTR_A = 0
 INDEX_ATTR_B = 1
@@ -16,7 +16,15 @@ CLASS_1 = 1
 
 
 class Node:
-    def __init__(self, attribute=None, value=None, typeNode=None, level=None, infoGain=None, constraint=None):
+    def __init__(
+        self,
+        attribute=None,
+        value=None,
+        typeNode=None,
+        level=None,
+        infoGain=None,
+        constraint=None,
+    ):
         """
         p : :Node: parent node
         l : :Node: left node
@@ -71,7 +79,7 @@ class BuildDecisionTreeClass:
     - create a root node
     - T=Build(D, A, minNum, root, d)
     - T=PostPrune(T,alpha, minNum, d)
-    - return T 
+    - return T
     """
 
     def __init__(self, file="file1.txt", minNum=2, data=None, default=0):
@@ -105,7 +113,7 @@ class BuildDecisionTreeClass:
         return text
 
     def getTable(self, file):
-        with open(file, 'r') as f:
+        with open(file, "r") as f:
             self.data = [line.split() for line in f]
 
         for line in self.data:
@@ -115,7 +123,6 @@ class BuildDecisionTreeClass:
         return self.data
 
     def buildRoot(self):
-
         self.root.t = "Root"
         self.root.lv = 1
         self.root.cv = self.countFct(self.data)
@@ -125,13 +132,13 @@ class BuildDecisionTreeClass:
 
     def countFct(self, data: List[List[int]], update=True):
         """
-        Count the number of elements in each class {0, 1} 
+        Count the number of elements in each class {0, 1}
         """
         x = 0
         for line in data:
             if line[INDEX_ATTR_C] == 0:
-                x = x+1
-        y = len(data)-x
+                x = x + 1
+        y = len(data) - x
         if update:
             self.count = [x, y]
         return [x, y]
@@ -142,7 +149,7 @@ class BuildDecisionTreeClass:
         """
         i = 0
         while data[i][INDEX_ATTR_C] == data[0][INDEX_ATTR_C]:
-            i = i+1
+            i = i + 1
             if i == len(data):
                 break
 
@@ -153,9 +160,9 @@ class BuildDecisionTreeClass:
             c = [0, 0]
             for line in data:
                 if line[INDEX_ATTR_C] == CLASS_0:
-                    c[0] = c[0]+1
+                    c[0] = c[0] + 1
                 elif line[INDEX_ATTR_C] == CLASS_1:
-                    c[1] = c[1]+1
+                    c[1] = c[1] + 1
             node.cv = c
 
             self.Process += "\nSame Class so it finish!"
@@ -190,9 +197,9 @@ class BuildDecisionTreeClass:
             c = [0, 0]
             for line in data:
                 if line[INDEX_ATTR_C] == CLASS_0:
-                    c[0] = c[0]+1
+                    c[0] = c[0] + 1
                 elif line[INDEX_ATTR_C] == CLASS_1:
-                    c[1] = c[1]+1
+                    c[1] = c[1] + 1
             node.cv = c
 
             self.Process += "\nRecords are less than minNum so it finish!"
@@ -203,13 +210,12 @@ class BuildDecisionTreeClass:
             return False
 
     def is_attr_empty(self, node: Node, Attr, data):
-
         self.countFct(data)
-        if (len(Attr) == 0):
+        if len(Attr) == 0:
             self.Process += "\nEmpty Attributes so it finish!"
 
             node.t = "Leaf"
-            if (self.count[0] > self.count[1]):
+            if self.count[0] > self.count[1]:
                 node.v = 0
             else:
                 node.v = 1
@@ -217,9 +223,9 @@ class BuildDecisionTreeClass:
             c = [0, 0]
             for line in data:
                 if line[INDEX_ATTR_C] == 0:
-                    c[0] = c[0]+1
+                    c[0] = c[0] + 1
                 elif line[INDEX_ATTR_C] == 1:
-                    c[1] = c[1]+1
+                    c[1] = c[1] + 1
             node.cv = c
 
             return True
@@ -227,13 +233,12 @@ class BuildDecisionTreeClass:
             return False
 
     def split(self, listAttribute, data):
-
         maxGain = -1
         maxAttribute = None
 
         for Attr in listAttribute:
             best_split = self.splitAttr(Attr, data)
-            if (best_split.gain > maxGain):
+            if best_split.gain > maxGain:
                 maxGain = best_split.gain
                 maxAttribute = Attr
                 maxS = best_split
@@ -244,8 +249,12 @@ class BuildDecisionTreeClass:
         return feature
 
     def splitAttr(self, Attribute, data: List[List[int]]):
-        splitA = [[[0], [1, 2, 3]], [[0, 1], [2, 3]],
-                  [[0, 1, 2], [3]], [[0, 1, 2, 3], []]]
+        splitA = [
+            [[0], [1, 2, 3]],
+            [[0, 1], [2, 3]],
+            [[0, 1, 2], [3]],
+            [[0, 1, 2, 3], []],
+        ]
         splitB = [[[0], [1, 2]], [[0, 1], [2]], [[0, 1, 2], []]]
         gain = -1
         bestSplit = None
@@ -262,24 +271,23 @@ class BuildDecisionTreeClass:
             # Count number element for each class (O or 1) for right leaf
             i2 = [0, 0]
             for line in data:
-                if (line[INDEX_ATTR_A] in i[0]):
+                if line[INDEX_ATTR_A] in i[0]:
                     if line[INDEX_ATTR_C] == CLASS_0:
-                        i1[0] = i1[0]+1
+                        i1[0] = i1[0] + 1
                     elif line[INDEX_ATTR_C] == CLASS_1:
-                        i1[1] = i1[1]+1
+                        i1[1] = i1[1] + 1
                 else:
                     if line[INDEX_ATTR_C] == CLASS_0:
-                        i2[0] = i2[0]+1
+                        i2[0] = i2[0] + 1
                     elif line[INDEX_ATTR_C] == CLASS_1:
-                        i2[1] = i2[1]+1
+                        i2[1] = i2[1] + 1
 
             currentGain = self.informationGain(p, i1, i2)
-            if (currentGain > gain):
+            if currentGain > gain:
                 bestSplit = i
                 gain = currentGain
                 c_values = [i1, i2]
-        BestSplit = namedtuple(
-            'BestSplit', ["best_split", "gain", "nb_clases_by_leaf"])
+        BestSplit = namedtuple("BestSplit", ["best_split", "gain", "nb_clases_by_leaf"])
         best_split = BestSplit(bestSplit, gain, c_values)
         return best_split
 
@@ -288,24 +296,25 @@ class BuildDecisionTreeClass:
         n2 = node[1]
         n = n1 + n2
 
-        prob_n1 = n1/n
-        prob_n2 = n2/n
+        prob_n1 = n1 / n
+        prob_n2 = n2 / n
         log_prob_n1 = 0 if prob_n1 == 0 else math.log2(prob_n1)
         log_prob_n2 = 0 if prob_n2 == 0 else math.log2(prob_n2)
 
-        entropy = -(prob_n1*log_prob_n1 + prob_n2*log_prob_n2)
+        entropy = -(prob_n1 * log_prob_n1 + prob_n2 * log_prob_n2)
         return entropy
 
     def informationGain(self, p, i_1, i_2):
         """
         p : Count the number of elements in each class {0, 1}
         """
-        if (i_2 != [0, 0] and i_1 != [0, 0]):
+        if i_2 != [0, 0] and i_1 != [0, 0]:
             n1 = i_1[0] + i_1[1]
             n2 = i_2[0] + i_2[1]
             n = n1 + n2
-            infoGain = self.entropy(
-                p) - ((n1/n)*self.entropy(i_1) + (n2/n)*self.entropy(i_2))
+            infoGain = self.entropy(p) - (
+                (n1 / n) * self.entropy(i_1) + (n2 / n) * self.entropy(i_2)
+            )
             return infoGain
         else:
             return 0
@@ -320,11 +329,11 @@ class BuildDecisionTreeClass:
         t = []
 
         for i in data:
-            if (Attr == "A"):
-                if (i[0] in leftRightSide):
+            if Attr == "A":
+                if i[0] in leftRightSide:
                     t.append(i)
-            elif (Attr == "B"):
-                if (i[1] in leftRightSide):
+            elif Attr == "B":
+                if i[1] in leftRightSide:
                     t.append(i)
         return t
 
@@ -342,18 +351,17 @@ class BuildDecisionTreeClass:
         listPath = []
         reste = x - 2**level
         for i in range(level):
-            powers = 2 ** (2-i)
+            powers = 2 ** (2 - i)
             print(reste - powers)
-            if (reste - powers >= 0):
+            if reste - powers >= 0:
                 index = 1
             else:
                 index = 0
             listPath.append(index)
-            reste = reste - index*powers
+            reste = reste - index * powers
         return listPath
 
     def build(self, data: List[List[int]], listAttribute, node: Node):
-
         self.Process += "\n\n******************************One iteration******************************\n"
 
         node.d = data
@@ -372,7 +380,7 @@ class BuildDecisionTreeClass:
 
         # Split returns the attribute taken, the values of attributes for the left and right side and the information gain
         feature = self.split(listAttribute, data)
-        self.Process += "\nFeature : " + ', '.join(map(str, feature))
+        self.Process += "\nFeature : " + ", ".join(map(str, feature))
         node.a = feature[0]
         node.c = feature[1]
         node.i = feature[2]
@@ -380,40 +388,38 @@ class BuildDecisionTreeClass:
         D1 = self.NewData(data, node.c[0], node.a)
 
         self.Process += "\nD1 node attribute : " + node.a
-        self.Process += "\nD1 node constraint : " + \
-            ', '.join(map(str, node.c[0]))
-        self.Process += "\nD1 : " + ', '.join(map(str, D1))
+        self.Process += "\nD1 node constraint : " + ", ".join(map(str, node.c[0]))
+        self.Process += "\nD1 : " + ", ".join(map(str, D1))
 
         D2 = self.NewData(data, node.c[1], node.a)
 
         self.Process += "\nD2 node attribute : " + node.a
-        self.Process += "\nD2 node constraint : " + \
-            ', '.join(map(str, node.c[1]))
-        self.Process += "\nD2 : " + ', '.join(map(str, D2))
+        self.Process += "\nD2 node constraint : " + ", ".join(map(str, node.c[1]))
+        self.Process += "\nD2 : " + ", ".join(map(str, D2))
 
         # It remove the atribute already used
         listAttribute.remove(feature[0])
-        self.Process += "\nlistAttr : " + ', '.join(map(str, listAttribute))
+        self.Process += "\nlistAttr : " + ", ".join(map(str, listAttribute))
 
         for i in range(len(node.c)):
-            i = i+1
+            i = i + 1
 
             nodeChild = Node()
-            if (i == 1):
+            if i == 1:
                 nodeChild.t = "Intermediate"
                 node.l = nodeChild
                 nodeChild.p = node
-                node.l.lv = node.lv+1
+                node.l.lv = node.lv + 1
                 node.l.cv = feature[3][0]
                 node.l.id = node.id * 2
                 self.dict_tree[node.l.id] = node.l
                 self.build(D1, listAttribute, node.l)
 
-            if (i == 2):
+            if i == 2:
                 nodeChild.t = "Intermediate"
                 node.r = nodeChild
                 nodeChild.p = node
-                node.r.lv = node.lv+1
+                node.r.lv = node.lv + 1
                 node.r.cv = feature[3][1]
                 node.r.id = (node.id * 2) + 1
                 self.dict_tree[node.r.id] = node.r
@@ -441,17 +447,19 @@ class BuildDecisionTreeClass:
 
         for node in self.dict_tree.values():
             for i in levels:
-                if (node.lv == i):
+                if node.lv == i:
                     if node.t != "Leaf":
                         self.Result2 += "\n"
                         self.Result2 += node.t
                         self.Result2 += "\nLevel " + str(node.lv)
-                        self.Result2 += "\nFeature " + \
-                            str(node.a) + " " + \
-                            ''.join(str(e)+" " for e in node.c[0])
+                        self.Result2 += (
+                            "\nFeature "
+                            + str(node.a)
+                            + " "
+                            + "".join(str(e) + " " for e in node.c[0])
+                        )
                         self.Result2 += "\nid " + str(node.id)
-                        self.Result2 += "\nInformation Gain " + \
-                            str(node.i) + "\n"
+                        self.Result2 += "\nInformation Gain " + str(node.i) + "\n"
                     else:
                         self.Result2 += "\n"
                         self.Result2 += node.t
@@ -472,7 +480,7 @@ def BuildDecisionTree(file, minNum):
     TreeObject = BuildDecisionTreeClass(file, minNum)
     TreeObject.Print_(process=1)
     result_tree = TreeObject.Print()
-    print('####################\n')
+    print("####################\n")
     print(result_tree)
 
 
