@@ -152,7 +152,7 @@
     \section{Model Evaluation}
     % -----------------------------------------------
     \subsection{Regression}
-    Let: 
+    Let:
     $y_i$ a label in dataset
     $\hat{y}$ a prediction
     $\bar{y}$ mean of labels
@@ -178,10 +178,10 @@
         \footnotesize
         \begin{tabular}{ |c|c|c| }
             \hline
-                       & Predict No                  & Predict Yes                       \\
+                     & Predict No                        & Predict Yes \\
             \hline
-            True No  & \thead{True Negative ($1-\alpha$)\\(TN)}& \thead{False Positive ($\alpha$) \\ (FP) } \\
-            True Yes & \thead{False Negative ($\beta$) \\ (FN)}& \thead{True Positive ($1-\beta$) \\ (TP) } \\
+            True No  & \thead{True Negative ($1-\alpha$)               \\(TN)}& \thead{False Positive ($\alpha$) \\ (FP) } \\
+            True Yes & \thead{False Negative ($\beta$)                 \\ (FN)}& \thead{True Positive ($1-\beta$) \\ (TP) } \\
             \hline
         \end{tabular}
     \end{center}
@@ -189,7 +189,7 @@
     \begin{itemize}[label={--},leftmargin=4mm]
         \vspace{-1mm}
         \itemsep -.4mm
-        \item Accuracy = $\frac{TP + TN}{TP + FP + FP + FN}$, percent correct. Not to use when having imbalanced dataset. 
+        \item Accuracy = $\frac{TP + TN}{TP + FP + FP + FN}$, percent correct. Not to use when having imbalanced dataset.
         \item Precision = $\frac{TP}{TP + FP}$, percent correct when predict positive
         \item Recall, Sensitivity = $\frac{TP}{TP + FN}$, percent of actual positives identified correctly (True Positive Rate)
         \item Specificity = $\frac{TN}{TN + FP}$, percent of actual negatives identified correctly, also 1 - FPR (True Negative Rate)
@@ -204,9 +204,9 @@
     % ----------------------------------------------------------------
     \section{Linear Regression}
     Models linear relationships between a continuous response and explanatory variables
-    
+
     \textbf{Normal equation} : $X^T(Y-X \Theta) = 0$
-    
+
     \textbf{Ordinary Least Squares} - find $\hat{\beta}$ for $\hat{y} = \hat{\beta_{0}} + \hat{\beta}X + \epsilon$
     by solving $\hat{\beta}$ = $(X^{T}X)^{-1}X^{T}Y$ which minimizes the SSE
 
@@ -292,24 +292,36 @@
         \item Cross Entropy = $-\sum (\hat{p_i}) log_2(\hat{p_i})$
     \end{itemize}
     At each leaf node, CART predicts the most frequent category, assuming false negative and false positive costs are the same. The splitting process handles multicollinearity and outliers. Trees are prone to high variance, so tune through CV.
-    
+
     \vspace{+1mm}
     For classification, nodes are splitted as following:
     \begin{itemize}[label={--},leftmargin=4mm]
         \vspace{-1mm}
         \itemsep -.4mm
         \item For each category
-            \subitem - For each possible split for this category:
-                Compute information gain.
+              \subitem - For each possible split for this category:
+              Compute information gain.
         \item The split chosen is the one which have the max information gain.
     \end{itemize}
+
+
     Exemple for a possible splits:
-        If category $A\in \{0,1,2\}$
-        Possible splits:
-        $[[0],[1,2]], [[0,1],[2]], [[0,1,2],[]]$
+    If category $A\in \{0,1,2\}$
+    Possible splits:
+    $[[0],[1,2]], [[0,1],[2]], [[0,1,2],[]]$
+
+
+    Information gain :
+    $$IG(S,A) = H(S) - \sum_{v \in \mathrm{values}(A)}\frac{\lvert S_v \rvert}{\lvert S \rvert}\, H(S_v)
+        ,
+        \begin{array}{rl}
+            S: & \text{training set}           \\[2pt]
+            A: & \text{split point},\; A \in S
+        \end{array}
+    $$
 
     \subsection{Random Forest}
-    Trains an ensemble of trees with a subset of \textbf{features} (columns) with replacement that vote for the final prediction 
+    Trains an ensemble of trees with a subset of \textbf{features} (columns) with replacement that vote for the final prediction
     $$f_{ens}=\frac{1}{T} \sum_{t}f_t(x)$$
     \textbf{Bootstrapping} : \textbf{sampling} (rows) with replacement (will contain duplicates), until the sample is as large as the training set
 
@@ -326,9 +338,9 @@
     % ----------------------------------------------------------------
     \section{Support Vector Machines}
     Separates data between two classes by maximizing the margin between the hyperplane and the nearest data points of any class. Relies on the following:
-    
-    Matematilly,it solves the problem: 
-    
+
+    Matematilly,it solves the problem:
+
     $$\min \frac{1}{2}||w||^2 + C \sum_i \upxi_i $$
     s.t $$y_i(wx_i+b)\geq 1-\upxi_i, \forall x_i, \upxi_i\geq 0 $$
     \vspace{-2.5mm}
