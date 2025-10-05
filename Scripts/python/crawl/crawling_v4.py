@@ -1,4 +1,5 @@
 import os
+import re
 import warnings
 from urllib.parse import unquote, urljoin, urlparse
 
@@ -92,11 +93,12 @@ def crawl_webpage(
 
     download_count["count"] += 1
 
-    # if not (base_url.endswith(".html") or base_url.endswith(".pdf")):
-    if not (base_url.endswith(".html")):
+    if not (base_url.endswith(".html") or base_url.endswith(".pdf")):
+        # if not (base_url.endswith(".html")):
         return
-
-    if base_url.endswith(".html"):
+        # if not re.search(r"\.html", base_url):
+        # return
+    if re.search(r"\.html", base_url):
         try:
             soup = BeautifulSoup(response.text, "lxml")
         except Exception as e:
@@ -112,8 +114,8 @@ def crawl_webpage(
 
             if url:
                 full_url = urljoin(base_url, url)
-                # if full_url.endswith(".html") or full_url.endswith(".pdf"):
-                if full_url.endswith(".html"):
+                if full_url.endswith(".html") or full_url.endswith(".pdf"):
+                    # if re.search(r"\.html", full_url):
                     resources.add(full_url)
                     graph.add_edge(base_url, full_url)  #  NEW ─ add link to graph
 
@@ -132,14 +134,24 @@ def crawl_webpage(
 def scrap_public_site(brute_files_path: str, dev_mode: bool):
     download_count = {"count": 0}
     graph = nx.DiGraph()
+    links_requested: set[str] = set()  # ← NEW ─ shared across base_urls
+
     # base_urls = ["https://www.bgl.lu/fr/particuliers.html"]
-    base_urls = ["https://www.bgl.lu/fr/entreprises/startups.html"]
+    # base_urls = ["https://www.bgl.lu/fr/entreprises/startups.html"]
+    base_urls = [
+        "https://www.bgl.lu/fr/particuliers.html",
+        "https://www.bgl.lu/fr/entreprises/startups.html",
+        "https://www.bgl.lu/fr/entreprises/bgl-bnp-paribas-development.html",
+        "https://www.bgl.lu/fr/welcomeing",
+        # … add more …
+    ]
     for base_url in base_urls:
         crawl_webpage(
             base_url=base_url,
             folder=brute_files_path,
             dev_mode=dev_mode,
             graph=graph,
+            links_requested=links_requested,  # ← pass shared set
             download_count=download_count,
             follow_links=False,
         )

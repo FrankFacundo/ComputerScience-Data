@@ -64,10 +64,10 @@ def save_content(url, content, folder):
         filename = "index.html"
 
     # Check if the original URL (passed to this function) indicates a PDF
-    is_pdf = parsed_url.path.lower().endswith(".pdf")
+    # is_pdf = parsed_url.path.lower().endswith(".pdf")
 
     # Ensure correct extension
-    if is_pdf:
+    if False:
         # Force .pdf extension if the URL indicates it's a PDF
         if not filename.lower().endswith(".pdf"):
             # Handle cases where redirect might change URL but content is PDF
@@ -180,7 +180,7 @@ def download_resource(url, folder, driver, wait_timeout=15):
 
     # ── At this point the page is as “settled” as we can reasonably make it ──
     final_url = driver.current_url
-    is_pdf = urlparse(final_url).path.lower().endswith(".pdf")
+    # is_pdf = urlparse(final_url).path.lower().endswith(".pdf")
 
     # Tentative success log
     if csv_writer and csvfile_handle:
@@ -188,7 +188,7 @@ def download_resource(url, folder, driver, wait_timeout=15):
         csvfile_handle.flush()
 
     try:
-        if is_pdf:
+        if False:
             print(f"Identified PDF → placeholder only: {final_url}")
             content = b""
             save_content(final_url, content, folder)
@@ -240,12 +240,15 @@ def crawl_webpage(base_url, folder, driver):
         return
 
     # 3. Determine if it's likely HTML or PDF (allow if PDF, HTML, or no extension)
-    is_pdf = path.endswith(".pdf")
+    # is_pdf = path.endswith(".pdf")
     is_html = path.endswith((".html", ".htm"))
     has_extension = "." in filename
 
-    if not (is_pdf or is_html or not has_extension or path == "/" or path == ""):
+    # if not (is_pdf or is_html or not has_extension or path == "/" or path == ""):
+    if not (is_html or not has_extension or path == "/" or path == ""):
         print(f"Skipping URL type (unknown/disallowed extension): {base_url}")
+        return
+    if not (path.startswith("/fr")):
         return
     # --- End Filtering Logic ---
 
@@ -310,7 +313,7 @@ def crawl_webpage(base_url, folder, driver):
                 # Final filter before adding: Ensure it's not a skipped type
                 link_path = urlparse(full_url).path.lower()
                 link_filename = os.path.basename(link_path)
-                link_is_pdf = link_path.endswith(".pdf")
+                # link_is_pdf = link_path.endswith(".pdf")
                 link_is_html = link_path.endswith((".html", ".htm"))
                 link_has_extension = "." in link_filename
 
@@ -319,8 +322,8 @@ def crawl_webpage(base_url, folder, driver):
                     continue
 
                 if not (
-                    link_is_pdf
-                    or link_is_html
+                    # link_is_pdf or
+                    link_is_html
                     or not link_has_extension
                     or link_path == "/"
                     or link_path == ""
@@ -341,7 +344,8 @@ def crawl_webpage(base_url, folder, driver):
 
 if __name__ == "__main__":
     list_pages = {
-        "particuliers": "https://www.bgl.lu/fr/particuliers.html",
+        # "particuliers": "https://www.bgl.lu/fr/particuliers.html",
+        "particuliers": "https://bgl.lu/fr/particuliers/contact/localisateur-agences.html",
         # Add more starting points if needed
     }
 
