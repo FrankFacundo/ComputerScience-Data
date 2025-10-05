@@ -1,3 +1,8 @@
+"""
+Script based on documentation: 
+https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
+"""
+
 import os
 import time
 from typing import Dict, Iterable, List, Optional, Union
