@@ -6,6 +6,8 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \usepackage{calc}
 \usepackage{tikz}
+\usepackage{bbm}   % for \mathbbm{1}
+\usepackage{mathtools} % in the preamble
 \usepackage{ifthen}
 \usepackage{textcomp}
 \usepackage{xcolor}
@@ -200,6 +202,44 @@
     \textbf{ROC Curve} - plots TPR vs. FPR for every threshold $\alpha$. Area Under the Curve  measures how likely the model differentiates positives and negatives (perfect AUC = 1, baseline = 0.5).
 
     \textbf{Precision-Recall Curve} - focuses on the correct prediction of the minority class, useful when data is imbalanced
+
+    \subsection{Ranking / Retrieval}
+    \newcommand{\ind}{\mathbf{1}}
+
+    \textbf{Setup.} For each query $q\in Q$, predicted ranking $\pi_q=(d_{q,1},\ldots,d_{q,n_q})$; relevance $\mathrm{rel}_q(d)\in\{0,1,2,3,\ldots\}$; $r_{q,i}=\mathrm{rel}_q(d_{q,i})$; relevant set $R_q=\{d:\mathrm{rel}_q(d)>0\}$. Use indicator $\ind\{\cdot\}$.
+    \vspace{.2em}
+
+    \textbf{Precision@k (per q)} $=\frac{1}{k}\sum_{i=1}^{\min(k,n_q)} \ind\{r_{q,i}>0\}$ (defined for $k\ge1$, divide by $k$ even if $n_q<k$). \quad
+
+    \textbf{Mean Precision@k} $=\frac{1}{|Q|}\sum_{q\in Q}\mathrm{Precision@}k(q)$.
+    \vspace{.2em}
+
+    \textbf{Average Precision (AP).} $\mathrm{P@}i(q)=\frac{1}{i}\sum_{j=1}^{i}\ind\{r_{q,j}>0\}$. \;
+    $\mathrm{AP}(q)=\begin{cases}\frac{1}{|R_q|}\sum_{i=1}^{n_q}\mathrm{P@}i(q)\,\ind\{r_{q,i}>0\}, & |R_q|>0\\[3pt] 0,& \text{otherwise}\end{cases}$.\;
+
+    \textbf{MAP} $=\frac{1}{|Q|}\sum_{q\in Q}\mathrm{AP}(q)$.
+    \vspace{.2em}
+
+    \textbf{Recall@k (per q)} $=\frac{\sum_{i=1}^{\min(k,n_q)} \ind\{r_{q,i}>0\}}{|R_q|}$, with the convention $\mathrm{Recall@}k(q)=0$ if $|R_q|=0$. \quad
+
+    \textbf{Mean Recall@k} $=\frac{1}{|Q|}\sum_{q\in Q}\mathrm{Recall@}k(q)$.
+    \vspace{.2em}
+
+    \textbf{Reciprocal Rank (RR).} $i_q^\star=\min\{\,i\ge1:\,r_{q,i}>0\,\}$ if it exists; $\mathrm{RR}(q)=\begin{cases}1/i_q^\star,& \text{if exists}\\[2pt]0,& \text{otherwise}\end{cases}$.\;
+
+    \textbf{MRR} $=\frac{1}{|Q|}\sum_{q\in Q}\mathrm{RR}(q)$.
+    \vspace{.2em}
+
+    \textbf{DCG@k.} $\mathrm{DCG@}k(q)=\sum_{i=1}^{\min(k,n_q)}\frac{2^{\,r_{q,i}}-1}{\log_2(i+1)}$; let $\mathrm{IDCG@}k(q)$ be DCG@k of the ideal ranking. \;
+
+    \textbf{NDCG@k} $=\begin{cases}\frac{\mathrm{DCG@}k(q)}{\mathrm{IDCG@}k(q)},& \mathrm{IDCG@}k(q)>0\\[3pt]0,& \text{otherwise}\end{cases}$.\;
+
+    \textbf{Ex. (@5).} Ground truth $G_q=(A,B,C,D,E)$, predicted $\pi_q=(C,Z,A,E,B)$. Grades from $G_q$: $\mathrm{rel}(A,\ldots,E)=(5,4,3,2,1)$ (others $0$). With gain $2^{r}-1$: $\mathrm{DCG@}5\approx28.73$, $\mathrm{IDCG@}5\approx45.64\Rightarrow \mathrm{nDCG@}5\approx0.630$.\;
+
+    \textbf{Mean NDCG@k} $=\frac{1}{|Q|}\sum_{q\in Q}\mathrm{NDCG@}k(q)$.
+    \vspace{.2em}
+
+    \textit{Binary case.} If $r_{q,i}\in\{0,1\}$, then $\mathrm{DCG@}k(q)=\sum_{i=1}^{\min(k,n_q)}\frac{\ind\{r_{q,i}=1\}}{\log_2(i+1)}$.
 
     % ----------------------------------------------------------------
     \section{Linear Regression}
