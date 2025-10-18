@@ -932,11 +932,42 @@
 
         %%%%%%%%%%%%%%%%%%%%%%
         \section{Naive Bayes}
-        Classifies data using the label with the highest conditional probability, given data $a$ and classes $c$. Naive because it assumes variables are independent.
+        \textbf{Setup.} Data $\mathcal{D}=\{(x_i,y_i)\}_{i=1}^N$ with classes $y_i\in\{1,\ldots,C\}$ and features $x_i=(x_{i1},\ldots,x_{id})$. Class prior $\pi_c=P(Y{=}c)$. Naive assumption: $(X_1,\ldots,X_d)\perp\!\!\!\perp$ given $Y$.
+        \vspace{.2em}
 
-        \textbf{Bayes' Theorem} $ P({c_i}|{a})  = \frac{P({a}|{c_i})P({c_i})}{P({a})}$
+        \textbf{Bayes' Theorem.}
+    $\displaystyle P(Y{=}c\mid x)=\frac{P(Y{=}c)p(x\mid c)}{p(x)},\quad
+    p(x)=\sum_{c'=1}^C \pi_{c'}\,p(x\mid c')\,.$
+        \; Under Naive independence: $\displaystyle p(x\mid c)=p(x_1,\ldots,x_d\mid c)=\prod_{j=1}^d p(x_j\mid c)$.
+        \; \textit{Proof.} By chain rule $\;p(x_1,\ldots,x_d\mid c)=\prod_{j=1}^d p(x_j\mid x_{1:j-1},c)\;$ and by conditional independence $\;p(x_j\mid x_{1:j-1},c)=p(x_j\mid c)$, hence the product.
 
-        \textbf{Gaussian Naive Bayes} - calculates conditional probability for continuous data by assuming a normal distribution
+        \textbf{MAP rule.} $\displaystyle \hat y(x)=\arg\max_{c\in[C]} P(Y{=}c\mid x) \propto \arg\max_{c}\ \pi_c\prod_{j=1}^d p(x_j\mid Y{=}c) \,.$
+        \; In log-space: $\displaystyle \hat y(x)=\arg\max_c \left[\log\pi_c+\sum_{j=1}^d \log p(x_j\mid c)\right]$.
+        \vspace{.2em}
+
+        \textbf{Posterior.} $\displaystyle P(Y{=}c\mid x)=\frac{\pi_c\,\prod_{j} p(x_j\mid c)}{\sum_{c'=1}^C \pi_{c'}\,\prod_{j} p(x_j\mid c')}\,.$
+        \vspace{.2em}
+
+        \textbf{Priors (imbalanced classes).} Empirical/Laplace-smoothed: $\displaystyle \hat\pi_c=\frac{N_c+\alpha}{N+\alpha C}$ with $N_c=\sum_{i=1}^N \ind\{y_i{=}c\}$.
+        \vspace{.2em}
+
+        \textbf{Bernoulli NB (binary features).} $x_j\in\{0,1\}$. \;
+        Likelihood: $\displaystyle p(x\mid c)=\prod_{j=1}^d \theta_{cj}^{\,x_j}(1-\theta_{cj})^{\,1-x_j}$,\;
+    $\displaystyle \hat\theta_{cj}=\frac{N^{(1)}_{cj}+\beta}{N_c+2\beta}$ where $N^{(1)}_{cj}=\sum_{i:y_i=c} x_{ij}$.
+        \vspace{.2em}
+
+        \textbf{Multinomial NB (counts / BoW).} $x_j\in\mathbb{N}$, vocabulary size $V$. \;
+        Likelihood (up to multinomial coeff.): $\displaystyle p(x\mid c)\propto\prod_{j=1}^d \phi_{cj}^{\,x_j}$,\;
+    $\displaystyle \hat\phi_{cj}=\frac{N_{cj}+\beta}{\sum_{k=1}^d N_{ck}+\beta V}$ where $N_{cj}=\sum_{i:y_i=c} x_{ij}$.
+        \vspace{.2em}
+
+        \textbf{Gaussian NB (continuous).} $x_j\in\mathbb{R}$, $p(x_j\mid c)=\mathcal{N}(\mu_{cj},\sigma^2_{cj})$. \;
+        Decision: $\displaystyle \hat y(x)=\arg\max_c\left[\log\pi_c-\tfrac12\sum_{j=1}^d\Big(\log(2\pi\sigma^2_{cj})+\tfrac{(x_j-\mu_{cj})^2}{\sigma^2_{cj}}\Big)\right]$. \;
+        Estimates: $\displaystyle \hat\mu_{cj}=\frac{1}{N_c}\!\sum_{i:y_i=c}\!x_{ij},\quad
+    \hat\sigma^2_{cj}=\frac{1}{N_c}\!\sum_{i:y_i=c}\!(x_{ij}-\hat\mu_{cj})^2$ (use $1/(N_c\!-\!1)$ for unbiased).
+        \vspace{.2em}
+
+        \textbf{Notes.} Use $\alpha,\beta>0$ (Laplace/Lidstone) to avoid zeros; set $\pi_c$ to reflect true prevalences in imbalanced data.
 
         % \columnbreak
         %------------------------------------------------------
