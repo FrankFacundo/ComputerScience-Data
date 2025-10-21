@@ -557,6 +557,49 @@
     \textbf{Cosine Similarity} - measures similarity between vectors, calculated as cos($\theta$) =
     $\frac{A\cdot B}{||A||||B||} $, which ranges from o to 1
 
+    \textbf{Setup/Notation.}
+    Corpus $\mathcal{D}=\{d_i\}_{i=1}^N$; vocabulary $\mathcal{V}$ (after tokenization/normalization).
+    Each document $d=(w_1,\dots,w_{|d|})$ with tokens $w_j\in\mathcal{V}$.
+    Query $q=(u_1,\dots,u_{|q|})$, $u_k\in\mathcal{V}$.
+    Average length $\displaystyle \overline{|d|}=\frac{1}{N}\sum_{i=1}^N |d_i|$.
+    For a term $t\in\mathcal{V}$:
+    \[
+        \begin{aligned}
+            tf_{t,d} & = \sum_{j=1}^{|d|}\ind\{w_j=t\}                                  &  & \text{(TF: term frequency)}        \\
+            df_t     & = \sum_{i=1}^N \ind\big\{\exists j\le |d_i|:\, w^{(i)}_j=t\big\} &  & \text{(DF: document frequency)}    \\
+            qtf_t    & = \sum_{k=1}^{|q|}\ind\{u_k=t\}                                  &  & \text{(QTF: query term frequency)}
+        \end{aligned}
+    \]
+    Note $tf_{t,d}\in\mathbb{N}$, $df_t\in\{0,\dots,N\}$, $qtf_t\in\{0,\dots,|q|\}$ and $\sum_{t\in\mathcal{V}} tf_{t,d}=|d|$.
+
+    \textbf{BM25 (Okapi).}
+    $\displaystyle s(d,q)=\sum_{t\in q} \operatorname{IDF}(t)\,
+        \frac{(k_1+1)\,tf_{t,d}}{tf_{t,d}+k_1\!\left(1-b+b\,\tfrac{|d|}{\overline{|d|}}\right)}
+        \cdot\frac{(k_3+1)\,qtf_t}{k_3+qtf_t}\,.$
+    \; Commonly $k_3\!\to\!\infty\Rightarrow\frac{(k_3+1)\,qtf_t}{k_3+qtf_t}\!\approx\!1$.
+
+    \textbf{IDF (inverse document frequency)(RSJ).}
+    $\displaystyle \operatorname{IDF}(t)=\log\frac{N-df_t+\tfrac12}{df_t+\tfrac12}\,.$
+    \; Smoothed: $\displaystyle \log\!\Big(1+\frac{N-df_t+\tfrac12}{df_t+\tfrac12}\Big)$.
+
+    \textbf{Terms \& params.}
+    $k_1{>}0$ (TF saturation, e.g.\ 1.2–2.0), $b\in[0,1]$ (length norm, e.g.\ 0.5–0.9), $k_3$ (query TF).
+
+    \textbf{Intuition.}
+    TF saturation: $\frac{(k_1+1)tf}{tf+k_1(\cdot)}$ grows sublinearly; length norm $1-b+b\frac{|d|}{\overline{|d|}}$ downweights long docs; IDF boosts rare terms.
+
+    \textbf{BM25+ (offset).}
+    $\displaystyle s_+(d,q)=\sum_{t\in q}\operatorname{IDF}(t)\,
+        \frac{(k_1+1)\,(tf_{t,d}+\delta)}{tf_{t,d}+k_1\!\left(1-b+b\,\tfrac{|d|}{\overline{|d|}}\right)}$ with $\delta{>}0$.
+
+    \textbf{BM25F (multi-field).}
+    $\displaystyle tf^{\!*}_{t,d}=\sum_f w_f\,\frac{tf_{t,d,f}}{1-b_f+b_f\,\tfrac{|d_f|}{\overline{|d_f|}}},\quad
+        s_F(d,q)=\sum_{t\in q}\operatorname{IDF}(t)\,\frac{(k_1+1)tf^{\!*}_{t,d}}{k_1+tf^{\!*}_{t,d}}$.
+
+    \textbf{Per-query normalization to $[0,1]$.}
+    $U_t=\operatorname{IDF}(t)\,(k_1+1)$; \;
+    $\displaystyle s_{\mathrm{norm}}(d,q)=\frac{s(d,q)}{\sum_{t\in q} U_t}\in[0,1]$ (clip).
+
     \subsection{Word Embedding}
     Maps words and phrases to numerical vectors
 
