@@ -1,0 +1,291 @@
+\documentclass[8pt,a4paper]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+% \usepackage[a4paper,margin=0.5cm]{geometry}
+\usepackage[a4paper]{geometry}
+% \usepackage[paperwidth=8.5in, paperheight=11in, margin=0in]{geometry}
+\usepackage{mdframed}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{fullpage}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,trees}
+\setlength{\columnsep}{0.5cm} % Adjust column separation as needed
+\setlength{\parindent}{0pt}
+
+\geometry{top=1.5cm,left=1.5cm,right=1cm,bottom=1cm}
+
+\begin{document}
+
+
+\begin{multicols}{3}
+
+      \section{Basics}
+
+      \subsection{recherche séquentielle}
+
+      \begin{mdframed}
+            \verb|trouvé = faux|\\
+            \verb|i = 0|\\
+            \verb|tant que (non trouvé) et (i < n)|\\
+            \verb|   si T[i] = x, trouvé = vrai|\\
+            \verb|   sinon i = i+1|\\
+            \verb|si pas trouvé alors trouvé = faux|\\
+      \end{mdframed}
+
+      complexité : \(O(n)\)
+
+      \bigskip
+
+      \subsection{recherche dichotomique}
+      Si la liste triée, complexité en \(O(\log n)\)
+
+
+      \subsection{tableau}
+      C'est une collection de variables de même type.\\
+      Accès à chaque case en \(O(1)\)
+
+      \subsection{liste chaînée}
+      Accès au 1\textsuperscript{er} maillon en \(O(1)\)\\
+      Accès au k-ième maillon en \(O(n)\)\\
+      insertion d'un élément en tête : en \(O(1)\)\\
+      \verb|add = nouvelle adresse|\\
+      \verb|add.next = start|\\
+      \verb|start = add|
+
+
+      \subsection{pile et file}
+      % \textbf{pile et file :}
+
+      % Replace your table with this version
+      {\scriptsize % or \scriptsize for slightly larger text
+            \begin{tabularx}{\linewidth}{|X|X|X|}
+                  \hline
+                                                   & Tableau                                                                   & Liste chaînée                      \\
+                  \hline
+                  Pile (LIFO) - Last In First Out  & Ajout / suppression en tête (O(1))                                        & Ajout / suppression en tête (O(1)) \\
+                  \hline
+                  File (FIFO) - First In First Out & Ajout / suppression en O(1) variables début
+                  (incr. quand on supprime) et fin (incr. quend on ajoute)
+                                                   & Ajout / suppression en O(1). Il faut un pointeur début et un pointeur fin                                      \\
+                  \hline
+            \end{tabularx}
+      }
+      % \bigskip
+
+      \section{Arbre}
+      % \textbf{Arbre :}\\
+      Structure composée de sommets regroupés de la façon suivante :\\
+      - une racine\\
+      - sous arbres disjoints (sous arbres). Il peut y en avoir 0
+      ou plus\\
+      \textbf{hauteur (n nœuds)}
+
+      \[
+            \left.
+            \begin{aligned}
+                  0 & \text{ si } n = 1, \\
+                  1 & \text{ si } n > 1
+            \end{aligned}
+            \right\} \leq h \leq n - 1.
+      \]
+
+
+      \subsection{Parcours d'un arbre \((R, A_1, A_2, \dots, A_k)\)}
+
+      \textbf{préfixe :}\\
+      examiner R\\
+      pour i variant de 1 à k\\
+      \hspace*{1cm}parcourir \(A_i\) en préfixe
+
+      \textbf{postfixe :}\\
+      pour i variant de 1 à k\\
+      \hspace*{1cm}parcourir \(A_i\) en postfixe\\
+      examiner R
+
+      \bigskip
+
+      \textbf{Arbre binaire}\\
+
+      \noindent
+      \resizebox{0.5\columnwidth}{!}{
+            \begin{tikzpicture}[%
+                        level distance=1.2cm,
+                        level 1/.style={sibling distance=3cm},
+                        level 2/.style={sibling distance=1.5cm},
+                        every node/.style={circle, draw, minimum size=7mm, inner sep=0pt}
+                  ]
+
+                  % Root
+                  \node {(1,5,7)}
+                  % Left subtree
+                  child { node {(2,2,4)}
+                              child { node {(3,1,1)} }
+                              child { node {(4,3,3)} }
+                        }
+                  % Right subtree
+                  child { node {(6,6,6)}
+                              child [missing] {}
+                              child { node {(7,7,5)} }
+                        };
+            \end{tikzpicture}
+      }
+
+
+      un AB est de la forme (Ar, Ag), Av avec A = vide ou AB, Arbre gauche et Ab, Arbre binaire.
+
+      \bigskip
+
+      \textbf{parcours infixe :}\\
+      parcourir \(A_1\) en infixe\\
+      examiner R\\
+      parcourir \(A_2\) en infixe
+
+      \bigskip
+
+      hauteur d'un AB (n nœuds) :\\
+      \(s = n - 1\)
+
+      \bigskip
+
+      \textbf{Tri :}\\
+      Thm : un tri comparatif a une complexité dans le pire des cas au moins \(O(n \log n)\)
+
+      \bigskip
+
+      \columnbreak
+
+      \textbf{Sélection :}\\
+      principe : on cherche le plus petit élément et on le met au début\\
+
+      pseudo code :\\
+      \verb|pour i allant de 1 à n-1|\\
+      \verb|   indicePetit = i|\\
+      \verb|min = T[i]|\\
+      \verb|   pour j allant de i+1 à n|\\
+      \verb|       si T[j] < min|\\
+      \verb|          indicePetit = j|\\
+      \verb|          min = T[j]|\\
+      \verb|   échanger (T[i], T[indicePetit])|\\
+      complexité : \(O(n^2)\)
+
+      \bigskip
+
+      \textbf{insertion :}\\
+      principe : on suppose les i premiers éléments triés. On insère \(T[i+1]\) en commençant par les remonter jusqu’à l’endroit où il doit aller\\
+
+      pseudo code :\\
+      \verb|pour i allant de 2 à n|\\
+      \verb|   clé = T[i]|\\
+      \verb|   j = i-1|\\
+      \verb|   tant que (j >= 1) et (T[j] > clé)|\\
+      \verb|       T[j+1] = T[j]|\\
+      \verb|       j = j-1|\\
+      \verb|   T[j+1] = clé|\\
+      complexité : \(O(n^2)\)
+
+      \bigskip
+
+      \textbf{Tri rapide :}\\
+      principe : on utilise une fonction partition qui s’intéresse aux données entre p et d et forme la liste :\\
+      \(\leq T[i] \mid T[i] > T[j]\)
+
+      pseudo code (triRapide(p,d)) :\\
+      \verb|if p < d then|\\
+      \verb|   q = partition(p,d)|\\
+      \verb|   triRapide(p, q-1)|\\
+      \verb|   triRapide(q+1, d)|
+
+      % fonction partition :\\
+      % \verb|x = T[d]|\\
+      % \verb|i = p-1|\\
+      % \verb|pour j = p à d-1|\\
+      % \verb|   tant que i < j si T[j] ≤ x et T[i] ≤ clé i = i+1|\\
+      % \verb|   échanger (T[i], T[j])|\\
+      % \verb|échanger (T[i+1], T[d])|\\
+      % \verb|renvoyer i+1|
+
+      \(O(\log n)\) dans le pire des cas\\
+      \(O(\log n)\) dans le meilleur des cas
+
+      \bigskip
+
+      \textbf{Tri par Arbre Binaire de Recherche :}\\
+      Un ABR est un AB dont les nœuds sont pourvus d'une clé.\\
+      La clé de tout nœud est comprise entre celles de ses fils. Les sous arbres à gauche sont plus petits et à droite plus grands.
+
+      La racine : on parcourt l'AB (on insère les données en fonction) dans l'ordre préfixe et on obtient un arbre équilibré.
+
+      insertion d'un élément :\\
+      Jusqu'à trouver la feuille : on va à gauche si la clé < racine clé, sinon à droite.\\
+      insertion en \(O(h) = O(\log n)\) si l'arbre est équilibré.
+
+      \bigskip
+
+      \textbf{Tri tas :}\\
+      un arbre parfait : un AB est parfait si tous les niveaux sont remplis.\\
+      le tas est un AB complet (rempli)\\
+      la place des feuilles est de n/2\\
+      complexité : \(O(n \log n)\)
+
+      \bigskip
+
+      \columnbreak
+
+      \textbf{Représentation par un tableau :}\\
+      N nœud d'indice i alors les fils de N ont indices 2i et 2i+1\\
+      le père de N d'indice i est i/2
+
+      \bigskip
+
+      \textbf{Construction d’un tas :}\\
+      insertion dans le tas donnée en tas à p reprises.\\
+      tant que la clé du fils est supérieure à celle du parent on permute.\\
+      \(O(n \log n)\)\\
+      construction en \(O(n)\) (\(n \log(n)\))
+
+      On répète alors le procédé suivant :\\
+      on l’échange avec la racine et on le place en bas. Puis l’élément du haut redescend à sa place, tant qu’il est supérieur à un plus grand fils en échangeant.\\
+      Le coût de la remontée est \(O(\log n)\)\\
+      et on fait ça n fois donc \(O(n \log n)\)
+
+      Complexité : \(O(n \log n)\)
+
+      \bigskip
+
+      \textbf{Hachage :}\\
+      On veut vérifier l’appartenance de mots \(x \in \{x_1,x_2,\dots,x_N\}\) de liste L de m mots dans un alphabet \(\Sigma\).
+
+      Principe de Hachage :\\
+      On utilise deux hachages \(h_1, h_2\) :\\
+      pour \(u \in \Sigma^*, h_1(u) = \dots, h_2(u) = \dots\)\\
+      On redimensionne les hachages, si trop de collisions, on re-hash.\\
+      Si \(n \gg m\) pas plus qu’on hache tous les codes pour E.\\
+      Il existe \(\Phi(prob)\) pour savoir si \(E \in L\) ou non.
+
+      Complexité : \(O(n/m)\)
+
+      \bigskip
+
+      \textbf{gestion des collisions :}\\
+      on crée un tableau de listes chaînées dont les maillons ont la même image par la hach. On utilise la liste chaînée en séquentielle.\\
+
+      complexité : \(O(n/p)\)\\
+      \(O(n + p)\) moyenne = \(O(p)\)\\
+      \(p = syn hach\)\\
+      longueur message : \(O(n + p)\)
+
+      \bigskip
+
+      % \textbf{Algorithme de Huffman}\\
+      % Longueur du message M : \(L(M)\)\\
+      % Règle du codage caractère c : \(c(\text{caractère}) = prob(c)\)\\
+      % codage d’un caractère : construction d’un arbre binaire à partir des caractères en rang trié.\\
+      % Longueur selon la règle du préfixe :
+
+\end{multicols}
+
+\end{document}
