@@ -443,15 +443,16 @@ tant que |S|<n:
     Même idée avec arêtes $\{x,y\}$; les composantes connexes émergent naturellement.
 
     \sect{BFS (largeur) \& DFS (profondeur)}
+    \textbf{Objets.} $G=(V,E)$ graphe; $s\in V$ source; $Q$=file FIFO; $d[v]$=distance (\#arêtes) depuis $s$; $pere[v]$=parent BFS; \textit{marquer} $v$ $\Leftrightarrow$ $visited[v]\leftarrow\text{vrai}$; $\mathrm{enqueue}(Q,v)$/$\mathrm{dequeue}(Q)$=opérations de file; ``pour $(u,v)$'' $\equiv$ pour tout arc $(u,v)\in E$.
     \subsect{BFS (file)}
     \begin{lstlisting}[style=tight]
-marquer s; d[s]=0; Q={s}
-while Q non vide:
-  u=dequeue(Q)
-  pour (u,v):
-    si v non marque:
-      marquer v; d[v]=d[u]+1; pere[v]=u; enqueue(Q,v)
-\end{lstlisting}
+    marquer s; d[s]=0; Q={s}
+    while Q non vide:
+    u=dequeue(Q)
+    pour (u,v):
+        si v non marque:
+        marquer v; d[v]=d[u]+1; pere[v]=u; enqueue(Q,v)
+    \end{lstlisting}
     \textbf{Propriété.} $d[v]=$ distance minimale (non pondéré). \quad \textbf{Complexité.} $\bigO(n+m)$.
 
     \subsect{DFS (pile/récursif)}
