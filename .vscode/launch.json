@@ -11,6 +11,20 @@
       "cwd": "${fileDirname}"
     },
     {
+      "name": "Debug pytest (current folder)",
+      "type": "python",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "-q",
+        "-k",
+        "test_param" // run only tests matching this expression
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "cwd": "${fileDirname}"
+    },
+    {
       "name": "Python: TFT",
       "type": "debugpy",
       "request": "launch",
