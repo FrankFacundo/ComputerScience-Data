@@ -57,6 +57,12 @@
 \setcounter{secnumdepth}{0}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt plus 0.5ex}
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+\newcommand{\tight}{\begingroup\scriptsize\thinmuskip=2mu\medmuskip=2mu\thickmuskip=3mu}
+\newcommand{\untight}{\endgroup}
 % ----------------------------------------------------
 
 \title{Data Science Cheatsheet}
@@ -312,53 +318,76 @@
     % -------------------------------
     \vspace{-.5mm}
     \section{Decision Trees}
-    \subsection{Classification and Regression Tree}
-    CART for regression minimizes SSE by splitting data into sub-regions and predicting the average value at leaf nodes.
+    \section{CART (Clas.\ \& Regr.) w/ Iris-style example}
 
-    The complexity parameter $cp$ only keeps splits that reduce loss by at least $cp$ (small $cp$ $\to$ deep tree)
-    \smallskip
-    \begin{center}
-        \vspace{-1mm}
-        \includegraphics[scale = .08]{images/CART.JPG}
+    \textbf{Data.} $\mathcal{D}=\{(pw_i,pl_i,y_i)\}_{i=1}^{12}$ with classes $y\in\{\text{setosa},\text{versicolor},\text{virginica}\}$.
+    Toy counts: 4 setosa (all $pw<0.6$), 4 versicolor ($pw\ge0.6$, $pl<1.7$), 4 virginica ($pw\ge0.6$, $pl\ge1.7$).
+
+    \textbf{Impurity \& gain.} For node $t$ with class probs $p_{t,c}$:
+    $G(t)=1-\sum_c p_{t,c}^2$,\;
+    $\Delta I=G(t)-\frac{n_L}{n_t}G(t_L)-\frac{n_R}{n_t}G(t_R)$.
+
+    \textbf{Root (before split).} Class mix $4/12$ each $\Rightarrow G(\text{root})=1-3(1/3)^2=2/3$.
+
+    \textbf{Best split 1 (numeric, $pw<0.6$).}
+    Left: $n_L=4$ (all setosa) $\Rightarrow G(L)=0$;\;
+    Right: $n_R=8$ (4 versicolor, 4 virginica) $\Rightarrow G(R)=1-2(1/2)^2=0.5$.
+    \[
+        \Delta I_{\text{root}}=\tfrac{2}{3}-\tfrac{4}{12}\cdot0-\tfrac{8}{12}\cdot0.5
+        =\tfrac{2}{3}-\tfrac{1}{3}=\boxed{\tfrac{1}{3}}.
+    \]
+
+    \textbf{Best split 2 (right child, $pl<1.7$).}
+    Left: $n=4$ (pure versicolor) $G=0$;\; Right: $n=4$ (pure virginica) $G=0$.
+    \[
+        \Delta I_{R}=0.5-1\cdot0=\boxed{0.5}.
+    \]
+
+    \textbf{Training rule (greedy).} For each node: sort thresholds per feature; evaluate $\Delta I$ via one pass (prefix counts); split if $\Delta I\!\ge\!cp$; recurse; prune by $R_\alpha(T)=\sum_{\ell}G(\ell)+\alpha|\mathcal L(T)|$.
+
+    \textbf{Picking the best $\Delta I$.} \emph{Not exponential.}
+    \underline{Numeric features:} sort distinct values once; test only cuts
+    between consecutive values. Let ordered targets be $y_{(1)},\dots,y_{(n)}$.
+
+    \tight
+    \[
+        \begin{aligned}
+            S_k & =\sum_{i\le k}y_{(i)},\; p_L=S_k/k,\; G_L=1-p_L^2-(1-p_L)^2, \\
+            p_R & =(S_n-S_k)/(n-k),\; G_R=1-p_R^2-(1-p_R)^2.
+        \end{aligned}
+    \]
+    \[
+        \begin{aligned}
+            T_k            & =\sum_{i\le k}y_{(i)},\; Q_k=\sum_{i\le k}y_{(i)}^2, \\
+            \mathrm{SSE}_L & =Q_k-T_k^2/k,\;
+            \mathrm{SSE}_R=(Q_n-Q_k)-(T_n-T_k)^2/(n-k).
+        \end{aligned}
+    \]
+    \untight
+
+
+
+    Scan $k=1,\dots,n\!-\!1$; take max $\Delta I$. Cost per feature: sort $O(n\log n)$ (or $O(n)$ with presorted indices) + linear scan $O(n)$.
+
+    \underline{Categoricals (K levels):} \emph{Binary y:} compute $\hat p(a)=P(Y\!=\!1\mid A\!=\!a)$, sort levels by $\hat p(a)$, test $K\!-\!1$ contiguous cuts (reduces to numeric). \emph{Multi-class:} order by one-vs-rest or argmax class rate (or target-encode with CV); test $K\!-\!1$ cuts. Hence $O(K\log K+K)$, not $2^{K-1}\!-\!1$.
+
+    \underline{Large scale (GBDT/RF):} histogram/quantile binning with $B$ bins $\Rightarrow$ per node $O(n+dB)$; feature subsampling and min-gain/min-samples further cap work.
+
+    \textbf{Final tree (matches figure).}
+    \[
+        \boxed{pw<0.6}\Rightarrow \text{setosa};\quad
+        pw\ge0.6 \ \&\ \boxed{pl<1.7}\Rightarrow \text{versicolor};\ \text{else}\ \text{virginica}.
+    \]
+
+    \textbf{Inference (examples).}
+    $(pw{=}0.55,pl{=}1.3)\!\Rightarrow\!\text{setosa};\
+        (pw{=}0.8,pl{=}1.5)\!\Rightarrow\!\text{versicolor};\
+        (pw{=}1.2,pl{=}2.0)\!\Rightarrow\!\text{virginica}.$
+
+    \begin{center}\vspace{-1mm}
+        \includegraphics[width=.9\linewidth]{CART.JPG}
     \end{center}
-    \vspace{-2mm}
-    CART for classification minimizes the sum of region impurity, \\
-    where $\hat{p_i}$ is the probability of a sample being in category $i$.
-    Possible measures, each with a max impurity of 0.5.
-    \begin{itemize}[label={--},leftmargin=4mm]
-        \vspace{-1mm}
-        \itemsep -.4mm
-        \item Gini Impurity = 1$ - \sum (\hat{p_i})^2$
-        \item Cross Entropy = $-\sum (\hat{p_i}) log_2(\hat{p_i})$
-    \end{itemize}
-    At each leaf node, CART predicts the most frequent category, assuming false negative and false positive costs are the same. The splitting process handles multicollinearity and outliers. Trees are prone to high variance, so tune through CV.
 
-    \vspace{+1mm}
-    For classification, nodes are splitted as following:
-    \begin{itemize}[label={--},leftmargin=4mm]
-        \vspace{-1mm}
-        \itemsep -.4mm
-        \item For each category
-              \subitem - For each possible split for this category:
-              Compute information gain.
-        \item The split chosen is the one which have the max information gain.
-    \end{itemize}
-
-
-    Exemple for a possible splits:
-    If category $A\in \{0,1,2\}$
-    Possible splits:
-    $[[0],[1,2]], [[0,1],[2]], [[0,1,2],[]]$
-
-
-    Information gain :
-    $$IG(S,A) = H(S) - \sum_{v \in \mathrm{values}(A)}\frac{\lvert S_v \rvert}{\lvert S \rvert}\, H(S_v)
-        ,
-        \begin{array}{rl}
-            S: & \text{training set}           \\[2pt]
-            A: & \text{split point},\; A \in S
-        \end{array}
-    $$
 
     \subsection{Random Forest}
     Trains an ensemble of trees with a subset of \textbf{features} (columns) with replacement that vote for the final prediction
