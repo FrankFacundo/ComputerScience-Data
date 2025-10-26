@@ -1,0 +1,9 @@
+# python 3.12.12
+torch==2.6.0
+torchvision==0.21.0
+transformers==4.46.3
+tokenizers==0.20.3
+pillow==12.0.0
+einops
+addict 
+easydict
