@@ -33,5 +33,6 @@ res = model.infer(
     crop_mode=True,
     save_results=True,
     test_compress=True,
+    eval_mode=False,
 )
 print(res)
