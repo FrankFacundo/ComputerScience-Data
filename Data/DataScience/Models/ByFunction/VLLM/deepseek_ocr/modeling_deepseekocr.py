@@ -1024,15 +1024,15 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
                         use_cache=True,
                     )
 
-        if "<image>" in conversation[0]["content"] and eval_mode:
-            outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1] :])
-            stop_str = "<｜end▁of▁sentence｜>"
-            if outputs.endswith(stop_str):
-                outputs = outputs[: -len(stop_str)]
-            # re_match
-            outputs = outputs.strip()
+        # if "<image>" in conversation[0]["content"] and eval_mode:
+        #     outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1] :])
+        #     stop_str = "<｜end▁of▁sentence｜>"
+        #     if outputs.endswith(stop_str):
+        #         outputs = outputs[: -len(stop_str)]
+        #     # re_match
+        #     outputs = outputs.strip()
 
-            return outputs
+        #     return outputs
 
         if "<image>" in conversation[0]["content"] and test_compress:
             outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1] :])
@@ -1049,7 +1049,7 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
             )
             print("=" * 50)
 
-        if "<image>" in conversation[0]["content"] and save_results:
+        if "<image>" in conversation[0]["content"] and save_results and eval_mode:
             outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1] :])
             stop_str = "<｜end▁of▁sentence｜>"
 
@@ -1078,8 +1078,9 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
 
             # if 'structural formula' in conversation[0]['content']:
             #     outputs = '<smiles>' + outputs + '</smiles>'
-            with open(f"{output_path}/result.mmd", "w", encoding="utf-8") as afile:
-                afile.write(outputs)
+            # with open(f"{output_path}/result.mmd", "w", encoding="utf-8") as afile:
+            #     afile.write(outputs)
+            return outputs
 
             if "line_type" in outputs:
                 import matplotlib.pyplot as plt
