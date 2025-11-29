@@ -361,6 +361,15 @@
               \begin{center}
                   $E(X) = \sum\limits_{i}x_iP(X=x_i)$
               \end{center}
+              On a discrete probability space $(\Omega,\mathcal{A},\mathbb{P})$ with a random variable
+              $X : \Omega \to \mathbb{R}$, a more general way to write expectation is
+              \[
+                  \mathbb{E}[X] = \sum_{\omega \in \Omega} X(\omega)\,\mathbb{P}(\{\omega\}).
+              \]
+              In particular, for two random variables $X$ and $Y$,
+              \[
+                  \mathbb{E}[X+Y] = \sum_{\omega \in \Omega} \bigl(X(\omega)+Y(\omega)\bigr)\,\mathbb{P}(\{\omega\}).
+              \]
 
               \begin{minipage}{\linewidth}
                   \centering
