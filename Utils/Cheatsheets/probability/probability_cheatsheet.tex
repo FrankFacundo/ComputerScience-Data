@@ -1121,6 +1121,9 @@
         \item $(A_n)_{n\ge 1}\subset\mathcal{A} \Rightarrow \bigcup_{n\ge 1} A_n \in\mathcal{A}$ (donc aussi $\bigcap_{n\ge 1} A_n\in\mathcal{A}$).
     \end{itemize}
 
+    \textbf{Boréliens sur $\mathbb{R}$} : on note $\mathcal{B}(\mathbb{R})$ la \textbf{tribu de Borel} sur $\mathbb{R}$, c’est-à-dire la plus petite tribu de parties de $\mathbb{R}$ contenant tous les ouverts (par exemple tous les intervalles ouverts).
+    Les ensembles de $\mathcal{B}(\mathbb{R})$ sont appelés \textbf{boréliens} (ou ensembles boréliens).
+
     \textbf{Mesure} sur $(\Omega,\mathcal{A})$ : application $\mu:\mathcal{A}\to[0,\infty]$ telle que
     \begin{itemize}
         \item $\mu(\emptyset)=0$,
@@ -1153,9 +1156,17 @@
 
     \subsection{Variables aléatoires et loi}
 
-    \textbf{Variable aléatoire réelle} : application mesurable $X:(\Omega,\mathcal{A})\to(\mathbb{R},\mathcal{B}(\mathbb{R}))$ telle que
+    \textbf{Variable aléatoire réelle} : application mesurable
     \[
-        \{X\in B\} := X^{-1}(B)\in\mathcal{A},\quad \forall B\in\mathcal{B}(\mathbb{R}).
+        X:(\Omega,\mathcal{A})\to(\mathbb{R},\mathcal{B}(\mathbb{R})),\quad
+        \omega \mapsto X(\omega).
+    \]
+    On note $X(\omega)$ la valeur prise par $X$ lorsque l’issue élémentaire est $\omega\in\Omega$.
+
+    On définit, pour tout borélien $B\in\mathcal{B}(\mathbb{R})$,
+    \[
+        \{X\in B\} := X^{-1}(B)
+        = \{\omega\in\Omega : X(\omega)\in B\} \in\mathcal{A}.
     \]
 
     \textbf{$\sigma$-algèbre engendrée} par $X$ : $\sigma(X)=\{X^{-1}(B):B\in\mathcal{B}(\mathbb{R})\}$.
@@ -1177,7 +1188,7 @@
 
     Pour une v.a. $X$ mesurable et $X\ge 0$ :
     \[
-        \mathbb{E}(X)=\int_\Omega X\,d\mathbb{P}
+        \mathbb{E}(X)=\int_\Omega X(\omega)\,d\mathbb{P}(\omega)
     \]
     est définie comme la limite de l’intégrale de fonctions simples croissantes qui approchent $X$.
 
@@ -1186,6 +1197,16 @@
         \mathbb{E}(X)=\int X\,d\mathbb{P} = \int X^+\,d\mathbb{P} - \int X^-\,d\mathbb{P},
     \]
     où $X^+=\max(X,0)$, $X^-=\max(-X,0)$.
+
+    \textbf{Cas discret (formule avec $X(\omega)$).} Si $\Omega$ est dénombrable et que $\mathbb{P}(\{\omega\})$ est définie pour tout $\omega\in\Omega$, alors pour une v.a. $X$ intégrable,
+    \[
+        \mathbb{E}[X] = \sum_{\omega\in\Omega} X(\omega)\,\mathbb{P}(\{\omega\}),
+    \]
+    et par exemple, pour deux v.a. $X,Y$ intégrables,
+    \[
+        \mathbb{E}[X+Y]
+        = \sum_{\omega\in\Omega} \bigl(X(\omega)+Y(\omega)\bigr)\,\mathbb{P}(\{\omega\}).
+    \]
 
     \textbf{Propriétés} :
     \begin{itemize}
@@ -1199,6 +1220,28 @@
         \mathbb{E}\big(g(X)\big)=\int_{\mathbb{R}} g(x) f(x)\,dx,
     \]
     ce qui est la version "Lebesgue" de LOTUS.
+
+    \paragraph{Petit dictionnaire de notations (vue d’ensemble).}
+
+    \begin{description}
+        \item[$\Omega$] Espace des issues possibles (\emph{espace des états}, \emph{sample space}).
+        \item[$\omega\in\Omega$] Une issue élémentaire, un résultat possible d’une expérience aléatoire.
+        \item[$\mathcal{A}$] Tribu (\(\sigma\)-algèbre) d’événements : sous-ensemble de $\mathcal{P}(\Omega)$ stable par les opérations usuelles.
+        \item[$A\in\mathcal{A}$] Un \textbf{événement}. On peut écrire $A=\{\omega : \text{``quelque propriété sur } \omega\text{''}\}$.
+        \item[$\mathbb{P}$] Mesure de probabilité sur $(\Omega,\mathcal{A})$; pour $A\in\mathcal{A}$, $\mathbb{P}(A)$ est la probabilité que $A$ se réalise.
+        \item[$X$] Variable aléatoire réelle, vue comme application $X:\Omega\to\mathbb{R}$.
+        \item[$X(\omega)$] Valeur de la v.a. $X$ lorsque l’issue élémentaire réalisée est $\omega$.
+        \item[$\{X\in B\}$] Événement $\{\omega\in\Omega : X(\omega)\in B\}$, pour un borélien $B\subset\mathbb{R}$.
+        \item[$\mathbb{P}_X$] Loi (ou distribution) de $X$ : mesure image de $\mathbb{P}$ par $X$, donnée par
+              $\mathbb{P}_X(B)=\mathbb{P}(X\in B)$.
+        \item[$\mathbb{E}(X)$] Espérance de $X$ :
+              \[
+                  \mathbb{E}[X]
+                  = \int_\Omega X(\omega)\,d\mathbb{P}(\omega)
+                  = \int_{\mathbb{R}} x\,\mathbb{P}_X(dx)
+              \]
+              (et dans le cas discret : $\mathbb{E}[X]=\sum_{\omega} X(\omega)\mathbb{P}(\{\omega\})$).
+    \end{description}
 
     \subsection{Convergences et théorèmes majeurs}
 
