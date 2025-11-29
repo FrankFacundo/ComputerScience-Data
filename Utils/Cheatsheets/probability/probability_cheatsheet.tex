@@ -31,6 +31,7 @@
             ]{bookmark}
 \usepackage{relsize}
 \usepackage{rotating}
+\usepackage[T1]{fontenc}
 
  \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
     \def\independenT#1#2{\mathrel{\setbox0\hbox{$#1#2$}%
@@ -1105,6 +1106,145 @@
         \item \textbf{Chebyshev} $P(|X - \mu| \geq a) \leq \frac{\sigma^2}{a^2}$ for $E(X)=\mu, \var(X) = \sigma^2$
         \item \textbf{Jensen} $E(g(X)) \geq g(E(X))$ for $g$ convex; reverse if $g$ is concave
     \end{enumerate}
+
+    \section{Measure-Theoretic Foundations (FRENCH)}\smallskip \hrule height 2pt \smallskip
+
+    \subsection{Espaces mesurés et espaces probabilisés}
+
+    \textbf{Espace mesurable} : $(\Omega,\mathcal{A})$ où $\Omega$ est un ensemble et
+    $\mathcal{A} \subset 2^\Omega = \mathcal{P}(\Omega)$ (l’ensemble des parties de $\Omega$)
+    une \textbf{tribu} (ou $\sigma$-algèbre).
+
+    \begin{itemize}
+        \item $\Omega \in \mathcal{A}$, $\emptyset \in \mathcal{A}$,
+        \item $A\in\mathcal{A} \Rightarrow A^c \in\mathcal{A}$,
+        \item $(A_n)_{n\ge 1}\subset\mathcal{A} \Rightarrow \bigcup_{n\ge 1} A_n \in\mathcal{A}$ (donc aussi $\bigcap_{n\ge 1} A_n\in\mathcal{A}$).
+    \end{itemize}
+
+    \textbf{Mesure} sur $(\Omega,\mathcal{A})$ : application $\mu:\mathcal{A}\to[0,\infty]$ telle que
+    \begin{itemize}
+        \item $\mu(\emptyset)=0$,
+        \item (additivité dénombrable) pour $A_i$ disjoints :
+              $\displaystyle \mu\!\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty \mu(A_i)$.
+    \end{itemize}
+
+    \textbf{Espace probabilisé} : $(\Omega,\mathcal{A},\mathbb{P})$ où
+    $\Omega$ est un ensemble,
+    $\mathcal{A}\subset 2^\Omega$ une \textbf{tribu} (ou $\sigma$-algèbre),
+    donc $(\Omega,\mathcal{A})$ est un espace mesurable,
+    et $\mathbb{P} : \mathcal{A} \to [0,1]$ une mesure de probabilité telle que $\mathbb{P}(\Omega)=1$.
+
+
+    \textbf{Propriétés de base} (pour $A,B\in\mathcal{A}$, $A\subset B$) :
+    \[
+        \mathbb{P}(A^c)=1-\mathbb{P}(A),\quad
+        \mathbb{P}(A)\le \mathbb{P}(B),\quad
+        \mathbb{P}\Big(\bigcup_{n}A_n\Big)\le \sum_n\mathbb{P}(A_n).
+    \]
+    \textbf{Continuité} : si $A_n\uparrow A$, alors $\mathbb{P}(A_n)\uparrow \mathbb{P}(A)$; si $A_n\downarrow A$, alors $\mathbb{P}(A_n)\downarrow \mathbb{P}(A)$.
+
+    \subsection{Presque-sûr et égalité p.s.}
+
+    \begin{itemize}
+        \item Un événement $A$ a lieu \textbf{presque sûrement (p.s.)} si $\mathbb{P}(A)=1$.
+        \item Deux v.a. $X,Y$ sont égales p.s. si $\mathbb{P}(X\neq Y)=0$ (on écrit $X=Y$ p.s.).
+    \end{itemize}
+    En théorie de la mesure, beaucoup de résultats sont valables \emph{à une modification p.s. près}.
+
+    \subsection{Variables aléatoires et loi}
+
+    \textbf{Variable aléatoire réelle} : application mesurable $X:(\Omega,\mathcal{A})\to(\mathbb{R},\mathcal{B}(\mathbb{R}))$ telle que
+    \[
+        \{X\in B\} := X^{-1}(B)\in\mathcal{A},\quad \forall B\in\mathcal{B}(\mathbb{R}).
+    \]
+
+    \textbf{$\sigma$-algèbre engendrée} par $X$ : $\sigma(X)=\{X^{-1}(B):B\in\mathcal{B}(\mathbb{R})\}$.
+
+    \textbf{Loi de $X$} : mesure image $\mathbb{P}_X$ sur $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ définie par
+    \[
+        \mathbb{P}_X(B) = \mathbb{P}(X\in B)=\mathbb{P}\big(X^{-1}(B)\big).
+    \]
+    Les notions de PMF/PDF/CDF classiques sont des descriptions concrètes de $\mathbb{P}_X$.
+
+    \textbf{Indépendance} :
+    \begin{itemize}
+        \item $X,Y$ indépendantes $\iff$ pour tous boréliens $A,B$ :
+              $\mathbb{P}(X\in A,Y\in B)=\mathbb{P}_X(A)\mathbb{P}_Y(B)$.
+        \item Équivalent : les $\sigma$-algèbres $\sigma(X)$ et $\sigma(Y)$ sont indépendantes.
+    \end{itemize}
+
+    \subsection{Espérance comme intégrale de Lebesgue}
+
+    Pour une v.a. $X$ mesurable et $X\ge 0$ :
+    \[
+        \mathbb{E}(X)=\int_\Omega X\,d\mathbb{P}
+    \]
+    est définie comme la limite de l’intégrale de fonctions simples croissantes qui approchent $X$.
+
+    Pour une v.a. intégrable ($\int |X|\,d\mathbb{P}<\infty$), on pose
+    \[
+        \mathbb{E}(X)=\int X\,d\mathbb{P} = \int X^+\,d\mathbb{P} - \int X^-\,d\mathbb{P},
+    \]
+    où $X^+=\max(X,0)$, $X^-=\max(-X,0)$.
+
+    \textbf{Propriétés} :
+    \begin{itemize}
+        \item Linéarité : $\mathbb{E}(aX+bY)=a\mathbb{E}(X)+b\mathbb{E}(Y)$.
+        \item Monotonie : $X\le Y$ p.s. $\Rightarrow \mathbb{E}(X)\le\mathbb{E}(Y)$.
+        \item Positivité : $X\ge 0$ p.s. $\Rightarrow \mathbb{E}(X)\ge 0$.
+    \end{itemize}
+
+    Lien avec les formules classiques : si $X$ admet une densité $f$ et $g$ borélienne,
+    \[
+        \mathbb{E}\big(g(X)\big)=\int_{\mathbb{R}} g(x) f(x)\,dx,
+    \]
+    ce qui est la version "Lebesgue" de LOTUS.
+
+    \subsection{Convergences et théorèmes majeurs}
+
+    Soient $(X_n)$ et $X$ des v.a. réelles.
+
+    \begin{description}
+        \item[Convergence presque sûre] $X_n\to X$ p.s. si
+              \[
+                  \mathbb{P}\big(\{\omega : X_n(\omega)\to X(\omega)\}\big)=1.
+              \]
+        \item[Convergence en probabilité] $X_n\to X$ en prob. si $\forall \varepsilon>0$,
+              \[
+                  \mathbb{P}(|X_n-X|>\varepsilon)\to 0.
+              \]
+        \item[Convergence en $L^1$] $X_n\to X$ en $L^1$ si $\mathbb{E}|X_n-X|\to 0$.
+        \item[Convergence en loi] $X_n\to X$ en loi si $\mathbb{P}_{X_n}$ converge faiblement vers $\mathbb{P}_X$ (convergence des CDF en tout point de continuité).
+    \end{description}
+
+    Relations importantes (sans réciproque en général) :
+    \[
+        X_n\to X \text{ p.s. } \Rightarrow X_n\to X \text{ en prob. } \Rightarrow X_n\to X \text{ en loi},
+    \]
+    \[
+        X_n\to X \text{ en } L^1 \Rightarrow X_n\to X \text{ en prob.}
+    \]
+
+    \textbf{Théorème de convergence monotone (Beppo-Levi)} : si $0\le X_n\uparrow X$ p.s., alors
+    \[
+        \mathbb{E}(X_n)\uparrow \mathbb{E}(X).
+    \]
+
+    \textbf{Théorème de convergence dominée (Lebesgue)} : si $X_n\to X$ p.s. et $\exists Y\ge 0$ intégrable tel que $|X_n|\le Y$ p.s. pour tout $n$, alors
+    \[
+        \mathbb{E}(X_n)\to \mathbb{E}(X),\quad \text{et}\quad \mathbb{E}(|X_n|)\le \mathbb{E}(Y).
+    \]
+
+    \subsection{Mesures produit, Fubini et Tonelli}
+
+    Pour deux espaces probabilisés $(\Omega_1,\mathcal{A}_1,\mathbb{P}_1)$ et $(\Omega_2,\mathcal{A}_2,\mathbb{P}_2)$, il existe une mesure produit $\mathbb{P}_1\otimes\mathbb{P}_2$ sur $(\Omega_1\times\Omega_2,\mathcal{A}_1\otimes\mathcal{A}_2)$.
+
+    Pour $f:\Omega_1\times\Omega_2\to[0,\infty]$ mesurable,
+    \[
+        \int f\,d(\mathbb{P}_1\otimes\mathbb{P}_2)=\int_{\Omega_2}\left(\int_{\Omega_1} f\,d\mathbb{P}_1\right)d\mathbb{P}_2
+        =\int_{\Omega_1}\left(\int_{\Omega_2} f\,d\mathbb{P}_2\right)d\mathbb{P}_1
+    \]
+    (Tonelli pour $f\ge 0$; Fubini si $\int |f|\,d(\mathbb{P}_1\otimes\mathbb{P}_2)<\infty$).
 
 
     \section{Formulas} \smallskip \hrule height 2pt \smallskip
