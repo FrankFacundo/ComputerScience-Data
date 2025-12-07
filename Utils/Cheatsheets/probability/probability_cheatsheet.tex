@@ -416,18 +416,24 @@
         % \item[What is a Continuous Random Variable (CRV)?] A continuous random variable can take on any possible value within a certain interval (for example, [0, 1]), whereas a discrete random variable can only take on variables in a list of countable values (for example, all the integers, or the values 1, $\frac{1}{2}, \frac{1}{4}, \frac{1}{8}$, etc.)
         % \item[Do Continuous Random Variables have PMFs?] No. The probability that a continuous random variable takes on any specific value is 0.
         \item[What's the probability that a CRV is in an interval?] Take the difference in CDF values (or use the PDF as described later).
-              \[P(a \leq X \leq b) = P(X \leq b) - P(X \leq a) = F_X(b) - F_X(a)\]
+              \[
+                  P(a \leq X \leq b) = P(X \leq b) - P(X \leq a) = F_X(b) - F_X(a)
+              \]
 
               For $X \sim \N(\mu,\sigma^2)$, this becomes
               \begin{align*}
-                  P(a\leq X\leq b) & =\Phi \left(\frac{b-\mu }{\sigma } \right) - \Phi \left( \frac{a-\mu }{\sigma } \right)
+                  P(a\leq X\leq b)
+                   & = \Phi \left(\frac{b-\mu }{\sigma } \right)
+                  - \Phi \left( \frac{a-\mu }{\sigma } \right).
               \end{align*}
 
         \item[What is the Probability Density Function (PDF)?] The PDF $f$ is the derivative of the CDF $F$.
-              \[ F'(x) = f(x) \]
+              \[
+                  F'(x) = f(x)
+              \]
               A PDF is nonnegative and integrates to $1$. By the fundamental theorem of calculus, to get from PDF back to CDF we can integrate:
               \begin{align*}
-                  F(x) & =  \int_{-\infty}^x f(t)dt
+                  F(x) & =  \int_{-\infty}^x f(t)\,dt
               \end{align*}
               \begin{minipage}{\linewidth}
                   \centering
@@ -435,17 +441,21 @@
               \end{minipage}
               To find the probability that a CRV takes on a value in an interval, integrate the PDF over that interval.
               \begin{align*}
-                  F(b) - F(a) & =  \int^b_a f(x)dx
+                  F(b) - F(a) & =  \int^b_a f(x)\,dx
               \end{align*}
 
-
-
-              % Two additional properties of a PDF:  it must integrate to 1 (because the probability that a CRV falls in the interval $[-\infty, \infty]$ is 1, and the PDF must always be nonnegative.
-              % \[\int^\infty_{-\infty}f(x)dx \hspace{2 cm} f(x) \geq 0\]
-        \item[How do I find the expected value of a CRV?] Analogous to the discrete case, where you sum $x$ times the PMF, for CRVs you integrate $x$ times the PDF.
-              \[E(X) = \int^\infty_{-\infty}xf(x)dx \]
-              % Review: Expected value is \emph{linear}. This means that for \emph{any} random variables $X$ and $Y$ and any constants $a, b, c$, the following is true:
-              % \[E(aX + bY + c) = aE(X) + bE(Y) + c\]
+        \item[How do I find the expected value of a CRV?]
+              For a random variable $X : \Omega \to \mathbb{R}$ on a probability space
+              $(\Omega,\mathcal{A},\mathbb{P})$, the general (measure-theoretic) definition of
+              expectation is the Lebesgue integral
+              \[
+                  \mathbb{E}[X] = \int_{\Omega} X(\omega)\,d\mathbb{P}(\omega).
+              \]
+              If $X$ admits a density $f$ with respect to the Lebesgue measure on $\mathbb{R}$,
+              this reduces to the usual “$x$ times the PDF” formula:
+              \[
+                  \mathbb{E}[X] = \int_{-\infty}^{\infty} x f(x)\,dx.
+              \]
     \end{description}
 
 
@@ -453,13 +463,36 @@
     \subsection{LOTUS}
     \begin{description}
         \item[Expected value of a function of an r.v.]
-              The expected value of $X$ is defined this way:
-              \[E(X) = \sum_x xP(X=x) \textnormal{ (for discrete $X$)}\]
-              \[E(X) = \int^\infty_{-\infty}xf(x)dx  \textnormal{ (for continuous $X$)}\]
-              The \textbf{Law of the Unconscious Statistician (LOTUS)} states that you can find the expected value of a \emph{function of a random variable}, $g(X)$, in a similar way, by replacing the $x$ in front of the PMF/PDF by $g(x)$ but still working with the PMF/PDF of $X$:
-              \[E(g(X)) = \sum_x g(x)P(X=x) \textnormal{ (for discrete $X$)}\]
-              \[E(g(X)) = \int^\infty_{-\infty}g(x)f(x)dx \textnormal{ (for continuous $X$)}\]
+              The expected value of $X$ on a probability space $(\Omega,\mathcal{A},\mathbb{P})$
+              is, in full generality,
+              \[
+                  E(X) = \int_{\Omega} X(\omega)\,d\mathbb{P}(\omega).
+              \]
+              In the discrete and continuous cases this becomes
+              \[
+                  E(X) = \sum_x x\,P(X=x) \quad \textnormal{(for discrete $X$)},
+              \]
+              \[
+                  E(X) = \int_{-\infty}^{\infty} x f(x)\,dx \quad \textnormal{(for continuous $X$)}.
+              \]
+
+              The \textbf{Law of the Unconscious Statistician (LOTUS)} states that you can find
+              the expected value of a \emph{function of a random variable}, $g(X)$, by
+              integrating (or summing) $g$ composed with $X$:
+              \[
+                  E\bigl(g(X)\bigr)
+                  = \int_{\Omega} g\bigl(X(\omega)\bigr)\,d\mathbb{P}(\omega)
+              \]
+              and, in the discrete and continuous special cases,
+              \[
+                  E(g(X)) = \sum_x g(x)\,P(X=x) \quad \textnormal{(for discrete $X$)},
+              \]
+              \[
+                  E(g(X)) = \int_{-\infty}^{\infty} g(x) f(x)\,dx \quad \textnormal{(for continuous $X$)}.
+              \]
+
         \item[What's a function of a random variable?] A function of a random variable is also a random variable. For example, if $X$ is the number of bikes you see in an hour, then $g(X) =  2X$ is the number of bike wheels you see in that hour and $h(X) = {X \choose 2} = \frac{X(X-1)}{2}$ is the number of \emph{pairs} of bikes such that you see both of those bikes in that hour.
+
         \item[What's the point?] You don't need to know the PMF/PDF of $g(X)$ to find its expected value. All you need is the PMF/PDF of $X$.
     \end{description}
 
@@ -1322,6 +1355,27 @@
         \item[Medians and Quantiles] Let $X$ have CDF $F$. Then $X$ has median $m$ if $F(m) \geq 0.5$ and $P(X \geq m) \geq 0.5$. For $X$ continuous, $m$ satisfies $F(m)=1/2$. In general, the $a$th quantile of $X$ is $\min \{x: F(x)\geq a\}$; the median is the case $a=1/2$.
         \item[log] Statisticians generally use $\log$ to refer to natural log (i.e., base $e$).
         \item[i.i.d r.v.s] Independent, identically-distributed random variables.
+        \item[Tail formula for expectation]
+              If $X \ge 0$ a.s. with density $f_X$ on $[0,\infty)$, then
+              \[
+                  \mathbb{E}[X]
+                  = \int_0^\infty x f_X(x)\,dx
+                  = \int_0^\infty \mathbb{P}(X > t)\,dt.
+              \]
+
+              \emph{Proof (very sketchy).}
+              Start from the density formula and use $x = \int_0^x 1\,dt$:
+              \[
+                  \mathbb{E}[X]
+                  = \int_0^\infty x f_X(x)\,dx
+                  = \int_0^\infty \int_0^x f_X(x)\,dt\,dx.
+              \]
+              On the region $D = \{(t,x): 0 \le t \le x < \infty\}$, Tonelli/Fubini gives
+              \[
+                  \int_0^\infty \int_0^x f_X(x)\,dt\,dx
+                  = \int_0^\infty \int_t^\infty f_X(x)\,dx\,dt
+                  = \int_0^\infty \mathbb{P}(X > t)\,dt.
+              \]
 
     \end{description}
 
@@ -1459,38 +1513,104 @@
     \end{enumerate}
 
     \vspace{1.5in}
-
-    \section{Distributions in R} \smallskip \hrule height 2pt \smallskip
+    \section{Distributions in Python} \smallskip \hrule height 2pt \smallskip
 
     \bigskip
+
+    \noindent\textbf{Assume:} \texttt{import numpy as np} and \texttt{from scipy.stats import *}.
 
     \begin{center}
         \begin{tabular}{cc}
             \hline
-            \textbf{Command}             & \textbf{What it does}                       \\
+            \textbf{Command}                   & \textbf{What it does}                                     \\
             \hline
-            \texttt{help(distributions)} & shows documentation on distributions        \\
-            \texttt{dbinom(k,n,p)}       & PMF $P(X=k)$ for $X \sim \Bin(n,p)$         \\
-            \texttt{pbinom(x,n,p)}       & CDF $P(X \leq x)$ for $X \sim \Bin(n,p)$    \\
-            \texttt{qbinom(a,n,p)}       & $a$th quantile for $X \sim \Bin(n,p)$       \\
-            \texttt{rbinom(r,n,p)}       & vector of $r$ i.i.d.~$\Bin(n,p)$ r.v.s      \\
-            \texttt{dgeom(k,p)}          & PMF $P(X=k)$ for $X \sim \Geom(p)$          \\
-            \texttt{dhyper(k,w,b,n)}     & PMF $P(X=k)$ for $X \sim \HGeom(w,b,n)$     \\
-            \texttt{dnbinom(k,r,p)}      & PMF $P(X=k)$ for $X \sim \NBin(r,p)$        \\
-            \texttt{dpois(k,r)}          & PMF $P(X=k)$ for $X \sim \Pois(r)$          \\
-            \texttt{dbeta(x,a,b)}        & PDF $f(x)$ for $X \sim \Beta(a,b)$          \\
-            \texttt{dchisq(x,n)}         & PDF $f(x)$ for $X \sim \chi^2_n$            \\
-            \texttt{dexp(x,b)}           & PDF $f(x)$ for $X \sim \Expo(b)$            \\
-            \texttt{dgamma(x,a,r)}       & PDF $f(x)$ for $X \sim \Gam(a,r)$           \\
-            \texttt{dlnorm(x,m,s)}       & PDF $f(x)$ for $X \sim \mathcal{LN}(m,s^2)$ \\
-            \texttt{dnorm(x,m,s)}        & PDF $f(x)$ for $X \sim \N(m,s^2)$           \\
-            \texttt{dt(x,n)}             & PDF $f(x)$ for $X \sim t_n$                 \\
-            \texttt{dunif(x,a,b)}        & PDF $f(x)$ for $X \sim \Unif(a,b)$          \\
+            \texttt{help(stats)}               & shows documentation on \texttt{scipy.stats}               \\
+            \texttt{binom.pmf(k, n, p)}        & PMF $P(X=k)$ for $X \sim \Bin(n,p)$                       \\
+            \texttt{binom.cdf(x, n, p)}        & CDF $P(X \le x)$ for $X \sim \Bin(n,p)$                   \\
+            \texttt{binom.ppf(a, n, p)}        & $a$th quantile for $X \sim \Bin(n,p)$                     \\
+            \texttt{binom.rvs(n, p, size=r)}   & vector of $r$ i.i.d.~$\Bin(n,p)$ samples                  \\
+            \texttt{geom.pmf(k, p)}            & PMF $P(X=k)$ for $X \sim \Geom(p)$                        \\
+            \texttt{hypergeom.pmf(k, M, K, n)} & PMF $P(X=k)$ for hypergeometric $X$                       \\
+            \texttt{nbinom.pmf(k, r, p)}       & PMF $P(X=k)$ for $X \sim \NBin(r,p)$                      \\
+            \texttt{poisson.pmf(k, mu)}        & PMF $P(X=k)$ for $X \sim \Pois(\lambda)$                  \\
+            \texttt{beta.pdf(x, a, b)}         & PDF $f(x)$ for $X \sim \Beta(a,b)$                        \\
+            \texttt{chi2.pdf(x, n)}            & PDF $f(x)$ for $X \sim \chi^2_n$                          \\
+            \texttt{expon.pdf(x, scale)}       & PDF $f(x)$ for $X \sim \Expo(\text{rate}=1/\text{scale})$ \\
+            \texttt{gamma.pdf(x, a, scale)}    & PDF $f(x)$ for $X \sim \Gam(a,\text{scale})$              \\
+            \texttt{lognorm.pdf(x, s, scale)}  & PDF $f(x)$ for lognormal $X$                              \\
+            \texttt{norm.pdf(x, m, s)}         & PDF $f(x)$ for $X \sim \N(m,s^2)$                         \\
+            \texttt{t.pdf(x, n)}               & PDF $f(x)$ for $X \sim t_n$                               \\
+            \texttt{uniform.pdf(x, a, b-a)}    & PDF $f(x)$ for $X \sim \Unif(a,b)$                        \\
             \hline
         \end{tabular}
     \end{center}
 
-    The table above gives R commands for working with various named distributions. Commands analogous to \texttt{pbinom}, \texttt{qbinom}, and \texttt{rbinom} work for the other distributions in the table. For example, \texttt{pnorm}, \texttt{qnorm}, and \texttt{rnorm} can be used to get the CDF,  quantiles, and random generation for the Normal.  For the Multinomial, \texttt{dmultinom} can be used for calculating the joint PMF and \texttt{rmultinom} can be used for generating random vectors. For the Multivariate Normal, after installing and loading the \texttt{mvtnorm} package \texttt{dmvnorm} can be used for calculating the joint PDF and \texttt{rmvnorm} can be used for generating random vectors.
+
+    The table above gives Python/SciPy commands for working with various named
+    distributions. Methods analogous to \texttt{pmf/pdf}, \texttt{cdf},
+    \texttt{ppf} (quantiles), and \texttt{rvs} (random generation) exist for
+    the other distributions in the table. For example, \texttt{norm.cdf},
+    \texttt{norm.ppf}, and \texttt{norm.rvs} can be used to get the CDF,
+    quantiles, and random generation for the Normal.  For the Multinomial,
+    \texttt{multinomial.pmf} and \texttt{multinomial.rvs} can be used for
+    calculating the joint PMF and generating random vectors. For the
+    Multivariate Normal, \texttt{scipy.stats.multivariate\_normal} provides
+    \texttt{pdf}, \texttt{cdf} (approximate), and \texttt{rvs} for joint
+    densities and random vectors.
+
+    \bigskip
+    \bigskip
+
+    \section{Distributions in C++} \smallskip \hrule height 2pt \smallskip
+
+    \bigskip
+
+    \noindent\textbf{Assume:}
+    \begin{itemize}
+        \item \texttt{\#include <boost/math/distributions.hpp>}
+        \item \texttt{using namespace boost::math;}
+    \end{itemize}
+
+    \begin{center}
+        % \scriptsize  % optional: keep or comment this out
+        \resizebox{\linewidth}{!}{%
+            \begin{tabular}{@{}ll@{}}
+                \hline
+                \textbf{Command}                                        & \textbf{What it does}                                   \\
+                \hline
+                \texttt{pdf(binomial\_distribution<>(n,p),k)}           & PMF $P(X=k)$ for $X \sim \Bin(n,p)$                     \\
+                \texttt{cdf(binomial\_distribution<>(n,p),x)}           & CDF $P(X \le x)$ for $X \sim \Bin(n,p)$                 \\
+                \texttt{quantile(binomial\_distribution<>(n,p),a)}      & $a$th quantile for $X \sim \Bin(n,p)$                   \\
+                \texttt{pdf(geometric\_distribution<>(p),k)}            & PMF $P(X=k)$ for $X \sim \Geom(p)$                      \\
+                \texttt{pdf(hypergeometric\_distribution<>(r,n,N),k)}   & PMF $P(X=k)$ for hypergeometric $X$                     \\
+                \texttt{pdf(negative\_binomial\_distribution<>(r,p),k)} & PMF $P(X=k)$ for $X \sim \NBin(r,p)$                    \\
+                \texttt{pdf(poisson\_distribution<>(lambda),k)}         & PMF $P(X=k)$ for $X \sim \Pois(\lambda)$                \\
+                \texttt{pdf(beta\_distribution<>(a,b),x)}               & PDF $f(x)$ for $X \sim \Beta(a,b)$                      \\
+                \texttt{pdf(chi\_squared\_distribution<>(n),x)}         & PDF $f(x)$ for $X \sim \chi^2_n$                        \\
+                \texttt{pdf(exponential\_distribution<>(lambda),x)}     & PDF $f(x)$ for $X \sim \Expo(\lambda)$                  \\
+                \texttt{pdf(gamma\_distribution<>(shape,scale),x)}      & PDF $f(x)$ for $X \sim \Gam(\text{shape},\text{scale})$ \\
+                \texttt{pdf(lognormal\_distribution<>(m,s),x)}          & PDF $f(x)$ for lognormal $X$                            \\
+                \texttt{pdf(normal\_distribution<>(m,s),x)}             & PDF $f(x)$ for $X \sim \N(m,s^2)$                       \\
+                \texttt{pdf(students\_t\_distribution<>(n),x)}          & PDF $f(x)$ for $X \sim t_n$                             \\
+                \texttt{pdf(uniform\_distribution<>(a,b),x)}            & PDF $f(x)$ for $X \sim \Unif(a,b)$                      \\
+                \hline
+            \end{tabular}%
+        }
+    \end{center}
+
+
+    \noindent The generic \texttt{cdf}, \texttt{quantile}, etc.\ work for all these Boost.Math
+    distribution objects. For random generation, use the C++ standard
+    library, e.g.
+    \begin{center}
+        \footnotesize
+        \texttt{std::mt19937 gen(seed); std::normal\_distribution<double> d(m,s); double x = d(gen);}
+    \end{center}
+
+
+    with analogous \texttt{std::binomial\_distribution}, \texttt{std::poisson\_distribution},
+    etc.\ for other distributions.
+    ::contentReference[oaicite:0]{index=0}
 
     \vspace{4in}
 
@@ -1504,7 +1624,6 @@
         \item Stat 110 Online (\url{http://stat110.net})
         \item Stat 110 Quora Blog (\url{https://stat110.quora.com/})
         \item Quora Probability FAQ (\url{http://bit.ly/probabilityfaq})
-        \item R Studio (\url{https://www.rstudio.com})
         \item LaTeX File (\texttt{\href{https://github.com/wzchen/probability_cheatsheet}{github.com/wzchen/probability\_cheatsheet}})
     \end{itemize}
 
