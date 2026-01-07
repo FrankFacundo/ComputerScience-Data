@@ -95,47 +95,67 @@
     \end{itemize}
 
     \subsection{Titre 1 : Mécanismes fondamentaux}
-    \subsection{Flux de trésorerie}
+    % (Pré-requis dans le préambule)
+    % \usepackage{hyperref}
+
+    \subsection{Flux de trésorerie (exemple réel : Microsoft)}
 
     \renewcommand{\arraystretch}{1.05}
     \noindent\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.60\linewidth} *{3}{>{\raggedleft\arraybackslash}X}}
         \toprule
-        \textbf{Tableau de flux de trésorerie}                         & \textbf{n-2} & \textbf{n-1} & \textbf{n} \\
+        \textbf{Tableau de flux de trésorerie (USD m)}                                & \textbf{n-2} & \textbf{n-1} & \textbf{n} \\
         \midrule
-        Recettes d’exploitation                                        &              &              &            \\
-        -- Dépenses d’exploitation                                     &              &              &            \\
+        Résultat net (Net income)                                                     & 72\,361      & 88\,136      & 101\,832   \\
+        + Ajustements non cash\footnotesize\,(amort., SBC, impôts différés, etc.)     & 17\,609      & 28\,588      & 39\,680    \\
         \cmidrule(lr){1-4}
-        \textbf{= Excédent de trésorerie d’exploitation (ETE)}         &              &              &            \\
+        \textbf{= Excédent de trésorerie d’exploitation (ETE)}                        & 89\,970      & 116\,724     & 141\,512   \\
         \addlinespace[2pt]
-        -- Investissements (Capex)                                     &              &              &            \\
-        + Cessions d’actifs                                            &              &              &            \\
+        -- $\Delta WCR$ (BFR)\footnotesize\,(>0 consomme ; <0 libère)                 & 2\,388       & -1\,824      & 5\,350     \\
         \cmidrule(lr){1-4}
-        \textbf{= Flux de trésorerie disponible avant impôt}           &              &              &            \\
+        \textbf{= Flux de trésorerie d’exploitation (CFO)}                            & 87\,582      & 118\,548     & 136\,162   \\
         \addlinespace[2pt]
-        -- Charges financières nettes des produits financiers          &              &              &            \\
-        -- Impôt sur les sociétés                                      &              &              &            \\
-        + Augmentations de capital                                     &              &              &            \\
-        -- Dividendes versés                                           &              &              &            \\
+        -- Investissements (Capex)\footnotesize\,(Additions to property \& equipment) & 28\,107      & 44\,477      & 64\,551    \\
+        + Cessions d’actifs\footnotesize\,(non détaillé $\Rightarrow$ 0 ici)          & 0            & 0            & 0          \\
         \cmidrule(lr){1-4}
-        \textbf{= Désendettement net (avant variations de trésorerie)} &              &              &            \\
+        \textbf{= Free Cash Flow (FCF)}                                               & 59\,475      & 74\,071      & 71\,611    \\
         \addlinespace[2pt]
-        \textit{Avec :}                                                &              &              &            \\
-        -- Remboursements d’emprunts                                   &              &              &            \\
-        + Nouveaux emprunts bancaires ou financiers                    &              &              &            \\
-        + Variation des placements financiers                          &              &              &            \\
-        + Variation du disponible                                      &              &              &            \\
-        \cmidrule(lr){1-4}
-        \textbf{= Désendettement net}                                  &              &              &            \\
+        -- Charges financières\footnotesize\,(cash paid for interest on debt)         & 1\,700       & 1\,700       & 1\,600     \\
+        -- Dividendes versés\footnotesize\,(cash dividends paid)                      & 19\,800      & 21\,771      & 24\,082    \\
+        -- Rachats d’actions\footnotesize\,(share repurchases)                        & 22\,245      & 17\,254      & 18\,420    \\
         \bottomrule
     \end{tabularx}
 
+    \begin{flushleft}
+        \footnotesize\textit{Sources :}
+        Microsoft 2025 Annual Report, section “Cash Flows Statements” (FY2025--FY2023),
+        \href{https://www.microsoft.com/investor/reports/ar25/index.html}{microsoft.com/investor/reports/ar25/index.html}.
+        Version dépôt SEC (Form 10-K FY2025),
+        \href{https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm}{sec.gov/.../msft-20250630.htm}.
+        Consulté le 7 janvier 2026.
+    \end{flushleft}
+
     \begin{itemize}[leftmargin=3.5mm,itemsep=0.2mm]
         \item CAF $=$ Résultat net $+$ amort./dépréciations $+$ provisions (non cash).
-        \item \textbf{FCFF} $=$ EBIT$(1{-}t)$ $+$ amort. $-$ Capex $-\Delta WCR$.
-        \item \textbf{FCFE} $=$ RN $+$ amort. $-$ Capex $-\Delta WCR \pm \Delta$ Dette nette.
-        \item \textbf{WCR (BFR)} $=$ Stocks $+$ Créances op. $-$ Dettes op.
+        \item \textbf{CFO (Cash Flow from Operations)} : flux de trésorerie d’exploitation après prise en compte du $\Delta WCR$ (BFR).
+              \hspace*{3.5mm}\textbf{CFO} $=$ \textbf{ETE} $-\Delta WCR$.
+        \item \textbf{FCF (Free Cash Flow)} : trésorerie \emph{libre} générée par l’activité après financement du besoin en fonds de roulement et des investissements
+              de maintien/développement (\textit{Capex}).
+              \hspace*{3.5mm}\textbf{FCF} $=$ \textbf{CFO} $-$ \text{Capex} $+$ \text{Cessions d’actifs}.
+        \item \textbf{FCFF (Free Cash Flow to the Firm)} : trésorerie disponible pour \textbf{tous} les apporteurs de capitaux (actionnaires + créanciers),
+              \textit{avant} service de la dette (intérêts/remboursements). Utilisée en DCF et actualisée au \textbf{WACC}.\\
+              \hspace*{3.5mm}\textbf{FCFF} $=$ EBIT$(1{-}t)$ $+$ amort. $-$ Capex $-\Delta WCR$.
+        \item \textbf{FCFE (Free Cash Flow to Equity)} : trésorerie disponible \textbf{pour les actionnaires} \textit{après} prise en compte du financement par la dette
+              (variation de dette nette). Actualisée au \textbf{coût des fonds propres}.\\
+              \hspace*{3.5mm}\textbf{FCFE} $=$ RN $+$ amort. $-$ Capex $-\Delta WCR \pm \Delta$ Dette nette.
+
+        \item \textbf{WCR (BFR) (Working Capital Requirement)} : besoin de financement lié au cycle d’exploitation (décalage encaissements/décaissements).\\
+              \hspace*{3.5mm}\textbf{WCR} $=$ Stocks $+$ Créances d’exploitation $-$ Dettes d’exploitation.
+
+        \item \textbf{$\Delta WCR$ (BFR)} $=$ $WCR_{n}-WCR_{n-1}$ \footnotesize\,(si $WCR$ augmente $\Rightarrow$ consommation de trésorerie).
         \item \textbf{Actif économique (AE)} $=$ Immobilisations nettes $+$ WCR.
     \end{itemize}
+
+
     \textbf{Résultats.} Ventes $\to$ \textit{EBITDA} $\to$ \textit{EBIT} $\to$ RN. Marges: $m_{\text{EBITDA}}, m_{\text{EBIT}}, m_{\text{net}}$.\\
     \textbf{AE \& ressources.} Capitaux engagés $=\text{AE}$. Ressources: Capitaux propres (CP) \& Dette nette (DN). \textbf{DN} $=$ Dette br. $-$ Trésorerie.\\
     \textbf{Du résultat à $\Delta$DN.} $\Delta DN = \text{Capex} + \Delta WCR + \text{Div} - \text{CAF}_{op} \;(\pm \text{M}\&\text{A})$.\\
@@ -145,7 +165,7 @@
         \item Levier fin.: $DN/\text{EBITDA}$, Int. Coverage $=$ $\text{EBIT}/\text{Charges d'intérêts}$.
     \end{itemize}
 
-    subsection{Les résultats}
+    \subsection{Les résultats}
 
     % --- Chaîne de passage résultat (avec indication des cycles)
     \noindent\small
