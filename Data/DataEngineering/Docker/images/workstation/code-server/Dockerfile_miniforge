@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM --platform=linux/amd64 ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TERM=xterm-256color
@@ -141,7 +141,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
 
 # Install Spark
-ENV SPARK_VERSION=3.5.5
+ENV SPARK_VERSION=4.1.1
 ENV HADOOP_VERSION=3
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
@@ -186,8 +186,7 @@ ADD launch.json /root/.local/share/code-server/User/launch.json
 ADD tasks.json /root/.local/share/code-server/User/tasks.json
 WORKDIR /workspace
 
-COPY extensions /extensions
-RUN code-server --install-extension /extensions/mathematic.vscode-pdf-0.0.6.vsix
+RUN code-server --install-extension mathematic.vscode-pdf
 RUN code-server --install-extension eamodio.gitlens
 RUN code-server --install-extension ms-python.python
 RUN code-server --install-extension ms-toolsai.jupyter
@@ -206,8 +205,9 @@ RUN code-server --install-extension GitHub.github-vscode-theme
 RUN code-server --install-extension mhutchie.git-graph
 RUN code-server --install-extension GrapeCity.gc-excelviewer
 RUN code-server --install-extension Vue.volar
+RUN code-server --install-extension vadimcn.vscode-lldb
 
-RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/v1.24.5/cpptools-linux-x64.vsix
+RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/v1.31.0/cpptools-linux-x64.vsix
 RUN code-server --install-extension cpptools-linux-x64.vsix
 
 # Adding your user to the Docker group (Optional, depends on your use case)
