@@ -1,0 +1,26 @@
+[package]
+name = "hungarian-rs"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = ["extension-module"]
+extension-module = ["pyo3/extension-module"]
+
+[lib]
+name = "hungarian_rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "0.22", features = ["abi3-py312"] }
+numpy = "0.22"
+rayon = "1.10"
+thiserror = "1.0"
+
+[dev-dependencies]
+approx = "0.5"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3

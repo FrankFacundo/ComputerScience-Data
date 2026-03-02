@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_DIR="${1:-$PWD}"
+PRELOADED_VENDOR_ROOT="/opt/rust-vendor/hungarian-rs"
+PRELOADED_VENDOR_DIR="${PRELOADED_VENDOR_ROOT}/vendor"
+PRELOADED_LOCK_SHA_FILE="${PRELOADED_VENDOR_ROOT}/Cargo.lock.sha256"
+
+if [[ ! -d "$PROJECT_DIR" ]]; then
+  echo "Project directory not found: $PROJECT_DIR" >&2
+  exit 1
+fi
+
+cd "$PROJECT_DIR"
+
+if [[ ! -f Cargo.toml ]]; then
+  echo "Cargo.toml not found in: $PROJECT_DIR" >&2
+  exit 1
+fi
+
+if [[ ! -f Cargo.lock ]]; then
+  echo "Cargo.lock not found, generating a lockfile first..."
+  cargo generate-lockfile
+fi
+
+if [[ -f .cargo/config.toml ]]; then
+  BACKUP_PATH=".cargo/config.toml.backup.$(date +%Y%m%d%H%M%S)"
+  cp .cargo/config.toml "$BACKUP_PATH"
+  echo "Existing Cargo config backed up to: $PROJECT_DIR/$BACKUP_PATH"
+fi
+
+mkdir -p .cargo
+
+USED_PRELOADED_VENDOR="false"
+if [[ -d "$PRELOADED_VENDOR_DIR" && -f "$PRELOADED_LOCK_SHA_FILE" ]]; then
+  PROJECT_LOCK_SHA="$(sha256sum Cargo.lock | awk '{print $1}')"
+  PRELOADED_LOCK_SHA="$(cat "$PRELOADED_LOCK_SHA_FILE")"
+
+  if [[ "$PROJECT_LOCK_SHA" == "$PRELOADED_LOCK_SHA" ]]; then
+    echo "Using preloaded vendor bundle from image: $PRELOADED_VENDOR_DIR"
+    rm -rf vendor
+    mkdir -p vendor
+    cp -a "$PRELOADED_VENDOR_DIR/." vendor/
+    USED_PRELOADED_VENDOR="true"
+  else
+    echo "Preloaded vendor bundle lock hash does not match this project."
+    echo "Falling back to Cargo vendoring from local cache/network."
+  fi
+fi
+
+if [[ "$USED_PRELOADED_VENDOR" == "false" ]]; then
+  echo "Vendoring Rust dependencies into: $PROJECT_DIR/vendor"
+  if cargo vendor --locked --offline vendor; then
+    echo "Vendored from local Cargo cache (offline mode)."
+  else
+    echo "Offline vendoring failed. Retrying with network access..."
+    cargo vendor --locked vendor
+  fi
+fi
+
+cat > .cargo/config.toml <<'CFG'
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+CFG
+
+echo "Wrote Cargo offline config: $PROJECT_DIR/.cargo/config.toml"
+echo "Use this for offline builds:"
+echo "  cargo build --release --offline --locked"
