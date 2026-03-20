@@ -1,8 +1,8 @@
 # Commands
 
-IMAGE_VERSION=0.96.10
+IMAGE_VERSION=0.96.12
 
-docker build -t code-server-${IMAGE_VERSION} -f Dockerfile_miniforge .
+docker build --platform linux/amd64 -t code-server-${IMAGE_VERSION} -f Dockerfile_miniforge .
 
 docker run -it --mount type=bind,source=/Users/frankfacundo/Code/bank_client_distance,target=/workspace -p 40000:40000 code-server-${IMAGE_VERSION}
 
