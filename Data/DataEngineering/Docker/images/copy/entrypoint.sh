@@ -2,7 +2,7 @@
 
 set -x
 
-docker build -t files .
+docker build --platform linux/amd64 -t files .
 docker run --rm files ls -alh /files
 docker tag files frankfacundo/files
 # docker run -it --entrypoint /bin/sh frankfacundo/files
