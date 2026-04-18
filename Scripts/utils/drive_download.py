@@ -92,5 +92,10 @@ def download_file_from_google_drive(link):
 
 
 if __name__ == "__main__":
+    # Example commands:
+    # python drive_download.py --link "https://drive.google.com/file/d/1IMiuHsiVvna_iN7vdZBMZy8DviFnrvYY/view"
+    # python drive_download.py -l "1IMiuHsiVvna_iN7vdZBMZy8DviFnrvYY"
+    # python drive_download.py -l "https://drive.google.com/file/d/1DurqjUNZ3otzEW1AJkqMvwjx4v0CCpdA/view?usp=sharing"
+    
     args = parse_args()
     download_file_from_google_drive(args.link)
