@@ -5,9 +5,8 @@ Example:
         --image image.png \
         --prompt "Describe this image in detail."
 
-Only the model/forward/generation pass is pure torch. The tokenizer and image
-processor are still loaded from transformers since reimplementing them is
-out of scope.
+The model, tokenizer, and image processor are all pure torch — no transformers
+dependency in the inference path.
 """
 
 from __future__ import annotations
@@ -18,7 +17,6 @@ from pathlib import Path
 
 import torch
 from PIL import Image
-from transformers import AutoImageProcessor, AutoTokenizer
 
 from qwen3_5_torch import (
     HybridCache,
@@ -26,6 +24,8 @@ from qwen3_5_torch import (
     Qwen3_5ForConditionalGeneration,
     load_qwen3_5_weights,
 )
+from qwen3_5_torch.image_processor import Qwen2VLImageProcessor
+from qwen3_5_torch.tokenizer import Qwen2Tokenizer
 
 DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant."
@@ -231,8 +231,8 @@ def main() -> None:
     print(f"[cfg]  device={device} dtype={dtype}", flush=True)
 
     print(f"[load] tokenizer + image processor from {args.model_path}", flush=True)
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
-    image_processor = AutoImageProcessor.from_pretrained(args.model_path, trust_remote_code=True)
+    tokenizer = Qwen2Tokenizer.from_pretrained(args.model_path)
+    image_processor = Qwen2VLImageProcessor.from_pretrained(args.model_path)
 
     print("[load] model config", flush=True)
     config = Qwen3_5Config.from_pretrained(args.model_path)
