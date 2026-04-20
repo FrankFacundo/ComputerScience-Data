@@ -1,12 +1,43 @@
-"""Inference entry point for the pure-torch Qwen3.5 implementation.
+r"""Inference entry point for the pure-torch Qwen3.5 implementation.
 
-Example:
+Example::
+
     python qwen3_5_torch.py \
         --image image.png \
         --prompt "Describe this image in detail."
 
 The model, tokenizer, and image processor are all pure torch — no transformers
 dependency in the inference path.
+
+End-to-end inference pipeline (math view)
+-----------------------------------------
+1. **Image preprocessing** (``Qwen2VLImageProcessor``): resize + normalize +
+   patchify → ``pixel_values`` and ``image_grid_thw``.
+2. **Prompt formatting** (``Qwen2Tokenizer.apply_chat_template``): render the
+   Jinja chat template, then expand ``<|image_pad|>`` to the right number of
+   placeholders (one per merged vision token).
+3. **Tokenize** the prompt → ``input_ids``.
+4. **Vision forward** (``Qwen3_5VisionModel``): patches → vision embeddings
+   of the text ``d_model`` width.
+5. **Splice** vision embeddings into text embeddings at every
+   ``<|image_pad|>`` position (``masked_scatter``).
+6. **Build 3-axis M-RoPE positions** from ``mm_token_type_ids`` and grids.
+7. **Text decoder** (``Qwen3_5TextModel``): L hybrid decoder layers with
+   either full softmax attention or Gated DeltaNet, each wrapped in a
+   pre-norm residual with SwiGLU MLPs.
+8. **LM head**: :math:`\text{logits} = W_{\text{lm}}\, y`.
+9. **Sampler** (:func:`_sample`): greedy, temperature sampling, or
+   nucleus (top-p) sampling.
+10. **KV / recurrent cache** (``HybridCache``): grown per decode step so
+    subsequent steps only forward a single token through the stack.
+
+The generation loop repeats 7–10 until an EOS id appears or
+``max_new_tokens`` is reached.
+
+References
+----------
+See the module docstrings inside ``qwen3_5_torch/`` for the underlying papers
+(Attention is All You Need, RoFormer, GQA, Gated DeltaNet, Mamba-2, Qwen2-VL).
 """
 
 from __future__ import annotations
@@ -34,6 +65,7 @@ IMAGE_TOKEN = "<|image_pad|>"
 
 
 def parse_args() -> argparse.Namespace:
+    """CLI arg parser for the inference entry point."""
     parser = argparse.ArgumentParser(
         description="Run Qwen3.5 inference with the pure-torch implementation."
     )
@@ -66,6 +98,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def _resolve_device(requested: str | None) -> torch.device:
+    """Pick a device: explicit override → CUDA → MPS → CPU."""
     if requested is not None:
         return torch.device(requested)
     if torch.cuda.is_available():
@@ -76,6 +109,7 @@ def _resolve_device(requested: str | None) -> torch.device:
 
 
 def _resolve_dtype(requested: str | None, device: torch.device) -> torch.dtype:
+    """Pick a parameter dtype given the chosen device (bf16 on CUDA, fp16 on MPS, fp32 on CPU)."""
     if requested is not None:
         return {"float32": torch.float32, "float16": torch.float16, "bfloat16": torch.bfloat16}[
             requested
@@ -88,6 +122,21 @@ def _resolve_dtype(requested: str | None, device: torch.device) -> torch.dtype:
 
 
 def expand_image_placeholders(prompt_text: str, image_grid_thw: torch.Tensor, merge_size: int) -> str:
+    r"""Expand one ``<|image_pad|>`` per image into N placeholders.
+
+    Math
+    ----
+    For an image with grid ``(T, H, W)`` and spatial merge size :math:`M`,
+    the vision tower emits
+
+    .. math::
+        N = \frac{T \cdot H \cdot W}{M^2}
+
+    tokens after the 2x2 merger. The chat template inserts a single
+    ``<|image_pad|>`` for each image — this function duplicates it to N
+    occurrences so that every vision token has a corresponding placeholder
+    to splice into.
+    """
     merge_length = merge_size ** 2
     expanded = prompt_text
     for grid in image_grid_thw.tolist():
@@ -104,6 +153,17 @@ def build_inputs(
     user_prompt: str,
     disable_thinking: bool,
 ) -> dict:
+    """Build the dict of tensors the model expects.
+
+    Stages
+    ------
+    1. Render the chat template (Jinja) with a system + user turn containing
+       an image reference.
+    2. Preprocess the image → ``(pixel_values, image_grid_thw)``.
+    3. Expand ``<|image_pad|>`` once per vision token
+       (:func:`expand_image_placeholders`).
+    4. Tokenize the final prompt → ``(input_ids, attention_mask)``.
+    """
     chat_template_kwargs = {"enable_thinking": False} if disable_thinking else None
     messages = [
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
@@ -136,7 +196,12 @@ def build_inputs(
 def compute_mm_token_type_ids(
     input_ids: torch.Tensor, image_token_id: int, video_token_id: int
 ) -> torch.Tensor:
-    """text=0, image=1, video=2 — matches transformers' processor output."""
+    """Label each input token by modality: ``text=0, image=1, video=2``.
+
+    This label stream drives :meth:`Qwen3_5Model.get_rope_index`, which groups
+    consecutive same-modality runs to assign either arithmetic text positions
+    or ``(t, h, w)`` vision positions. Matches transformers' processor output.
+    """
     out = torch.zeros_like(input_ids, dtype=torch.int32)
     out[input_ids == image_token_id] = 1
     out[input_ids == video_token_id] = 2
@@ -153,7 +218,27 @@ def generate(
     temperature: float,
     top_p: float,
 ) -> torch.Tensor:
-    """Greedy / top-p sampling loop with hybrid KV cache."""
+    r"""Greedy / top-p sampling loop with hybrid KV / linear cache.
+
+    Math
+    ----
+    At each step :math:`t` the model computes logits
+
+    .. math::
+        \ell_t = W_{\text{lm}}\, y_t \in \mathbb{R}^{V},
+
+    from which the sampler (:func:`_sample`) draws the next token:
+
+    * :math:`T = 0`: greedy — :math:`\arg\max \ell_t`.
+    * :math:`T > 0`: softmax at temperature :math:`T` → multinomial, optionally
+      restricted to the top-:math:`p` nucleus.
+
+    The first forward ("prefill") processes all prompt tokens together (and
+    the image branch). Subsequent forwards process one token at a time,
+    reusing the ``HybridCache`` so each full-attention layer grows its KV by
+    one column and each Gated DeltaNet layer updates its conv ring buffer +
+    recurrent state in-place.
+    """
     input_ids = inputs["input_ids"]
     attention_mask = inputs.get("attention_mask")
     cache = HybridCache(layer_types=model.config.text_config.layer_types)
@@ -189,6 +274,31 @@ def generate(
 
 
 def _sample(logits: torch.Tensor, temperature: float, top_p: float) -> torch.Tensor:
+    r"""Pick one token from next-token logits.
+
+    Supports three regimes:
+
+    1. **Greedy** (:math:`T \le 0`): :math:`\hat{t} = \arg\max_v \ell_v`.
+    2. **Temperature sampling** (:math:`T > 0`, ``top_p == 1``):
+
+       .. math::
+           p_v = \frac{\exp(\ell_v / T)}{\sum_{v'} \exp(\ell_{v'} / T)},
+           \quad \hat{t} \sim p.
+
+       Larger :math:`T` flattens the distribution; :math:`T \to 0^+`
+       recovers greedy in the limit.
+    3. **Nucleus / top-:math:`p`** (Holtzman 2019,
+       https://arxiv.org/abs/1904.09751): sort the temperature-scaled
+       distribution descending, let :math:`V_p` be the smallest prefix of
+       indices with cumulative probability :math:`\ge p`, set all logits
+       outside :math:`V_p` to :math:`-\infty`, renormalise, then sample.
+       (The guard ``keep[..., 0] = True`` ensures the top-1 token is
+       always kept even when :math:`p_1 > p`.)
+
+    Returns
+    -------
+    torch.LongTensor of shape ``(B, 1)``.
+    """
     if temperature <= 0:
         return logits.argmax(-1, keepdim=True)
     logits = logits / temperature
@@ -207,6 +317,13 @@ def _sample(logits: torch.Tensor, temperature: float, top_p: float) -> torch.Ten
 
 
 def _eos_token_ids(tokenizer, config) -> set[int]:
+    """Collect every id that signals end-of-generation.
+
+    Qwen chat checkpoints commonly declare multiple EOS ids (e.g. the base
+    ``<|endoftext|>`` plus chat-specific ``<|im_end|>``). Emitting any one
+    should stop the loop, so we union both the tokenizer's and the text
+    config's declared ids into a single set.
+    """
     ids: set[int] = set()
     for src in (tokenizer.eos_token_id, getattr(config.text_config, "eos_token_id", None)):
         if src is None:
@@ -219,6 +336,20 @@ def _eos_token_ids(tokenizer, config) -> set[int]:
 
 
 def main() -> None:
+    """Run a single prompt + image through the model end-to-end.
+
+    Stages
+    ------
+    1. Parse CLI args; seed torch.
+    2. Resolve device (CUDA/MPS/CPU) and dtype (bf16/fp16/fp32).
+    3. Load tokenizer + image processor + config (from local model dir).
+    4. Instantiate :class:`Qwen3_5ForConditionalGeneration` with random
+       weights, then load the safetensors shards over it.
+    5. Build prompt + vision inputs (:func:`build_inputs`).
+    6. Compute modality token-type ids for M-RoPE.
+    7. Call :func:`generate` (prefill + decode loop).
+    8. Decode the completion tokens and print them.
+    """
     args = parse_args()
     torch.manual_seed(args.seed)
 

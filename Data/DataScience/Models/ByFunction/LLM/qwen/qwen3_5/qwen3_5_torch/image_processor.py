@@ -1,9 +1,32 @@
-"""Qwen2VL-style image preprocessor, pure torch + PIL + torchvision.
+r"""Qwen2VL-style image preprocessor, pure torch + PIL + torchvision.
 
-Produces the same `(pixel_values, image_grid_thw)` that the transformers
-`Qwen2VLImageProcessorFast` produces, with values matching bit-for-bit when the
-underlying torchvision/PIL is identical. Load config from
-`preprocessor_config.json`.
+Produces the same ``(pixel_values, image_grid_thw)`` that the transformers
+``Qwen2VLImageProcessorFast`` produces, with values matching bit-for-bit when
+the underlying torchvision/PIL is identical.
+
+Pipeline (per image)
+--------------------
+1. **PIL → tensor** (``C, H, W``, uint8) via ``torchvision.functional``.
+2. **Smart resize**: round ``(H, W)`` to multiples of ``factor = patch · merge``
+   while clipping total pixel count into ``[min_pixels, max_pixels]`` and
+   preserving the aspect ratio up to a rounding step. See :func:`smart_resize`.
+3. **Rescale**: ``x ← x / 255`` so values lie in ``[0, 1]``.
+4. **Normalize**: ``x ← (x - mean) / std`` (channel-wise).
+5. **Patchify**: reshape into an ordered sequence of
+   ``(C · t_patch · patch · patch)`` flat patches using a permutation that
+   groups 2×2 "merger blocks" together so the vision model's spatial merger
+   can simply reshape.
+
+Output
+------
+* ``pixel_values`` of shape ``(N_total, C · t_patch · patch · patch)``
+* ``image_grid_thw`` of shape ``(num_images, 3)`` — rows
+  ``(grid_t, grid_h, grid_w)``.
+
+Reference
+---------
+Qwen2-VL: native-resolution image preprocessing,
+https://arxiv.org/abs/2409.12191
 """
 
 from __future__ import annotations
@@ -25,9 +48,27 @@ def smart_resize(
     min_pixels: int,
     max_pixels: int,
 ) -> tuple[int, int]:
-    """Round (h, w) to multiples of `factor` while staying within pixel budget.
+    r"""Round ``(h, w)`` to multiples of ``factor`` while staying within a pixel budget.
 
-    Mirrors `transformers.models.qwen2_vl.image_processing_qwen2_vl.smart_resize`.
+    Math
+    ----
+    Let :math:`f = \text{factor}` (``patch_size · merge_size``) and initial
+    target :math:`\bar h = f \cdot \text{round}(h/f),\; \bar w = f \cdot \text{round}(w/f)`.
+
+    * If :math:`\bar h \bar w > \text{max\_pixels}`: shrink both sides by
+      :math:`\beta = \sqrt{h\,w / \text{max\_pixels}}` then floor to multiples of ``f``.
+    * If :math:`\bar h \bar w < \text{min\_pixels}`: enlarge by
+      :math:`\beta = \sqrt{\text{min\_pixels} / (h\,w)}` then ceil to multiples of ``f``.
+
+    The choice of ``floor`` for max-pixel and ``ceil`` for min-pixel is
+    deliberate: both hit the target budget from the **inside**, preserving
+    the budget invariants after rounding.
+
+    Aspect ratio guard
+        If the source ratio exceeds 200:1, raise — beyond this the bilinear
+        pos-embed interpolation becomes numerically unstable.
+
+    Reference: mirrors ``transformers.models.qwen2_vl.image_processing_qwen2_vl.smart_resize``.
     """
     if max(height, width) / min(height, width) > 200:
         raise ValueError(
@@ -47,11 +88,15 @@ def smart_resize(
 
 
 class Qwen2VLImageProcessor:
-    """Pure-python equivalent of `Qwen2VLImageProcessorFast` for Qwen3.5.
+    r"""Pure-python equivalent of ``Qwen2VLImageProcessorFast`` for Qwen3.5.
 
     The output packs patches into a single long sequence along the first axis,
-    and returns `image_grid_thw` of shape `(num_images, 3)` with each row
-    `(grid_t, grid_h, grid_w)`.
+    and returns ``image_grid_thw`` of shape ``(num_images, 3)`` with each row
+    ``(grid_t, grid_h, grid_w)``.
+
+    The per-patch layout is chosen so the vision model's ``PatchEmbed`` (a
+    Conv3d with kernel=stride) and the 2x2 spatial merger can both operate
+    with plain reshapes — see :meth:`_process_one`.
     """
 
     def __init__(
@@ -109,6 +154,12 @@ class Qwen2VLImageProcessor:
     def preprocess(
         self, images: Image.Image | Iterable[Image.Image], *, return_tensors: str = "pt"
     ) -> dict:
+        """Preprocess one or more images into the packed vision input format.
+
+        Produces a single ``pixel_values`` tensor concatenating every image's
+        patches along the first axis, and an ``image_grid_thw`` tensor listing
+        each image's ``(grid_t, grid_h, grid_w)``.
+        """
         if isinstance(images, Image.Image):
             images = [images]
 
@@ -131,6 +182,36 @@ class Qwen2VLImageProcessor:
     # -- implementation -------------------------------------------------
 
     def _process_one(self, image: Image.Image) -> tuple[torch.Tensor, tuple[int, int, int]]:
+        r"""Preprocess one image end-to-end.
+
+        Math / pipeline
+        ---------------
+        1. **RGB convert** (optional) and uint8 CHW tensor.
+        2. **Smart resize** to :math:`(\bar h, \bar w)` with
+           :math:`\bar h, \bar w \equiv 0 \pmod{p \cdot m}` (``p = patch_size``,
+           ``m = merge_size``).
+        3. **Rescale** :math:`x \leftarrow x / 255`.
+        4. **Normalize** :math:`x \leftarrow (x - \mu) / \sigma` per channel.
+        5. **Temporal pad** to a multiple of ``temporal_patch_size`` by
+           repeating the last frame (needed for the Conv3d kernel).
+        6. **Reshape into patch/merge structure**:
+
+           .. math::
+               (B,\, \text{grid\_t} \cdot t_p,\, C,\, H,\, W)
+               \longrightarrow
+               (B,\, \text{grid\_t},\, t_p,\, C,
+                \tfrac{H}{p m},\, m,\, p,\,
+                \tfrac{W}{p m},\, m,\, p)
+
+           then permute to
+           ``(B, grid_t, H/pm, W/pm, m, m, C, t_p, p, p)`` and finally flatten
+           to ``(grid_t · grid_h · grid_w,  C · t_p · p · p)`` so the vision
+           tower sees one flat patch per row, grouped by 2×2 merger blocks.
+
+        Returns
+        -------
+        ``(patches, (grid_t, grid_h, grid_w))`` for this image.
+        """
         if self.do_convert_rgb and image.mode != "RGB":
             image = image.convert("RGB")
 

@@ -1,4 +1,27 @@
-"""Decoder layer, text model and causal-LM wrapper."""
+"""Decoder layer, text model, and causal-LM wrapper.
+
+The text stack is a **pre-norm** Transformer with the usual
+
+.. math::
+    x \leftarrow x + \text{Attn}(\text{RMSNorm}(x))
+    \qquad
+    x \leftarrow x + \text{MLP}(\text{RMSNorm}(x))
+
+but each layer's ``Attn`` is *either* full softmax attention
+(:class:`~qwen3_5_torch.attention.Qwen3_5Attention`) *or* a Gated DeltaNet
+linear-attention block (:class:`~qwen3_5_torch.linear_attention.Qwen3_5GatedDeltaNet`).
+The choice is fixed by ``config.layer_types``. This hybrid design keeps the
+expressivity of softmax attention on a subset of layers while amortising
+long-context cost on the rest.
+
+Architecture papers
+-------------------
+* Pre-norm transformer: Xiong et al., "On Layer Normalization in the
+  Transformer Architecture" (2020) — https://arxiv.org/abs/2002.04745
+* LLaMA-style decoder (RMSNorm + SwiGLU + RoPE + causal):
+  Touvron et al., 2023 — https://arxiv.org/abs/2302.13971
+* Gated DeltaNet: Yang et al., 2024 — https://arxiv.org/abs/2412.06464
+"""
 
 from __future__ import annotations
 
@@ -22,10 +45,26 @@ def _build_causal_mask(
     dtype: torch.dtype,
     device: torch.device,
 ) -> Optional[torch.Tensor]:
-    """Return a 4D causal additive mask of shape (B, 1, S, KV_len).
+    r"""Build the 4-D additive causal mask used by softmax attention.
 
-    Follows transformers' convention: 0 where attention is allowed, `min(dtype)`
-    where it is not.
+    Math
+    ----
+    A causal mask :math:`M \in \{0, -\infty\}^{S \times (S + T_{past})}` with
+
+    .. math::
+        M_{q, k} = \begin{cases}
+            0            & \text{if } k \le q + T_{\text{past}} \\
+            -\infty      & \text{otherwise (future token)}
+        \end{cases}
+
+    is *added* to the pre-softmax scores; after softmax, forbidden positions
+    receive probability 0. An optional padding 2-D mask (1=keep, 0=pad) is
+    combined by setting columns of padded keys to :math:`-\infty` as well.
+
+    Conventions match HuggingFace transformers:
+        * shape ``(B, 1, S, KV_len)`` so it broadcasts across heads.
+        * ``0`` where attention is allowed, ``torch.finfo(dtype).min`` where
+          it is forbidden (cheaper than `-inf` for fp16/bf16 softmaxes).
     """
     if seq_len == 1 and past_len == 0 and attention_mask is None:
         return None
@@ -33,7 +72,8 @@ def _build_causal_mask(
     kv_len = past_len + seq_len
     min_value = torch.finfo(dtype).min
 
-    # lower-triangular causal mask (allow prev tokens + self)
+    # Lower-triangular causal mask: for each query position q (in absolute
+    # coords past_len..past_len+S), positions k > q are forbidden.
     positions_q = torch.arange(past_len, past_len + seq_len, device=device).unsqueeze(-1)
     positions_k = torch.arange(kv_len, device=device).unsqueeze(0)
     causal = positions_k > positions_q  # True = forbidden
@@ -42,8 +82,8 @@ def _build_causal_mask(
 
     if attention_mask is not None:
         batch_size = attention_mask.shape[0]
-        # pad 2D mask if it's shorter than kv_len (can happen with KV cache)
         if attention_mask.shape[-1] < kv_len:
+            # zero-pad the right side (treats missing entries as non-padding)
             pad = kv_len - attention_mask.shape[-1]
             attention_mask = torch.nn.functional.pad(attention_mask, (0, pad), value=1)
         elif attention_mask.shape[-1] > kv_len:
@@ -56,6 +96,27 @@ def _build_causal_mask(
 
 
 class Qwen3_5DecoderLayer(nn.Module):
+    r"""One pre-norm transformer block of Qwen3.5.
+
+    Math
+    ----
+    For an input hidden state :math:`x \in \mathbb{R}^{B \times S \times d}`:
+
+    .. math::
+        \begin{aligned}
+            h_1 &= x + \text{MixerBlock}\big(\text{RMSNorm}_1(x)\big) \\
+            h_2 &= h_1 + \text{SwiGLU}\big(\text{RMSNorm}_2(h_1)\big)
+        \end{aligned}
+
+    where ``MixerBlock`` is one of:
+
+    * ``Qwen3_5Attention``  — full softmax attention with GQA + RoPE + output gate
+    * ``Qwen3_5GatedDeltaNet`` — gated-delta-rule linear attention
+
+    Residual placement is the standard *pre-norm* arrangement (Xiong et al.
+    2020): ``x + Block(Norm(x))``, which makes deep stacks easier to train.
+    """
+
     def __init__(self, config: Qwen3_5TextConfig, layer_idx: int):
         super().__init__()
         self.layer_idx = layer_idx
@@ -96,16 +157,33 @@ class Qwen3_5DecoderLayer(nn.Module):
                 past_key_values=past_key_values,
             )
 
+        # Residual after mixer
         hidden_states = residual + hidden_states
 
         residual = hidden_states
         hidden_states = self.post_attention_layernorm(hidden_states)
         hidden_states = self.mlp(hidden_states)
+        # Residual after MLP
         hidden_states = residual + hidden_states
         return hidden_states
 
 
 class Qwen3_5TextModel(nn.Module):
+    r"""Stack of decoder layers with an input embedding and a final RMSNorm.
+
+    Math (end-to-end)
+    -----------------
+    .. math::
+        h^{(0)} &= E[\,\text{input\_ids}\,] \\
+        h^{(\ell+1)} &= \text{DecoderLayer}_\ell(h^{(\ell)}; \cos, \sin,\, \text{mask},\, \text{cache}) \\
+        y &= \text{RMSNorm}(h^{(L)})
+
+    The final ``y`` is returned as ``last_hidden_state`` and lifted to vocab
+    logits by :class:`Qwen3_5ForCausalLM` via ``lm_head``. RoPE ``(cos, sin)``
+    is computed once per forward from the 3-axis position ids and reused by
+    every full-attention layer.
+    """
+
     def __init__(self, config: Qwen3_5TextConfig):
         super().__init__()
         self.config = config
@@ -132,6 +210,18 @@ class Qwen3_5TextModel(nn.Module):
         inputs_embeds: Optional[torch.Tensor] = None,
         use_cache: bool = False,
     ) -> dict:
+        r"""Run one forward pass over ``input_ids`` (or ``inputs_embeds``).
+
+        Key steps
+        ---------
+        1. **Embed**        : :math:`h^{(0)} = E[x]`.
+        2. **Positions**    : build 3-axis rope positions (``T, H, W``).
+        3. **RoPE tables**  : ``(cos, sin) = rotary_emb(h^{(0)}, pos)``.
+        4. **Masks**        : 4-D causal mask for full layers, 2-D keep mask
+                              passed to linear layers (just zeroes padding).
+        5. **Decoder stack** : :math:`L` residual blocks.
+        6. **Final norm**   : :math:`y = \text{RMSNorm}(h^{(L)})`.
+        """
         if (input_ids is None) == (inputs_embeds is None):
             raise ValueError("Provide exactly one of input_ids or inputs_embeds.")
 
@@ -144,14 +234,15 @@ class Qwen3_5TextModel(nn.Module):
 
         past_len = 0
         if past_key_values is not None:
-            # full-attention length (per-layer KV length is the same across full layers)
+            # Find first full-attention layer to read its KV length — all full
+            # layers grow in lockstep so any one of them gives the correct T.
             for i, t in enumerate(self.config.layer_types):
                 if t == "full_attention":
                     past_len = past_key_values.get_seq_length(i)
                     break
 
-        # Build 4D position ids: the rotary needs (3, bs, seq); mrope axes T/H/W.
-        # For text-only, all three axes hold the same integer.
+        # Build 4-D position ids: the rotary needs (3, bs, seq); mrope axes T/H/W.
+        # For text-only, all three axes hold the same integer (plain 1-D positions).
         if position_ids is None:
             base_pos = torch.arange(past_len, past_len + seq_len, device=inputs_embeds.device)
             base_pos = base_pos.unsqueeze(0).expand(batch_size, -1)  # (bs, seq)
@@ -170,8 +261,10 @@ class Qwen3_5TextModel(nn.Module):
             else:
                 raise ValueError(f"Unsupported position_ids shape {tuple(position_ids.shape)}")
 
-        # Build per-layer masks — full attention uses the 4D causal mask; linear
-        # attention uses the raw 2D mask (only for zeroing out padding).
+        # Build per-layer masks:
+        #   * full attention uses the 4D causal+padding mask;
+        #   * linear attention uses the raw 2D mask to zero out padding
+        #     (Mamba-style `apply_mask_to_padding_states`).
         full_mask = _build_causal_mask(
             attention_mask, seq_len, past_len, inputs_embeds.dtype, inputs_embeds.device
         )
@@ -182,6 +275,7 @@ class Qwen3_5TextModel(nn.Module):
             linear_mask = None
 
         hidden_states = inputs_embeds
+        # Precompute RoPE tables once — shared across all full-attention layers.
         position_embeddings = self.rotary_emb(hidden_states, rope_position_ids)
 
         for decoder_layer in self.layers:
@@ -205,6 +299,19 @@ class Qwen3_5TextModel(nn.Module):
 
 
 class Qwen3_5ForCausalLM(nn.Module):
+    r"""Text-only causal LM head on top of :class:`Qwen3_5TextModel`.
+
+    Adds
+
+    .. math::
+        \text{logits} = W_{\text{lm}}\, y \;\in\; \mathbb{R}^{B \times S \times V},
+
+    where :math:`W_{\text{lm}}` is optionally tied to the input embedding
+    (``config.tie_word_embeddings``). Tying halves the memory footprint of the
+    softmax layer and was introduced in Press & Wolf 2016,
+    https://arxiv.org/abs/1608.05859.
+    """
+
     def __init__(self, config: Qwen3_5TextConfig):
         super().__init__()
         self.config = config
@@ -234,6 +341,7 @@ class Qwen3_5ForCausalLM(nn.Module):
             use_cache=use_cache,
         )
         hidden_states = out["last_hidden_state"]
+        # Logits: y · W_lm^T
         logits = self.lm_head(hidden_states)
         return {
             "logits": logits,

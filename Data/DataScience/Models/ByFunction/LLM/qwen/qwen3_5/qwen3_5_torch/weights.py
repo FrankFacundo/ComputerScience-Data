@@ -1,4 +1,21 @@
-"""Safetensors weight loader for Qwen3.5 checkpoints."""
+"""Safetensors weight loader for Qwen3.5 checkpoints.
+
+Pure-bookkeeping module — no math lives here. It walks the ``*.safetensors``
+shards listed in ``model.safetensors.index.json`` (or a single-shard file),
+maps each checkpoint key to a model key via :func:`_remap_key`, and copies
+tensors into ``model.state_dict()`` with optional dtype casting.
+
+Key things the remap handles:
+
+* HuggingFace checkpoints store the conditional-generation model with prefix
+  ``model.language_model.*`` and ``model.visual.*``. In **text-only** mode we
+  strip the ``model.language_model.`` prefix and skip visual keys.
+* MTP (Multi-Token-Prediction) checkpoints embed auxiliary heads prefixed
+  with ``mtp.*``; those are always skipped.
+* Tied ``lm_head`` — if the checkpoint lacks ``lm_head.weight`` because the
+  original model tied it to ``embed_tokens``, we copy the embedding across
+  after loading.
+"""
 
 from __future__ import annotations
 
@@ -14,6 +31,12 @@ _MTP_PATTERN = re.compile(r"^mtp(\.|$)")
 
 
 def _iter_shards(model_dir: Path) -> Iterable[Path]:
+    """Yield ``*.safetensors`` shards in deterministic order.
+
+    Uses ``model.safetensors.index.json`` if present (the standard HF sharded
+    layout); falls back to a single ``model.safetensors`` or to glob-sorted
+    shards in ``model_dir``.
+    """
     index_path = model_dir / "model.safetensors.index.json"
     if index_path.exists():
         with open(index_path) as f:
@@ -31,6 +54,11 @@ def _iter_shards(model_dir: Path) -> Iterable[Path]:
 
 
 def _remap_key(key: str, text_only: bool) -> str | None:
+    """Map a checkpoint key to the matching model state_dict key.
+
+    Returns ``None`` for keys that should be skipped entirely (MTP heads,
+    or visual keys when loading text-only).
+    """
     if _MTP_PATTERN.match(key):
         return None
     if text_only:
@@ -130,7 +158,12 @@ def load_qwen3_5_weights(
 
 
 def _is_persistent_buffer(module: nn.Module, name: str) -> bool:
-    """Walk `name` and check the persistent flag on the owning module."""
+    """Walk ``name`` and check the persistent flag on the owning module.
+
+    Non-persistent buffers (e.g. ``inv_freq``) are recomputed at init time and
+    must NOT be required to appear in checkpoints — otherwise the strict-load
+    path would raise for legitimately missing keys.
+    """
     parts = name.split(".")
     submod = module
     for p in parts[:-1]:

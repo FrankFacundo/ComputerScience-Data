@@ -1,13 +1,45 @@
-"""Pure-python Qwen2-style BBPE tokenizer (also what Qwen3.5 uses).
+r"""Pure-python Qwen2-style BBPE tokenizer (also what Qwen3.5 uses).
 
-Pipeline matches the HuggingFace tokenizers `Qwen2Tokenizer` backend:
+Pipeline matches the HuggingFace tokenizers ``Qwen2Tokenizer`` backend::
 
     special-token split  ->  NFC normalize  ->  pretokenize (regex)
         ->  byte-level encode  ->  BPE merge  ->  vocab lookup
 
-Decoding is the inverse: id -> byte-level string -> utf-8 bytes -> text.
+Decoding is the inverse: id → byte-level string → utf-8 bytes → text.
 
-External deps: `regex` (needed for `\\p{L}` Unicode categories in the
+Background
+----------
+* **BPE** (Byte-Pair Encoding) — Sennrich et al., "Neural Machine Translation
+  of Rare Words with Subword Units" (ACL 2016).
+  https://arxiv.org/abs/1508.07909
+* **Byte-level BPE (BBPE)** — Radford et al., "Language Models are Unsupervised
+  Multitask Learners" (GPT-2, 2019). Operates on UTF-8 bytes rather than raw
+  characters; the 256-byte alphabet guarantees out-of-vocab robustness and
+  the round-trip property ``decode(encode(x)) == x``.
+* **NFC normalization** — Unicode canonical composition applied before
+  pretokenization so that visually identical strings (e.g. ``é`` vs.
+  ``e + \u0301``) produce the same tokens.
+
+Algorithm summary (encode)
+--------------------------
+For each input string ``s``:
+
+1. Split off any *special token* substrings (``<|im_start|>`` etc.) first.
+2. NFC normalize the remaining chunks.
+3. **Pretokenize** with a regex that groups contractions, letters, digits,
+   punctuation, and runs of whitespace separately. Qwen2 uses the GPT-2
+   style regex below, extended to Unicode categories (``\p{L}``, ``\p{N}``,
+   ``\p{M}``).
+4. **Byte-level encode** each piece: :math:`s \to \prod_{b \in \text{utf8}(s)}
+   \text{bytes\_to\_unicode}(b)`. The mapping moves raw byte values into
+   printable Unicode codepoints so the BPE merge table can be stored as
+   ordinary strings.
+5. **BPE merge** until no ranked pair remains. With merges ranked by training
+   frequency, this is :math:`O(n^2 / \log n)` per piece in the worst case but
+   linear in practice thanks to the ``_cache`` memo.
+6. Map each final sub-piece to its integer id via ``vocab``.
+
+External deps: ``regex`` (needed for ``\p{L}`` Unicode categories in the
 pretokenization regex).
 """
 
@@ -27,7 +59,17 @@ import regex as re
 
 @lru_cache()
 def bytes_to_unicode() -> dict[int, str]:
-    """Map every byte to a printable, non-whitespace unicode codepoint."""
+    r"""Map every byte to a printable, non-whitespace unicode codepoint.
+
+    This is the exact bijection used by GPT-2's tokenizer (Radford et al.,
+    2019). The forward map ``byte → str`` covers all 256 byte values:
+
+    * Printable ASCII/Latin-1 bytes map to themselves.
+    * The remaining 68 "ugly" bytes (control chars, whitespace) are remapped
+      to codepoints starting at ``U+0100`` to keep the BPE input printable.
+
+    The inverse is used at decode time to recover the raw UTF-8 bytes.
+    """
     bs = (
         list(range(ord("!"), ord("~") + 1))
         + list(range(ord("¡"), ord("¬") + 1))
@@ -44,6 +86,11 @@ def bytes_to_unicode() -> dict[int, str]:
 
 
 def _get_pairs(word: tuple[str, ...]) -> set[tuple[str, str]]:
+    """All adjacent pairs in a tuple-of-symbols representation of a word.
+
+    Used inside the BPE inner loop: we repeatedly select the highest-ranked
+    pair present in ``pairs`` and merge every occurrence.
+    """
     return {(a, b) for a, b in zip(word, word[1:])}
 
 
@@ -51,7 +98,19 @@ def _get_pairs(word: tuple[str, ...]) -> set[tuple[str, str]]:
 
 
 class _BPE:
-    """Plain BPE merger over string tokens."""
+    r"""Plain BPE merger over string tokens.
+
+    At encode time each byte-level string is iteratively merged by repeatedly
+    applying the lowest-rank (i.e. highest-priority) ranked pair. Given a
+    merge list :math:`(p_0, p_1, \dots)` produced by training, the policy is
+
+    .. math::
+        \pi(\text{word}) = \arg\min_{(a, b) \in \text{pairs(word)}} \text{rank}(a, b),
+
+    merge every occurrence of :math:`\pi(\text{word})` in ``word``, and repeat
+    until no pair has a rank. The ranks are encoded by their index in the
+    training-time merge list (``merges.txt``), so earlier rows have priority.
+    """
 
     def __init__(self, vocab: dict[str, int], merges: list[tuple[str, str]]):
         self.encoder = vocab
@@ -60,6 +119,12 @@ class _BPE:
         self._cache: dict[str, str] = {}
 
     def bpe(self, token: str) -> str:
+        """Return the merged form of ``token`` as a space-separated string.
+
+        The splitter in the caller splits on spaces to recover sub-pieces.
+        Results are memoised in ``self._cache`` since many tokens (e.g. common
+        words) repeat across a corpus.
+        """
         if token in self._cache:
             return self._cache[token]
         word = tuple(token)
@@ -100,10 +165,26 @@ class _BPE:
 
 
 class Qwen2Tokenizer:
-    """Pure-python Qwen2/Qwen3.5 BBPE tokenizer.
+    r"""Pure-python Qwen2/Qwen3.5 BBPE tokenizer.
 
     Construction is cheap; all state is vocab/merges/special-token tables.
     Encoded pieces are compared byte-for-byte to transformers output.
+
+    Encode-time algebra (per piece)
+    -------------------------------
+    Let :math:`s` be a UTF-8 string piece after pretokenization. Then
+
+    .. math::
+        \text{encoded}(s) = \text{bytes\_to\_unicode} \circ \text{utf8}(s)
+        \quad \in \Sigma^*
+
+    (where :math:`\Sigma` is the printable Unicode alphabet), and
+
+    .. math::
+        \text{ids}(s) = [\,\text{vocab}[u]\,]_{u \in \text{BPE}(\text{encoded}(s))}.
+
+    Special tokens are matched **before** pretokenization so they never get
+    fragmented by BPE.
     """
 
     _DEFAULT_PRETOKENIZE_REGEX = (
@@ -153,6 +234,7 @@ class Qwen2Tokenizer:
 
     @classmethod
     def from_pretrained(cls, model_dir: str | Path) -> "Qwen2Tokenizer":
+        """Load ``vocab.json``, ``merges.txt``, and ``tokenizer_config.json``."""
         model_dir = Path(model_dir)
         with open(model_dir / "vocab.json", encoding="utf-8") as f:
             vocab = json.load(f)
@@ -233,6 +315,13 @@ class Qwen2Tokenizer:
 
     def decode(self, ids: Iterable[int], *, skip_special_tokens: bool = False,
                clean_up_tokenization_spaces: bool = False) -> str:
+        """Decode a sequence of ids back to text.
+
+        Non-special ids are mapped through ``bpe.decoder`` (string pieces) and
+        concatenated; contiguous runs of non-special pieces are then converted
+        back to bytes via the inverse of ``bytes_to_unicode`` and decoded as
+        UTF-8. Special tokens pass through verbatim (or are skipped).
+        """
         tokens: list[str] = []
         for i in ids:
             i = int(i)
@@ -261,6 +350,11 @@ class Qwen2Tokenizer:
         return text
 
     def __call__(self, text: str, *, return_tensors: str | None = None) -> dict:
+        """Encode ``text`` and return ``(input_ids, attention_mask)``.
+
+        With ``return_tensors="pt"`` the output is shaped ``(1, S)`` (a batch
+        of 1), matching transformers' default.
+        """
         ids = self.encode(text)
         mask = [1] * len(ids)
         if return_tensors == "pt":
@@ -322,6 +416,7 @@ class Qwen2Tokenizer:
     # -- internals ------------------------------------------------------
 
     def _is_special(self, token_id: int) -> bool:
+        """True iff ``token_id`` corresponds to a token marked as ``special``."""
         tok = self._added_decoder.get(token_id)
         if tok is None:
             return False
@@ -329,6 +424,12 @@ class Qwen2Tokenizer:
         return bool(info.get("special", False))
 
     def _encode_iter(self, text: str) -> Iterable[int]:
+        """Encode ``text`` yielding ids, preserving special-token boundaries.
+
+        Special tokens (``<|im_start|>``, ``<|image_pad|>`` etc.) are isolated
+        *before* pretokenization / byte-level BPE so they always produce a
+        single id — never fragmented.
+        """
         if self._special_re is None:
             yield from self._encode_chunk(text)
             return
@@ -343,6 +444,11 @@ class Qwen2Tokenizer:
             yield from self._encode_chunk(text[last:])
 
     def _encode_chunk(self, text: str) -> Iterable[int]:
+        """Encode a substring that is guaranteed to contain no special tokens.
+
+        Pipeline: NFC → optional leading space → pretok regex → byte-level
+        encode → BPE merge → vocab lookup (see module docstring).
+        """
         if not text:
             return
         text = unicodedata.normalize("NFC", text)
@@ -358,6 +464,9 @@ class Qwen2Tokenizer:
                 yield self._bpe.encoder[sub]
 
     def _decode_bytes(self, tokens: list[str]) -> str:
+        """Inverse of the byte-level encode: concatenate tokens, map each char
+        back to its raw byte via ``byte_decoder``, then decode UTF-8.
+        """
         text = "".join(tokens)
         buf = bytearray(self._byte_decoder[c] for c in text)
         return buf.decode("utf-8", errors=self.errors)

@@ -1,4 +1,25 @@
-"""Multimodal Qwen3.5 (vision + text) and conditional-generation wrapper."""
+r"""Multimodal Qwen3.5 (vision + text) and conditional-generation wrapper.
+
+This file glues the vision tower (:class:`Qwen3_5VisionModel`) and the text
+decoder (:class:`Qwen3_5TextModel`) together into a single model. The recipe
+is the **Qwen2-VL / Qwen3-VL "late-fusion" scheme**:
+
+1. The text tokenizer produces a sequence that contains special image
+   placeholder tokens ``<|image_pad|>`` (one per merged-vision token).
+2. The vision tower turns each image into a sequence of merged vision
+   embeddings of the same width as the text model.
+3. The multimodal model **splices** vision embeddings into the text embedding
+   stream by ``masked_scatter`` — so at each placeholder position we replace
+   the learned ``<|image_pad|>`` embedding by the corresponding vision
+   embedding.
+4. A 3-axis **M-RoPE position id** is built per token, with text tokens using
+   a single running index across all three axes and vision tokens receiving
+   ``(t, h, w)`` coordinates derived from their grid.
+5. The spliced embeddings are run through the text decoder.
+6. The final hidden states are projected to vocab logits.
+
+Paper: Wang et al., "Qwen2-VL", 2024 — https://arxiv.org/abs/2409.12191
+"""
 
 from __future__ import annotations
 
@@ -15,13 +36,29 @@ from .vision import Qwen3_5VisionModel
 
 
 class Qwen3_5Model(nn.Module):
-    """Top-level multimodal model: vision tower + hybrid text decoder.
+    r"""Top-level multimodal model: vision tower + hybrid text decoder.
 
-    Accepts batched `input_ids` with image/video placeholder tokens. For each
-    placeholder, the corresponding vision features (from `pixel_values` or
-    `pixel_values_videos`) are spliced into the text embedding stream via
-    `masked_scatter`. 3D M-RoPE position ids are computed from
-    `mm_token_type_ids` + per-image `grid_thw` tensors.
+    Accepts batched ``input_ids`` with image/video placeholder tokens. For
+    each placeholder, the corresponding vision features (from ``pixel_values``
+    or ``pixel_values_videos``) are spliced into the text embedding stream via
+    ``masked_scatter``. 3D M-RoPE position ids are computed from
+    ``mm_token_type_ids`` + per-image ``grid_thw`` tensors.
+
+    Math at a glance
+    ----------------
+    .. math::
+        e^{(0)} = E[\,\text{input\_ids}\,]
+        \qquad
+        v_i = \text{Vision}(\text{pixels}_i, \text{grid}_i)
+
+    .. math::
+        \tilde e^{(0)} = \text{masked\_scatter}\big(e^{(0)},\; \text{img\_mask},\; v\big)
+
+    .. math::
+        (t_n, h_n, w_n) = \text{RoPEIndex}_n \quad \text{(per token)}
+
+    .. math::
+        y = \text{TextDecoder}(\tilde e^{(0)};\, (t, h, w))
     """
 
     def __init__(self, config: Qwen3_5Config):
@@ -44,8 +81,20 @@ class Qwen3_5Model(nn.Module):
         pixel_values: torch.Tensor,
         image_grid_thw: torch.Tensor,
     ) -> list[torch.Tensor]:
+        r"""Run the vision tower and split its output by image.
+
+        Shapes
+        ------
+        * Input ``pixel_values`` is the packed tensor of patches across all
+          images in the batch.
+        * Output is a list of per-image embeddings
+          :math:`v_i \in \mathbb{R}^{(T_i H_i W_i / M^2) \times d_{\text{text}}}`
+          where ``M = spatial_merge_size`` and each image contributes
+          ``T·H·W / M²`` tokens (after the 2x2 merger).
+        """
         vision_output = self.visual(pixel_values, grid_thw=image_grid_thw)
         image_embeds = vision_output["pooler_output"]
+        # After merger each image contributes T*H*W / M^2 tokens.
         split_sizes = (
             image_grid_thw.prod(-1) // (self.visual.spatial_merge_size ** 2)
         ).tolist()
@@ -56,6 +105,8 @@ class Qwen3_5Model(nn.Module):
         pixel_values_videos: torch.Tensor,
         video_grid_thw: torch.Tensor,
     ) -> list[torch.Tensor]:
+        """Identical machinery as :meth:`get_image_features` — videos are just
+        images with ``T_i > 1`` frames."""
         return self.get_image_features(pixel_values_videos, video_grid_thw)
 
     # -- multimodal placeholder masking --------------------------------
@@ -67,6 +118,13 @@ class Qwen3_5Model(nn.Module):
         image_features: Optional[torch.Tensor] = None,
         video_features: Optional[torch.Tensor] = None,
     ) -> tuple[torch.Tensor, torch.Tensor]:
+        r"""Return boolean masks marking image / video placeholder positions.
+
+        When ``input_ids`` is available we simply compare ids. When only
+        ``inputs_embeds`` is available (e.g. for embedding-level decoding), we
+        identify placeholders by testing whether the embedding row equals the
+        learned placeholder embedding :math:`E[\text{image\_token\_id}]`.
+        """
         if input_ids is None:
             embed = self.get_input_embeddings()
             img_token_emb = embed(
@@ -95,6 +153,24 @@ class Qwen3_5Model(nn.Module):
         time_interval: int = 1,
         device: Optional[torch.device] = None,
     ) -> torch.Tensor:
+        r"""Build the ``(t, h, w)`` positions for one image's vision tokens.
+
+        Math
+        ----
+        For a grid of size ``(T, H, W)`` (already divided by the respective
+        merge sizes), we enumerate all ``T·H·W`` spatial positions as:
+
+        .. math::
+            (t_n, h_n, w_n) \text{ with }
+            w_n = s + (n \bmod W),\quad
+            h_n = s + \lfloor n / W \rfloor \bmod H, \quad
+            t_n = s \cdot \tau,
+
+        where ``s = start_position`` and :math:`\tau = \text{time\_interval}`.
+        The temporal component is constant per frame because Qwen3.5 inserts
+        explicit *timestamp tokens* in the text between video frames — the
+        per-frame temporal offset lives there, not in the vision ids.
+        """
         t = grid_thw[0].item() // temp_merge_size
         h = grid_thw[1].item() // spatial_merge_size
         w = grid_thw[2].item() // spatial_merge_size
@@ -113,8 +189,32 @@ class Qwen3_5Model(nn.Module):
         video_grid_thw: Optional[torch.LongTensor] = None,
         attention_mask: Optional[torch.Tensor] = None,
     ) -> tuple[torch.Tensor, torch.Tensor]:
-        # videos with multiple frames are expanded since Qwen3.5 inserts
-        # timestamp tokens between frames (each frame is treated separately)
+        r"""Compute the 3-axis M-RoPE position ids for an entire sequence.
+
+        Math / algorithm
+        ----------------
+        A single running counter :math:`p` walks left-to-right through the
+        token stream. Each maximal contiguous group of tokens of a single
+        modality (text = 0, image = 1, video = 2) contributes positions:
+
+        * **Text group of length L**:
+          :math:`(p, p+1, \dots, p+L-1)` on all 3 axes; advance ``p += L``.
+        * **Vision group (image/video)**:
+          use ``get_vision_position_ids(p, grid)`` for per-token ``(t, h, w)``;
+          advance ``p += max(H, W) / M`` (the longer spatial side of the
+          grid, divided by the merge size). Using the longer side makes
+          subsequent text positions larger than the maximum vision coordinate,
+          so the text still sees strictly increasing positions.
+
+        Returns
+        -------
+        * ``position_ids`` of shape ``(3, B, S)`` — the M-RoPE ids.
+        * ``mrope_deltas`` of shape ``(B, 1)`` — the difference between the
+          final position and the raw token count. Used during KV-cache
+          decoding to extend the counter past the prefill correctly.
+        """
+        # Videos with multiple frames are expanded since Qwen3.5 inserts
+        # timestamp tokens between frames (each frame is treated separately).
         if video_grid_thw is not None:
             video_grid_thw = torch.repeat_interleave(video_grid_thw, video_grid_thw[:, 0], dim=0)
             video_grid_thw = video_grid_thw.clone()
@@ -136,6 +236,7 @@ class Qwen3_5Model(nn.Module):
                 current_input_ids = current_input_ids[attention_mask[batch_idx].bool()]
                 token_type = token_type[attention_mask[batch_idx].bool()]
 
+            # Group consecutive tokens by modality: [(modality, start, end), ...]
             groups = []
             for key, g in itertools.groupby(enumerate(token_type.tolist()), lambda x: x[1]):
                 g = list(g)
@@ -145,17 +246,21 @@ class Qwen3_5Model(nn.Module):
             chunks: list[torch.Tensor] = []
             for modality, start, end in groups:
                 if modality == 0:
+                    # text: simple arithmetic progression on all 3 axes.
                     text_len = end - start
                     chunks.append(
                         torch.arange(text_len, device=input_ids.device).view(1, -1).expand(3, -1) + current_pos
                     )
                     current_pos += text_len
                 else:
+                    # vision: (t, h, w) coordinates starting at current_pos.
                     grid_thw = next(grid_iters[modality])
                     vision_pos = self.get_vision_position_ids(
                         current_pos, grid_thw, 1, spatial_merge_size, device=input_ids.device
                     )
                     chunks.append(vision_pos)
+                    # advance by max(H, W) // merge_size so subsequent text
+                    # positions are strictly larger than any vision coord.
                     current_pos += int(max(grid_thw[1], grid_thw[2])) // spatial_merge_size
             llm_pos = torch.cat(chunks, dim=1).reshape(3, -1)
             if attention_mask is not None:
@@ -177,6 +282,18 @@ class Qwen3_5Model(nn.Module):
         past_key_values: Optional[HybridCache] = None,
         mm_token_type_ids: Optional[torch.Tensor] = None,
     ) -> Optional[torch.Tensor]:
+        r"""Return 3-axis position ids for the current forward.
+
+        Prefill (``past_len == 0``)
+            Build positions from scratch via :meth:`get_rope_index`. Store
+            ``rope_deltas = max_pos + 1 - num_tokens`` on self so we can
+            **extend** them during decoding without re-walking the prefix.
+
+        Decode (``past_len > 0``)
+            Next-token position = ``past_len + offset + rope_deltas``. Since
+            text positions are monotonic and we advanced by ``max(H, W)/M``
+            for vision groups, this stays consistent with the prefill.
+        """
         past_len = 0 if past_key_values is None else past_key_values.get_seq_length()
         has_mm = image_grid_thw is not None or video_grid_thw is not None
         if has_mm and mm_token_type_ids is None and input_ids is not None:
@@ -222,6 +339,17 @@ class Qwen3_5Model(nn.Module):
         mm_token_type_ids: Optional[torch.IntTensor] = None,
         use_cache: bool = False,
     ) -> dict:
+        r"""End-to-end multimodal forward pass.
+
+        Stages
+        ------
+        1. Embed ``input_ids`` → ``inputs_embeds``.
+        2. If ``pixel_values`` is given: run the vision tower, splice image
+           features into ``inputs_embeds`` at placeholder positions.
+        3. If ``pixel_values_videos``: same, for videos.
+        4. Build 3-axis M-RoPE position ids (new for prefill, shifted for decode).
+        5. Run the text decoder over the spliced embeddings.
+        """
         if (input_ids is None) == (inputs_embeds is None):
             raise ValueError("Provide exactly one of input_ids or inputs_embeds.")
 
@@ -229,9 +357,11 @@ class Qwen3_5Model(nn.Module):
             inputs_embeds = self.get_input_embeddings()(input_ids)
 
         if pixel_values is not None:
+            # Vision → list of per-image embeddings → flat concat in order.
             image_embeds = self.get_image_features(pixel_values, image_grid_thw)
             image_embeds = torch.cat(image_embeds, dim=0).to(inputs_embeds.device, inputs_embeds.dtype)
             image_mask, _ = self.get_placeholder_mask(input_ids, inputs_embeds, image_features=image_embeds)
+            # Replace placeholder embeddings in-place at masked positions.
             inputs_embeds = inputs_embeds.masked_scatter(image_mask, image_embeds)
 
         if pixel_values_videos is not None:
@@ -264,7 +394,16 @@ class Qwen3_5Model(nn.Module):
 
 
 class Qwen3_5ForConditionalGeneration(nn.Module):
-    """Multimodal causal-LM head."""
+    r"""Multimodal causal-LM head.
+
+    Adds the language-model softmax projection on top of :class:`Qwen3_5Model`:
+
+    .. math::
+        \text{logits} = W_{\text{lm}}\; y,
+
+    with ``y`` the final hidden state from the decoder. Optionally ties
+    :math:`W_{\text{lm}}` to the input embedding (see :class:`Qwen3_5ForCausalLM`).
+    """
 
     def __init__(self, config: Qwen3_5Config):
         super().__init__()

@@ -1,4 +1,36 @@
-"""Qwen3.5 configuration as plain dataclasses (no transformers dependency)."""
+"""Qwen3.5 configuration as plain dataclasses (no transformers dependency).
+
+All hyperparameters that enter the math of the model live here. A quick map:
+
+* ``vocab_size``                      : V (number of tokens — input embedding / softmax width)
+* ``hidden_size``                     : d_model
+* ``intermediate_size``               : d_ff (SwiGLU middle width)
+* ``num_hidden_layers``               : L
+* ``num_attention_heads``             : H_q   — query heads
+* ``num_key_value_heads``             : H_kv  — KV heads (GQA sharing = H_q / H_kv)
+* ``head_dim``                        : d_h   — per-head size
+* ``rope_parameters.rope_theta``      : θ_base (RoPE base; very large for long ctx)
+* ``rope_parameters.partial_rotary_factor`` : fraction of head_dim that receives RoPE
+* ``rope_parameters.mrope_section``   : 3-axis split widths for M-RoPE interleave
+* ``layer_types``                     : list of length L giving "full_attention"
+                                        or "linear_attention" per layer
+* ``full_attention_interval``         : every Nth layer is full-attention (default 4)
+* ``linear_*``                        : Gated DeltaNet branch sizes (see model.py)
+
+Vision (``Qwen3_5VisionConfig``)::
+
+    depth, hidden_size, intermediate_size, num_heads   : ViT stack
+    patch_size, temporal_patch_size                    : Conv3d kernel = stride
+    spatial_merge_size (=2)                            : 2×2 patch merger at the end
+    out_hidden_size                                    : projection width = text d_model
+
+References for the architecture choices
+---------------------------------------
+* GQA:  Ainslie et al. 2023 — https://arxiv.org/abs/2305.13245
+* RoPE: Su et al. 2021       — https://arxiv.org/abs/2104.09864
+* Gated DeltaNet: Yang et al. 2024 — https://arxiv.org/abs/2412.06464
+* Qwen2-VL (M-RoPE + vision recipe): Wang et al. 2024 — https://arxiv.org/abs/2409.12191
+"""
 
 from __future__ import annotations
 
@@ -9,6 +41,17 @@ from typing import Any
 
 
 def _default_rope_params() -> dict[str, Any]:
+    """Default RoPE params for Qwen3.5 text side.
+
+    * ``rope_theta = 1e7`` — the large base empirically stabilises attention
+      across very long contexts (the original RoFormer used ``10_000``);
+      a larger base slows phase wrap so distant tokens remain distinguishable
+      up to ``max_position_embeddings = 262_144``.
+    * ``partial_rotary_factor = 0.25`` — only the first 25% of each head's
+      channel is rotated. The remainder passes through unchanged.
+    * ``mrope_section = [11, 11, 10]`` — 3-axis split used by interleaved
+      M-RoPE (temporal / height / width). See :mod:`rotary`.
+    """
     return {
         "rope_type": "default",
         "rope_theta": 10000000.0,
@@ -51,6 +94,12 @@ class Qwen3_5TextConfig:
     eos_token_id: int | list[int] | None = None
 
     def __post_init__(self):
+        # Pattern: linear_attention on most layers, full_attention every
+        # `full_attention_interval`-th layer (1-indexed). With interval=4 and
+        # 32 layers the layer types are
+        #     L L L F | L L L F | ... | L L L F
+        # i.e. ~75% linear-attention layers to amortise long-context memory
+        # and 25% full-attention layers to preserve expressivity.
         if self.layer_types is None:
             self.layer_types = [
                 "linear_attention" if bool((i + 1) % self.full_attention_interval) else "full_attention"
