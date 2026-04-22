@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.linear_attention API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.linear_attention</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/linear_attention.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5GatedDeltaNet">Qwen3_5GatedDeltaNet</a></li></ul></li><li>Functions<ul><li><a href="#fn-l2norm">l2norm</a></li><li><a href="#fn-apply_mask_to_padding_states">apply_mask_to_padding_states</a></li><li><a href="#fn-torch_causal_conv1d_update">torch_causal_conv1d_update</a></li><li><a href="#fn-torch_chunk_gated_delta_rule">torch_chunk_gated_delta_rule</a></li><li><a href="#fn-torch_recurrent_gated_delta_rule">torch_recurrent_gated_delta_rule</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Gated DeltaNet — the linear-attention branch used in Qwen3.5 layers.</p>
+<p>This is a pure-PyTorch port of the reference <code>torch_chunk_gated_delta_rule</code> / <code>torch_recurrent_gated_delta_rule</code> paths in transformers. No triton, no fla, no causal_conv1d kernels — just <code>F.conv1d</code> and a gated-delta-rule loop.</p>
+<h1>Mathematical background</h1>
+<p>Gated DeltaNet generalises two earlier linear-attention families:</p>
+<ol><li><p><strong>Linear attention</strong> (Katharopoulos et al. 2020, https://arxiv.org/abs/2006.16236). With feature map <code>\phi(\cdot)</code> the attention at step <code>t</code> becomes the recurrence</p>
+<p>.. math: S<em>t = S</em>{t-1} + \phi(k<em>t) v</em>t^\top, \qquad o<em>t = \phi(q</em>t)^\top S<em>t \,/\, z</em>t.</p></li><li><p><strong>DeltaNet</strong> (Schlag et al. 2021; see also Yang et al. 2024 https://arxiv.org/abs/2406.06484) replaces the additive rule by an <strong>associative delta rule</strong>:</p>
+<p>.. math: S<em>t = S</em>{t-1} + \beta<em>t (v</em>t - S<em>{t-1}\,k</em>t)\,k_t^\top,</p>
+<p>which is an online least-squares / associative-memory update — it writes the <em>residual</em> <code>v_t - S_{t-1} k_t</code> rather than <code>v_t</code> itself. This dramatically improves in-context recall vs linear attention.</p></li><li><p><strong>Gated DeltaNet</strong> (Yang et al. 2024, https://arxiv.org/abs/2412.06464) combines Mamba-2&#x27;s data-dependent <strong>forget gate</strong> <code>g_t</code> with the delta rule:</p>
+<p>.. math: S<em>t = \alpha</em>t S<em>{t-1} + \beta</em>t \big(v<em>t - (\alpha</em>t S<em>{t-1})\,k</em>t\big)\,k<em>t^\top, \qquad o</em>t = q<em>t^\top S</em>t,</p>
+<p>where <code>\alpha_t = \exp(g_t)</code> with <code>g_t \le 0</code> (so <code>\alpha_t \in (0, 1]</code>) is the multiplicative decay, and <code>\beta_t = \sigma(b_t)</code> controls the size of the delta update. This gives the model both a <strong>forget</strong> mechanism (like Mamba/SSMs) and a <strong>precise overwrite</strong> mechanism (like DeltaNet). In practice the forget is derived as</p>
+<p>.. math: g<em>t = -A \cdot \text{softplus}(a</em>t + \text{dt\<em>bias}), \quad A = \exp(A</em>{\text{log}}),</p>
+<p>matching the <code>A_log</code> / <code>dt</code> parameterisation of Mamba-2.</p></li></ol>
+<h2>Structure of this file</h2>
+<ul><li><code>l2norm</code>, <code>apply_mask_to_padding_states</code>, <code>torch_causal_conv1d_update</code> — helpers.</li><li><code>torch_chunk_gated_delta_rule</code>     — fast chunked evaluation (prefill).</li><li><code>torch_recurrent_gated_delta_rule</code> — step-by-step recurrence (decoding).</li><li><code>Qwen3_5GatedDeltaNet</code> — the nn.Module that wraps everything with the qkv depthwise conv, gating projections, RMSNormGated, and output proj.</li></ul>
+<h2>References</h2>
+<ul><li>Linear attention:  Katharopoulos+ 2020  — https://arxiv.org/abs/2006.16236</li><li>DeltaNet:          Yang+ 2024 (chunking) — https://arxiv.org/abs/2406.06484</li><li>Gated DeltaNet:    Yang+ 2024            — https://arxiv.org/abs/2412.06464</li><li>Mamba-2 (for the A/dt gate parameterisation): Dao &amp; Gu 2024 — https://arxiv.org/abs/2405.21060</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5GatedDeltaNet">
+    <h2>Qwen3_5GatedDeltaNet</h2>
+    <div class="meta">Line 380 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5GatedDeltaNet(nn.Module)</div>
+    <div class="docstring"><p>Gated DeltaNet block used in place of attention in ~3/4 of Qwen3.5 layers.</p>
+<h2>Pipeline (matches <code>Qwen3_5GatedDeltaNet</code> in transformers)</h2>
+<p>Inputs: <code>x ∈ R^{B×S×d}</code>, cache, padding mask.</p>
+<ol><li>Zero-out padding rows (Mamba-style).</li><li><p>Project x to three streams:</p>
+<ul><li><code>mixed_qkv = [Q | K | V] = W_{qkv} x</code>, shape <code>(B, conv_dim, S)</code></li><li><code>z = W_z x</code> → gate for the output RMSNormGated.</li><li><code>b = W_b x</code> → raw β (before sigmoid).</li><li><code>a = W_a x</code> → raw a (before the <code>A exp · softplus</code> map → g).</li></ul></li><li>Depthwise causal conv1d over the concatenated qkv channel axis (width <code>conv_dim = 2·d_k + d_v</code>). During decoding the conv_state is a ring buffer of width <code>conv_kernel_size</code>.</li><li>Split into <code>Q, K, V</code> and reshape to per-head. If <code>H_v &gt; H_k</code>, queries and keys are repeated to match the value-head count (similar to GQA).</li><li><p>Derive gates:</p>
+<p>.. math: \beta<em>t = \sigma(b</em>t), \qquad g<em>t = -A \cdot \text{softplus}(a</em>t + \text{dt\_bias})</p>
+<p>so that <code>\alpha_t = e^{g_t} \in (0, 1]</code>.</p></li><li>Delta-rule kernel — chunked for prefill, recurrent for single-step decoding — producing <code>core_out</code> of shape <code>(B, S, H_v, d_v)</code>.</li><li><code>RMSNormGated</code> with the gate <code>z</code>: <code>y = (W · RMSNorm(o)) ⊙ SiLU(z)</code>.</li><li>Output projection <code>y ← W_out y</code>.</li></ol>
+<h2>Parameters</h2>
+<p><code>A_log</code> : learnable; <code>A = exp(A_log)</code> is the per-head decay magnitude (matches Mamba-2&#x27;s <code>A</code> parameter). <code>dt_bias</code> : learnable additive bias in the softplus, giving an initial &quot;time-step&quot; analogous to <code>Δ</code> in Mamba-2.</p>
+<p>References: see module docstring.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 421</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig, layer_idx: int)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 462</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, cache_params: Optional[HybridCache] = None, attention_mask: Optional[torch.Tensor] = None) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  <section class="section" id="fn-l2norm">
+    <h3>l2norm</h3>
+    <div class="meta">Line 86</div>
+    <div class="signature">def l2norm(x: torch.Tensor, dim: int = -1, eps: float = 1e-06) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>L2 normalise along <code>dim</code> with epsilon stabilisation.</p>
+<h2>Math</h2>
+<p>.. math: \text{l2norm}(x)<em>i = \frac{x</em>i}{\sqrt{\sum<em>j x</em>j^2 + \varepsilon}}.</p>
+<p>Used on q and k inside the kernel so their dot-product behaves like a cosine similarity — a known stabiliser for long-horizon linear attention.</p></div>
+  </section>
+  
+  <section class="section" id="fn-apply_mask_to_padding_states">
+    <h3>apply_mask_to_padding_states</h3>
+    <div class="meta">Line 101</div>
+    <div class="signature">def apply_mask_to_padding_states(hidden_states: torch.Tensor, attention_mask) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Zero-out hidden states for padding tokens (Mamba-style).</p>
+<h2>Math</h2>
+<p>For a 2-D attention mask <code>m \in \{0, 1\}^{B \times S}</code> the output is <code>hidden_states * m[:, :, None]</code>. Since Gated DeltaNet is a causal recurrence, padding contributes nothing once its contribution is zeroed before entering the recurrence.</p></div>
+  </section>
+  
+  <section class="section" id="fn-torch_causal_conv1d_update">
+    <h3>torch_causal_conv1d_update</h3>
+    <div class="meta">Line 117</div>
+    <div class="signature">def torch_causal_conv1d_update(hidden_states: torch.Tensor, conv_state: torch.Tensor, weight: torch.Tensor, bias: Optional[torch.Tensor] = None, activation: str | None = None) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Single-step causal conv1d that rolls the conv_state in place.</p>
+<h2>Math</h2>
+<p>Conceptually this is a depthwise 1-D convolution with kernel width <code>K</code>:</p>
+<p>.. math: y<em>t = \sum</em>{\tau=0}^{K-1} W[\tau] \cdot x_{t-\tau} \;+\; b</p>
+<p>At each decode step we maintain <code>conv_state = [x_{t-K+1}, \dots, x_t]</code>, roll the new tokens in, apply the conv, take the last <code>seq_len</code> outputs, and optionally apply a SiLU. The rolled state is copied <strong>in place</strong> so the cache updates without extra allocation.</p></div>
+  </section>
+  
+  <section class="section" id="fn-torch_chunk_gated_delta_rule">
+    <h3>torch_chunk_gated_delta_rule</h3>
+    <div class="meta">Line 154</div>
+    <div class="signature">def torch_chunk_gated_delta_rule(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, g: torch.Tensor, beta: torch.Tensor, chunk_size: int = 64, initial_state: Optional[torch.Tensor] = None, output_final_state: bool = False, use_qk_l2norm_in_kernel: bool = False)</div>
+    
+    <div class="docstring"><p>Chunked gated-delta-rule attention (prefill path).</p>
+<h2>Inputs</h2>
+<ul><li><code>query, key, value</code>: <code>(B, T, H, D)</code>.</li><li><code>g</code> (= <code>\log \alpha</code>): cumulative log-decay scores, <code>(B, T, H)</code>.</li><li><code>beta</code>: delta-rule step sizes <code>\beta_t \in (0, 1)</code>, <code>(B, T, H)</code>.</li><li><code>chunk_size</code>: decomposition length <code>C</code> for the chunked algorithm.</li></ul>
+<h2>Output</h2>
+<ul><li><code>core_attn_out</code>: <code>(B, T, H, Dv)</code>.</li><li><code>last_recurrent_state</code>: optional <code>(B, H, Dk, Dv)</code>.</li></ul>
+<h2>Math</h2>
+<p>The gated delta rule</p>
+<p>.. math: S<em>t = \alpha</em>t S<em>{t-1} + \beta</em>t\big(v<em>t - (\alpha</em>t S<em>{t-1}) k</em>t\big)k_t^\top</p>
+<p>is cast into an <strong>exactly-equivalent chunked form</strong> following Yang et al. (2024, Sec. 3). Let <code>G_{i,j} = \exp(\sum_{\ell=j}^{i} g_\ell)</code> be the cumulative decay from step <code>j</code> to step <code>i</code> inside the chunk. The intra-chunk triangular solve</p>
+<p>.. math: (I + L[k<em>\beta k^\top \odot G]) \;\tilde v = v</em>\beta</p>
+<p>(computed by the explicit for-loop over <code>chunk_size</code>) linearises the delta recursion inside one chunk; the inter-chunk state update is the scalar-gated outer product</p>
+<p>.. math: S<em>{\text{next}} = e^{g</em>{[-1]}} S \;+\; k^\top \big(e^{g_{[-1]} - g}\odot \tilde v\big).</p>
+<p>The output of chunk <code>c</code> is split into an <strong>intra</strong> term <code>\text{inter\_attn} \tilde v</code> (triangular mask over the chunk) and an <strong>inter</strong> term <code>q\,e^{g}\, S_{prev}</code> (contribution of previous state). This is the same structure as Mamba-2&#x27;s chunked SSM (Dao &amp; Gu 2024), specialised to the delta-rule update.</p>
+<p><code>use_qk_l2norm_in_kernel=True</code> applies <code>l2norm</code> to q and k before the kernel — the configuration used by Qwen3.5.</p></div>
+  </section>
+  
+  <section class="section" id="fn-torch_recurrent_gated_delta_rule">
+    <h3>torch_recurrent_gated_delta_rule</h3>
+    <div class="meta">Line 302</div>
+    <div class="signature">def torch_recurrent_gated_delta_rule(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, g: torch.Tensor, beta: torch.Tensor, initial_state: Optional[torch.Tensor], output_final_state: bool, use_qk_l2norm_in_kernel: bool = False)</div>
+    
+    <div class="docstring"><p>Step-by-step recurrent gated-delta-rule (single-token decoding path).</p>
+<h2>Math</h2>
+<p>Explicit loop of the closed-form recurrence</p>
+<p>.. math: \begin{aligned} S<em>t^{\prime} &amp;= \alpha</em>t S<em>{t-1} \\ \tilde v</em>t   &amp;= v<em>t - S</em>t^{\prime\top} k<em>t \\ S</em>t          &amp;= S<em>t^{\prime} + \beta</em>t\; k<em>t\, \tilde v</em>t^\top \\ o<em>t          &amp;= S</em>t^\top q_t \end{aligned}</p>
+<p>with <code>\alpha_t = \exp(g_t)</code> and <code>\beta_t</code> already in <code>(0, 1)</code>. This matches Eq. (1)–(2) of Yang et al. 2024 but written in our <code>(Dk, Dv)</code> outer-product layout. Cheaper than the chunked path when decoding one token at a time.</p></div>
+  </section>
+  
+  </main>
+</body>
+</html>

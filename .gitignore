@@ -3,6 +3,7 @@
 **/.cache
 **/node_modules/**
 **/*.pem
+**/.DS_Store
 
 Data/DataEngineering/airflow/service/secrets/
 Data/DataEngineering/DB/postgresql/data

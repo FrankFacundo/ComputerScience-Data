@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.vision API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.vision</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/vision.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5VisionMLP">Qwen3_5VisionMLP</a></li><li><a href="#class-Qwen3_5VisionPatchEmbed">Qwen3_5VisionPatchEmbed</a></li><li><a href="#class-Qwen3_5VisionPatchMerger">Qwen3_5VisionPatchMerger</a></li><li><a href="#class-Qwen3_5VisionAttention">Qwen3_5VisionAttention</a></li><li><a href="#class-Qwen3_5VisionBlock">Qwen3_5VisionBlock</a></li><li><a href="#class-Qwen3_5VisionModel">Qwen3_5VisionModel</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Vision transformer for Qwen3.5 multimodal.</p>
+<p>Processes pre-patchified pixel inputs of shape <code>(N, C · t_patch · patch · patch)</code> and returns per-token features projected into the text <code>out_hidden_size</code>. This is the Qwen2-VL / Qwen3-VL &quot;native resolution&quot; ViT: patch size is a small constant (16), but the input grid <code>(T, H, W)</code> adapts to the image aspect ratio via <code>smart_resize</code> in <code>image_processor</code>.</p>
+<h2>Pipeline overview</h2>
+<ol><li><strong>Patch embed</strong> (<code>Qwen3_5VisionPatchEmbed</code>) — Conv3d with kernel = stride = (t_patch, patch, patch) over the input volume, producing one embedding per patch.</li><li><strong>Absolute learned positions</strong> — a 2D learned <code>pos_embed</code> table of side <code>sqrt(num_position_embeddings)</code> is <strong>bilinearly interpolated</strong> to each image&#x27;s grid via <code>Qwen3_5VisionModel.fast_pos_embed_interpolate</code>. This lets the same learned grid generalise to arbitrary aspect ratios.</li><li><strong>Rotary position embedding</strong> — per-token (row, col) rotary via <code>Qwen3_5VisionModel.rot_pos_emb</code> (single-axis RoPE, see <code>rotary</code>).</li><li><strong>Transformer blocks</strong> — L layers of pre-norm attention + MLP with <em>packed-sequence</em> attention: multiple images live in the same batch entry and <code>cu_seqlens</code> delimits per-image boundaries so images do not attend to each other.</li><li><strong>Patch merger</strong> — 2x2 spatial merger collapses 4 adjacent patches into 1, projects into the text model&#x27;s <code>d_model</code> via a 2-layer MLP. This reduces the number of visual tokens by 4x before they are spliced into the text stream.</li></ol>
+<h2>References</h2>
+<ul><li>ViT: Dosovitskiy et al., &quot;An Image is Worth 16x16 Words&quot;, 2020 — https://arxiv.org/abs/2010.11929</li><li>Qwen2-VL (native resolution, 2D RoPE, packed seq attention): Wang et al., 2024 — https://arxiv.org/abs/2409.12191</li><li>SigLIP vision backbone conventions (tanh-GELU, GELU MLPs): Zhai et al., 2023 — https://arxiv.org/abs/2303.15343</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5VisionMLP">
+    <h2>Qwen3_5VisionMLP</h2>
+    <div class="meta">Line 54 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionMLP(nn.Module)</div>
+    <div class="docstring"><p>Two-layer MLP used in each vision block.</p>
+<h2>Math</h2>
+<p>.. math: \text{MLP}(x) \;=\; W<em>2\,\phi(W</em>1 x + b<em>1) + b</em>2</p>
+<p>where <code>\phi = \text{gelu\_tanh}</code> is the tanh approximation of GELU (used by SigLIP / Qwen-VL vision). Unlike the text stack this is a plain FFN, <em>not</em> a gated (SwiGLU) MLP.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 67</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 73</div>
+    <div class="signature">def forward(self, x: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionPatchEmbed">
+    <h2>Qwen3_5VisionPatchEmbed</h2>
+    <div class="meta">Line 77 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionPatchEmbed(nn.Module)</div>
+    <div class="docstring"><p>Patch embedding via a Conv3d over <code>(t_patch, patch, patch)</code> volumes.</p>
+<h2>Math</h2>
+<p>For an input patch <code>x \in \mathbb{R}^{C \times t_p \times p \times p}</code>:</p>
+<p>.. math: \text{embed}(x) = W \;\ast\; x \;+\; b  \;\;\in\; \mathbb{R}^{d}</p>
+<p>where <code>W</code> has shape <code>(d, C, t_p, p, p)</code> and stride == kernel so patches do not overlap. The linear Conv3d with kernel == stride is the standard ViT patch-embed trick (Dosovitskiy 2020) extended to video with a temporal kernel <code>t_p</code> (here 2 — one frame pair).</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 93</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 104</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionPatchMerger">
+    <h2>Qwen3_5VisionPatchMerger</h2>
+    <div class="meta">Line 113 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionPatchMerger(nn.Module)</div>
+    <div class="docstring"><p>2x2 spatial merger + projection into the text model&#x27;s <code>d_model</code>.</p>
+<h2>Math</h2>
+<p>Let <code>M = spatial_merge_size = 2</code>. The merger reinterprets every <code>M · M</code> adjacent tokens as a single super-token by concatenating their channels:</p>
+<p>.. math: \tilde x \in \mathbb{R}^{N/M^2 \times (M^2 \cdot d_v)}.</p>
+<p>It then applies LayerNorm → Linear → GELU → Linear to project into <code>out_hidden_size</code> (text <code>d_model</code>). This is the 4x token compression used by Qwen2-VL: vision tokens are dense but expensive, so merging is a cheap way to shrink the sequence before it enters the text decoder.</p>
+<p>Conditional LayerNorm <code>use_postshuffle_norm=True</code> applies norm <em>after</em> the channel concatenation (different per-feature statistics). Default False here matches the Qwen3.5 recipe.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 135</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig, use_postshuffle_norm: bool = False)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 145</div>
+    <div class="signature">def forward(self, x: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionAttention">
+    <h2>Qwen3_5VisionAttention</h2>
+    <div class="meta">Line 154 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionAttention(nn.Module)</div>
+    <div class="docstring"><p>Vision self-attention on a <strong>packed sequence</strong> of multiple images.</p>
+<h2>Math</h2>
+<p>Per image (delimited by <code>cu_seqlens</code>), the usual scaled dot-product:</p>
+<p>.. math: A = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_h}}\right), \qquad \text{out} = A V.</p>
+<p><code>cu_seqlens</code> carries cumulative per-image token counts; attention is computed independently within each chunk so images do not attend to each other. Unlike the text stack there is <strong>no causal mask</strong> — images use full bi-directional attention.</p>
+<p>The <code>qkv</code> projection produces all three streams at once for efficiency, then rotary is applied to <code>q</code> and <code>k</code> via <code>apply_rotary_pos_emb_vision</code>.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 174</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 183</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, cu_seqlens: torch.Tensor, position_embeddings: Tuple[torch.Tensor, torch.Tensor]) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionBlock">
+    <h2>Qwen3_5VisionBlock</h2>
+    <div class="meta">Line 216 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionBlock(nn.Module)</div>
+    <div class="docstring"><p>Pre-norm ViT block: <code>x += attn(norm(x)); x += mlp(norm(x))</code>.</p>
+<h2>Math</h2>
+<p>.. math: \begin{aligned} h<em>1 &amp;= x + \text{Attn}(\text{LN}</em>1(x)) \\ h<em>2 &amp;= h</em>1 + \text{MLP}(\text{LN}<em>2(h</em>1)) \end{aligned}</p>
+<p>with <strong>LayerNorm</strong> (not RMSNorm — unlike the text stack).</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 230</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 237</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, cu_seqlens: torch.Tensor, position_embeddings: Tuple[torch.Tensor, torch.Tensor]) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionModel">
+    <h2>Qwen3_5VisionModel</h2>
+    <div class="meta">Line 252 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5VisionModel(nn.Module)</div>
+    <div class="docstring"><p>Qwen3.5 vision tower.</p>
+<p>Expects <code>hidden_states</code> of shape <code>(N, C · t_patch · patch · patch)</code> where <code>N</code> is the total number of patches across every image/frame, and <code>grid_thw</code> rows of <code>(num_frames, h_grid, w_grid)</code> describing the patch grid for each image.</p>
+<h2>End-to-end math</h2>
+<p>.. math: \begin{aligned} e^{(0)} &amp;= \text{PatchEmbed}(x) \\ e^{(0)} &amp;\leftarrow e^{(0)} + \text{Interp}(\text{PosEmbed},\, \text{grid\<em>thw}) \\ (\cos, \sin) &amp;= \text{RoPE}(\text{rot\</em>pos\<em>emb}(\text{grid\</em>thw})) \\ e^{(\ell+1)} &amp;= \text{Block}<em>\ell(e^{(\ell)};\, \text{cu\</em>seqlens},\, (\cos,\sin)) \\ z           &amp;= \text{Merger}(e^{(L)})   \quad\text{(4x token compression)} \end{aligned}</p>
+<p><code>z</code> is the vector that gets <strong>spliced into the text embeddings</strong> at each <code>&lt;|image_pad|&gt;</code> position by <code>Qwen3_5Model.forward</code>.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 275</div>
+    <div class="signature">def __init__(self, config: Qwen3_5VisionConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-rot_pos_emb">
+    <h4>rot_pos_emb</h4>
+    <div class="meta">Line 296</div>
+    <div class="signature">def rot_pos_emb(self, grid_thw: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Per-token (row, col) rotary frequencies concatenated along <code>dim=-1</code>.</p>
+<h2>Math</h2>
+<p>For each token at position <code>(r, c)</code> inside an image grid the rotary &quot;angle table&quot; is built by looking up a shared 1-D frequency table <code>freq_table[·] ∈ R^{d/2}</code>:</p>
+<p>.. math: \text{out}[n] = \big[\,\text{freq\<em>table}[r</em>n] \;\|\; \text{freq\<em>table}[c</em>n]\,\big] \in \mathbb{R}^{d}.</p>
+<p>The 2x2 spatial-merge layout is baked in: within a 2x2 super-block the 4 sub-positions are generated by nested offsets before being mapped through <code>freq_table</code>. For videos (<code>num_frames &gt; 1</code>) the same 2D coordinates are repeated across frames (temporal RoPE is handled separately via the text-side M-RoPE).</p></div>
+  </section>
+  
+  <section class="section" id="fn-fast_pos_embed_interpolate">
+    <h4>fast_pos_embed_interpolate</h4>
+    <div class="meta">Line 353</div>
+    <div class="signature">def fast_pos_embed_interpolate(self, grid_thw: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Bilinearly interpolate learned <code>pos_embed</code> to each image&#x27;s grid.</p>
+<h2>Math</h2>
+<p>The learned <code>pos_embed</code> is a <code>num_grid_per_side × num_grid_per_side</code> table. For a target grid of size <code>(h, w)</code> we place <code>h</code> equally-spaced samples along each axis and read the table at the 4 surrounding integer corners with bilinear weights:</p>
+<p>.. math: \tilde e[y, x] = \sum<em>{(i,j) \in \{0,1\}^2} w</em>{ij}(dy, dx)\; \text{pos\<em>embed}[y</em>0 + i,\, x_0 + j],</p>
+<p>with <code>dy, dx</code> the fractional parts of the sample positions and</p>
+<p>.. math: w<em>{00} = (1-dy)(1-dx),\quad w</em>{01} = (1-dy)\,dx, \\ w<em>{10} = dy\,(1-dx),  \quad   w</em>{11} = dy\,dx.</p>
+<p>This allows the ViT to support arbitrary grids without retraining a new positional table — essentially inverting the ViT-style &quot;interpolate positional embedding to higher resolution&quot; trick (Touvron et al. 2022, &quot;Deit III&quot;; originally from ViT&#x27;s appendix).</p></div>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 442</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, grid_thw: torch.Tensor) -&gt; dict</div>
+    
+    <div class="docstring"><p>Run the vision tower.</p>
+<h2>Steps</h2>
+<ol><li>Patch embed: <code>e = Conv3d(x)</code> per patch.</li><li>Add interpolated absolute position embeddings.</li><li>Compute per-token rotary (row, col) frequencies; duplicate to full head width with <code>cat((r, r), -1)</code> and take cos/sin.</li><li>Build <code>cu_seqlens</code> from <code>grid_thw</code> — per-image token counts.</li><li>L transformer blocks (packed-sequence attention).</li><li><code>merger(·)</code> — 2x2 spatial merge + projection to text <code>d_model</code>.</li></ol></div>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.attention API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.attention</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/attention.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5Attention">Qwen3_5Attention</a></li></ul></li><li>Functions<ul><li><a href="#fn-repeat_kv">repeat_kv</a></li><li><a href="#fn-eager_attention">eager_attention</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Full-attention block for Qwen3.5 (GQA + per-head q/k RMSNorm + output gate).</p>
+<p>This file implements the &quot;full attention&quot; branch used by Qwen3.5 in roughly every 4th transformer layer (the others use the linear-attention branch in <code>linear_attention</code>). The block combines several well-known techniques:</p>
+<ul><li><strong>Scaled dot-product attention</strong> (Vaswani et al., 2017) — &quot;Attention Is All You Need&quot;: https://arxiv.org/abs/1706.03762</li><li><strong>Grouped-Query Attention (GQA)</strong> (Ainslie et al., 2023) — keys/values are shared across groups of query heads: https://arxiv.org/abs/2305.13245</li><li><strong>Rotary position embedding (RoPE)</strong> — see <code>rotary</code>.</li><li><strong>Q/K per-head RMSNorm</strong> — as introduced by Qwen2/Qwen3 (Dehghani et al. &quot;Scaling Vision Transformers to 22B Parameters&quot;, 2023, also popularised it): normalising each head&#x27;s q and k stabilises training and also bounds the attention logits.</li><li><strong>Output gate</strong> — a sigmoid gate is derived from the same input and applied multiplicatively to the attention output before the final projection. Related ideas: gated-attention-unit (GAU) in Hua et al. 2022 (https://arxiv.org/abs/2202.10447).</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5Attention">
+    <h2>Qwen3_5Attention</h2>
+    <div class="meta">Line 105 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5Attention(nn.Module)</div>
+    <div class="docstring"><p>Grouped-Query Attention with q/k RMSNorm and a per-token output gate.</p>
+<h2>Projections</h2>
+<p>For input <code>x \in \mathbb{R}^{B \times S \times d_{\text{model}}}</code> the block computes</p>
+<p>.. math: [Q \,\|\, G] = x W<em>Q,\qquad K = x W</em>K,\qquad V = x W_V</p>
+<p>where <code>q_proj</code> produces a concatenated <code>(Q, G)</code> with twice the normal width — the second half is the <em>gate</em>. Shapes after reshape:</p>
+<ul><li><code>Q, G \in \mathbb{R}^{B \times S \times H_q \times d_h}</code></li><li><code>K, V \in \mathbb{R}^{B \times S \times H_{kv} \times d_h}</code></li></ul>
+<h2>Per-head RMSNorm</h2>
+<p>RMSNorm is applied <strong>inside</strong> the head axis on q and k independently:</p>
+<p>.. math: Q \leftarrow \text{RMSNorm}(Q),\qquad K \leftarrow \text{RMSNorm}(K).</p>
+<p>This improves stability for long-context attention and keeps the softmax logits in a bounded range.</p>
+<h2>Rotary</h2>
+<p>RoPE is applied to q and k (partial rotary, see <code>rotary</code>):</p>
+<p>.. math: Q<em>m^{\text{rot}} = R</em>m Q<em>m,\qquad K</em>m^{\text{rot}} = R<em>m K</em>m</p>
+<p>with rotation matrices <code>R_m</code> parameterised by the token position <code>m</code>.</p>
+<h2>Attention + gate</h2>
+<p>.. math: O = \text{Attn}(Q^{\text{rot}}, K^{\text{rot}}, V)</p>
+<p>The gate is derived from the same input, passed through a sigmoid, and applied elementwise to the attention output <strong>before</strong> <code>o_proj</code>:</p>
+<p>.. math: \tilde O = O \odot \sigma(G),\qquad y = W_O\, \tilde O.</p>
+<h2>KV cache</h2>
+<p>During incremental decoding, <code>past_key_values.update_full</code> concatenates the new <code>(K, V)</code> along the time dim. Full-attention layers therefore grow their KV memory linearly with the decoded length (<code>O(T)</code>), in contrast with the linear-attention layers whose cache is constant-size.</p>
+<h2>References</h2>
+<ul><li>GQA: https://arxiv.org/abs/2305.13245</li><li>Attention: https://arxiv.org/abs/1706.03762</li><li>RoPE: https://arxiv.org/abs/2104.09864</li></ul></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 167</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig, layer_idx: int)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 195</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, position_embeddings: Tuple[torch.Tensor, torch.Tensor], attention_mask: Optional[torch.Tensor] = None, past_key_values: Optional[HybridCache] = None) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Run one full-attention block.</p>
+<h2>Algorithmic steps</h2>
+<ol><li>Project <code>x</code> through <code>q_proj</code> and split into <code>(Q, gate)</code>.</li><li>Project <code>x</code> through <code>k_proj</code>, <code>v_proj</code>.</li><li>Apply per-head RMSNorm to <code>Q</code> and <code>K</code>.</li><li>Apply RoPE: <code>Q&#x27;, K&#x27; = apply_rotary_pos_emb(Q, K, cos, sin)</code>.</li><li>Append <code>(K&#x27;, V)</code> to the KV cache.</li><li>Compute scaled dot-product attention <code>A V</code> with GQA repeat.</li><li>Multiply by the sigmoid gate and project back to <code>d_model</code>.</li></ol></div>
+  </section>
+  
+  </section>
+  
+    
+  <section class="section" id="fn-repeat_kv">
+    <h3>repeat_kv</h3>
+    <div class="meta">Line 36</div>
+    <div class="signature">def repeat_kv(x: torch.Tensor, n_rep: int) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Repeat KV heads to match the query-head count under GQA.</p>
+<h2>Math / semantics</h2>
+<p>In Grouped-Query Attention there are <code>H_q</code> query heads and <code>H_kv</code> key heads with <code>H_q = H_kv * n_rep</code>. Each KV head is shared across <code>n_rep</code> query heads. This op tiles</p>
+<p>.. math: K \in \mathbb{R}^{B \times H<em>{kv} \times T \times D} \longrightarrow \hat K \in \mathbb{R}^{B \times H</em>q \times T \times D}</p>
+<p>by repeating each row <code>n_rep</code> times. <code>n_rep == 1</code> means ordinary multi-head attention (no sharing).</p>
+<p>Reference (GQA): https://arxiv.org/abs/2305.13245</p></div>
+  </section>
+  
+  <section class="section" id="fn-eager_attention">
+    <h3>eager_attention</h3>
+    <div class="meta">Line 61</div>
+    <div class="signature">def eager_attention(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, attention_mask: Optional[torch.Tensor], num_kv_groups: int, scaling: float, dropout: float = 0.0, training: bool = False) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Reference scaled-dot-product attention (no Flash, no SDPA fused kernel).</p>
+<h2>Math</h2>
+<p>With repeated-KV for GQA, attention is</p>
+<p>.. math: A = \operatorname{softmax}\!\Big(\tfrac{Q K^{\top}}{\sqrt{d_h}} + M\Big), \qquad \text{Attn}(Q, K, V) = A V</p>
+<p>where <code>M</code> is an additive mask with <code>0</code> at allowed positions and <code>-\infty</code> (i.e. <code>torch.finfo(dtype).min</code>) at forbidden positions. The softmax is computed in fp32 for numerical stability and cast back afterwards. <code>scaling = 1/sqrt(d_h)</code>.</p>
+<p>The output is reshaped to <code>(B, S, H, D)</code> so the subsequent reshape / <code>o_proj</code> can treat the head axis as &quot;just another feature block&quot;.</p>
+<p>Reference: Vaswani et al., 2017 — https://arxiv.org/abs/1706.03762</p></div>
+  </section>
+  
+  </main>
+</body>
+</html>
