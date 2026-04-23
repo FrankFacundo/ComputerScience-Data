@@ -1,0 +1,4 @@
+Timestamp,From Bank,Account,To Bank,Account.1,Amount Received,Receiving Currency,Amount Paid,Payment Currency,Payment Format,laundering_probability,predicted_laundering
+2022/09/01 00:20,010,SYNTH_FROM_001,010,SYNTH_TO_001,3697.34,US Dollar,3697.34,US Dollar,Reinvestment,0.45456174,0
+2022/09/01 00:23,03208,SYNTH_FROM_002,001,SYNTH_TO_002,0.01,US Dollar,0.01,US Dollar,Cheque,0.48057798,0
+2022/09/01 00:30,011,SYNTH_FROM_003,070,SYNTH_TO_003,18500.0,Euro,18750.0,US Dollar,ACH,0.42675123,0
