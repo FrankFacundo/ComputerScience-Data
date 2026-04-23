@@ -1,0 +1,17 @@
+txId,time_step,illicit_probability,predicted_label,predicted_class
+synthetic_tx_0000,53,0.010293532,licit,0
+synthetic_tx_0001,53,0.012258718,licit,0
+synthetic_tx_0002,51,0.01569005,licit,0
+synthetic_tx_0003,54,0.01184541,licit,0
+synthetic_tx_0004,51,0.081223026,licit,0
+synthetic_tx_0005,53,0.06918257,licit,0
+synthetic_tx_0006,52,0.059435032,licit,0
+synthetic_tx_0007,51,0.03406782,licit,0
+synthetic_tx_0008,54,0.023721576,licit,0
+synthetic_tx_0009,50,0.03300313,licit,0
+synthetic_tx_0010,52,0.10826825,licit,0
+synthetic_tx_0011,52,0.21574706,licit,0
+synthetic_tx_0012,53,0.015541728,licit,0
+synthetic_tx_0013,51,0.010253324,licit,0
+synthetic_tx_0014,53,0.009765774,licit,0
+synthetic_tx_0015,52,0.017501274,licit,0
