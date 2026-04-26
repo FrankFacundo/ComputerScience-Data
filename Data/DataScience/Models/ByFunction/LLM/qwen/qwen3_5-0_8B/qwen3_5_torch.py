@@ -58,7 +58,7 @@ from qwen3_5_torch import (
 from qwen3_5_torch.image_processor import Qwen2VLImageProcessor
 from qwen3_5_torch.tokenizer import Qwen2Tokenizer
 
-DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
+DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-0.8B"
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant."
 DEFAULT_USER_PROMPT = "Describe this image."
 IMAGE_TOKEN = "<|image_pad|>"

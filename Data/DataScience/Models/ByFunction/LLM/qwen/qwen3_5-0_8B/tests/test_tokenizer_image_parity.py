@@ -1,6 +1,6 @@
 """Parity: pure-python tokenizer + image processor vs. transformers.
 
-Runs against the real Qwen3.5-27B checkpoint and the test image in this directory.
+Runs against the real Qwen3.5-0.8B checkpoint and the test image in this directory.
 Skipped automatically if the model path is not present locally.
 
     python tests/test_tokenizer_image_parity.py
@@ -20,7 +20,7 @@ sys.path.insert(0, HERE)
 from qwen3_5_torch.image_processor import Qwen2VLImageProcessor
 from qwen3_5_torch.tokenizer import Qwen2Tokenizer
 
-MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
+MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-0.8B"
 IMAGE_PATH = os.path.join(HERE, "image.png")
 
 TEXT_SAMPLES = [

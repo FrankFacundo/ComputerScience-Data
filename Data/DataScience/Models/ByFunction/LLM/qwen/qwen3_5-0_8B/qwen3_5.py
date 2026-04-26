@@ -6,7 +6,7 @@ from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageTextToText, AutoTokenizer
 
 
-DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
+DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-0.8B"
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant."
 DEFAULT_USER_PROMPT = "Describe this image."
 IMAGE_TOKEN = "<|image_pad|>"
