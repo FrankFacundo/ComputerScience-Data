@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.rotary API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.rotary</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/rotary.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-TextRotaryEmbedding">TextRotaryEmbedding</a></li><li><a href="#class-VisionRotaryEmbedding">VisionRotaryEmbedding</a></li></ul></li><li>Functions<ul><li><a href="#fn-rotate_half">rotate_half</a></li><li><a href="#fn-apply_rotary_pos_emb">apply_rotary_pos_emb</a></li><li><a href="#fn-apply_rotary_pos_emb_vision">apply_rotary_pos_emb_vision</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Rotary position embeddings for Qwen3.5.</p>
+<p>Qwen3.5 uses <strong>interleaved multi-axis RoPE (M-RoPE)</strong> with partial rotary. The text rotary embedding accepts position ids of shape <code>(3, bs, seq)</code> where the three rows correspond to <code>(temporal, height, width)</code>, and projects them through a shared <code>inv_freq</code> — then interleaves the per-axis frequencies into a single per-token rotary vector. The vision tower uses a simpler single-axis RoPE over <code>(row, col)</code>.</p>
+<h2>Math overview</h2>
+<p>Standard RoPE (Su et al. 2021) encodes an absolute position <code>m</code> into a rotation of each 2-D sub-space of the query/key vector. For head dim <code>d</code> the inverse frequencies are</p>
+<p>.. math: \theta_i = \text{base}^{-2i/d}, \qquad i = 0, 1, \dots, d/2 - 1.</p>
+<p>For position <code>m</code> and a 2-D pair <code>(x_{2i}, x_{2i+1})</code>:</p>
+<p>.. math: R<em>{\theta</em>i, m}\!\begin{bmatrix}x<em>{2i}\\x</em>{2i+1}\end{bmatrix} \;=\;\begin{bmatrix}\cos m\theta<em>i &amp; -\sin m\theta</em>i\\ \sin m\theta<em>i &amp; \cos m\theta</em>i\end{bmatrix} \begin{bmatrix}x<em>{2i}\\x</em>{2i+1}\end{bmatrix}.</p>
+<p>The dot-product <code>\langle R\,q_m, R\,k_n\rangle</code> depends only on the relative offset <code>m-n</code>, giving relative-position-aware attention with absolute-position code. Equivalently (using the half-interleaved layout that transformers adopts):</p>
+<p>.. math: \text{RoPE}(x, m) = x \odot \cos(m\theta) + \text{rotate\_half}(x) \odot \sin(m\theta),</p>
+<p>where <code>rotate_half([a, b]) = [-b, a]</code> splits the head into two halves.</p>
+<h2>Partial rotary</h2>
+<p>Qwen3.5 sets <code>partial_rotary_factor = 0.25</code>: only the first <code>rotary_dim = 0.25 * head_dim</code> channels of q/k are rotated, the remainder pass through unchanged. This reduces the compute of RoPE and was empirically found to work as well as full rotary for some architectures.</p>
+<h2>Interleaved M-RoPE (Qwen2-VL / Qwen3.5)</h2>
+<p>For multimodal inputs, each <em>token</em> has three position indices <code>(t, h, w)</code>. Rather than averaging axis embeddings, M-RoPE splits the inv_freq channels into three disjoint sections with widths <code>mrope_section</code> (Qwen3.5 uses <code>[11, 11, 10]</code>), and <strong>interleaves</strong> them across channel index modulo 3: channel positions <code>≡ 0 (mod 3)</code> carry the <em>temporal</em> frequency, <code>≡ 1</code> the <em>height</em>, <code>≡ 2</code> the <em>width</em>. Applied to a single channel <code>i</code>:</p>
+<p>.. math: \theta<em>i \;=\; \begin{cases} m</em>t \cdot \theta^{(t)}<em>i &amp; \text{if } i \bmod 3 = 0 \\ m</em>h \cdot \theta^{(h)}<em>i &amp; \text{if } i \bmod 3 = 1 \\ m</em>w \cdot \theta^{(w)}_i &amp; \text{if } i \bmod 3 = 2 \\ \end{cases}</p>
+<h2>References</h2>
+<ul><li>RoFormer / RoPE: Su et al., 2021 — https://arxiv.org/abs/2104.09864</li><li>Qwen2-VL (M-RoPE): Wang et al., 2024 — https://arxiv.org/abs/2409.12191</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-TextRotaryEmbedding">
+    <h2>TextRotaryEmbedding</h2>
+    <div class="meta">Line 203 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class TextRotaryEmbedding(nn.Module)</div>
+    <div class="docstring"><p>Qwen3.5 text-side rotary embedding with interleaved M-RoPE.</p>
+<p>Given position ids of shape <code>(3, bs, seq)</code> — the (T, H, W) axes — this module returns <code>(cos, sin)</code> tables of shape <code>(bs, seq, rotary_dim)</code> that are applied to the queries/keys by <code>apply_rotary_pos_emb</code>.</p>
+<h2>Pipeline (per forward call)</h2>
+<ol><li><strong>Outer product</strong> per axis: <code>freqs[a] = pos[a] * inv_freq</code> → <code>(3, bs, seq, dim_half)</code>.</li><li><strong>Interleave</strong> across channel index mod 3 via <code>_apply_interleaved_mrope</code> → <code>(bs, seq, dim_half)</code>.</li><li><strong>Double</strong> the channel dim with <code>cat([freqs, freqs], -1)</code> so that <code>cos/sin</code> match the two halves consumed by <code>rotate_half</code>.</li><li>Compute <code>cos</code>, <code>sin</code> and scale by <code>attention_scaling</code> (1.0 in this implementation — slot for long-context NTK-aware scaling schemes).</li></ol>
+<p>Reference: https://arxiv.org/abs/2409.12191 (Qwen2-VL M-RoPE)</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 224</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig, device = None)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 235</div>
+    <div class="signature">def forward(self, x: torch.Tensor, position_ids: torch.LongTensor) -&gt; Tuple[torch.Tensor, torch.Tensor]</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@torch.no_grad()</code></li></ul>
+    <div class="docstring"><p>position_ids:</p>
+<ul><li><code>(bs, seq)</code> — text-only; expanded to <code>(3, bs, seq)</code> with T=H=W.</li><li><code>(3, bs, seq)</code> — multimodal <code>(T, H, W)</code> positions.</li></ul>
+<h2>Returns</h2>
+<p><code>(cos, sin)</code> each of shape <code>(bs, seq, rotary_dim)</code> and dtype == x.dtype.</p></div>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-VisionRotaryEmbedding">
+    <h2>VisionRotaryEmbedding</h2>
+    <div class="meta">Line 274 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class VisionRotaryEmbedding(nn.Module)</div>
+    <div class="docstring"><p>Single-axis rotary embedding used inside the vision tower.</p>
+<p>Identical to classical RoPE but precomputes a frequency <em>table</em> indexed by integer position — the vision side looks up <code>freq[row]</code> and <code>freq[col]</code> separately, then concatenates them along the last dim to get a 2-D (row, col) rotary encoding.</p>
+<p>.. math: \text{inv\<em>freq}</em>i \;=\; \theta^{-2i/d}, \quad \text{freqs}[m, i] \;=\; m \cdot \text{inv\<em>freq}</em>i.</p>
+<p>Reference: RoFormer — https://arxiv.org/abs/2104.09864</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 289</div>
+    <div class="signature">def __init__(self, dim: int, theta: float = 10000.0)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 296</div>
+    <div class="signature">def forward(self, seqlen: int) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Return a <code>(seqlen, dim/2)</code> table where <code>out[m, i] = m * inv_freq[i]</code>.</p></div>
+  </section>
+  
+  </section>
+  
+    
+  <section class="section" id="fn-rotate_half">
+    <h3>rotate_half</h3>
+    <div class="meta">Line 77</div>
+    <div class="signature">def rotate_half(x: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Rotate the last dim by 90° in its (first-half, second-half) 2-D pairing.</p>
+<h2>Math</h2>
+<p>For <code>x = [x_0 \;\|\; x_1]</code> split into two equal halves along the last axis, returns</p>
+<p>.. math: \text{rotate\<em>half}(x) \;=\; [-x</em>1 \;\|\; x_0].</p>
+<p>Combined with <code>x * cos + rotate_half(x) * sin</code> this realises the 2-D rotation used by RoPE. The &quot;half-then-half&quot; layout (as opposed to strict 2-D interleave <code>(x_0,x_1,x_2,x_3,\ldots)</code>) is the convention used by LLaMA / Qwen / HuggingFace transformers.</p></div>
+  </section>
+  
+  <section class="section" id="fn-apply_rotary_pos_emb">
+    <h3>apply_rotary_pos_emb</h3>
+    <div class="meta">Line 97</div>
+    <div class="signature">def apply_rotary_pos_emb(q: torch.Tensor, k: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor, unsqueeze_dim: int = 1) -&gt; Tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>Apply partial rotary embeddings to q/k.</p>
+<h2>Math</h2>
+<p>Given precomputed <code>cos</code> and <code>sin</code> tables of shape <code>(bs, seq, rotary_dim)</code> (broadcastable to head-axis by <code>unsqueeze_dim</code>):</p>
+<p>.. math: q&#x27; = q \odot \cos + \text{rotate\_half}(q) \odot \sin</p>
+<p>.. math: k&#x27; = k \odot \cos + \text{rotate\_half}(k) \odot \sin</p>
+<p>When <code>cos.shape[-1] &lt; head_dim</code> (partial rotary), the rotation is applied only to the leading <code>rotary_dim</code> channels of <code>q</code> and <code>k</code>; the trailing channels are concatenated back unchanged.</p>
+<p>Why this formulation Writing the rotation in <code>(cos, -sin; sin, cos)</code> form with the &quot;half-split&quot; permutation gives the same geometry as the classical 2-D rotation <code>(x_{2i}, x_{2i+1}) \mapsto (x_{2i}\cos\theta - x_{2i+1}\sin\theta,\; x_{2i}\sin\theta + x_{2i+1}\cos\theta)</code> but maps cleanly to contiguous GPU memory.</p>
+<p>Reference: https://arxiv.org/abs/2104.09864</p></div>
+  </section>
+  
+  <section class="section" id="fn-apply_rotary_pos_emb_vision">
+    <h3>apply_rotary_pos_emb_vision</h3>
+    <div class="meta">Line 302</div>
+    <div class="signature">def apply_rotary_pos_emb_vision(q: torch.Tensor, k: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor) -&gt; Tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>RoPE for the vision tower (full rotary over all head channels).</p>
+<p>Same formula as <code>apply_rotary_pos_emb</code> but:</p>
+<ul><li>no <code>partial_rotary</code> — all channels are rotated;</li><li>computed in fp32 for numerical stability and cast back at the end.</li></ul>
+<p>.. math: q&#x27; = q\cos + \text{rotate\<em>half}(q)\sin, \qquad k&#x27; = k\cos + \text{rotate\</em>half}(k)\sin.</p></div>
+  </section>
+  
+  </main>
+</body>
+</html>

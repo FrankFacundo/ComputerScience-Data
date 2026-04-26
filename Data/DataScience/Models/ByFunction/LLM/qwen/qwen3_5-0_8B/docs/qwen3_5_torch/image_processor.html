@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.image_processor API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.image_processor</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/image_processor.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen2VLImageProcessor">Qwen2VLImageProcessor</a></li></ul></li><li>Functions<ul><li><a href="#fn-smart_resize">smart_resize</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Qwen2VL-style image preprocessor, pure torch + PIL + torchvision.</p>
+<p>Produces the same <code>(pixel_values, image_grid_thw)</code> that the transformers <code>Qwen2VLImageProcessorFast</code> produces, with values matching bit-for-bit when the underlying torchvision/PIL is identical.</p>
+<h2>Pipeline (per image)</h2>
+<ol><li><strong>PIL → tensor</strong> (<code>C, H, W</code>, uint8) via <code>torchvision.functional</code>.</li><li><strong>Smart resize</strong>: round <code>(H, W)</code> to multiples of <code>factor = patch · merge</code> while clipping total pixel count into <code>[min_pixels, max_pixels]</code> and preserving the aspect ratio up to a rounding step. See <code>smart_resize</code>.</li><li><strong>Rescale</strong>: <code>x ← x / 255</code> so values lie in <code>[0, 1]</code>.</li><li><strong>Normalize</strong>: <code>x ← (x - mean) / std</code> (channel-wise).</li><li><strong>Patchify</strong>: reshape into an ordered sequence of <code>(C · t_patch · patch · patch)</code> flat patches using a permutation that groups 2×2 &quot;merger blocks&quot; together so the vision model&#x27;s spatial merger can simply reshape.</li></ol>
+<h2>Output</h2>
+<ul><li><code>pixel_values</code> of shape <code>(N_total, C · t_patch · patch · patch)</code></li><li><code>image_grid_thw</code> of shape <code>(num_images, 3)</code> — rows <code>(grid_t, grid_h, grid_w)</code>.</li></ul>
+<h2>Reference</h2>
+<p>Qwen2-VL: native-resolution image preprocessing, https://arxiv.org/abs/2409.12191</p></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen2VLImageProcessor">
+    <h2>Qwen2VLImageProcessor</h2>
+    <div class="meta">Line 90 · Bases: <code>object</code></div>
+    <div class="signature">class Qwen2VLImageProcessor</div>
+    <div class="docstring"><p>Pure-python equivalent of <code>Qwen2VLImageProcessorFast</code> for Qwen3.5.</p>
+<p>The output packs patches into a single long sequence along the first axis, and returns <code>image_grid_thw</code> of shape <code>(num_images, 3)</code> with each row <code>(grid_t, grid_h, grid_w)</code>.</p>
+<p>The per-patch layout is chosen so the vision model&#x27;s <code>PatchEmbed</code> (a Conv3d with kernel=stride) and the 2x2 spatial merger can both operate with plain reshapes — see <code>_process_one</code>.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 102</div>
+    <div class="signature">def __init__(self, *, patch_size: int = 16, temporal_patch_size: int = 2, merge_size: int = 2, image_mean: tuple[float, float, float] = (0.5, 0.5, 0.5), image_std: tuple[float, float, float] = (0.5, 0.5, 0.5), min_pixels: int = 56 * 56, max_pixels: int = 28 * 28 * 1280, rescale_factor: float = 1.0 / 255.0, do_resize: bool = True, do_rescale: bool = True, do_normalize: bool = True, do_convert_rgb: bool = True)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-from_pretrained">
+    <h4>from_pretrained</h4>
+    <div class="meta">Line 132</div>
+    <div class="signature">def from_pretrained(cls, model_dir: str | Path) -&gt; &#x27;Qwen2VLImageProcessor&#x27;</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@classmethod</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-preprocess">
+    <h4>preprocess</h4>
+    <div class="meta">Line 154</div>
+    <div class="signature">def preprocess(self, images: Image.Image | Iterable[Image.Image], *, return_tensors: str = &#x27;pt&#x27;) -&gt; dict</div>
+    
+    <div class="docstring"><p>Preprocess one or more images into the packed vision input format.</p>
+<p>Produces a single <code>pixel_values</code> tensor concatenating every image&#x27;s patches along the first axis, and an <code>image_grid_thw</code> tensor listing each image&#x27;s <code>(grid_t, grid_h, grid_w)</code>.</p></div>
+  </section>
+  
+  <section class="section" id="fn-size">
+    <h4>size</h4>
+    <div class="meta">Line 179</div>
+    <div class="signature">def size(self) -&gt; dict[str, int]</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  <section class="section" id="fn-smart_resize">
+    <h3>smart_resize</h3>
+    <div class="meta">Line 44</div>
+    <div class="signature">def smart_resize(height: int, width: int, factor: int, min_pixels: int, max_pixels: int) -&gt; tuple[int, int]</div>
+    
+    <div class="docstring"><p>Round <code>(h, w)</code> to multiples of <code>factor</code> while staying within a pixel budget.</p>
+<h2>Math</h2>
+<p>Let <code>f = \text{factor}</code> (<code>patch_size · merge_size</code>) and initial target <code>\bar h = f \cdot \text{round}(h/f),\; \bar w = f \cdot \text{round}(w/f)</code>.</p>
+<ul><li>If <code>\bar h \bar w &gt; \text{max\_pixels}</code>: shrink both sides by <code>\beta = \sqrt{h\,w / \text{max\_pixels}}</code> then floor to multiples of <code>f</code>.</li><li>If <code>\bar h \bar w &lt; \text{min\_pixels}</code>: enlarge by <code>\beta = \sqrt{\text{min\_pixels} / (h\,w)}</code> then ceil to multiples of <code>f</code>.</li></ul>
+<p>The choice of <code>floor</code> for max-pixel and <code>ceil</code> for min-pixel is deliberate: both hit the target budget from the <strong>inside</strong>, preserving the budget invariants after rounding.</p>
+<p>Aspect ratio guard If the source ratio exceeds 200:1, raise — beyond this the bilinear pos-embed interpolation becomes numerically unstable.</p>
+<p>Reference: mirrors <code>transformers.models.qwen2_vl.image_processing_qwen2_vl.smart_resize</code>.</p></div>
+  </section>
+  
+  </main>
+</body>
+</html>

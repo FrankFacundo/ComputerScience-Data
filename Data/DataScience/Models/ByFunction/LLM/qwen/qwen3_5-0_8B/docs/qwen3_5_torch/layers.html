@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.layers API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.layers</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/layers.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li><a href="#constants">Constants</a></li><li>Classes<ul><li><a href="#class-RMSNorm">RMSNorm</a></li><li><a href="#class-RMSNormGated">RMSNormGated</a></li><li><a href="#class-SwiGLUMLP">SwiGLUMLP</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Basic building blocks: RMSNorm variants and SwiGLU MLP.</p>
+<h2>References</h2>
+<p>RMSNorm Zhang &amp; Sennrich, &quot;Root Mean Square Layer Normalization&quot;, NeurIPS 2019. https://arxiv.org/abs/1910.07467</p>
+<p>SwiGLU Shazeer, &quot;GLU Variants Improve Transformer&quot;, 2020. https://arxiv.org/abs/2002.05202</p>
+<p>SiLU / Swish activation Ramachandran, Zoph &amp; Le, &quot;Searching for Activation Functions&quot;, 2017. https://arxiv.org/abs/1710.05941</p>
+<p>GELU Hendrycks &amp; Gimpel, &quot;Gaussian Error Linear Units&quot;, 2016. https://arxiv.org/abs/1606.08415</p></div>
+    </section>
+    
+  <section class="section" id="constants">
+    <h2>Constants</h2>
+    <ul class="member-list"><li><code>ACT2FN</code> = <code>{&#x27;silu&#x27;: F.silu, &#x27;gelu&#x27;: F.gelu, &#x27;gelu_pytorch_tanh&#x27;: lambda x: F.gelu(x, approximate=&#x27;tanh&#x27;), &#x27;relu&#x27;: F.relu}</code> <span class="small">(line 41)</span></li></ul>
+  </section>
+  
+    
+  <section class="section" id="class-RMSNorm">
+    <h2>RMSNorm</h2>
+    <div class="meta">Line 49 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class RMSNorm(nn.Module)</div>
+    <div class="docstring"><p>Root Mean Square Layer Normalization (Zhang &amp; Sennrich, 2019).</p>
+<h2>Math</h2>
+<p>Given an input <code>x \in \mathbb{R}^{d}</code>:</p>
+<p>.. math: \text{RMS}(x) = \sqrt{\tfrac{1}{d}\sum<em>{i=1}^{d} x</em>i^2 \;+\; \varepsilon}</p>
+<p>.. math: \text{RMSNorm}(x) = \frac{x}{\text{RMS}(x)} \odot (1 + w)</p>
+<p>where <code>w \in \mathbb{R}^d</code> is a learnable per-channel weight and <code>\odot</code> is elementwise multiplication. Unlike LayerNorm, no mean subtraction and no learnable bias are used — this saves a first moment and empirically matches LayerNorm quality at lower cost.</p>
+<h2>Qwen3.5 convention</h2>
+<p>The stored weight is zero-initialized and the effective scale is <code>1 + weight</code> (the reference implementation writes the <em>delta</em> from the identity scale). This matches Hugging Face transformers&#x27; <code>Qwen3_5RMSNorm</code>.</p>
+<p>Why fp32 inside? Squaring fp16/bf16 activations can overflow; the variance is therefore accumulated in fp32 and cast back to the original dtype at the end.</p>
+<p>Reference: https://arxiv.org/abs/1910.07467</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 80</div>
+    <div class="signature">def __init__(self, dim: int, eps: float = 1e-06)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 85</div>
+    <div class="signature">def forward(self, x: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-RMSNormGated">
+    <h2>RMSNormGated</h2>
+    <div class="meta">Line 94 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class RMSNormGated(nn.Module)</div>
+    <div class="docstring"><p>RMSNorm with a multiplicative SiLU gate (used inside GatedDeltaNet).</p>
+<h2>Math</h2>
+<p>For input <code>x</code> and gate <code>z</code>:</p>
+<p>.. math: y = \big(w \odot \text{RMSNorm}(x)\big) \;\odot\; \text{SiLU}(z)</p>
+<p>where <code>SiLU(z) = z * sigmoid(z)</code>.</p>
+<p>This is the same &quot;normalize then gate&quot; pattern used in Mamba / Mamba-2 (Gu &amp; Dao 2023, 2024) for the output of the SSM block. The gate is computed from the same input stream and broadcasts elementwise, giving per-feature multiplicative control over the normalized output.</p>
+<p>Unlike <code>RMSNorm</code>, the weight is <strong>1-initialized</strong> here — this is the convention used in the reference <code>Qwen3_5RMSNormGated</code> class.</p>
+<h2>References</h2>
+<ul><li>Mamba-2: Dao &amp; Gu, &quot;Transformers are SSMs&quot;. https://arxiv.org/abs/2405.21060</li><li>SiLU:   Ramachandran et al. 2017. https://arxiv.org/abs/1710.05941</li></ul></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 120</div>
+    <div class="signature">def __init__(self, dim: int, eps: float = 1e-06)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 125</div>
+    <div class="signature">def forward(self, x: torch.Tensor, gate: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-SwiGLUMLP">
+    <h2>SwiGLUMLP</h2>
+    <div class="meta">Line 136 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class SwiGLUMLP(nn.Module)</div>
+    <div class="docstring"><p>SwiGLU feed-forward block (Shazeer 2020, &quot;GLU Variants Improve Transformer&quot;).</p>
+<h2>Math</h2>
+<p>Three linear projections <code>W_{\text{gate}}, W_{\text{up}}, W_{\text{down}}</code> define</p>
+<p>.. math: \text{SwiGLU}(x) \;=\; W<em>{\text{down}}\!\Big( \underbrace{\text{SiLU}(W</em>{\text{gate}}\, x)}<em>{\text{gate branch}} \;\odot\; \underbrace{W</em>{\text{up}}\, x}_{\text{value branch}} \Big)</p>
+<p>i.e. a gated-linear-unit with SiLU as the gating nonlinearity. Compared to a plain <code>FFN(x) = W_2 \sigma(W_1 x)</code>, SwiGLU empirically improves loss at matched parameter count; it is used in PaLM, LLaMA, Qwen, etc.</p>
+<p>Hidden size <code>gate_proj</code> and <code>up_proj</code> are Linear(hidden → intermediate), <code>down_proj</code> is Linear(intermediate → hidden). Qwen3.5 has no bias on any of the three.</p>
+<p>Reference: https://arxiv.org/abs/2002.05202</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 163</div>
+    <div class="signature">def __init__(self, hidden_size: int, intermediate_size: int, hidden_act: str = &#x27;silu&#x27;)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 170</div>
+    <div class="signature">def forward(self, x: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>

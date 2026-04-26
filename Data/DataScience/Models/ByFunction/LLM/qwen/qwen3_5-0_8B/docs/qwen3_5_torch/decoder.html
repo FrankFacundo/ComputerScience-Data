@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.decoder API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.decoder</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/decoder.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5DecoderLayer">Qwen3_5DecoderLayer</a></li><li><a href="#class-Qwen3_5TextModel">Qwen3_5TextModel</a></li><li><a href="#class-Qwen3_5ForCausalLM">Qwen3_5ForCausalLM</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Decoder layer, text model, and causal-LM wrapper.</p>
+<p>The text stack is a <strong>pre-norm</strong> Transformer with the usual</p>
+<p>.. math: x \leftarrow x + \text{Attn}(\text{RMSNorm}(x)) \qquad x \leftarrow x + \text{MLP}(\text{RMSNorm}(x))</p>
+<p>but each layer&#x27;s <code>Attn</code> is <em>either</em> full softmax attention (<code>~qwen3_5_torch.attention.Qwen3_5Attention</code>) <em>or</em> a Gated DeltaNet linear-attention block (<code>~qwen3_5_torch.linear_attention.Qwen3_5GatedDeltaNet</code>). The choice is fixed by <code>config.layer_types</code>. This hybrid design keeps the expressivity of softmax attention on a subset of layers while amortising long-context cost on the rest.</p>
+<h2>Architecture papers</h2>
+<ul><li>Pre-norm transformer: Xiong et al., &quot;On Layer Normalization in the Transformer Architecture&quot; (2020) — https://arxiv.org/abs/2002.04745</li><li>LLaMA-style decoder (RMSNorm + SwiGLU + RoPE + causal): Touvron et al., 2023 — https://arxiv.org/abs/2302.13971</li><li>Gated DeltaNet: Yang et al., 2024 — https://arxiv.org/abs/2412.06464</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5DecoderLayer">
+    <h2>Qwen3_5DecoderLayer</h2>
+    <div class="meta">Line 98 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5DecoderLayer(nn.Module)</div>
+    <div class="docstring"><p>One pre-norm transformer block of Qwen3.5.</p>
+<h2>Math</h2>
+<p>For an input hidden state <code>x \in \mathbb{R}^{B \times S \times d}</code>:</p>
+<p>.. math: \begin{aligned} h<em>1 &amp;= x + \text{MixerBlock}\big(\text{RMSNorm}</em>1(x)\big) \\ h<em>2 &amp;= h</em>1 + \text{SwiGLU}\big(\text{RMSNorm}<em>2(h</em>1)\big) \end{aligned}</p>
+<p>where <code>MixerBlock</code> is one of:</p>
+<ul><li><code>Qwen3_5Attention</code>  — full softmax attention with GQA + RoPE + output gate</li><li><code>Qwen3_5GatedDeltaNet</code> — gated-delta-rule linear attention</li></ul>
+<p>Residual placement is the standard <em>pre-norm</em> arrangement (Xiong et al. 2020): <code>x + Block(Norm(x))</code>, which makes deep stacks easier to train.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 120</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig, layer_idx: int)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 135</div>
+    <div class="signature">def forward(self, hidden_states: torch.Tensor, position_embeddings: Tuple[torch.Tensor, torch.Tensor], full_attention_mask: Optional[torch.Tensor] = None, linear_attention_mask: Optional[torch.Tensor] = None, past_key_values: Optional[HybridCache] = None) -&gt; torch.Tensor</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5TextModel">
+    <h2>Qwen3_5TextModel</h2>
+    <div class="meta">Line 171 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5TextModel(nn.Module)</div>
+    <div class="docstring"><p>Stack of decoder layers with an input embedding and a final RMSNorm.</p>
+<h2>Math (end-to-end)</h2>
+<p>.. math: h^{(0)} &amp;= E[\,\text{input\<em>ids}\,] \\ h^{(\ell+1)} &amp;= \text{DecoderLayer}</em>\ell(h^{(\ell)}; \cos, \sin,\, \text{mask},\, \text{cache}) \\ y &amp;= \text{RMSNorm}(h^{(L)})</p>
+<p>The final <code>y</code> is returned as <code>last_hidden_state</code> and lifted to vocab logits by <code>Qwen3_5ForCausalLM</code> via <code>lm_head</code>. RoPE <code>(cos, sin)</code> is computed once per forward from the 3-axis position ids and reused by every full-attention layer.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 187</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-get_input_embeddings">
+    <h4>get_input_embeddings</h4>
+    <div class="meta">Line 198</div>
+    <div class="signature">def get_input_embeddings(self) -&gt; nn.Embedding</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-set_input_embeddings">
+    <h4>set_input_embeddings</h4>
+    <div class="meta">Line 201</div>
+    <div class="signature">def set_input_embeddings(self, value: nn.Embedding) -&gt; None</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 204</div>
+    <div class="signature">def forward(self, input_ids: Optional[torch.LongTensor] = None, attention_mask: Optional[torch.Tensor] = None, position_ids: Optional[torch.LongTensor] = None, past_key_values: Optional[HybridCache] = None, inputs_embeds: Optional[torch.Tensor] = None, use_cache: bool = False) -&gt; dict</div>
+    
+    <div class="docstring"><p>Run one forward pass over <code>input_ids</code> (or <code>inputs_embeds</code>).</p>
+<h2>Key steps</h2>
+<ol><li><strong>Embed</strong>        : <code>h^{(0)} = E[x]</code>.</li><li><strong>Positions</strong>    : build 3-axis rope positions (<code>T, H, W</code>).</li><li><strong>RoPE tables</strong>  : <code>(cos, sin) = rotary_emb(h^{(0)}, pos)</code>.</li><li><strong>Masks</strong>        : 4-D causal mask for full layers, 2-D keep mask passed to linear layers (just zeroes padding).</li><li><strong>Decoder stack</strong> : <code>L</code> residual blocks.</li><li><strong>Final norm</strong>   : <code>y = \text{RMSNorm}(h^{(L)})</code>.</li></ol></div>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5ForCausalLM">
+    <h2>Qwen3_5ForCausalLM</h2>
+    <div class="meta">Line 301 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5ForCausalLM(nn.Module)</div>
+    <div class="docstring"><p>Text-only causal LM head on top of <code>Qwen3_5TextModel</code>.</p>
+<p>Adds</p>
+<p>.. math: \text{logits} = W_{\text{lm}}\, y \;\in\; \mathbb{R}^{B \times S \times V},</p>
+<p>where <code>W_{\text{lm}}</code> is optionally tied to the input embedding (<code>config.tie_word_embeddings</code>). Tying halves the memory footprint of the softmax layer and was introduced in Press &amp; Wolf 2016, https://arxiv.org/abs/1608.05859.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 315</div>
+    <div class="signature">def __init__(self, config: Qwen3_5TextConfig)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-get_input_embeddings">
+    <h4>get_input_embeddings</h4>
+    <div class="meta">Line 323</div>
+    <div class="signature">def get_input_embeddings(self)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 326</div>
+    <div class="signature">def forward(self, input_ids: Optional[torch.LongTensor] = None, attention_mask: Optional[torch.Tensor] = None, position_ids: Optional[torch.LongTensor] = None, past_key_values: Optional[HybridCache] = None, inputs_embeds: Optional[torch.Tensor] = None, use_cache: bool = False) -&gt; dict</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>

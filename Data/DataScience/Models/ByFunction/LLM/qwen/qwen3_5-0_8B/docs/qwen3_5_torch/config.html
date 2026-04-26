@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.config API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.config</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/config.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5TextConfig">Qwen3_5TextConfig</a></li><li><a href="#class-Qwen3_5VisionConfig">Qwen3_5VisionConfig</a></li><li><a href="#class-Qwen3_5Config">Qwen3_5Config</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Qwen3.5 configuration as plain dataclasses (no transformers dependency).</p>
+<p>All hyperparameters that enter the math of the model live here. A quick map:</p>
+<ul><li><code>vocab_size</code>                      : V (number of tokens — input embedding / softmax width)</li><li><code>hidden_size</code>                     : d_model</li><li><code>intermediate_size</code>               : d_ff (SwiGLU middle width)</li><li><code>num_hidden_layers</code>               : L</li><li><code>num_attention_heads</code>             : H_q   — query heads</li><li><code>num_key_value_heads</code>             : H<em>kv  — KV heads (GQA sharing = H</em>q / H_kv)</li><li><code>head_dim</code>                        : d_h   — per-head size</li><li><code>rope_parameters.rope_theta</code>      : θ_base (RoPE base; very large for long ctx)</li><li><code>rope_parameters.partial_rotary_factor</code> : fraction of head_dim that receives RoPE</li><li><code>rope_parameters.mrope_section</code>   : 3-axis split widths for M-RoPE interleave</li><li><code>layer_types</code>                     : list of length L giving &quot;full<em>attention&quot; or &quot;linear</em>attention&quot; per layer</li><li><code>full_attention_interval</code>         : every Nth layer is full-attention (default 4)</li><li><code>linear_*</code>                        : Gated DeltaNet branch sizes (see model.py)</li></ul>
+<p>Vision (<code>Qwen3_5VisionConfig</code>): depth, hidden<em>size, intermediate</em>size, num<em>heads   : ViT stack patch</em>size, temporal<em>patch</em>size                    : Conv3d kernel = stride spatial<em>merge</em>size (=2)                            : 2×2 patch merger at the end out<em>hidden</em>size                                    : projection width = text d_model</p>
+<h2>References for the architecture choices</h2>
+<ul><li>GQA:  Ainslie et al. 2023 — https://arxiv.org/abs/2305.13245</li><li>RoPE: Su et al. 2021       — https://arxiv.org/abs/2104.09864</li><li>Gated DeltaNet: Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li><li>Qwen2-VL (M-RoPE + vision recipe): Wang et al. 2024 — https://arxiv.org/abs/2409.12191</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5TextConfig">
+    <h2>Qwen3_5TextConfig</h2>
+    <div class="meta">Line 65 · Bases: <code>object</code></div>
+    <div class="signature">class Qwen3_5TextConfig</div>
+    <p class="small">No docstring.</p>
+    
+  </section>
+  
+  <section class="section" id="class-Qwen3_5VisionConfig">
+    <h2>Qwen3_5VisionConfig</h2>
+    <div class="meta">Line 121 · Bases: <code>object</code></div>
+    <div class="signature">class Qwen3_5VisionConfig</div>
+    <p class="small">No docstring.</p>
+    
+  </section>
+  
+  <section class="section" id="class-Qwen3_5Config">
+    <h2>Qwen3_5Config</h2>
+    <div class="meta">Line 137 · Bases: <code>object</code></div>
+    <div class="signature">class Qwen3_5Config</div>
+    <p class="small">No docstring.</p>
+    <h3>Methods</h3>
+  <section class="section" id="fn-from_dict">
+    <h4>from_dict</h4>
+    <div class="meta">Line 148</div>
+    <div class="signature">def from_dict(cls, data: dict[str, Any]) -&gt; &#x27;Qwen3_5Config&#x27;</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@classmethod</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-from_pretrained">
+    <h4>from_pretrained</h4>
+    <div class="meta">Line 179</div>
+    <div class="signature">def from_pretrained(cls, model_dir: str | Path) -&gt; &#x27;Qwen3_5Config&#x27;</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@classmethod</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>

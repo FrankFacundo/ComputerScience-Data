@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.tokenizer API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.tokenizer</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/tokenizer.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen2Tokenizer">Qwen2Tokenizer</a></li></ul></li><li>Functions<ul><li><a href="#fn-bytes_to_unicode">bytes_to_unicode</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Pure-python Qwen2-style BBPE tokenizer (also what Qwen3.5 uses).</p>
+<p>Pipeline matches the HuggingFace tokenizers <code>Qwen2Tokenizer</code> backend: special-token split  -&gt;  NFC normalize  -&gt;  pretokenize (regex) -&gt;  byte-level encode  -&gt;  BPE merge  -&gt;  vocab lookup</p>
+<p>Decoding is the inverse: id → byte-level string → utf-8 bytes → text.</p>
+<h2>Background</h2>
+<ul><li><strong>BPE</strong> (Byte-Pair Encoding) — Sennrich et al., &quot;Neural Machine Translation of Rare Words with Subword Units&quot; (ACL 2016). https://arxiv.org/abs/1508.07909</li><li><strong>Byte-level BPE (BBPE)</strong> — Radford et al., &quot;Language Models are Unsupervised Multitask Learners&quot; (GPT-2, 2019). Operates on UTF-8 bytes rather than raw characters; the 256-byte alphabet guarantees out-of-vocab robustness and the round-trip property <code>decode(encode(x)) == x</code>.</li><li><strong>NFC normalization</strong> — Unicode canonical composition applied before pretokenization so that visually identical strings (e.g. <code>é</code> vs. <code>e + \u0301</code>) produce the same tokens.</li></ul>
+<h2>Algorithm summary (encode)</h2>
+<p>For each input string <code>s</code>:</p>
+<ol><li>Split off any <em>special token</em> substrings (<code>&lt;|im_start|&gt;</code> etc.) first.</li><li>NFC normalize the remaining chunks.</li><li><strong>Pretokenize</strong> with a regex that groups contractions, letters, digits, punctuation, and runs of whitespace separately. Qwen2 uses the GPT-2 style regex below, extended to Unicode categories (<code>\p{L}</code>, <code>\p{N}</code>, <code>\p{M}</code>).</li><li><strong>Byte-level encode</strong> each piece: <code>s \to \prod_{b \in \text{utf8}(s)} \text{bytes\_to\_unicode}(b)</code>. The mapping moves raw byte values into printable Unicode codepoints so the BPE merge table can be stored as ordinary strings.</li><li><strong>BPE merge</strong> until no ranked pair remains. With merges ranked by training frequency, this is <code>O(n^2 / \log n)</code> per piece in the worst case but linear in practice thanks to the <code>_cache</code> memo.</li><li>Map each final sub-piece to its integer id via <code>vocab</code>.</li></ol>
+<p>External deps: <code>regex</code> (needed for <code>\p{L}</code> Unicode categories in the pretokenization regex).</p></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen2Tokenizer">
+    <h2>Qwen2Tokenizer</h2>
+    <div class="meta">Line 167 · Bases: <code>object</code></div>
+    <div class="signature">class Qwen2Tokenizer</div>
+    <div class="docstring"><p>Pure-python Qwen2/Qwen3.5 BBPE tokenizer.</p>
+<p>Construction is cheap; all state is vocab/merges/special-token tables. Encoded pieces are compared byte-for-byte to transformers output.</p>
+<h2>Encode-time algebra (per piece)</h2>
+<p>Let <code>s</code> be a UTF-8 string piece after pretokenization. Then</p>
+<p>.. math: \text{encoded}(s) = \text{bytes\<em>to\</em>unicode} \circ \text{utf8}(s) \quad \in \Sigma^*</p>
+<p>(where <code>\Sigma</code> is the printable Unicode alphabet), and</p>
+<p>.. math: \text{ids}(s) = [\,\text{vocab}[u]\,]_{u \in \text{BPE}(\text{encoded}(s))}.</p>
+<p>Special tokens are matched <strong>before</strong> pretokenization so they never get fragmented by BPE.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 200</div>
+    <div class="signature">def __init__(self, vocab: dict[str, int], merges: list[tuple[str, str]], *, added_tokens: dict[str, int] | None = None, pretokenize_regex: str | None = None, errors: str = &#x27;replace&#x27;, add_prefix_space: bool = False)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-from_pretrained">
+    <h4>from_pretrained</h4>
+    <div class="meta">Line 236</div>
+    <div class="signature">def from_pretrained(cls, model_dir: str | Path) -&gt; &#x27;Qwen2Tokenizer&#x27;</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@classmethod</code></li></ul>
+    <div class="docstring"><p>Load <code>vocab.json</code>, <code>merges.txt</code>, and <code>tokenizer_config.json</code>.</p></div>
+  </section>
+  
+  <section class="section" id="fn-vocab_size">
+    <h4>vocab_size</h4>
+    <div class="meta">Line 287</div>
+    <div class="signature">def vocab_size(self) -&gt; int</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-eos_token">
+    <h4>eos_token</h4>
+    <div class="meta">Line 291</div>
+    <div class="signature">def eos_token(self) -&gt; str | None</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-eos_token_id">
+    <h4>eos_token_id</h4>
+    <div class="meta">Line 295</div>
+    <div class="signature">def eos_token_id(self) -&gt; int | None</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-pad_token">
+    <h4>pad_token</h4>
+    <div class="meta">Line 300</div>
+    <div class="signature">def pad_token(self) -&gt; str | None</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-pad_token_id">
+    <h4>pad_token_id</h4>
+    <div class="meta">Line 304</div>
+    <div class="signature">def pad_token_id(self) -&gt; int | None</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-chat_template">
+    <h4>chat_template</h4>
+    <div class="meta">Line 309</div>
+    <div class="signature">def chat_template(self) -&gt; str | None</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-encode">
+    <h4>encode</h4>
+    <div class="meta">Line 312</div>
+    <div class="signature">def encode(self, text: str, *, add_special_tokens: bool = False) -&gt; list[int]</div>
+    
+    <div class="docstring"><p>Encode <code>text</code> to token ids. <code>add_special_tokens</code> is a no-op for Qwen2.</p></div>
+  </section>
+  
+  <section class="section" id="fn-decode">
+    <h4>decode</h4>
+    <div class="meta">Line 316</div>
+    <div class="signature">def decode(self, ids: Iterable[int], *, skip_special_tokens: bool = False, clean_up_tokenization_spaces: bool = False) -&gt; str</div>
+    
+    <div class="docstring"><p>Decode a sequence of ids back to text.</p>
+<p>Non-special ids are mapped through <code>bpe.decoder</code> (string pieces) and concatenated; contiguous runs of non-special pieces are then converted back to bytes via the inverse of <code>bytes_to_unicode</code> and decoded as UTF-8. Special tokens pass through verbatim (or are skipped).</p></div>
+  </section>
+  
+  <section class="section" id="fn-apply_chat_template">
+    <h4>apply_chat_template</h4>
+    <div class="meta">Line 370</div>
+    <div class="signature">def apply_chat_template(self, messages: list[dict], *, tokenize: bool = True, add_generation_prompt: bool = False, chat_template_kwargs: dict | None = None, **extra_kwargs) -&gt; str | list[int]</div>
+    
+    <div class="docstring"><p>Render the stored chat template (Jinja2) with <code>messages</code>.</p>
+<p>Any unknown keyword args (e.g. <code>enable_thinking</code>) are forwarded to the template, matching transformers&#x27; behavior. <code>chat_template_kwargs</code>, if provided, is merged in after direct kwargs.</p></div>
+  </section>
+  
+  </section>
+  
+    
+  <section class="section" id="fn-bytes_to_unicode">
+    <h3>bytes_to_unicode</h3>
+    <div class="meta">Line 61</div>
+    <div class="signature">def bytes_to_unicode() -&gt; dict[int, str]</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@lru_cache()</code></li></ul>
+    <div class="docstring"><p>Map every byte to a printable, non-whitespace unicode codepoint.</p>
+<p>This is the exact bijection used by GPT-2&#x27;s tokenizer (Radford et al., 2019). The forward map <code>byte → str</code> covers all 256 byte values:</p>
+<ul><li>Printable ASCII/Latin-1 bytes map to themselves.</li><li>The remaining 68 &quot;ugly&quot; bytes (control chars, whitespace) are remapped to codepoints starting at <code>U+0100</code> to keep the BPE input printable.</li></ul>
+<p>The inverse is used at decode time to recover the raw UTF-8 bytes.</p></div>
+  </section>
+  
+  </main>
+</body>
+</html>

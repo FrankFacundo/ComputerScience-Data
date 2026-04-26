@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li><a href="#constants">Constants</a></li><li>Functions<ul><li><a href="#fn-parse_args">parse_args</a></li><li><a href="#fn-expand_image_placeholders">expand_image_placeholders</a></li><li><a href="#fn-build_inputs">build_inputs</a></li><li><a href="#fn-compute_mm_token_type_ids">compute_mm_token_type_ids</a></li><li><a href="#fn-generate">generate</a></li><li><a href="#fn-main">main</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Inference entry point for the pure-torch Qwen3.5 implementation.</p>
+<p>Example: python qwen3<em>5</em>torch.py \ --image image.png \ --prompt &quot;Describe this image in detail.&quot;</p>
+<p>The model, tokenizer, and image processor are all pure torch — no transformers dependency in the inference path.</p>
+<h2>End-to-end inference pipeline (math view)</h2>
+<ol><li><strong>Image preprocessing</strong> (<code>Qwen2VLImageProcessor</code>): resize + normalize + patchify → <code>pixel_values</code> and <code>image_grid_thw</code>.</li><li><strong>Prompt formatting</strong> (<code>Qwen2Tokenizer.apply_chat_template</code>): render the Jinja chat template, then expand <code>&lt;|image_pad|&gt;</code> to the right number of placeholders (one per merged vision token).</li><li><strong>Tokenize</strong> the prompt → <code>input_ids</code>.</li><li><strong>Vision forward</strong> (<code>Qwen3_5VisionModel</code>): patches → vision embeddings of the text <code>d_model</code> width.</li><li><strong>Splice</strong> vision embeddings into text embeddings at every <code>&lt;|image_pad|&gt;</code> position (<code>masked_scatter</code>).</li><li><strong>Build 3-axis M-RoPE positions</strong> from <code>mm_token_type_ids</code> and grids.</li><li><strong>Text decoder</strong> (<code>Qwen3_5TextModel</code>): L hybrid decoder layers with either full softmax attention or Gated DeltaNet, each wrapped in a pre-norm residual with SwiGLU MLPs.</li><li><strong>LM head</strong>: <code>\text{logits} = W_{\text{lm}}\, y</code>.</li><li><strong>Sampler</strong> (<code>_sample</code>): greedy, temperature sampling, or nucleus (top-p) sampling.</li><li><strong>KV / recurrent cache</strong> (<code>HybridCache</code>): grown per decode step so subsequent steps only forward a single token through the stack.</li></ol>
+<p>The generation loop repeats 7–10 until an EOS id appears or <code>max_new_tokens</code> is reached.</p>
+<h2>References</h2>
+<p>See the module docstrings inside <code>qwen3_5_torch/</code> for the underlying papers (Attention is All You Need, RoFormer, GQA, Gated DeltaNet, Mamba-2, Qwen2-VL).</p></div>
+    </section>
+    
+  <section class="section" id="constants">
+    <h2>Constants</h2>
+    <ul class="member-list"><li><code>DEFAULT_MODEL_PATH</code> = <code>&#x27;/Users/frankfacundo/Models/Qwen/Qwen3.5-27B&#x27;</code> <span class="small">(line 61)</span></li><li><code>DEFAULT_SYSTEM_PROMPT</code> = <code>&#x27;You are a helpful assistant.&#x27;</code> <span class="small">(line 62)</span></li><li><code>DEFAULT_USER_PROMPT</code> = <code>&#x27;Describe this image.&#x27;</code> <span class="small">(line 63)</span></li><li><code>IMAGE_TOKEN</code> = <code>&#x27;&lt;|image_pad|&gt;&#x27;</code> <span class="small">(line 64)</span></li></ul>
+  </section>
+  
+    
+    
+  <section class="section" id="fn-parse_args">
+    <h3>parse_args</h3>
+    <div class="meta">Line 67</div>
+    <div class="signature">def parse_args() -&gt; argparse.Namespace</div>
+    
+    <div class="docstring"><p>CLI arg parser for the inference entry point.</p></div>
+  </section>
+  
+  <section class="section" id="fn-expand_image_placeholders">
+    <h3>expand_image_placeholders</h3>
+    <div class="meta">Line 124</div>
+    <div class="signature">def expand_image_placeholders(prompt_text: str, image_grid_thw: torch.Tensor, merge_size: int) -&gt; str</div>
+    
+    <div class="docstring"><p>Expand one <code>&lt;|image_pad|&gt;</code> per image into N placeholders.</p>
+<h2>Math</h2>
+<p>For an image with grid <code>(T, H, W)</code> and spatial merge size <code>M</code>, the vision tower emits</p>
+<p>.. math: N = \frac{T \cdot H \cdot W}{M^2}</p>
+<p>tokens after the 2x2 merger. The chat template inserts a single <code>&lt;|image_pad|&gt;</code> for each image — this function duplicates it to N occurrences so that every vision token has a corresponding placeholder to splice into.</p></div>
+  </section>
+  
+  <section class="section" id="fn-build_inputs">
+    <h3>build_inputs</h3>
+    <div class="meta">Line 148</div>
+    <div class="signature">def build_inputs(tokenizer, image_processor, image_path: Path, system_prompt: str, user_prompt: str, disable_thinking: bool) -&gt; dict</div>
+    
+    <div class="docstring"><p>Build the dict of tensors the model expects.</p>
+<h2>Stages</h2>
+<ol><li>Render the chat template (Jinja) with a system + user turn containing an image reference.</li><li>Preprocess the image → <code>(pixel_values, image_grid_thw)</code>.</li><li>Expand <code>&lt;|image_pad|&gt;</code> once per vision token (<code>expand_image_placeholders</code>).</li><li>Tokenize the final prompt → <code>(input_ids, attention_mask)</code>.</li></ol></div>
+  </section>
+  
+  <section class="section" id="fn-compute_mm_token_type_ids">
+    <h3>compute_mm_token_type_ids</h3>
+    <div class="meta">Line 196</div>
+    <div class="signature">def compute_mm_token_type_ids(input_ids: torch.Tensor, image_token_id: int, video_token_id: int) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Label each input token by modality: <code>text=0, image=1, video=2</code>.</p>
+<p>This label stream drives <code>Qwen3_5Model.get_rope_index</code>, which groups consecutive same-modality runs to assign either arithmetic text positions or <code>(t, h, w)</code> vision positions. Matches transformers&#x27; processor output.</p></div>
+  </section>
+  
+  <section class="section" id="fn-generate">
+    <h3>generate</h3>
+    <div class="meta">Line 212</div>
+    <div class="signature">def generate(model: Qwen3_5ForConditionalGeneration, inputs: dict, *, max_new_tokens: int, eos_token_ids: set[int], temperature: float, top_p: float) -&gt; torch.Tensor</div>
+    <div class="meta">Decorators</div><ul class="member-list"><li><code>@torch.no_grad()</code></li></ul>
+    <div class="docstring"><p>Greedy / top-p sampling loop with hybrid KV / linear cache.</p>
+<h2>Math</h2>
+<p>At each step <code>t</code> the model computes logits</p>
+<p>.. math: \ell<em>t = W</em>{\text{lm}}\, y_t \in \mathbb{R}^{V},</p>
+<p>from which the sampler (<code>_sample</code>) draws the next token:</p>
+<ul><li><code>T = 0</code>: greedy — <code>\arg\max \ell_t</code>.</li><li><code>T &gt; 0</code>: softmax at temperature <code>T</code> → multinomial, optionally restricted to the top-<code>p</code> nucleus.</li></ul>
+<p>The first forward (&quot;prefill&quot;) processes all prompt tokens together (and the image branch). Subsequent forwards process one token at a time, reusing the <code>HybridCache</code> so each full-attention layer grows its KV by one column and each Gated DeltaNet layer updates its conv ring buffer + recurrent state in-place.</p></div>
+  </section>
+  
+  <section class="section" id="fn-main">
+    <h3>main</h3>
+    <div class="meta">Line 338</div>
+    <div class="signature">def main() -&gt; None</div>
+    
+    <div class="docstring"><p>Run a single prompt + image through the model end-to-end.</p>
+<h2>Stages</h2>
+<ol><li>Parse CLI args; seed torch.</li><li>Resolve device (CUDA/MPS/CPU) and dtype (bf16/fp16/fp32).</li><li>Load tokenizer + image processor + config (from local model dir).</li><li>Instantiate <code>Qwen3_5ForConditionalGeneration</code> with random weights, then load the safetensors shards over it.</li><li>Build prompt + vision inputs (<code>build_inputs</code>).</li><li>Compute modality token-type ids for M-RoPE.</li><li>Call <code>generate</code> (prefill + decode loop).</li><li>Decode the completion tokens and print them.</li></ol></div>
+  </section>
+  
+  </main>
+</body>
+</html>

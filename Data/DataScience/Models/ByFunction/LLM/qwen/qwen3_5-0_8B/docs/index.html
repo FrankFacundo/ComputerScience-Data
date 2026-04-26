@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python API Docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Documentation</span>
+    <h1>Python API Docs</h1>
+    <p class="subtitle">Generated from source without importing runtime dependencies.</p>
+    
+        <section class="section">
+          <h2><a href="qwen3_5_torch/index.html">qwen3_5_torch</a></h2>
+          <div class="meta"><code>qwen3_5_torch/__init__.py</code></div>
+          <div class="meta">No public API symbols detected</div>
+          <p class="small">No docstring.</p>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch.html">qwen3_5_torch</a></h2>
+          <div class="meta"><code>qwen3_5_torch.py</code></div>
+          <div class="meta">6 functions · 4 constants</div>
+          <div class="docstring"><p>Inference entry point for the pure-torch Qwen3.5 implementation.</p>
+<p>Example: python qwen3<em>5</em>torch.py \ --image image.png \ --prompt &quot;Describe this image in detail.&quot;</p>
+<p>The model, tokenizer, and image processor are all pure torch — no transformers dependency in the inference path.</p>
+<h2>End-to-end inference pipeline (math view)</h2>
+<ol><li><strong>Image preprocessing</strong> (<code>Qwen2VLImageProcessor</code>): resize + normalize + patchify → <code>pixel_values</code> and <code>image_grid_thw</code>.</li><li><strong>Prompt formatting</strong> (<code>Qwen2Tokenizer.apply_chat_template</code>): render the Jinja chat template, then expand <code>&lt;|image_pad|&gt;</code> to the right number of placeholders (one per merged vision token).</li><li><strong>Tokenize</strong> the prompt → <code>input_ids</code>.</li><li><strong>Vision forward</strong> (<code>Qwen3_5VisionModel</code>): patches → vision embeddings of the text <code>d_model</code> width.</li><li><strong>Splice</strong> vision embeddings into text embeddings at every <code>&lt;|image_pad|&gt;</code> position (<code>masked_scatter</code>).</li><li><strong>Build 3-axis M-RoPE positions</strong> from <code>mm_token_type_ids</code> and grids.</li><li><strong>Text decoder</strong> (<code>Qwen3_5TextModel</code>): L hybrid decoder layers with either full softmax attention or Gated DeltaNet, each wrapped in a pre-norm residual with SwiGLU MLPs.</li><li><strong>LM head</strong>: <code>\text{logits} = W_{\text{lm}}\, y</code>.</li><li><strong>Sampler</strong> (<code>_sample</code>): greedy, temperature sampling, or nucleus (top-p) sampling.</li><li><strong>KV / recurrent cache</strong> (<code>HybridCache</code>): grown per decode step so subsequent steps only forward a single token through the stack.</li></ol>
+<p>The generation loop repeats 7–10 until an EOS id appears or <code>max_new_tokens</code> is reached.</p>
+<h2>References</h2>
+<p>See the module docstrings inside <code>qwen3_5_torch/</code> for the underlying papers (Attention is All You Need, RoFormer, GQA, Gated DeltaNet, Mamba-2, Qwen2-VL).</p></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/attention.html">qwen3_5_torch.attention</a></h2>
+          <div class="meta"><code>qwen3_5_torch/attention.py</code></div>
+          <div class="meta">1 classes · 2 functions</div>
+          <div class="docstring"><p>Full-attention block for Qwen3.5 (GQA + per-head q/k RMSNorm + output gate).</p>
+<p>This file implements the &quot;full attention&quot; branch used by Qwen3.5 in roughly every 4th transformer layer (the others use the linear-attention branch in <code>linear_attention</code>). The block combines several well-known techniques:</p>
+<ul><li><strong>Scaled dot-product attention</strong> (Vaswani et al., 2017) — &quot;Attention Is All You Need&quot;: https://arxiv.org/abs/1706.03762</li><li><strong>Grouped-Query Attention (GQA)</strong> (Ainslie et al., 2023) — keys/values are shared across groups of query heads: https://arxiv.org/abs/2305.13245</li><li><strong>Rotary position embedding (RoPE)</strong> — see <code>rotary</code>.</li><li><strong>Q/K per-head RMSNorm</strong> — as introduced by Qwen2/Qwen3 (Dehghani et al. &quot;Scaling Vision Transformers to 22B Parameters&quot;, 2023, also popularised it): normalising each head&#x27;s q and k stabilises training and also bounds the attention logits.</li><li><strong>Output gate</strong> — a sigmoid gate is derived from the same input and applied multiplicatively to the attention output before the final projection. Related ideas: gated-attention-unit (GAU) in Hua et al. 2022 (https://arxiv.org/abs/2202.10447).</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/cache.html">qwen3_5_torch.cache</a></h2>
+          <div class="meta"><code>qwen3_5_torch/cache.py</code></div>
+          <div class="meta">3 classes</div>
+          <div class="docstring"><p>A hybrid KV / linear-attention cache for Qwen3.5.</p>
+<p>Qwen3.5 interleaves <em>full-attention</em> and <em>linear-attention</em> layers (the latter is the Gated DeltaNet — see <code>linear_attention</code>). The two kinds of layers have fundamentally different caches during autoregressive decoding:</p>
+<ul><li><strong>Full attention</strong>   — cache the complete <code>K, V</code> tensors and grow them by concatenating one column per decoded token. Space per layer: <code>O(T · H_kv · d_h)</code>.</li><li><p><strong>Linear attention (Gated DeltaNet)</strong> — cache a constant-size state:</p>
+<ol><li>A <strong>causal-conv ring buffer</strong> holding the last <code>conv_kernel_size</code> tokens of the qkv-conv input (so the depthwise conv can continue across decode steps). Shape: <code>(B, conv_dim, K)</code>.</li><li>A <strong>recurrent state</strong> <code>S_t \in \mathbb{R}^{H_v \times d_k \times d_v}</code> that summarises everything seen so far — see Eq. (1)–(2) in <code>linear_attention</code> for its update rule.</li></ol>
+<p>Space per layer: constant in <code>T</code> — this is the whole point of linear-attention models (Mamba, DeltaNet, GatedDeltaNet).</p></li></ul>
+<p>For each layer index the cache stores exactly one of the two kinds, dispatched by <code>config.text_config.layer_types</code>.</p>
+<h2>References</h2>
+<ul><li>Mamba:           Gu &amp; Dao 2023  — https://arxiv.org/abs/2312.00752</li><li>Mamba-2:         Dao &amp; Gu 2024  — https://arxiv.org/abs/2405.21060</li><li>DeltaNet:        Yang et al. 2024 — https://arxiv.org/abs/2406.06484</li><li>Gated DeltaNet:  Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/config.html">qwen3_5_torch.config</a></h2>
+          <div class="meta"><code>qwen3_5_torch/config.py</code></div>
+          <div class="meta">3 classes</div>
+          <div class="docstring"><p>Qwen3.5 configuration as plain dataclasses (no transformers dependency).</p>
+<p>All hyperparameters that enter the math of the model live here. A quick map:</p>
+<ul><li><code>vocab_size</code>                      : V (number of tokens — input embedding / softmax width)</li><li><code>hidden_size</code>                     : d_model</li><li><code>intermediate_size</code>               : d_ff (SwiGLU middle width)</li><li><code>num_hidden_layers</code>               : L</li><li><code>num_attention_heads</code>             : H_q   — query heads</li><li><code>num_key_value_heads</code>             : H<em>kv  — KV heads (GQA sharing = H</em>q / H_kv)</li><li><code>head_dim</code>                        : d_h   — per-head size</li><li><code>rope_parameters.rope_theta</code>      : θ_base (RoPE base; very large for long ctx)</li><li><code>rope_parameters.partial_rotary_factor</code> : fraction of head_dim that receives RoPE</li><li><code>rope_parameters.mrope_section</code>   : 3-axis split widths for M-RoPE interleave</li><li><code>layer_types</code>                     : list of length L giving &quot;full<em>attention&quot; or &quot;linear</em>attention&quot; per layer</li><li><code>full_attention_interval</code>         : every Nth layer is full-attention (default 4)</li><li><code>linear_*</code>                        : Gated DeltaNet branch sizes (see model.py)</li></ul>
+<p>Vision (<code>Qwen3_5VisionConfig</code>): depth, hidden<em>size, intermediate</em>size, num<em>heads   : ViT stack patch</em>size, temporal<em>patch</em>size                    : Conv3d kernel = stride spatial<em>merge</em>size (=2)                            : 2×2 patch merger at the end out<em>hidden</em>size                                    : projection width = text d_model</p>
+<h2>References for the architecture choices</h2>
+<ul><li>GQA:  Ainslie et al. 2023 — https://arxiv.org/abs/2305.13245</li><li>RoPE: Su et al. 2021       — https://arxiv.org/abs/2104.09864</li><li>Gated DeltaNet: Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li><li>Qwen2-VL (M-RoPE + vision recipe): Wang et al. 2024 — https://arxiv.org/abs/2409.12191</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/decoder.html">qwen3_5_torch.decoder</a></h2>
+          <div class="meta"><code>qwen3_5_torch/decoder.py</code></div>
+          <div class="meta">3 classes</div>
+          <div class="docstring"><p>Decoder layer, text model, and causal-LM wrapper.</p>
+<p>The text stack is a <strong>pre-norm</strong> Transformer with the usual</p>
+<p>.. math: x \leftarrow x + \text{Attn}(\text{RMSNorm}(x)) \qquad x \leftarrow x + \text{MLP}(\text{RMSNorm}(x))</p>
+<p>but each layer&#x27;s <code>Attn</code> is <em>either</em> full softmax attention (<code>~qwen3_5_torch.attention.Qwen3_5Attention</code>) <em>or</em> a Gated DeltaNet linear-attention block (<code>~qwen3_5_torch.linear_attention.Qwen3_5GatedDeltaNet</code>). The choice is fixed by <code>config.layer_types</code>. This hybrid design keeps the expressivity of softmax attention on a subset of layers while amortising long-context cost on the rest.</p>
+<h2>Architecture papers</h2>
+<ul><li>Pre-norm transformer: Xiong et al., &quot;On Layer Normalization in the Transformer Architecture&quot; (2020) — https://arxiv.org/abs/2002.04745</li><li>LLaMA-style decoder (RMSNorm + SwiGLU + RoPE + causal): Touvron et al., 2023 — https://arxiv.org/abs/2302.13971</li><li>Gated DeltaNet: Yang et al., 2024 — https://arxiv.org/abs/2412.06464</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/image_processor.html">qwen3_5_torch.image_processor</a></h2>
+          <div class="meta"><code>qwen3_5_torch/image_processor.py</code></div>
+          <div class="meta">1 classes · 1 functions</div>
+          <div class="docstring"><p>Qwen2VL-style image preprocessor, pure torch + PIL + torchvision.</p>
+<p>Produces the same <code>(pixel_values, image_grid_thw)</code> that the transformers <code>Qwen2VLImageProcessorFast</code> produces, with values matching bit-for-bit when the underlying torchvision/PIL is identical.</p>
+<h2>Pipeline (per image)</h2>
+<ol><li><strong>PIL → tensor</strong> (<code>C, H, W</code>, uint8) via <code>torchvision.functional</code>.</li><li><strong>Smart resize</strong>: round <code>(H, W)</code> to multiples of <code>factor = patch · merge</code> while clipping total pixel count into <code>[min_pixels, max_pixels]</code> and preserving the aspect ratio up to a rounding step. See <code>smart_resize</code>.</li><li><strong>Rescale</strong>: <code>x ← x / 255</code> so values lie in <code>[0, 1]</code>.</li><li><strong>Normalize</strong>: <code>x ← (x - mean) / std</code> (channel-wise).</li><li><strong>Patchify</strong>: reshape into an ordered sequence of <code>(C · t_patch · patch · patch)</code> flat patches using a permutation that groups 2×2 &quot;merger blocks&quot; together so the vision model&#x27;s spatial merger can simply reshape.</li></ol>
+<h2>Output</h2>
+<ul><li><code>pixel_values</code> of shape <code>(N_total, C · t_patch · patch · patch)</code></li><li><code>image_grid_thw</code> of shape <code>(num_images, 3)</code> — rows <code>(grid_t, grid_h, grid_w)</code>.</li></ul>
+<h2>Reference</h2>
+<p>Qwen2-VL: native-resolution image preprocessing, https://arxiv.org/abs/2409.12191</p></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/layers.html">qwen3_5_torch.layers</a></h2>
+          <div class="meta"><code>qwen3_5_torch/layers.py</code></div>
+          <div class="meta">3 classes · 1 constants</div>
+          <div class="docstring"><p>Basic building blocks: RMSNorm variants and SwiGLU MLP.</p>
+<h2>References</h2>
+<p>RMSNorm Zhang &amp; Sennrich, &quot;Root Mean Square Layer Normalization&quot;, NeurIPS 2019. https://arxiv.org/abs/1910.07467</p>
+<p>SwiGLU Shazeer, &quot;GLU Variants Improve Transformer&quot;, 2020. https://arxiv.org/abs/2002.05202</p>
+<p>SiLU / Swish activation Ramachandran, Zoph &amp; Le, &quot;Searching for Activation Functions&quot;, 2017. https://arxiv.org/abs/1710.05941</p>
+<p>GELU Hendrycks &amp; Gimpel, &quot;Gaussian Error Linear Units&quot;, 2016. https://arxiv.org/abs/1606.08415</p></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/linear_attention.html">qwen3_5_torch.linear_attention</a></h2>
+          <div class="meta"><code>qwen3_5_torch/linear_attention.py</code></div>
+          <div class="meta">1 classes · 5 functions</div>
+          <div class="docstring"><p>Gated DeltaNet — the linear-attention branch used in Qwen3.5 layers.</p>
+<p>This is a pure-PyTorch port of the reference <code>torch_chunk_gated_delta_rule</code> / <code>torch_recurrent_gated_delta_rule</code> paths in transformers. No triton, no fla, no causal_conv1d kernels — just <code>F.conv1d</code> and a gated-delta-rule loop.</p>
+<h1>Mathematical background</h1>
+<p>Gated DeltaNet generalises two earlier linear-attention families:</p>
+<ol><li><p><strong>Linear attention</strong> (Katharopoulos et al. 2020, https://arxiv.org/abs/2006.16236). With feature map <code>\phi(\cdot)</code> the attention at step <code>t</code> becomes the recurrence</p>
+<p>.. math: S<em>t = S</em>{t-1} + \phi(k<em>t) v</em>t^\top, \qquad o<em>t = \phi(q</em>t)^\top S<em>t \,/\, z</em>t.</p></li><li><p><strong>DeltaNet</strong> (Schlag et al. 2021; see also Yang et al. 2024 https://arxiv.org/abs/2406.06484) replaces the additive rule by an <strong>associative delta rule</strong>:</p>
+<p>.. math: S<em>t = S</em>{t-1} + \beta<em>t (v</em>t - S<em>{t-1}\,k</em>t)\,k_t^\top,</p>
+<p>which is an online least-squares / associative-memory update — it writes the <em>residual</em> <code>v_t - S_{t-1} k_t</code> rather than <code>v_t</code> itself. This dramatically improves in-context recall vs linear attention.</p></li><li><p><strong>Gated DeltaNet</strong> (Yang et al. 2024, https://arxiv.org/abs/2412.06464) combines Mamba-2&#x27;s data-dependent <strong>forget gate</strong> <code>g_t</code> with the delta rule:</p>
+<p>.. math: S<em>t = \alpha</em>t S<em>{t-1} + \beta</em>t \big(v<em>t - (\alpha</em>t S<em>{t-1})\,k</em>t\big)\,k<em>t^\top, \qquad o</em>t = q<em>t^\top S</em>t,</p>
+<p>where <code>\alpha_t = \exp(g_t)</code> with <code>g_t \le 0</code> (so <code>\alpha_t \in (0, 1]</code>) is the multiplicative decay, and <code>\beta_t = \sigma(b_t)</code> controls the size of the delta update. This gives the model both a <strong>forget</strong> mechanism (like Mamba/SSMs) and a <strong>precise overwrite</strong> mechanism (like DeltaNet). In practice the forget is derived as</p>
+<p>.. math: g<em>t = -A \cdot \text{softplus}(a</em>t + \text{dt\<em>bias}), \quad A = \exp(A</em>{\text{log}}),</p>
+<p>matching the <code>A_log</code> / <code>dt</code> parameterisation of Mamba-2.</p></li></ol>
+<h2>Structure of this file</h2>
+<ul><li><code>l2norm</code>, <code>apply_mask_to_padding_states</code>, <code>torch_causal_conv1d_update</code> — helpers.</li><li><code>torch_chunk_gated_delta_rule</code>     — fast chunked evaluation (prefill).</li><li><code>torch_recurrent_gated_delta_rule</code> — step-by-step recurrence (decoding).</li><li><code>Qwen3_5GatedDeltaNet</code> — the nn.Module that wraps everything with the qkv depthwise conv, gating projections, RMSNormGated, and output proj.</li></ul>
+<h2>References</h2>
+<ul><li>Linear attention:  Katharopoulos+ 2020  — https://arxiv.org/abs/2006.16236</li><li>DeltaNet:          Yang+ 2024 (chunking) — https://arxiv.org/abs/2406.06484</li><li>Gated DeltaNet:    Yang+ 2024            — https://arxiv.org/abs/2412.06464</li><li>Mamba-2 (for the A/dt gate parameterisation): Dao &amp; Gu 2024 — https://arxiv.org/abs/2405.21060</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/model.html">qwen3_5_torch.model</a></h2>
+          <div class="meta"><code>qwen3_5_torch/model.py</code></div>
+          <div class="meta">2 classes</div>
+          <div class="docstring"><p>Multimodal Qwen3.5 (vision + text) and conditional-generation wrapper.</p>
+<p>This file glues the vision tower (<code>Qwen3_5VisionModel</code>) and the text decoder (<code>Qwen3_5TextModel</code>) together into a single model. The recipe is the <strong>Qwen2-VL / Qwen3-VL &quot;late-fusion&quot; scheme</strong>:</p>
+<ol><li>The text tokenizer produces a sequence that contains special image placeholder tokens <code>&lt;|image_pad|&gt;</code> (one per merged-vision token).</li><li>The vision tower turns each image into a sequence of merged vision embeddings of the same width as the text model.</li><li>The multimodal model <strong>splices</strong> vision embeddings into the text embedding stream by <code>masked_scatter</code> — so at each placeholder position we replace the learned <code>&lt;|image_pad|&gt;</code> embedding by the corresponding vision embedding.</li><li>A 3-axis <strong>M-RoPE position id</strong> is built per token, with text tokens using a single running index across all three axes and vision tokens receiving <code>(t, h, w)</code> coordinates derived from their grid.</li><li>The spliced embeddings are run through the text decoder.</li><li>The final hidden states are projected to vocab logits.</li></ol>
+<p>Paper: Wang et al., &quot;Qwen2-VL&quot;, 2024 — https://arxiv.org/abs/2409.12191</p></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/rotary.html">qwen3_5_torch.rotary</a></h2>
+          <div class="meta"><code>qwen3_5_torch/rotary.py</code></div>
+          <div class="meta">2 classes · 3 functions</div>
+          <div class="docstring"><p>Rotary position embeddings for Qwen3.5.</p>
+<p>Qwen3.5 uses <strong>interleaved multi-axis RoPE (M-RoPE)</strong> with partial rotary. The text rotary embedding accepts position ids of shape <code>(3, bs, seq)</code> where the three rows correspond to <code>(temporal, height, width)</code>, and projects them through a shared <code>inv_freq</code> — then interleaves the per-axis frequencies into a single per-token rotary vector. The vision tower uses a simpler single-axis RoPE over <code>(row, col)</code>.</p>
+<h2>Math overview</h2>
+<p>Standard RoPE (Su et al. 2021) encodes an absolute position <code>m</code> into a rotation of each 2-D sub-space of the query/key vector. For head dim <code>d</code> the inverse frequencies are</p>
+<p>.. math: \theta_i = \text{base}^{-2i/d}, \qquad i = 0, 1, \dots, d/2 - 1.</p>
+<p>For position <code>m</code> and a 2-D pair <code>(x_{2i}, x_{2i+1})</code>:</p>
+<p>.. math: R<em>{\theta</em>i, m}\!\begin{bmatrix}x<em>{2i}\\x</em>{2i+1}\end{bmatrix} \;=\;\begin{bmatrix}\cos m\theta<em>i &amp; -\sin m\theta</em>i\\ \sin m\theta<em>i &amp; \cos m\theta</em>i\end{bmatrix} \begin{bmatrix}x<em>{2i}\\x</em>{2i+1}\end{bmatrix}.</p>
+<p>The dot-product <code>\langle R\,q_m, R\,k_n\rangle</code> depends only on the relative offset <code>m-n</code>, giving relative-position-aware attention with absolute-position code. Equivalently (using the half-interleaved layout that transformers adopts):</p>
+<p>.. math: \text{RoPE}(x, m) = x \odot \cos(m\theta) + \text{rotate\_half}(x) \odot \sin(m\theta),</p>
+<p>where <code>rotate_half([a, b]) = [-b, a]</code> splits the head into two halves.</p>
+<h2>Partial rotary</h2>
+<p>Qwen3.5 sets <code>partial_rotary_factor = 0.25</code>: only the first <code>rotary_dim = 0.25 * head_dim</code> channels of q/k are rotated, the remainder pass through unchanged. This reduces the compute of RoPE and was empirically found to work as well as full rotary for some architectures.</p>
+<h2>Interleaved M-RoPE (Qwen2-VL / Qwen3.5)</h2>
+<p>For multimodal inputs, each <em>token</em> has three position indices <code>(t, h, w)</code>. Rather than averaging axis embeddings, M-RoPE splits the inv_freq channels into three disjoint sections with widths <code>mrope_section</code> (Qwen3.5 uses <code>[11, 11, 10]</code>), and <strong>interleaves</strong> them across channel index modulo 3: channel positions <code>≡ 0 (mod 3)</code> carry the <em>temporal</em> frequency, <code>≡ 1</code> the <em>height</em>, <code>≡ 2</code> the <em>width</em>. Applied to a single channel <code>i</code>:</p>
+<p>.. math: \theta<em>i \;=\; \begin{cases} m</em>t \cdot \theta^{(t)}<em>i &amp; \text{if } i \bmod 3 = 0 \\ m</em>h \cdot \theta^{(h)}<em>i &amp; \text{if } i \bmod 3 = 1 \\ m</em>w \cdot \theta^{(w)}_i &amp; \text{if } i \bmod 3 = 2 \\ \end{cases}</p>
+<h2>References</h2>
+<ul><li>RoFormer / RoPE: Su et al., 2021 — https://arxiv.org/abs/2104.09864</li><li>Qwen2-VL (M-RoPE): Wang et al., 2024 — https://arxiv.org/abs/2409.12191</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/tokenizer.html">qwen3_5_torch.tokenizer</a></h2>
+          <div class="meta"><code>qwen3_5_torch/tokenizer.py</code></div>
+          <div class="meta">1 classes · 1 functions</div>
+          <div class="docstring"><p>Pure-python Qwen2-style BBPE tokenizer (also what Qwen3.5 uses).</p>
+<p>Pipeline matches the HuggingFace tokenizers <code>Qwen2Tokenizer</code> backend: special-token split  -&gt;  NFC normalize  -&gt;  pretokenize (regex) -&gt;  byte-level encode  -&gt;  BPE merge  -&gt;  vocab lookup</p>
+<p>Decoding is the inverse: id → byte-level string → utf-8 bytes → text.</p>
+<h2>Background</h2>
+<ul><li><strong>BPE</strong> (Byte-Pair Encoding) — Sennrich et al., &quot;Neural Machine Translation of Rare Words with Subword Units&quot; (ACL 2016). https://arxiv.org/abs/1508.07909</li><li><strong>Byte-level BPE (BBPE)</strong> — Radford et al., &quot;Language Models are Unsupervised Multitask Learners&quot; (GPT-2, 2019). Operates on UTF-8 bytes rather than raw characters; the 256-byte alphabet guarantees out-of-vocab robustness and the round-trip property <code>decode(encode(x)) == x</code>.</li><li><strong>NFC normalization</strong> — Unicode canonical composition applied before pretokenization so that visually identical strings (e.g. <code>é</code> vs. <code>e + \u0301</code>) produce the same tokens.</li></ul>
+<h2>Algorithm summary (encode)</h2>
+<p>For each input string <code>s</code>:</p>
+<ol><li>Split off any <em>special token</em> substrings (<code>&lt;|im_start|&gt;</code> etc.) first.</li><li>NFC normalize the remaining chunks.</li><li><strong>Pretokenize</strong> with a regex that groups contractions, letters, digits, punctuation, and runs of whitespace separately. Qwen2 uses the GPT-2 style regex below, extended to Unicode categories (<code>\p{L}</code>, <code>\p{N}</code>, <code>\p{M}</code>).</li><li><strong>Byte-level encode</strong> each piece: <code>s \to \prod_{b \in \text{utf8}(s)} \text{bytes\_to\_unicode}(b)</code>. The mapping moves raw byte values into printable Unicode codepoints so the BPE merge table can be stored as ordinary strings.</li><li><strong>BPE merge</strong> until no ranked pair remains. With merges ranked by training frequency, this is <code>O(n^2 / \log n)</code> per piece in the worst case but linear in practice thanks to the <code>_cache</code> memo.</li><li>Map each final sub-piece to its integer id via <code>vocab</code>.</li></ol>
+<p>External deps: <code>regex</code> (needed for <code>\p{L}</code> Unicode categories in the pretokenization regex).</p></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/vision.html">qwen3_5_torch.vision</a></h2>
+          <div class="meta"><code>qwen3_5_torch/vision.py</code></div>
+          <div class="meta">6 classes</div>
+          <div class="docstring"><p>Vision transformer for Qwen3.5 multimodal.</p>
+<p>Processes pre-patchified pixel inputs of shape <code>(N, C · t_patch · patch · patch)</code> and returns per-token features projected into the text <code>out_hidden_size</code>. This is the Qwen2-VL / Qwen3-VL &quot;native resolution&quot; ViT: patch size is a small constant (16), but the input grid <code>(T, H, W)</code> adapts to the image aspect ratio via <code>smart_resize</code> in <code>image_processor</code>.</p>
+<h2>Pipeline overview</h2>
+<ol><li><strong>Patch embed</strong> (<code>Qwen3_5VisionPatchEmbed</code>) — Conv3d with kernel = stride = (t_patch, patch, patch) over the input volume, producing one embedding per patch.</li><li><strong>Absolute learned positions</strong> — a 2D learned <code>pos_embed</code> table of side <code>sqrt(num_position_embeddings)</code> is <strong>bilinearly interpolated</strong> to each image&#x27;s grid via <code>Qwen3_5VisionModel.fast_pos_embed_interpolate</code>. This lets the same learned grid generalise to arbitrary aspect ratios.</li><li><strong>Rotary position embedding</strong> — per-token (row, col) rotary via <code>Qwen3_5VisionModel.rot_pos_emb</code> (single-axis RoPE, see <code>rotary</code>).</li><li><strong>Transformer blocks</strong> — L layers of pre-norm attention + MLP with <em>packed-sequence</em> attention: multiple images live in the same batch entry and <code>cu_seqlens</code> delimits per-image boundaries so images do not attend to each other.</li><li><strong>Patch merger</strong> — 2x2 spatial merger collapses 4 adjacent patches into 1, projects into the text model&#x27;s <code>d_model</code> via a 2-layer MLP. This reduces the number of visual tokens by 4x before they are spliced into the text stream.</li></ol>
+<h2>References</h2>
+<ul><li>ViT: Dosovitskiy et al., &quot;An Image is Worth 16x16 Words&quot;, 2020 — https://arxiv.org/abs/2010.11929</li><li>Qwen2-VL (native resolution, 2D RoPE, packed seq attention): Wang et al., 2024 — https://arxiv.org/abs/2409.12191</li><li>SigLIP vision backbone conventions (tanh-GELU, GELU MLPs): Zhai et al., 2023 — https://arxiv.org/abs/2303.15343</li></ul></div>
+        </section>
+        
+        <section class="section">
+          <h2><a href="qwen3_5_torch/weights.html">qwen3_5_torch.weights</a></h2>
+          <div class="meta"><code>qwen3_5_torch/weights.py</code></div>
+          <div class="meta">1 functions · 1 constants</div>
+          <div class="docstring"><p>Safetensors weight loader for Qwen3.5 checkpoints.</p>
+<p>Pure-bookkeeping module — no math lives here. It walks the <code>*.safetensors</code> shards listed in <code>model.safetensors.index.json</code> (or a single-shard file), maps each checkpoint key to a model key via <code>_remap_key</code>, and copies tensors into <code>model.state_dict()</code> with optional dtype casting.</p>
+<p>Key things the remap handles:</p>
+<ul><li>HuggingFace checkpoints store the conditional-generation model with prefix <code>model.language_model.*</code> and <code>model.visual.*</code>. In <strong>text-only</strong> mode we strip the <code>model.language_model.</code> prefix and skip visual keys.</li><li>MTP (Multi-Token-Prediction) checkpoints embed auxiliary heads prefixed with <code>mtp.*</code>; those are always skipped.</li><li>Tied <code>lm_head</code> — if the checkpoint lacks <code>lm_head.weight</code> because the original model tied it to <code>embed_tokens</code>, we copy the embedding across after loading.</li></ul></div>
+        </section>
+        
+  </main>
+</body>
+</html>

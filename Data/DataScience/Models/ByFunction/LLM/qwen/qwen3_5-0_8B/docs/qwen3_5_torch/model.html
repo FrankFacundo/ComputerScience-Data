@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.model API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.model</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/model.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5Model">Qwen3_5Model</a></li><li><a href="#class-Qwen3_5ForConditionalGeneration">Qwen3_5ForConditionalGeneration</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>Multimodal Qwen3.5 (vision + text) and conditional-generation wrapper.</p>
+<p>This file glues the vision tower (<code>Qwen3_5VisionModel</code>) and the text decoder (<code>Qwen3_5TextModel</code>) together into a single model. The recipe is the <strong>Qwen2-VL / Qwen3-VL &quot;late-fusion&quot; scheme</strong>:</p>
+<ol><li>The text tokenizer produces a sequence that contains special image placeholder tokens <code>&lt;|image_pad|&gt;</code> (one per merged-vision token).</li><li>The vision tower turns each image into a sequence of merged vision embeddings of the same width as the text model.</li><li>The multimodal model <strong>splices</strong> vision embeddings into the text embedding stream by <code>masked_scatter</code> — so at each placeholder position we replace the learned <code>&lt;|image_pad|&gt;</code> embedding by the corresponding vision embedding.</li><li>A 3-axis <strong>M-RoPE position id</strong> is built per token, with text tokens using a single running index across all three axes and vision tokens receiving <code>(t, h, w)</code> coordinates derived from their grid.</li><li>The spliced embeddings are run through the text decoder.</li><li>The final hidden states are projected to vocab logits.</li></ol>
+<p>Paper: Wang et al., &quot;Qwen2-VL&quot;, 2024 — https://arxiv.org/abs/2409.12191</p></div>
+    </section>
+    
+    
+  <section class="section" id="class-Qwen3_5Model">
+    <h2>Qwen3_5Model</h2>
+    <div class="meta">Line 38 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5Model(nn.Module)</div>
+    <div class="docstring"><p>Top-level multimodal model: vision tower + hybrid text decoder.</p>
+<p>Accepts batched <code>input_ids</code> with image/video placeholder tokens. For each placeholder, the corresponding vision features (from <code>pixel_values</code> or <code>pixel_values_videos</code>) are spliced into the text embedding stream via <code>masked_scatter</code>. 3D M-RoPE position ids are computed from <code>mm_token_type_ids</code> + per-image <code>grid_thw</code> tensors.</p>
+<h2>Math at a glance</h2>
+<p>.. math: e^{(0)} = E[\,\text{input\<em>ids}\,] \qquad v</em>i = \text{Vision}(\text{pixels}<em>i, \text{grid}</em>i)</p>
+<p>.. math: \tilde e^{(0)} = \text{masked\<em>scatter}\big(e^{(0)},\; \text{img\</em>mask},\; v\big)</p>
+<p>.. math: (t<em>n, h</em>n, w<em>n) = \text{RoPEIndex}</em>n \quad \text{(per token)}</p>
+<p>.. math: y = \text{TextDecoder}(\tilde e^{(0)};\, (t, h, w))</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 64</div>
+    <div class="signature">def __init__(self, config: Qwen3_5Config)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-get_input_embeddings">
+    <h4>get_input_embeddings</h4>
+    <div class="meta">Line 71</div>
+    <div class="signature">def get_input_embeddings(self) -&gt; nn.Embedding</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-set_input_embeddings">
+    <h4>set_input_embeddings</h4>
+    <div class="meta">Line 74</div>
+    <div class="signature">def set_input_embeddings(self, value: nn.Embedding) -&gt; None</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-get_image_features">
+    <h4>get_image_features</h4>
+    <div class="meta">Line 79</div>
+    <div class="signature">def get_image_features(self, pixel_values: torch.Tensor, image_grid_thw: torch.Tensor) -&gt; list[torch.Tensor]</div>
+    
+    <div class="docstring"><p>Run the vision tower and split its output by image.</p>
+<h2>Shapes</h2>
+<ul><li>Input <code>pixel_values</code> is the packed tensor of patches across all images in the batch.</li><li>Output is a list of per-image embeddings <code>v_i \in \mathbb{R}^{(T_i H_i W_i / M^2) \times d_{\text{text}}}</code> where <code>M = spatial_merge_size</code> and each image contributes <code>T·H·W / M²</code> tokens (after the 2x2 merger).</li></ul></div>
+  </section>
+  
+  <section class="section" id="fn-get_video_features">
+    <h4>get_video_features</h4>
+    <div class="meta">Line 103</div>
+    <div class="signature">def get_video_features(self, pixel_values_videos: torch.Tensor, video_grid_thw: torch.Tensor) -&gt; list[torch.Tensor]</div>
+    
+    <div class="docstring"><p>Identical machinery as <code>get_image_features</code> — videos are just images with <code>T_i &gt; 1</code> frames.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_placeholder_mask">
+    <h4>get_placeholder_mask</h4>
+    <div class="meta">Line 114</div>
+    <div class="signature">def get_placeholder_mask(self, input_ids: Optional[torch.LongTensor], inputs_embeds: torch.Tensor, image_features: Optional[torch.Tensor] = None, video_features: Optional[torch.Tensor] = None) -&gt; tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>Return boolean masks marking image / video placeholder positions.</p>
+<p>When <code>input_ids</code> is available we simply compare ids. When only <code>inputs_embeds</code> is available (e.g. for embedding-level decoding), we identify placeholders by testing whether the embedding row equals the learned placeholder embedding <code>E[\text{image\_token\_id}]</code>.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_vision_position_ids">
+    <h4>get_vision_position_ids</h4>
+    <div class="meta">Line 147</div>
+    <div class="signature">def get_vision_position_ids(self, start_position: int, grid_thw: torch.Tensor, temp_merge_size: int = 1, spatial_merge_size: int = 1, time_interval: int = 1, device: Optional[torch.device] = None) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Build the <code>(t, h, w)</code> positions for one image&#x27;s vision tokens.</p>
+<h2>Math</h2>
+<p>For a grid of size <code>(T, H, W)</code> (already divided by the respective merge sizes), we enumerate all <code>T·H·W</code> spatial positions as:</p>
+<p>.. math: (t<em>n, h</em>n, w<em>n) \text{ with } w</em>n = s + (n \bmod W),\quad h<em>n = s + \lfloor n / W \rfloor \bmod H, \quad t</em>n = s \cdot \tau,</p>
+<p>where <code>s = start_position</code> and <code>\tau = \text{time\_interval}</code>. The temporal component is constant per frame because Qwen3.5 inserts explicit <em>timestamp tokens</em> in the text between video frames — the per-frame temporal offset lives there, not in the vision ids.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_rope_index">
+    <h4>get_rope_index</h4>
+    <div class="meta">Line 184</div>
+    <div class="signature">def get_rope_index(self, input_ids: torch.LongTensor, mm_token_type_ids: torch.IntTensor, image_grid_thw: Optional[torch.LongTensor] = None, video_grid_thw: Optional[torch.LongTensor] = None, attention_mask: Optional[torch.Tensor] = None) -&gt; tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>Compute the 3-axis M-RoPE position ids for an entire sequence.</p>
+<h2>Math / algorithm</h2>
+<p>A single running counter <code>p</code> walks left-to-right through the token stream. Each maximal contiguous group of tokens of a single modality (text = 0, image = 1, video = 2) contributes positions:</p>
+<ul><li><strong>Text group of length L</strong>: <code>(p, p+1, \dots, p+L-1)</code> on all 3 axes; advance <code>p += L</code>.</li><li><strong>Vision group (image/video)</strong>: use <code>get_vision_position_ids(p, grid)</code> for per-token <code>(t, h, w)</code>; advance <code>p += max(H, W) / M</code> (the longer spatial side of the grid, divided by the merge size). Using the longer side makes subsequent text positions larger than the maximum vision coordinate, so the text still sees strictly increasing positions.</li></ul>
+<h2>Returns</h2>
+<ul><li><code>position_ids</code> of shape <code>(3, B, S)</code> — the M-RoPE ids.</li><li><code>mrope_deltas</code> of shape <code>(B, 1)</code> — the difference between the final position and the raw token count. Used during KV-cache decoding to extend the counter past the prefill correctly.</li></ul></div>
+  </section>
+  
+  <section class="section" id="fn-compute_3d_position_ids">
+    <h4>compute_3d_position_ids</h4>
+    <div class="meta">Line 275</div>
+    <div class="signature">def compute_3d_position_ids(self, input_ids: Optional[torch.Tensor], inputs_embeds: Optional[torch.Tensor], image_grid_thw: Optional[torch.Tensor] = None, video_grid_thw: Optional[torch.Tensor] = None, attention_mask: Optional[torch.Tensor] = None, past_key_values: Optional[HybridCache] = None, mm_token_type_ids: Optional[torch.Tensor] = None) -&gt; Optional[torch.Tensor]</div>
+    
+    <div class="docstring"><p>Return 3-axis position ids for the current forward.</p>
+<p>Prefill (<code>past_len == 0</code>) Build positions from scratch via <code>get_rope_index</code>. Store <code>rope_deltas = max_pos + 1 - num_tokens</code> on self so we can <strong>extend</strong> them during decoding without re-walking the prefix.</p>
+<p>Decode (<code>past_len &gt; 0</code>) Next-token position = <code>past_len + offset + rope_deltas</code>. Since text positions are monotonic and we advanced by <code>max(H, W)/M</code> for vision groups, this stays consistent with the prefill.</p></div>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 328</div>
+    <div class="signature">def forward(self, input_ids: Optional[torch.LongTensor] = None, attention_mask: Optional[torch.Tensor] = None, position_ids: Optional[torch.LongTensor] = None, past_key_values: Optional[HybridCache] = None, inputs_embeds: Optional[torch.Tensor] = None, pixel_values: Optional[torch.Tensor] = None, pixel_values_videos: Optional[torch.Tensor] = None, image_grid_thw: Optional[torch.LongTensor] = None, video_grid_thw: Optional[torch.LongTensor] = None, mm_token_type_ids: Optional[torch.IntTensor] = None, use_cache: bool = False) -&gt; dict</div>
+    
+    <div class="docstring"><p>End-to-end multimodal forward pass.</p>
+<h2>Stages</h2>
+<ol><li>Embed <code>input_ids</code> → <code>inputs_embeds</code>.</li><li>If <code>pixel_values</code> is given: run the vision tower, splice image features into <code>inputs_embeds</code> at placeholder positions.</li><li>If <code>pixel_values_videos</code>: same, for videos.</li><li>Build 3-axis M-RoPE position ids (new for prefill, shifted for decode).</li><li>Run the text decoder over the spliced embeddings.</li></ol></div>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-Qwen3_5ForConditionalGeneration">
+    <h2>Qwen3_5ForConditionalGeneration</h2>
+    <div class="meta">Line 396 · Bases: <code>nn.Module</code></div>
+    <div class="signature">class Qwen3_5ForConditionalGeneration(nn.Module)</div>
+    <div class="docstring"><p>Multimodal causal-LM head.</p>
+<p>Adds the language-model softmax projection on top of <code>Qwen3_5Model</code>:</p>
+<p>.. math: \text{logits} = W_{\text{lm}}\; y,</p>
+<p>with <code>y</code> the final hidden state from the decoder. Optionally ties <code>W_{\text{lm}}</code> to the input embedding (see <code>Qwen3_5ForCausalLM</code>).</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 408</div>
+    <div class="signature">def __init__(self, config: Qwen3_5Config)</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-get_input_embeddings">
+    <h4>get_input_embeddings</h4>
+    <div class="meta">Line 416</div>
+    <div class="signature">def get_input_embeddings(self) -&gt; nn.Embedding</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-forward">
+    <h4>forward</h4>
+    <div class="meta">Line 419</div>
+    <div class="signature">def forward(self, input_ids: Optional[torch.LongTensor] = None, attention_mask: Optional[torch.Tensor] = None, position_ids: Optional[torch.LongTensor] = None, past_key_values: Optional[HybridCache] = None, inputs_embeds: Optional[torch.Tensor] = None, pixel_values: Optional[torch.Tensor] = None, pixel_values_videos: Optional[torch.Tensor] = None, image_grid_thw: Optional[torch.LongTensor] = None, video_grid_thw: Optional[torch.LongTensor] = None, mm_token_type_ids: Optional[torch.IntTensor] = None, use_cache: bool = False) -&gt; dict</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>

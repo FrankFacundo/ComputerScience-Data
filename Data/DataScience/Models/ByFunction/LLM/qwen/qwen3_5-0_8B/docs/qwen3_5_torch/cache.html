@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qwen3_5_torch.cache API docs</title>
+  <style>
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ee;
+  color: #1f2933;
+}
+a {
+  color: #0f4c5c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.eyebrow {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #d7e7ea;
+  color: #0f4c5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+h3 {
+  margin-top: 24px;
+  font-size: 18px;
+}
+.subtitle {
+  margin-top: 8px;
+  color: #52606d;
+}
+.toc {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: #fffdf7;
+  border: 1px solid #e5dfd0;
+  border-radius: 14px;
+}
+.toc ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+.section {
+  margin-top: 28px;
+  padding: 22px 22px 18px;
+  background: #fff;
+  border: 1px solid #ebe5d6;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.meta {
+  margin-top: 8px;
+  color: #52606d;
+  font-size: 14px;
+}
+.docstring {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8faf9;
+  border-left: 4px solid #d7e7ea;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.docstring > :first-child {
+  margin-top: 0;
+}
+.docstring > :last-child {
+  margin-bottom: 0;
+}
+.docstring p,
+.docstring ul,
+.docstring ol,
+.docstring blockquote {
+  margin: 0 0 14px;
+}
+.docstring ul,
+.docstring ol {
+  padding-left: 24px;
+}
+.docstring li {
+  margin: 6px 0;
+}
+.docstring pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #eef4f6;
+  border-radius: 8px;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.docstring code {
+  padding: 0.1em 0.35em;
+  background: #eef4f6;
+  border-radius: 4px;
+}
+.docstring pre code {
+  padding: 0;
+  background: transparent;
+}
+.docstring h1,
+.docstring h2,
+.docstring h3,
+.docstring h4 {
+  margin: 22px 0 10px;
+  font-size: 1.1em;
+}
+.docstring hr {
+  border: 0;
+  border-top: 1px solid #d9e2e8;
+  margin: 18px 0;
+}
+.signature {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #13293d;
+  color: #f4f7fb;
+  border-radius: 10px;
+  overflow-x: auto;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.member-list {
+  margin-top: 12px;
+}
+.member-list li {
+  margin: 8px 0;
+}
+.small {
+  font-size: 14px;
+  color: #52606d;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="eyebrow">Python Module</span>
+    <h1>qwen3_5_torch.cache</h1>
+    <p class="subtitle">Source: <code>qwen3_5_torch/cache.py</code></p>
+    
+  <nav class="toc">
+    <strong>Contents</strong>
+    <ul><li>Classes<ul><li><a href="#class-FullAttentionState">FullAttentionState</a></li><li><a href="#class-LinearAttentionState">LinearAttentionState</a></li><li><a href="#class-HybridCache">HybridCache</a></li></ul></li></ul>
+  </nav>
+  
+    <section class="section">
+      <h2>Module Docstring</h2>
+      <div class="docstring"><p>A hybrid KV / linear-attention cache for Qwen3.5.</p>
+<p>Qwen3.5 interleaves <em>full-attention</em> and <em>linear-attention</em> layers (the latter is the Gated DeltaNet — see <code>linear_attention</code>). The two kinds of layers have fundamentally different caches during autoregressive decoding:</p>
+<ul><li><strong>Full attention</strong>   — cache the complete <code>K, V</code> tensors and grow them by concatenating one column per decoded token. Space per layer: <code>O(T · H_kv · d_h)</code>.</li><li><p><strong>Linear attention (Gated DeltaNet)</strong> — cache a constant-size state:</p>
+<ol><li>A <strong>causal-conv ring buffer</strong> holding the last <code>conv_kernel_size</code> tokens of the qkv-conv input (so the depthwise conv can continue across decode steps). Shape: <code>(B, conv_dim, K)</code>.</li><li>A <strong>recurrent state</strong> <code>S_t \in \mathbb{R}^{H_v \times d_k \times d_v}</code> that summarises everything seen so far — see Eq. (1)–(2) in <code>linear_attention</code> for its update rule.</li></ol>
+<p>Space per layer: constant in <code>T</code> — this is the whole point of linear-attention models (Mamba, DeltaNet, GatedDeltaNet).</p></li></ul>
+<p>For each layer index the cache stores exactly one of the two kinds, dispatched by <code>config.text_config.layer_types</code>.</p>
+<h2>References</h2>
+<ul><li>Mamba:           Gu &amp; Dao 2023  — https://arxiv.org/abs/2312.00752</li><li>Mamba-2:         Dao &amp; Gu 2024  — https://arxiv.org/abs/2405.21060</li><li>DeltaNet:        Yang et al. 2024 — https://arxiv.org/abs/2406.06484</li><li>Gated DeltaNet:  Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li></ul></div>
+    </section>
+    
+    
+  <section class="section" id="class-FullAttentionState">
+    <h2>FullAttentionState</h2>
+    <div class="meta">Line 41 · Bases: <code>object</code></div>
+    <div class="signature">class FullAttentionState</div>
+    <div class="docstring"><p>Concatenating KV cache for one full-attention layer.</p>
+<p>During incremental decoding <code>key_cache</code> and <code>value_cache</code> grow along the time dim: at step <code>t</code>, <code>K_t = [K_{&lt;t} \| k_t]</code> (likewise for <code>V</code>). Softmax attention then operates over the full prefix, yielding exact (not approximate) attention at the cost of <code>O(T)</code> memory.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-update">
+    <h4>update</h4>
+    <div class="meta">Line 53</div>
+    <div class="signature">def update(self, key: torch.Tensor, value: torch.Tensor) -&gt; tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>Append new <code>(key, value)</code> along the time axis (<code>dim=-2</code>).</p>
+<p>Math:  <code>K_{\le t} = \text{cat}(K_{&lt;t}, k_t)</code> and analogously for V. Returns the updated tensors so the caller can use them directly.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_seq_length">
+    <h4>get_seq_length</h4>
+    <div class="meta">Line 67</div>
+    <div class="signature">def get_seq_length(self) -&gt; int</div>
+    
+    <div class="docstring"><p>Current cached KV length <code>T</code>.</p></div>
+  </section>
+  
+  </section>
+  
+  <section class="section" id="class-LinearAttentionState">
+    <h2>LinearAttentionState</h2>
+    <div class="meta">Line 75 · Bases: <code>object</code></div>
+    <div class="signature">class LinearAttentionState</div>
+    <div class="docstring"><p>Constant-size state for one Gated DeltaNet layer.</p>
+<p>Contains:</p>
+<ul><li><code>conv_states</code>      — last <code>conv_kernel_size</code> tokens of the qkv-conv input, used for one-step causal-conv updates during decoding.</li><li><code>recurrent_states</code> — the gated-delta-rule recurrence <code>S \in \mathbb{R}^{B \times H_v \times d_k \times d_v}</code> such that the next output is <code>o_t = q_t^{\top} S_t</code> (see Eq. in <code>linear_attention</code>).</li></ul></div>
+    
+  </section>
+  
+  <section class="section" id="class-HybridCache">
+    <h2>HybridCache</h2>
+    <div class="meta">Line 92 · Bases: <code>object</code></div>
+    <div class="signature">class HybridCache</div>
+    <div class="docstring"><p>A minimal hybrid cache for Qwen3.5.</p>
+<p>Layers are addressed by <code>layer_idx</code>. For full-attention layers, K/V tensors are concatenated along the time dim. For linear-attention layers, the cache stores a causal-conv ring buffer (last <code>conv_kernel_size</code> tokens) and the gated-delta-rule recurrent state.</p>
+<p>The <code>seen_tokens</code> counter tracks the total text-side positions consumed so the rotary / position-id machinery has a reference for incremental decoding — in particular, at step <code>t</code> the next token&#x27;s position is <code>past_len = seen_tokens</code> and the rotary cos/sin is computed at that offset.</p></div>
+    <h3>Methods</h3>
+  <section class="section" id="fn-__init__">
+    <h4>__init__</h4>
+    <div class="meta">Line 107</div>
+    <div class="signature">def __init__(self, layer_types: list[str])</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="fn-update_full">
+    <h4>update_full</h4>
+    <div class="meta">Line 121</div>
+    <div class="signature">def update_full(self, layer_idx: int, key_states: torch.Tensor, value_states: torch.Tensor) -&gt; tuple[torch.Tensor, torch.Tensor]</div>
+    
+    <div class="docstring"><p>Append <code>(K, V)</code> to the named full-attention layer and return it.</p></div>
+  </section>
+  
+  <section class="section" id="fn-has_linear_state">
+    <h4>has_linear_state</h4>
+    <div class="meta">Line 132</div>
+    <div class="signature">def has_linear_state(self, layer_idx: int) -&gt; bool</div>
+    
+    <div class="docstring"><p>True iff a recurrent state has been written for this linear layer.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_linear">
+    <h4>get_linear</h4>
+    <div class="meta">Line 137</div>
+    <div class="signature">def get_linear(self, layer_idx: int) -&gt; LinearAttentionState</div>
+    
+    <div class="docstring"><p>Return (create if missing) the linear state slot for this layer.</p></div>
+  </section>
+  
+  <section class="section" id="fn-update_linear_conv_state">
+    <h4>update_linear_conv_state</h4>
+    <div class="meta">Line 141</div>
+    <div class="signature">def update_linear_conv_state(self, layer_idx: int, conv_state: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Replace the causal-conv ring buffer for this layer.</p></div>
+  </section>
+  
+  <section class="section" id="fn-update_linear_recurrent_state">
+    <h4>update_linear_recurrent_state</h4>
+    <div class="meta">Line 147</div>
+    <div class="signature">def update_linear_recurrent_state(self, layer_idx: int, recurrent_state: torch.Tensor) -&gt; torch.Tensor</div>
+    
+    <div class="docstring"><p>Replace the recurrent state <code>S \in \mathbb{R}^{B \times H_v \times d_k \times d_v}</code>.</p></div>
+  </section>
+  
+  <section class="section" id="fn-get_seq_length">
+    <h4>get_seq_length</h4>
+    <div class="meta">Line 154</div>
+    <div class="signature">def get_seq_length(self, layer_idx: int = 0) -&gt; int</div>
+    
+    <div class="docstring"><p>Return the effective sequence length seen by layer <code>layer_idx</code>.</p>
+<p>For full-attention this is the cached KV length; for linear-attention layers the true &quot;state&quot; is recurrent (no explicit length) — we return <code>self._seen_tokens</code> as a stand-in so the rotary / position machinery can still index the correct token offset.</p></div>
+  </section>
+  
+  <section class="section" id="fn-advance">
+    <h4>advance</h4>
+    <div class="meta">Line 168</div>
+    <div class="signature">def advance(self, seq_len: int) -&gt; None</div>
+    
+    <div class="docstring"><p>Advance the global token counter by <code>seq_len</code> (called after each forward).</p></div>
+  </section>
+  
+  <section class="section" id="fn-has_previous_state">
+    <h4>has_previous_state</h4>
+    <div class="meta">Line 172</div>
+    <div class="signature">def has_previous_state(self) -&gt; bool</div>
+    
+    <div class="docstring"><p>True iff any token has been consumed — used to branch prefill vs decode.</p></div>
+  </section>
+  
+  </section>
+  
+    
+  </main>
+</body>
+</html>
