@@ -148,30 +148,31 @@ class Qwen3_6SparseMoeBlock(nn.Module):
             topk_weights = topk_weights / (topk_weights.sum(dim=-1, keepdim=True) + 1e-20)
         topk_weights = topk_weights.to(x.dtype)
 
-        # One-hot dispatch tensor of shape (N, E) with the top-K weights at the
-        # chosen positions and zero elsewhere.
-        weight_dense = torch.zeros(
-            x.shape[0], self.num_experts, dtype=topk_weights.dtype, device=x.device
-        )
-        weight_dense.scatter_(1, topk_indices, topk_weights)
-
-        # Routed sum: for each expert e, gather its tokens, run the SwiGLU,
-        # and scatter the contribution back into `out`.
-        out = torch.zeros_like(x)
-        # Per-expert mask of tokens that selected it (shape (E, N), bool).
-        expert_mask = (topk_indices.unsqueeze(-1) == torch.arange(self.num_experts, device=x.device)).any(dim=1)
-        for expert_idx in range(self.num_experts):
-            token_mask = expert_mask[:, expert_idx]
-            if not bool(token_mask.any()):
-                continue
-            x_e = x[token_mask]                                         # (n_e, d)
-            y_e = self.experts.expert_forward(x_e, expert_idx)          # (n_e, d)
-            w_e = weight_dense[token_mask, expert_idx].unsqueeze(-1)    # (n_e, 1)
-            out[token_mask] = out[token_mask] + (y_e * w_e).to(out.dtype)
-
-        # Shared expert: σ(W_g x) · MLP(x), added to the routed sum.
+        # Shared expert is independent of the routed loop; launching it first
+        # lets its kernels overlap with the per-expert dispatch below.
         shared = self.shared_expert(x)
         shared_gate = torch.sigmoid(self.shared_expert_gate(x))         # (N, 1)
-        out = out + shared_gate * shared
+        out = shared_gate * shared
+
+        # Determine which experts received at least one token. Building the
+        # full hit list once (with a single device→CPU sync) is dramatically
+        # faster than checking `token_mask.any()` inside a 256-iteration loop,
+        # which forces a sync per iteration on accelerators (notably MPS).
+        # Shape: (E, top_k, N) so `expert_mask[e]` indexes (top_k_pos, token).
+        with torch.no_grad():
+            expert_mask = F.one_hot(topk_indices, num_classes=self.num_experts).permute(2, 1, 0)
+            expert_hit = expert_mask.sum(dim=(-1, -2)).gt(0).nonzero(as_tuple=False).flatten().tolist()
+
+        gate_up_w = self.experts.gate_up_proj
+        down_w = self.experts.down_proj
+        for expert_idx in expert_hit:
+            top_k_pos, token_idx = torch.where(expert_mask[expert_idx])
+            x_e = x[token_idx]                                            # (n_e, d)
+            gu = F.linear(x_e, gate_up_w[expert_idx])                     # (n_e, 2·d_moe)
+            gate, up = gu.chunk(2, dim=-1)
+            h_e = F.silu(gate) * up
+            y_e = F.linear(h_e, down_w[expert_idx])                       # (n_e, d)
+            w_e = topk_weights[token_idx, top_k_pos, None]                # (n_e, 1)
+            out.index_add_(0, token_idx, (y_e * w_e).to(out.dtype))
 
         return out.view(batch_size, seq_len, hidden_dim)
