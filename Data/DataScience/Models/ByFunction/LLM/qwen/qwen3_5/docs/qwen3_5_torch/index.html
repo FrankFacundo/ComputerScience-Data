@@ -136,6 +136,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -159,6 +171,21 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 </style>
+  
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 </head>
 <body>
   <main class="page">

@@ -28,16 +28,16 @@
       "name": "Python: Qwen3.5 only torch inference (image+prompt)",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5/qwen3_5_torch.py",
+      "program": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5-0_8B/qwen3_5_torch.py",
       "args": [
         "--image",
-        "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5/image.png",
+        "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5-0_8B/image.png",
         "--prompt",
         "Describe this image in detail."
       ],
       "console": "integratedTerminal",
       "justMyCode": false,
-      "cwd": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5"
+      "cwd": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5-0_8B"
     },
     {
       "name": "Python: TFT",

@@ -136,6 +136,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -159,6 +171,21 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 </style>
+  
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 </head>
 <body>
   <main class="page">
@@ -168,14 +195,30 @@ code {
     
   <nav class="toc">
     <strong>Contents</strong>
-    <ul><li>Classes<ul><li><a href="#class-Qwen3_5Attention">Qwen3_5Attention</a></li></ul></li><li>Functions<ul><li><a href="#fn-repeat_kv">repeat_kv</a></li><li><a href="#fn-eager_attention">eager_attention</a></li></ul></li></ul>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5Attention">Qwen3_5Attention</a><ul><li><a href="#class-Qwen3_5Attention-method-__init__">__init__</a></li><li><a href="#class-Qwen3_5Attention-method-forward">forward</a></li></ul></li></ul></li><li>Functions<ul><li><a href="#fn-repeat_kv">repeat_kv</a></li><li><a href="#fn-eager_attention">eager_attention</a></li></ul></li></ul>
   </nav>
   
     <section class="section">
       <h2>Module Docstring</h2>
       <div class="docstring"><p>Full-attention block for Qwen3.5 (GQA + per-head q/k RMSNorm + output gate).</p>
-<p>This file implements the &quot;full attention&quot; branch used by Qwen3.5 in roughly every 4th transformer layer (the others use the linear-attention branch in <code>linear_attention</code>). The block combines several well-known techniques:</p>
-<ul><li><strong>Scaled dot-product attention</strong> (Vaswani et al., 2017) — &quot;Attention Is All You Need&quot;: https://arxiv.org/abs/1706.03762</li><li><strong>Grouped-Query Attention (GQA)</strong> (Ainslie et al., 2023) — keys/values are shared across groups of query heads: https://arxiv.org/abs/2305.13245</li><li><strong>Rotary position embedding (RoPE)</strong> — see <code>rotary</code>.</li><li><strong>Q/K per-head RMSNorm</strong> — as introduced by Qwen2/Qwen3 (Dehghani et al. &quot;Scaling Vision Transformers to 22B Parameters&quot;, 2023, also popularised it): normalising each head&#x27;s q and k stabilises training and also bounds the attention logits.</li><li><strong>Output gate</strong> — a sigmoid gate is derived from the same input and applied multiplicatively to the attention output before the final projection. Related ideas: gated-attention-unit (GAU) in Hua et al. 2022 (https://arxiv.org/abs/2202.10447).</li></ul></div>
+<p>This file implements the "full attention" branch used by Qwen3.5 in roughly
+every 4th transformer layer (the others use the linear-attention branch in
+<code>linear_attention</code>). The block combines several well-known techniques:</p>
+<ul>
+<li><strong>Scaled dot-product attention</strong> (Vaswani et al., 2017) — "Attention Is All
+  You Need": https://arxiv.org/abs/1706.03762</li>
+<li><strong>Grouped-Query Attention (GQA)</strong> (Ainslie et al., 2023) — keys/values are
+  shared across groups of query heads: https://arxiv.org/abs/2305.13245</li>
+<li><strong>Rotary position embedding (RoPE)</strong> — see <code>rotary</code>.</li>
+<li><strong>Q/K per-head RMSNorm</strong> — as introduced by Qwen2/Qwen3 (Dehghani et al.
+  "Scaling Vision Transformers to 22B Parameters", 2023, also popularised it):
+  normalising each head's q and k stabilises training and also bounds the
+  attention logits.</li>
+<li><strong>Output gate</strong> — a sigmoid gate is derived from the same input and applied
+  multiplicatively to the attention output before the final projection.
+  Related ideas: gated-attention-unit (GAU) in Hua et al. 2022
+  (https://arxiv.org/abs/2202.10447).</li>
+</ul></div>
     </section>
     
     
@@ -185,28 +228,53 @@ code {
     <div class="signature">class Qwen3_5Attention(nn.Module)</div>
     <div class="docstring"><p>Grouped-Query Attention with q/k RMSNorm and a per-token output gate.</p>
 <h2>Projections</h2>
-<p>For input <code>x \in \mathbb{R}^{B \times S \times d_{\text{model}}}</code> the block computes</p>
-<p>.. math: [Q \,\|\, G] = x W<em>Q,\qquad K = x W</em>K,\qquad V = x W_V</p>
-<p>where <code>q_proj</code> produces a concatenated <code>(Q, G)</code> with twice the normal width — the second half is the <em>gate</em>. Shapes after reshape:</p>
-<ul><li><code>Q, G \in \mathbb{R}^{B \times S \times H_q \times d_h}</code></li><li><code>K, V \in \mathbb{R}^{B \times S \times H_{kv} \times d_h}</code></li></ul>
+<p>For input <span class="math-inline">\(x \in \mathbb{R}^{B \times S \times d_{\text{model}}}\)</span> the
+block computes</p>
+<div class="math-block">\[
+[Q \,\|\, G] = x W_Q,\qquad K = x W_K,\qquad V = x W_V
+\]</div>
+<p>where <code>q_proj</code> produces a concatenated <code>(Q, G)</code> with twice the normal
+width — the second half is the <em>gate</em>. Shapes after reshape:</p>
+<ul>
+<li><span class="math-inline">\(Q, G \in \mathbb{R}^{B \times S \times H_q \times d_h}\)</span></li>
+<li><span class="math-inline">\(K, V \in \mathbb{R}^{B \times S \times H_{kv} \times d_h}\)</span></li>
+</ul>
 <h2>Per-head RMSNorm</h2>
 <p>RMSNorm is applied <strong>inside</strong> the head axis on q and k independently:</p>
-<p>.. math: Q \leftarrow \text{RMSNorm}(Q),\qquad K \leftarrow \text{RMSNorm}(K).</p>
-<p>This improves stability for long-context attention and keeps the softmax logits in a bounded range.</p>
+<div class="math-block">\[
+Q \leftarrow \text{RMSNorm}(Q),\qquad K \leftarrow \text{RMSNorm}(K).
+\]</div>
+<p>This improves stability for long-context attention and keeps the softmax
+logits in a bounded range.</p>
 <h2>Rotary</h2>
 <p>RoPE is applied to q and k (partial rotary, see <code>rotary</code>):</p>
-<p>.. math: Q<em>m^{\text{rot}} = R</em>m Q<em>m,\qquad K</em>m^{\text{rot}} = R<em>m K</em>m</p>
-<p>with rotation matrices <code>R_m</code> parameterised by the token position <code>m</code>.</p>
+<div class="math-block">\[
+Q_m^{\text{rot}} = R_m Q_m,\qquad K_m^{\text{rot}} = R_m K_m
+\]</div>
+<p>with rotation matrices <span class="math-inline">\(R_m\)</span> parameterised by the token position
+<span class="math-inline">\(m\)</span>.</p>
 <h2>Attention + gate</h2>
-<p>.. math: O = \text{Attn}(Q^{\text{rot}}, K^{\text{rot}}, V)</p>
-<p>The gate is derived from the same input, passed through a sigmoid, and applied elementwise to the attention output <strong>before</strong> <code>o_proj</code>:</p>
-<p>.. math: \tilde O = O \odot \sigma(G),\qquad y = W_O\, \tilde O.</p>
+<div class="math-block">\[
+O = \text{Attn}(Q^{\text{rot}}, K^{\text{rot}}, V)
+\]</div>
+<p>The gate is derived from the same input, passed through a sigmoid, and
+applied elementwise to the attention output <strong>before</strong> <code>o_proj</code>:</p>
+<div class="math-block">\[
+\tilde O = O \odot \sigma(G),\qquad y = W_O\, \tilde O.
+\]</div>
 <h2>KV cache</h2>
-<p>During incremental decoding, <code>past_key_values.update_full</code> concatenates the new <code>(K, V)</code> along the time dim. Full-attention layers therefore grow their KV memory linearly with the decoded length (<code>O(T)</code>), in contrast with the linear-attention layers whose cache is constant-size.</p>
+<p>During incremental decoding, <code>past_key_values.update_full</code> concatenates
+the new <code>(K, V)</code> along the time dim. Full-attention layers therefore
+grow their KV memory linearly with the decoded length (<span class="math-inline">\(O(T)\)</span>), in
+contrast with the linear-attention layers whose cache is constant-size.</p>
 <h2>References</h2>
-<ul><li>GQA: https://arxiv.org/abs/2305.13245</li><li>Attention: https://arxiv.org/abs/1706.03762</li><li>RoPE: https://arxiv.org/abs/2104.09864</li></ul></div>
+<ul>
+<li>GQA: https://arxiv.org/abs/2305.13245</li>
+<li>Attention: https://arxiv.org/abs/1706.03762</li>
+<li>RoPE: https://arxiv.org/abs/2104.09864</li>
+</ul></div>
     <h3>Methods</h3>
-  <section class="section" id="fn-__init__">
+  <section class="section" id="class-Qwen3_5Attention-method-__init__">
     <h4>__init__</h4>
     <div class="meta">Line 167</div>
     <div class="signature">def __init__(self, config: Qwen3_5TextConfig, layer_idx: int)</div>
@@ -214,14 +282,22 @@ code {
     <p class="small">No docstring.</p>
   </section>
   
-  <section class="section" id="fn-forward">
+  <section class="section" id="class-Qwen3_5Attention-method-forward">
     <h4>forward</h4>
     <div class="meta">Line 195</div>
     <div class="signature">def forward(self, hidden_states: torch.Tensor, position_embeddings: Tuple[torch.Tensor, torch.Tensor], attention_mask: Optional[torch.Tensor] = None, past_key_values: Optional[HybridCache] = None) -&gt; torch.Tensor</div>
     
     <div class="docstring"><p>Run one full-attention block.</p>
 <h2>Algorithmic steps</h2>
-<ol><li>Project <code>x</code> through <code>q_proj</code> and split into <code>(Q, gate)</code>.</li><li>Project <code>x</code> through <code>k_proj</code>, <code>v_proj</code>.</li><li>Apply per-head RMSNorm to <code>Q</code> and <code>K</code>.</li><li>Apply RoPE: <code>Q&#x27;, K&#x27; = apply_rotary_pos_emb(Q, K, cos, sin)</code>.</li><li>Append <code>(K&#x27;, V)</code> to the KV cache.</li><li>Compute scaled dot-product attention <code>A V</code> with GQA repeat.</li><li>Multiply by the sigmoid gate and project back to <code>d_model</code>.</li></ol></div>
+<ol>
+<li>Project <code>x</code> through <code>q_proj</code> and split into <code>(Q, gate)</code>.</li>
+<li>Project <code>x</code> through <code>k_proj</code>, <code>v_proj</code>.</li>
+<li>Apply per-head RMSNorm to <code>Q</code> and <code>K</code>.</li>
+<li>Apply RoPE: <code>Q', K' = apply_rotary_pos_emb(Q, K, cos, sin)</code>.</li>
+<li>Append <code>(K', V)</code> to the KV cache.</li>
+<li>Compute scaled dot-product attention <span class="math-inline">\(A V\)</span> with GQA repeat.</li>
+<li>Multiply by the sigmoid gate and project back to <code>d_model</code>.</li>
+</ol></div>
   </section>
   
   </section>
@@ -234,9 +310,16 @@ code {
     
     <div class="docstring"><p>Repeat KV heads to match the query-head count under GQA.</p>
 <h2>Math / semantics</h2>
-<p>In Grouped-Query Attention there are <code>H_q</code> query heads and <code>H_kv</code> key heads with <code>H_q = H_kv * n_rep</code>. Each KV head is shared across <code>n_rep</code> query heads. This op tiles</p>
-<p>.. math: K \in \mathbb{R}^{B \times H<em>{kv} \times T \times D} \longrightarrow \hat K \in \mathbb{R}^{B \times H</em>q \times T \times D}</p>
-<p>by repeating each row <code>n_rep</code> times. <code>n_rep == 1</code> means ordinary multi-head attention (no sharing).</p>
+<p>In Grouped-Query Attention there are <code>H_q</code> query heads and <code>H_kv</code> key
+heads with <code>H_q = H_kv * n_rep</code>. Each KV head is shared across
+<code>n_rep</code> query heads. This op tiles</p>
+<div class="math-block">\[
+K \in \mathbb{R}^{B \times H_{kv} \times T \times D}
+\longrightarrow
+\hat K \in \mathbb{R}^{B \times H_q \times T \times D}
+\]</div>
+<p>by repeating each row <code>n_rep</code> times. <code>n_rep == 1</code> means ordinary
+multi-head attention (no sharing).</p>
 <p>Reference (GQA): https://arxiv.org/abs/2305.13245</p></div>
   </section>
   
@@ -248,9 +331,17 @@ code {
     <div class="docstring"><p>Reference scaled-dot-product attention (no Flash, no SDPA fused kernel).</p>
 <h2>Math</h2>
 <p>With repeated-KV for GQA, attention is</p>
-<p>.. math: A = \operatorname{softmax}\!\Big(\tfrac{Q K^{\top}}{\sqrt{d_h}} + M\Big), \qquad \text{Attn}(Q, K, V) = A V</p>
-<p>where <code>M</code> is an additive mask with <code>0</code> at allowed positions and <code>-\infty</code> (i.e. <code>torch.finfo(dtype).min</code>) at forbidden positions. The softmax is computed in fp32 for numerical stability and cast back afterwards. <code>scaling = 1/sqrt(d_h)</code>.</p>
-<p>The output is reshaped to <code>(B, S, H, D)</code> so the subsequent reshape / <code>o_proj</code> can treat the head axis as &quot;just another feature block&quot;.</p>
+<div class="math-block">\[
+A = \operatorname{softmax}\!\Big(\tfrac{Q K^{\top}}{\sqrt{d_h}} + M\Big),
+\qquad
+\text{Attn}(Q, K, V) = A V
+\]</div>
+<p>where <span class="math-inline">\(M\)</span> is an additive mask with <code>0</code> at allowed positions and
+<code>-\infty</code> (i.e. <code>torch.finfo(dtype).min</code>) at forbidden positions.
+The softmax is computed in fp32 for numerical stability and cast back
+afterwards. <code>scaling = 1/sqrt(d_h)</code>.</p>
+<p>The output is reshaped to <code>(B, S, H, D)</code> so the subsequent reshape /
+<code>o_proj</code> can treat the head axis as "just another feature block".</p>
 <p>Reference: Vaswani et al., 2017 — https://arxiv.org/abs/1706.03762</p></div>
   </section>
   

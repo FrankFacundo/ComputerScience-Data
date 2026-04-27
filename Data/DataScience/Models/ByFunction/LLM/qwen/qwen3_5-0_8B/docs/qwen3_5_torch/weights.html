@@ -136,6 +136,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -159,6 +171,21 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 </style>
+  
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 </head>
 <body>
   <main class="page">
@@ -168,15 +195,27 @@ code {
     
   <nav class="toc">
     <strong>Contents</strong>
-    <ul><li><a href="#constants">Constants</a></li><li>Functions<ul><li><a href="#fn-load_qwen3_5_weights">load_qwen3_5_weights</a></li></ul></li></ul>
+    <ul><li><a href="#constants">Constants</a></li><li>Functions<ul><li><a href="#fn-_iter_shards">_iter_shards</a></li><li><a href="#fn-_remap_key">_remap_key</a></li><li><a href="#fn-load_qwen3_5_weights">load_qwen3_5_weights</a></li><li><a href="#fn-_is_persistent_buffer">_is_persistent_buffer</a></li></ul></li></ul>
   </nav>
   
     <section class="section">
       <h2>Module Docstring</h2>
       <div class="docstring"><p>Safetensors weight loader for Qwen3.5 checkpoints.</p>
-<p>Pure-bookkeeping module — no math lives here. It walks the <code>*.safetensors</code> shards listed in <code>model.safetensors.index.json</code> (or a single-shard file), maps each checkpoint key to a model key via <code>_remap_key</code>, and copies tensors into <code>model.state_dict()</code> with optional dtype casting.</p>
+<p>Pure-bookkeeping module — no math lives here. It walks the <code>*.safetensors</code>
+shards listed in <code>model.safetensors.index.json</code> (or a single-shard file),
+maps each checkpoint key to a model key via <code>_remap_key</code>, and copies
+tensors into <code>model.state_dict()</code> with optional dtype casting.</p>
 <p>Key things the remap handles:</p>
-<ul><li>HuggingFace checkpoints store the conditional-generation model with prefix <code>model.language_model.*</code> and <code>model.visual.*</code>. In <strong>text-only</strong> mode we strip the <code>model.language_model.</code> prefix and skip visual keys.</li><li>MTP (Multi-Token-Prediction) checkpoints embed auxiliary heads prefixed with <code>mtp.*</code>; those are always skipped.</li><li>Tied <code>lm_head</code> — if the checkpoint lacks <code>lm_head.weight</code> because the original model tied it to <code>embed_tokens</code>, we copy the embedding across after loading.</li></ul></div>
+<ul>
+<li>HuggingFace checkpoints store the conditional-generation model with prefix
+  <code>model.language_model.*</code> and <code>model.visual.*</code>. In <strong>text-only</strong> mode we
+  strip the <code>model.language_model.</code> prefix and skip visual keys.</li>
+<li>MTP (Multi-Token-Prediction) checkpoints embed auxiliary heads prefixed
+  with <code>mtp.*</code>; those are always skipped.</li>
+<li>Tied <code>lm_head</code> — if the checkpoint lacks <code>lm_head.weight</code> because the
+  original model tied it to <code>embed_tokens</code>, we copy the embedding across
+  after loading.</li>
+</ul></div>
     </section>
     
   <section class="section" id="constants">
@@ -186,6 +225,27 @@ code {
   
     
     
+  <section class="section" id="fn-_iter_shards">
+    <h3>_iter_shards</h3>
+    <div class="meta">Line 33</div>
+    <div class="signature">def _iter_shards(model_dir: Path) -&gt; Iterable[Path]</div>
+    
+    <div class="docstring"><p>Yield <code>*.safetensors</code> shards in deterministic order.</p>
+<p>Uses <code>model.safetensors.index.json</code> if present (the standard HF sharded
+layout); falls back to a single <code>model.safetensors</code> or to glob-sorted
+shards in <code>model_dir</code>.</p></div>
+  </section>
+  
+  <section class="section" id="fn-_remap_key">
+    <h3>_remap_key</h3>
+    <div class="meta">Line 56</div>
+    <div class="signature">def _remap_key(key: str, text_only: bool) -&gt; str | None</div>
+    
+    <div class="docstring"><p>Map a checkpoint key to the matching model state_dict key.</p>
+<p>Returns <code>None</code> for keys that should be skipped entirely (MTP heads,
+or visual keys when loading text-only).</p></div>
+  </section>
+  
   <section class="section" id="fn-load_qwen3_5_weights">
     <h3>load_qwen3_5_weights</h3>
     <div class="meta">Line 78</div>
@@ -193,7 +253,24 @@ code {
     
     <div class="docstring"><p>Load sharded safetensors weights into <code>model</code>.</p>
 <h2>Parameters</h2>
-<p>text_only True when loading into <code>Qwen3_5ForCausalLM</code> (text-only). Strips the <code>model.language_model.</code> prefix and skips <code>model.visual.*</code>. strict Raise if any parameter was not assigned or if unexpected keys remain. dtype Optional cast applied to every tensor during load.</p></div>
+<p>text_only
+    True when loading into <code>Qwen3_5ForCausalLM</code> (text-only). Strips the
+    <code>model.language_model.</code> prefix and skips <code>model.visual.*</code>.
+strict
+    Raise if any parameter was not assigned or if unexpected keys remain.
+dtype
+    Optional cast applied to every tensor during load.</p></div>
+  </section>
+  
+  <section class="section" id="fn-_is_persistent_buffer">
+    <h3>_is_persistent_buffer</h3>
+    <div class="meta">Line 160</div>
+    <div class="signature">def _is_persistent_buffer(module: nn.Module, name: str) -&gt; bool</div>
+    
+    <div class="docstring"><p>Walk <code>name</code> and check the persistent flag on the owning module.</p>
+<p>Non-persistent buffers (e.g. <code>inv_freq</code>) are recomputed at init time and
+must NOT be required to appear in checkpoints — otherwise the strict-load
+path would raise for legitimately missing keys.</p></div>
   </section>
   
   </main>

@@ -136,6 +136,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -159,6 +171,21 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 </style>
+  
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 </head>
 <body>
   <main class="page">
@@ -168,17 +195,42 @@ code {
     
   <nav class="toc">
     <strong>Contents</strong>
-    <ul><li>Classes<ul><li><a href="#class-Qwen3_5TextConfig">Qwen3_5TextConfig</a></li><li><a href="#class-Qwen3_5VisionConfig">Qwen3_5VisionConfig</a></li><li><a href="#class-Qwen3_5Config">Qwen3_5Config</a></li></ul></li></ul>
+    <ul><li>Classes<ul><li><a href="#class-Qwen3_5TextConfig">Qwen3_5TextConfig</a><ul><li><a href="#class-Qwen3_5TextConfig-method-__post_init__">__post_init__</a></li></ul></li><li><a href="#class-Qwen3_5VisionConfig">Qwen3_5VisionConfig</a></li><li><a href="#class-Qwen3_5Config">Qwen3_5Config</a><ul><li><a href="#class-Qwen3_5Config-method-from_dict">from_dict</a></li><li><a href="#class-Qwen3_5Config-method-from_pretrained">from_pretrained</a></li></ul></li></ul></li><li>Functions<ul><li><a href="#fn-_default_rope_params">_default_rope_params</a></li></ul></li></ul>
   </nav>
   
     <section class="section">
       <h2>Module Docstring</h2>
       <div class="docstring"><p>Qwen3.5 configuration as plain dataclasses (no transformers dependency).</p>
 <p>All hyperparameters that enter the math of the model live here. A quick map:</p>
-<ul><li><code>vocab_size</code>                      : V (number of tokens — input embedding / softmax width)</li><li><code>hidden_size</code>                     : d_model</li><li><code>intermediate_size</code>               : d_ff (SwiGLU middle width)</li><li><code>num_hidden_layers</code>               : L</li><li><code>num_attention_heads</code>             : H_q   — query heads</li><li><code>num_key_value_heads</code>             : H<em>kv  — KV heads (GQA sharing = H</em>q / H_kv)</li><li><code>head_dim</code>                        : d_h   — per-head size</li><li><code>rope_parameters.rope_theta</code>      : θ_base (RoPE base; very large for long ctx)</li><li><code>rope_parameters.partial_rotary_factor</code> : fraction of head_dim that receives RoPE</li><li><code>rope_parameters.mrope_section</code>   : 3-axis split widths for M-RoPE interleave</li><li><code>layer_types</code>                     : list of length L giving &quot;full<em>attention&quot; or &quot;linear</em>attention&quot; per layer</li><li><code>full_attention_interval</code>         : every Nth layer is full-attention (default 4)</li><li><code>linear_*</code>                        : Gated DeltaNet branch sizes (see model.py)</li></ul>
-<p>Vision (<code>Qwen3_5VisionConfig</code>): depth, hidden<em>size, intermediate</em>size, num<em>heads   : ViT stack patch</em>size, temporal<em>patch</em>size                    : Conv3d kernel = stride spatial<em>merge</em>size (=2)                            : 2×2 patch merger at the end out<em>hidden</em>size                                    : projection width = text d_model</p>
+<ul>
+<li><code>vocab_size</code>                      : V (number of tokens — input embedding / softmax width)</li>
+<li><code>hidden_size</code>                     : d_model</li>
+<li><code>intermediate_size</code>               : d_ff (SwiGLU middle width)</li>
+<li><code>num_hidden_layers</code>               : L</li>
+<li><code>num_attention_heads</code>             : H_q   — query heads</li>
+<li><code>num_key_value_heads</code>             : H_kv  — KV heads (GQA sharing = H_q / H_kv)</li>
+<li><code>head_dim</code>                        : d_h   — per-head size</li>
+<li><code>rope_parameters.rope_theta</code>      : θ_base (RoPE base; very large for long ctx)</li>
+<li><code>rope_parameters.partial_rotary_factor</code> : fraction of head_dim that receives RoPE</li>
+<li><code>rope_parameters.mrope_section</code>   : 3-axis split widths for M-RoPE interleave</li>
+<li><code>layer_types</code>                     : list of length L giving "full_attention"
+                                        or "linear_attention" per layer</li>
+<li><code>full_attention_interval</code>         : every Nth layer is full-attention (default 4)</li>
+<li><code>linear_*</code>                        : Gated DeltaNet branch sizes (see model.py)</li>
+</ul>
+<p>Vision (<code>Qwen3_5VisionConfig</code>):</p>
+<pre><code>depth, hidden_size, intermediate_size, num_heads   : ViT stack
+patch_size, temporal_patch_size                    : Conv3d kernel = stride
+spatial_merge_size (=2)                            : 2×2 patch merger at the end
+out_hidden_size                                    : projection width = text d_model
+</code></pre>
 <h2>References for the architecture choices</h2>
-<ul><li>GQA:  Ainslie et al. 2023 — https://arxiv.org/abs/2305.13245</li><li>RoPE: Su et al. 2021       — https://arxiv.org/abs/2104.09864</li><li>Gated DeltaNet: Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li><li>Qwen2-VL (M-RoPE + vision recipe): Wang et al. 2024 — https://arxiv.org/abs/2409.12191</li></ul></div>
+<ul>
+<li>GQA:  Ainslie et al. 2023 — https://arxiv.org/abs/2305.13245</li>
+<li>RoPE: Su et al. 2021       — https://arxiv.org/abs/2104.09864</li>
+<li>Gated DeltaNet: Yang et al. 2024 — https://arxiv.org/abs/2412.06464</li>
+<li>Qwen2-VL (M-RoPE + vision recipe): Wang et al. 2024 — https://arxiv.org/abs/2409.12191</li>
+</ul></div>
     </section>
     
     
@@ -187,7 +239,15 @@ code {
     <div class="meta">Line 65 · Bases: <code>object</code></div>
     <div class="signature">class Qwen3_5TextConfig</div>
     <p class="small">No docstring.</p>
+    <h3>Methods</h3>
+  <section class="section" id="class-Qwen3_5TextConfig-method-__post_init__">
+    <h4>__post_init__</h4>
+    <div class="meta">Line 96</div>
+    <div class="signature">def __post_init__(self)</div>
     
+    <p class="small">No docstring.</p>
+  </section>
+  
   </section>
   
   <section class="section" id="class-Qwen3_5VisionConfig">
@@ -204,7 +264,7 @@ code {
     <div class="signature">class Qwen3_5Config</div>
     <p class="small">No docstring.</p>
     <h3>Methods</h3>
-  <section class="section" id="fn-from_dict">
+  <section class="section" id="class-Qwen3_5Config-method-from_dict">
     <h4>from_dict</h4>
     <div class="meta">Line 148</div>
     <div class="signature">def from_dict(cls, data: dict[str, Any]) -&gt; &#x27;Qwen3_5Config&#x27;</div>
@@ -212,7 +272,7 @@ code {
     <p class="small">No docstring.</p>
   </section>
   
-  <section class="section" id="fn-from_pretrained">
+  <section class="section" id="class-Qwen3_5Config-method-from_pretrained">
     <h4>from_pretrained</h4>
     <div class="meta">Line 179</div>
     <div class="signature">def from_pretrained(cls, model_dir: str | Path) -&gt; &#x27;Qwen3_5Config&#x27;</div>
@@ -223,6 +283,24 @@ code {
   </section>
   
     
+  <section class="section" id="fn-_default_rope_params">
+    <h3>_default_rope_params</h3>
+    <div class="meta">Line 43</div>
+    <div class="signature">def _default_rope_params() -&gt; dict[str, Any]</div>
+    
+    <div class="docstring"><p>Default RoPE params for Qwen3.5 text side.</p>
+<ul>
+<li><code>rope_theta = 1e7</code> — the large base empirically stabilises attention
+  across very long contexts (the original RoFormer used <code>10_000</code>);
+  a larger base slows phase wrap so distant tokens remain distinguishable
+  up to <code>max_position_embeddings = 262_144</code>.</li>
+<li><code>partial_rotary_factor = 0.25</code> — only the first 25% of each head's
+  channel is rotated. The remainder passes through unchanged.</li>
+<li><code>mrope_section = [11, 11, 10]</code> — 3-axis split used by interleaved
+  M-RoPE (temporal / height / width). See <code>rotary</code>.</li>
+</ul></div>
+  </section>
+  
   </main>
 </body>
 </html>

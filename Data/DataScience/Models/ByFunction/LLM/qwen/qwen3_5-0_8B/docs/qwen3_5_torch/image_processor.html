@@ -136,6 +136,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -159,6 +171,21 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 </style>
+  
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 </head>
 <body>
   <main class="page">
@@ -168,19 +195,37 @@ code {
     
   <nav class="toc">
     <strong>Contents</strong>
-    <ul><li>Classes<ul><li><a href="#class-Qwen2VLImageProcessor">Qwen2VLImageProcessor</a></li></ul></li><li>Functions<ul><li><a href="#fn-smart_resize">smart_resize</a></li></ul></li></ul>
+    <ul><li>Classes<ul><li><a href="#class-Qwen2VLImageProcessor">Qwen2VLImageProcessor</a><ul><li><a href="#class-Qwen2VLImageProcessor-method-__init__">__init__</a></li><li><a href="#class-Qwen2VLImageProcessor-method-from_pretrained">from_pretrained</a></li><li><a href="#class-Qwen2VLImageProcessor-method-__call__">__call__</a></li><li><a href="#class-Qwen2VLImageProcessor-method-preprocess">preprocess</a></li><li><a href="#class-Qwen2VLImageProcessor-method-size">size</a></li><li><a href="#class-Qwen2VLImageProcessor-method-_process_one">_process_one</a></li></ul></li></ul></li><li>Functions<ul><li><a href="#fn-smart_resize">smart_resize</a></li></ul></li></ul>
   </nav>
   
     <section class="section">
       <h2>Module Docstring</h2>
       <div class="docstring"><p>Qwen2VL-style image preprocessor, pure torch + PIL + torchvision.</p>
-<p>Produces the same <code>(pixel_values, image_grid_thw)</code> that the transformers <code>Qwen2VLImageProcessorFast</code> produces, with values matching bit-for-bit when the underlying torchvision/PIL is identical.</p>
+<p>Produces the same <code>(pixel_values, image_grid_thw)</code> that the transformers
+<code>Qwen2VLImageProcessorFast</code> produces, with values matching bit-for-bit when
+the underlying torchvision/PIL is identical.</p>
 <h2>Pipeline (per image)</h2>
-<ol><li><strong>PIL → tensor</strong> (<code>C, H, W</code>, uint8) via <code>torchvision.functional</code>.</li><li><strong>Smart resize</strong>: round <code>(H, W)</code> to multiples of <code>factor = patch · merge</code> while clipping total pixel count into <code>[min_pixels, max_pixels]</code> and preserving the aspect ratio up to a rounding step. See <code>smart_resize</code>.</li><li><strong>Rescale</strong>: <code>x ← x / 255</code> so values lie in <code>[0, 1]</code>.</li><li><strong>Normalize</strong>: <code>x ← (x - mean) / std</code> (channel-wise).</li><li><strong>Patchify</strong>: reshape into an ordered sequence of <code>(C · t_patch · patch · patch)</code> flat patches using a permutation that groups 2×2 &quot;merger blocks&quot; together so the vision model&#x27;s spatial merger can simply reshape.</li></ol>
+<ol>
+<li><strong>PIL → tensor</strong> (<code>C, H, W</code>, uint8) via <code>torchvision.functional</code>.</li>
+<li><strong>Smart resize</strong>: round <code>(H, W)</code> to multiples of <code>factor = patch · merge</code>
+   while clipping total pixel count into <code>[min_pixels, max_pixels]</code> and
+   preserving the aspect ratio up to a rounding step. See <code>smart_resize</code>.</li>
+<li><strong>Rescale</strong>: <code>x ← x / 255</code> so values lie in <code>[0, 1]</code>.</li>
+<li><strong>Normalize</strong>: <code>x ← (x - mean) / std</code> (channel-wise).</li>
+<li><strong>Patchify</strong>: reshape into an ordered sequence of
+   <code>(C · t_patch · patch · patch)</code> flat patches using a permutation that
+   groups 2×2 "merger blocks" together so the vision model's spatial merger
+   can simply reshape.</li>
+</ol>
 <h2>Output</h2>
-<ul><li><code>pixel_values</code> of shape <code>(N_total, C · t_patch · patch · patch)</code></li><li><code>image_grid_thw</code> of shape <code>(num_images, 3)</code> — rows <code>(grid_t, grid_h, grid_w)</code>.</li></ul>
+<ul>
+<li><code>pixel_values</code> of shape <code>(N_total, C · t_patch · patch · patch)</code></li>
+<li><code>image_grid_thw</code> of shape <code>(num_images, 3)</code> — rows
+  <code>(grid_t, grid_h, grid_w)</code>.</li>
+</ul>
 <h2>Reference</h2>
-<p>Qwen2-VL: native-resolution image preprocessing, https://arxiv.org/abs/2409.12191</p></div>
+<p>Qwen2-VL: native-resolution image preprocessing,
+https://arxiv.org/abs/2409.12191</p></div>
     </section>
     
     
@@ -189,10 +234,14 @@ code {
     <div class="meta">Line 90 · Bases: <code>object</code></div>
     <div class="signature">class Qwen2VLImageProcessor</div>
     <div class="docstring"><p>Pure-python equivalent of <code>Qwen2VLImageProcessorFast</code> for Qwen3.5.</p>
-<p>The output packs patches into a single long sequence along the first axis, and returns <code>image_grid_thw</code> of shape <code>(num_images, 3)</code> with each row <code>(grid_t, grid_h, grid_w)</code>.</p>
-<p>The per-patch layout is chosen so the vision model&#x27;s <code>PatchEmbed</code> (a Conv3d with kernel=stride) and the 2x2 spatial merger can both operate with plain reshapes — see <code>_process_one</code>.</p></div>
+<p>The output packs patches into a single long sequence along the first axis,
+and returns <code>image_grid_thw</code> of shape <code>(num_images, 3)</code> with each row
+<code>(grid_t, grid_h, grid_w)</code>.</p>
+<p>The per-patch layout is chosen so the vision model's <code>PatchEmbed</code> (a
+Conv3d with kernel=stride) and the 2x2 spatial merger can both operate
+with plain reshapes — see <code>_process_one</code>.</p></div>
     <h3>Methods</h3>
-  <section class="section" id="fn-__init__">
+  <section class="section" id="class-Qwen2VLImageProcessor-method-__init__">
     <h4>__init__</h4>
     <div class="meta">Line 102</div>
     <div class="signature">def __init__(self, *, patch_size: int = 16, temporal_patch_size: int = 2, merge_size: int = 2, image_mean: tuple[float, float, float] = (0.5, 0.5, 0.5), image_std: tuple[float, float, float] = (0.5, 0.5, 0.5), min_pixels: int = 56 * 56, max_pixels: int = 28 * 28 * 1280, rescale_factor: float = 1.0 / 255.0, do_resize: bool = True, do_rescale: bool = True, do_normalize: bool = True, do_convert_rgb: bool = True)</div>
@@ -200,7 +249,7 @@ code {
     <p class="small">No docstring.</p>
   </section>
   
-  <section class="section" id="fn-from_pretrained">
+  <section class="section" id="class-Qwen2VLImageProcessor-method-from_pretrained">
     <h4>from_pretrained</h4>
     <div class="meta">Line 132</div>
     <div class="signature">def from_pretrained(cls, model_dir: str | Path) -&gt; &#x27;Qwen2VLImageProcessor&#x27;</div>
@@ -208,21 +257,64 @@ code {
     <p class="small">No docstring.</p>
   </section>
   
-  <section class="section" id="fn-preprocess">
+  <section class="section" id="class-Qwen2VLImageProcessor-method-__call__">
+    <h4>__call__</h4>
+    <div class="meta">Line 149</div>
+    <div class="signature">def __call__(self, images: Image.Image | Iterable[Image.Image], *, return_tensors: str = &#x27;pt&#x27;) -&gt; dict</div>
+    
+    <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="class-Qwen2VLImageProcessor-method-preprocess">
     <h4>preprocess</h4>
     <div class="meta">Line 154</div>
     <div class="signature">def preprocess(self, images: Image.Image | Iterable[Image.Image], *, return_tensors: str = &#x27;pt&#x27;) -&gt; dict</div>
     
     <div class="docstring"><p>Preprocess one or more images into the packed vision input format.</p>
-<p>Produces a single <code>pixel_values</code> tensor concatenating every image&#x27;s patches along the first axis, and an <code>image_grid_thw</code> tensor listing each image&#x27;s <code>(grid_t, grid_h, grid_w)</code>.</p></div>
+<p>Produces a single <code>pixel_values</code> tensor concatenating every image's
+patches along the first axis, and an <code>image_grid_thw</code> tensor listing
+each image's <code>(grid_t, grid_h, grid_w)</code>.</p></div>
   </section>
   
-  <section class="section" id="fn-size">
+  <section class="section" id="class-Qwen2VLImageProcessor-method-size">
     <h4>size</h4>
     <div class="meta">Line 179</div>
     <div class="signature">def size(self) -&gt; dict[str, int]</div>
     <div class="meta">Decorators</div><ul class="member-list"><li><code>@property</code></li></ul>
     <p class="small">No docstring.</p>
+  </section>
+  
+  <section class="section" id="class-Qwen2VLImageProcessor-method-_process_one">
+    <h4>_process_one</h4>
+    <div class="meta">Line 184</div>
+    <div class="signature">def _process_one(self, image: Image.Image) -&gt; tuple[torch.Tensor, tuple[int, int, int]]</div>
+    
+    <div class="docstring"><p>Preprocess one image end-to-end.</p>
+<h2>Math / pipeline</h2>
+<ol>
+<li><strong>RGB convert</strong> (optional) and uint8 CHW tensor.</li>
+<li><strong>Smart resize</strong> to <span class="math-inline">\((\bar h, \bar w)\)</span> with
+   <span class="math-inline">\(\bar h, \bar w \equiv 0 \pmod{p \cdot m}\)</span> (<code>p = patch_size</code>,
+   <code>m = merge_size</code>).</li>
+<li><strong>Rescale</strong> <span class="math-inline">\(x \leftarrow x / 255\)</span>.</li>
+<li><strong>Normalize</strong> <span class="math-inline">\(x \leftarrow (x - \mu) / \sigma\)</span> per channel.</li>
+<li><strong>Temporal pad</strong> to a multiple of <code>temporal_patch_size</code> by
+   repeating the last frame (needed for the Conv3d kernel).</li>
+<li><strong>Reshape into patch/merge structure</strong>:</li>
+</ol>
+<div class="math-block">\[
+(B,\, \text{grid\_t} \cdot t_p,\, C,\, H,\, W)
+\longrightarrow
+(B,\, \text{grid\_t},\, t_p,\, C,
+ \tfrac{H}{p m},\, m,\, p,\,
+ \tfrac{W}{p m},\, m,\, p)
+\]</div>
+<p>then permute to
+   <code>(B, grid_t, H/pm, W/pm, m, m, C, t_p, p, p)</code> and finally flatten
+   to <code>(grid_t · grid_h · grid_w,  C · t_p · p · p)</code> so the vision
+   tower sees one flat patch per row, grouped by 2×2 merger blocks.</p>
+<h2>Returns</h2>
+<p><code>(patches, (grid_t, grid_h, grid_w))</code> for this image.</p></div>
   </section>
   
   </section>
@@ -235,10 +327,20 @@ code {
     
     <div class="docstring"><p>Round <code>(h, w)</code> to multiples of <code>factor</code> while staying within a pixel budget.</p>
 <h2>Math</h2>
-<p>Let <code>f = \text{factor}</code> (<code>patch_size · merge_size</code>) and initial target <code>\bar h = f \cdot \text{round}(h/f),\; \bar w = f \cdot \text{round}(w/f)</code>.</p>
-<ul><li>If <code>\bar h \bar w &gt; \text{max\_pixels}</code>: shrink both sides by <code>\beta = \sqrt{h\,w / \text{max\_pixels}}</code> then floor to multiples of <code>f</code>.</li><li>If <code>\bar h \bar w &lt; \text{min\_pixels}</code>: enlarge by <code>\beta = \sqrt{\text{min\_pixels} / (h\,w)}</code> then ceil to multiples of <code>f</code>.</li></ul>
-<p>The choice of <code>floor</code> for max-pixel and <code>ceil</code> for min-pixel is deliberate: both hit the target budget from the <strong>inside</strong>, preserving the budget invariants after rounding.</p>
-<p>Aspect ratio guard If the source ratio exceeds 200:1, raise — beyond this the bilinear pos-embed interpolation becomes numerically unstable.</p>
+<p>Let <span class="math-inline">\(f = \text{factor}\)</span> (<code>patch_size · merge_size</code>) and initial
+target <span class="math-inline">\(\bar h = f \cdot \text{round}(h/f),\; \bar w = f \cdot \text{round}(w/f)\)</span>.</p>
+<ul>
+<li>If <span class="math-inline">\(\bar h \bar w &gt; \text{max\_pixels}\)</span>: shrink both sides by
+  <span class="math-inline">\(\beta = \sqrt{h\,w / \text{max\_pixels}}\)</span> then floor to multiples of <code>f</code>.</li>
+<li>If <span class="math-inline">\(\bar h \bar w &lt; \text{min\_pixels}\)</span>: enlarge by
+  <span class="math-inline">\(\beta = \sqrt{\text{min\_pixels} / (h\,w)}\)</span> then ceil to multiples of <code>f</code>.</li>
+</ul>
+<p>The choice of <code>floor</code> for max-pixel and <code>ceil</code> for min-pixel is
+deliberate: both hit the target budget from the <strong>inside</strong>, preserving
+the budget invariants after rounding.</p>
+<p>Aspect ratio guard
+    If the source ratio exceeds 200:1, raise — beyond this the bilinear
+    pos-embed interpolation becomes numerically unstable.</p>
 <p>Reference: mirrors <code>transformers.models.qwen2_vl.image_processing_qwen2_vl.smart_resize</code>.</p></div>
   </section>
   

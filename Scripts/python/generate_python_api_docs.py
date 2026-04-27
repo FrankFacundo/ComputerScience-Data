@@ -156,6 +156,18 @@ h3 {
   border-top: 1px solid #d9e2e8;
   margin: 18px 0;
 }
+.math-block {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.math-inline {
+  white-space: nowrap;
+}
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 .signature {
   margin-top: 12px;
   padding: 12px 14px;
@@ -178,6 +190,22 @@ h3 {
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+"""
+
+MATHJAX_SCRIPT = r"""
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 """
 
 
@@ -256,8 +284,14 @@ def build_module_name(source_path: Path, rel_source_path: Path) -> str:
   return ".".join(parts)
 
 
-def is_public_name(name: str) -> bool:
-  return not name.startswith("_") or name in {"__init__"}
+DOCUMENTED_DUNDER_METHODS = {"__init__", "__call__", "__post_init__"}
+
+
+def is_documentable_name(name: str) -> bool:
+  """Return whether a symbol should appear in the generated API docs."""
+  if name.startswith("__") and name.endswith("__"):
+    return name in DOCUMENTED_DUNDER_METHODS
+  return True
 
 
 def expr_to_text(node: ast.AST | None) -> str:
@@ -389,7 +423,7 @@ def extract_function(node: ast.FunctionDef | ast.AsyncFunctionDef) -> FunctionDo
 def extract_class(node: ast.ClassDef, source: str) -> ClassDoc:
   methods = []
   for child in node.body:
-    if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) and is_public_name(child.name):
+    if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) and is_documentable_name(child.name):
       method_doc = extract_function(child)
       method_doc.docstring = raw_docstring(child, source)
       methods.append(method_doc)
@@ -411,11 +445,11 @@ def parse_module(source_path: Path, rel_source_path: Path) -> ModuleDoc:
   functions = []
   classes = []
   for node in tree.body:
-    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and is_public_name(node.name):
+    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and is_documentable_name(node.name):
       function_doc = extract_function(node)
       function_doc.docstring = raw_docstring(node, source)
       functions.append(function_doc)
-    elif isinstance(node, ast.ClassDef) and is_public_name(node.name):
+    elif isinstance(node, ast.ClassDef) and is_documentable_name(node.name):
       classes.append(extract_class(node, source))
   return ModuleDoc(
       source_path=source_path,
@@ -432,10 +466,86 @@ def h(text: str) -> str:
   return html.escape(text)
 
 
+def extract_math_placeholders(text: str) -> tuple[str, list[tuple[str, str]]]:
+  placeholders: list[tuple[str, str]] = []
+
+  def stash_math(tex: str, *, display: bool) -> str:
+    index = len(placeholders)
+    token = f"%%MATH{index}%%"
+    if display:
+      clean_tex = inspect.cleandoc(tex).strip()
+      replacement = f'<div class="math-block">\\[\n{h(clean_tex)}\n\\]</div>'
+    else:
+      clean_tex = re.sub(r"\s*\n\s*", " ", tex).strip()
+      replacement = f'<span class="math-inline">\\({h(clean_tex)}\\)</span>'
+    placeholders.append((token, replacement))
+    return token
+
+  text = _stash_rst_math_blocks(text, stash_math)
+  text = re.sub(
+      r":math:`([^`]+)`",
+      lambda match: stash_math(match.group(1), display=False),
+      text,
+      flags=re.DOTALL,
+  )
+  return text, placeholders
+
+
+def _line_indent(line: str) -> int:
+  return len(line) - len(line.lstrip(" "))
+
+
+def _stash_rst_math_blocks(text: str, stash_math) -> str:
+  lines = text.split("\n")
+  out: list[str] = []
+  i = 0
+  n = len(lines)
+
+  while i < n:
+    match = re.match(r"^(\s*)\.\.\s+math::(?:\s+(.*?))?\s*$", lines[i])
+    if match is None:
+      out.append(lines[i])
+      i += 1
+      continue
+
+    directive_indent = len(match.group(1))
+    inline_math = match.group(2) or ""
+    i += 1
+
+    math_lines: list[str] = []
+    if inline_math:
+      math_lines.append(inline_math)
+    else:
+      while i < n and not lines[i].strip():
+        i += 1
+
+      while i < n:
+        line = lines[i]
+        if not line.strip():
+          j = i + 1
+          while j < n and not lines[j].strip():
+            j += 1
+          if j < n and _line_indent(lines[j]) > directive_indent:
+            math_lines.append("")
+            i += 1
+            continue
+          break
+        if _line_indent(line) <= directive_indent:
+          break
+        math_lines.append(line)
+        i += 1
+
+    if out and out[-1].strip():
+      out.append("")
+    out.append(stash_math("\n".join(math_lines), display=True))
+    out.append("")
+
+  return "\n".join(out)
+
+
 def normalize_docstring_markup(text: str) -> str:
   text = text.replace("\r\n", "\n")
   text = re.sub(r":(?:func|meth|class|mod|attr|obj|data):`([^`]+)`", r"`\1`", text)
-  text = re.sub(r":math:`([^`]+)`", r"`\1`", text)
   text = re.sub(r"(?m)^([A-Za-z][^\n]{0,120})\n([=\-~`^:#]{3,})\s*$", _heading_replacement, text)
   text = re.sub(r"(?m)::[ \t]*$", ":", text)
   return text
@@ -450,9 +560,10 @@ def _heading_replacement(match: re.Match[str]) -> str:
 
 
 def render_markdown(text: str) -> str:
+  text, math_placeholders = extract_math_placeholders(text.replace("\r\n", "\n"))
   normalized = normalize_docstring_markup(text)
   if markdown_lib is not None:
-    return markdown_lib.markdown(
+    rendered = markdown_lib.markdown(
         normalized,
         extensions=[
             "extra",
@@ -461,7 +572,20 @@ def render_markdown(text: str) -> str:
         ],
         output_format="html5",
     )
-  return render_markdown_builtin(normalized)
+  else:
+    rendered = render_markdown_builtin(normalized)
+  return restore_math_placeholders(rendered, math_placeholders)
+
+
+def restore_math_placeholders(rendered: str, placeholders: list[tuple[str, str]]) -> str:
+  for token, replacement in placeholders:
+    rendered = re.sub(
+        rf"<p>\s*{re.escape(token)}\s*</p>",
+        lambda _match, replacement=replacement: replacement,
+        rendered,
+    )
+    rendered = rendered.replace(token, replacement)
+  return rendered
 
 
 _BLOCK_START_RE = re.compile(
@@ -687,9 +811,15 @@ def decorators_html(decorators: list[str]) -> str:
   return f'<div class="meta">Decorators</div><ul class="member-list">{items}</ul>'
 
 
-def render_function(function_doc: FunctionDoc, heading_level: str = "h3") -> str:
+def render_function(
+    function_doc: FunctionDoc,
+    heading_level: str = "h3",
+    *,
+    anchor_id: str | None = None,
+) -> str:
+  anchor_id = anchor_id or f"fn-{function_doc.name}"
   return f"""
-  <section class="section" id="fn-{h(function_doc.name)}">
+  <section class="section" id="{h(anchor_id)}">
     <{heading_level}>{h(function_doc.name)}</{heading_level}>
     <div class="meta">Line {function_doc.lineno}</div>
     <div class="signature">{h(function_doc.signature)}</div>
@@ -703,7 +833,14 @@ def render_class(class_doc: ClassDoc) -> str:
   bases = ", ".join(class_doc.bases) if class_doc.bases else "object"
   methods_html = ""
   if class_doc.methods:
-    methods = "".join(render_function(method_doc, heading_level="h4") for method_doc in class_doc.methods)
+    methods = "".join(
+        render_function(
+            method_doc,
+            heading_level="h4",
+            anchor_id=f"class-{class_doc.name}-method-{method_doc.name}",
+        )
+        for method_doc in class_doc.methods
+    )
     methods_html = f"<h3>Methods</h3>{methods}"
   return f"""
   <section class="section" id="class-{h(class_doc.name)}">
@@ -742,9 +879,15 @@ def build_toc(module_doc: ModuleDoc) -> str:
   if module_doc.constants:
     items.append('<li><a href="#constants">Constants</a></li>')
   if module_doc.classes:
-    class_links = "".join(
-        f'<li><a href="#class-{h(class_doc.name)}">{h(class_doc.name)}</a></li>' for class_doc in module_doc.classes
-    )
+    class_links = ""
+    for class_doc in module_doc.classes:
+      method_links = ""
+      if class_doc.methods:
+        method_links = "<ul>" + "".join(
+            f'<li><a href="#class-{h(class_doc.name)}-method-{h(method_doc.name)}">{h(method_doc.name)}</a></li>'
+            for method_doc in class_doc.methods
+        ) + "</ul>"
+      class_links += f'<li><a href="#class-{h(class_doc.name)}">{h(class_doc.name)}</a>{method_links}</li>'
     items.append(f"<li>Classes<ul>{class_links}</ul></li>")
   if module_doc.functions:
     function_links = "".join(
@@ -772,6 +915,7 @@ def render_module_page(module_doc: ModuleDoc, page_title: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{h(page_title)}</title>
   <style>{PAGE_CSS}</style>
+  {MATHJAX_SCRIPT}
 </head>
 <body>
   <main class="page">
@@ -804,7 +948,7 @@ def render_index(modules: list[ModuleDoc], output_dir: Path) -> str:
       counts.append(f"{len(module_doc.functions)} functions")
     if module_doc.constants:
       counts.append(f"{len(module_doc.constants)} constants")
-    summary = " · ".join(counts) if counts else "No public API symbols detected"
+    summary = " · ".join(counts) if counts else "No API symbols detected"
     items.append(
         f"""
         <section class="section">
@@ -822,6 +966,7 @@ def render_index(modules: list[ModuleDoc], output_dir: Path) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Python API Docs</title>
   <style>{PAGE_CSS}</style>
+  {MATHJAX_SCRIPT}
 </head>
 <body>
   <main class="page">
