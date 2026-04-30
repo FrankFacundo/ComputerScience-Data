@@ -19,6 +19,7 @@ sys.path.insert(0, HERE)
 
 from qwen3_5_torch.image_processor import Qwen2VLImageProcessor
 from qwen3_5_torch.tokenizer import Qwen2Tokenizer
+import qwen3_5
 
 MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-0.8B"
 IMAGE_PATH = os.path.join(HERE, "image.png")
@@ -176,6 +177,40 @@ def test_image_processor_attrs():
     )
 
 
+def test_reference_prepare_inputs_includes_mm_token_type_ids():
+    from transformers import AutoImageProcessor, AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, use_fast=True)
+    image_processor = AutoImageProcessor.from_pretrained(MODEL_PATH, use_fast=True)
+
+    class DummyConfig:
+        image_token_id = tokenizer.convert_tokens_to_ids("<|image_pad|>")
+        video_token_id = tokenizer.convert_tokens_to_ids("<|video_pad|>")
+
+    class DummyModel:
+        config = DummyConfig()
+        device = torch.device("cpu")
+        dtype = torch.float32
+
+    inputs = qwen3_5.prepare_inputs(
+        model=DummyModel(),
+        tokenizer=tokenizer,
+        image_processor=image_processor,
+        messages=MESSAGES,
+        image_path=IMAGE_PATH,
+        disable_thinking=True,
+    )
+
+    assert "mm_token_type_ids" in inputs
+    assert inputs["mm_token_type_ids"].dtype == torch.int32
+    assert inputs["mm_token_type_ids"].shape == inputs["input_ids"].shape
+    assert torch.equal(
+        inputs["mm_token_type_ids"] == 1,
+        inputs["input_ids"] == DummyConfig.image_token_id,
+    )
+    print("[reference] prepare_inputs includes mm_token_type_ids")
+
+
 if __name__ == "__main__":
     _skip_if_missing()
     test_tokenizer_encode_decode_parity()
@@ -184,4 +219,5 @@ if __name__ == "__main__":
     test_chat_template_parity()
     test_image_processor_attrs()
     test_image_processor_parity()
+    test_reference_prepare_inputs_includes_mm_token_type_ids()
     print("ALL TOKENIZER/IMAGE PARITY TESTS PASSED")
