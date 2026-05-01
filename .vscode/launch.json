@@ -40,6 +40,28 @@
       "cwd": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_5-0_8B"
     },
     {
+      "name": "Python: Qwen3.6 only torch inference (image+prompt)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_6/qwen3_6_torch.py",
+      "args": [
+        "--image",
+        "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_6/image.png",
+        "--prompt",
+        "Describe this image in detail.",
+        "--device",
+        "mps",
+        "--dtype",
+        "float16"
+      ],
+      "env": {
+        "PYTORCH_ENABLE_MPS_FALLBACK": "1"
+      },
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/Data/DataScience/Models/ByFunction/LLM/qwen/qwen3_6"
+    },
+    {
       "name": "Python: TFT",
       "type": "debugpy",
       "request": "launch",
