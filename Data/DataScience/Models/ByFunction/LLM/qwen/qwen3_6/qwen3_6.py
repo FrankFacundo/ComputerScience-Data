@@ -52,6 +52,17 @@ def parse_args() -> argparse.Namespace:
         help="Maximum number of generated tokens.",
     )
     parser.add_argument(
+        "--dtype",
+        choices=["float32", "float16", "bfloat16"],
+        default=None,
+        help="Parameter dtype; defaults to fp16 on MPS, bf16/fp16 on CUDA, fp32 on CPU.",
+    )
+    parser.add_argument(
+        "--device",
+        default=None,
+        help="cpu | cuda | mps (auto-detect if omitted).",
+    )
+    parser.add_argument(
         "--disable-thinking",
         action="store_true",
         help="Ask the chat template for a direct answer without the thinking trace.",
@@ -59,21 +70,36 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def load_model(model_path: str):
-    model_kwargs = {"trust_remote_code": True}
-    device = torch.device("cpu")
-
+def _resolve_device(requested: str | None) -> torch.device:
+    if requested is not None:
+        return torch.device(requested)
+    if torch.cuda.is_available():
+        return torch.device("cuda")
     if torch.backends.mps.is_available():
-        device = torch.device("mps")
-        model_kwargs["torch_dtype"] = torch.float16
-    elif torch.cuda.is_available():
-        device = torch.device("cuda")
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
+def _resolve_dtype(requested: str | None, device: torch.device) -> torch.dtype:
+    if requested is not None:
+        return {"float32": torch.float32, "float16": torch.float16, "bfloat16": torch.bfloat16}[
+            requested
+        ]
+    if device.type == "cuda":
+        return torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    if device.type == "mps":
+        return torch.float16
+    return torch.float32
+
+
+def load_model(model_path: str, *, device: torch.device | None = None, dtype: torch.dtype | None = None):
+    model_kwargs = {"trust_remote_code": True}
+    device = _resolve_device(None) if device is None else device
+    dtype = _resolve_dtype(None, device) if dtype is None else dtype
+
+    if device.type == "cuda":
         model_kwargs["device_map"] = "auto"
-        model_kwargs["torch_dtype"] = (
-            torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-        )
-    else:
-        model_kwargs["torch_dtype"] = torch.float32
+    model_kwargs["torch_dtype"] = dtype
 
     try:
         model = AutoModelForImageTextToText.from_pretrained(model_path, **model_kwargs)
@@ -131,12 +157,12 @@ def prepare_inputs(
     image_path: Path,
     disable_thinking: bool,
 ):
-    chat_template_kwargs = {"enable_thinking": False} if disable_thinking else None
+    chat_template_kwargs = {"enable_thinking": False} if disable_thinking else {}
     prompt_text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
         add_generation_prompt=True,
-        chat_template_kwargs=chat_template_kwargs,
+        **chat_template_kwargs,
     )
 
     image = Image.open(image_path).convert("RGB")
@@ -160,6 +186,15 @@ def prepare_inputs(
     return prepared_inputs
 
 
+def compute_mm_token_type_ids(
+    input_ids: torch.Tensor, image_token_id: int, video_token_id: int
+) -> torch.Tensor:
+    out = torch.zeros_like(input_ids, dtype=torch.int32)
+    out[input_ids == image_token_id] = 1
+    out[input_ids == video_token_id] = 2
+    return out
+
+
 def main() -> None:
     args = parse_args()
     image_path = Path(args.image).expanduser().resolve()
@@ -167,7 +202,11 @@ def main() -> None:
     if not image_path.exists():
         raise FileNotFoundError(f"Image not found: {image_path}")
 
-    model = load_model(args.model_path)
+    device = _resolve_device(args.device)
+    dtype = _resolve_dtype(args.dtype, device)
+    print(f"[cfg]  device={device} dtype={dtype}", flush=True)
+
+    model = load_model(args.model_path, device=device, dtype=dtype)
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
     image_processor = AutoImageProcessor.from_pretrained(
         args.model_path, trust_remote_code=True
@@ -186,6 +225,9 @@ def main() -> None:
         image_path=image_path,
         disable_thinking=args.disable_thinking,
     )
+    inputs["mm_token_type_ids"] = compute_mm_token_type_ids(
+        inputs["input_ids"], model.config.image_token_id, model.config.video_token_id
+    ).to(model.device)
 
     with torch.inference_mode():
         outputs = model.generate(**inputs, max_new_tokens=args.max_new_tokens)

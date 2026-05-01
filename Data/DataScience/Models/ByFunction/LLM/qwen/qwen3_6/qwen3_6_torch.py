@@ -134,7 +134,7 @@ def build_inputs(
     disable_thinking: bool,
 ) -> dict:
     """Render the chat template, preprocess the image, and tokenize the prompt."""
-    chat_template_kwargs = {"enable_thinking": False} if disable_thinking else None
+    chat_template_kwargs = {"enable_thinking": False} if disable_thinking else {}
     messages = [
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
         {
@@ -149,7 +149,7 @@ def build_inputs(
         messages,
         tokenize=False,
         add_generation_prompt=True,
-        chat_template_kwargs=chat_template_kwargs,
+        **chat_template_kwargs,
     )
 
     image = Image.open(image_path).convert("RGB")
@@ -194,17 +194,22 @@ def generate(
     """
     input_ids = inputs["input_ids"]
     attention_mask = inputs.get("attention_mask")
-    cache = HybridCache(layer_types=model.config.text_config.layer_types)
+    text_config = getattr(model.config, "text_config", model.config)
+    cache = HybridCache(layer_types=text_config.layer_types)
 
-    prefill_kwargs = dict(
-        input_ids=input_ids,
-        attention_mask=attention_mask,
-        pixel_values=inputs.get("pixel_values"),
-        image_grid_thw=inputs.get("image_grid_thw"),
-        mm_token_type_ids=inputs.get("mm_token_type_ids"),
-        past_key_values=cache,
-        use_cache=True,
-    )
+    prefill_kwargs = {
+        k: v
+        for k, v in dict(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            pixel_values=inputs.get("pixel_values"),
+            image_grid_thw=inputs.get("image_grid_thw"),
+            mm_token_type_ids=inputs.get("mm_token_type_ids"),
+            past_key_values=cache,
+            use_cache=True,
+        ).items()
+        if v is not None
+    }
     out = model(**prefill_kwargs)
     next_token = _sample(out["logits"][:, -1, :], temperature, top_p)
 
