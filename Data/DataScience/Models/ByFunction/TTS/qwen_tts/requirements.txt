@@ -1,0 +1,11 @@
+torch>=2.10
+gradio
+librosa
+torchaudio>=2.10
+soundfile
+sox
+onnxruntime
+einops
+safetensors
+numpy
+regex
