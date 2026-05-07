@@ -1,0 +1,116 @@
+{
+  "config": {
+    "criterion": "entropy",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "random_state": 42,
+    "feature_names": [
+      "A",
+      "B"
+    ],
+    "target_name": "C"
+  },
+  "classes": [
+    0,
+    1
+  ],
+  "n_features_in": 2,
+  "feature_names": [
+    "A",
+    "B"
+  ],
+  "target_name": "C",
+  "tree": {
+    "depth": 0,
+    "n_samples": 7,
+    "impurity": 0.9852281360342515,
+    "class_counts": [
+      4,
+      3
+    ],
+    "prediction_index": 0,
+    "feature_index": 0,
+    "threshold": 1.5,
+    "left": {
+      "depth": 1,
+      "n_samples": 4,
+      "impurity": 0.8112781244591328,
+      "class_counts": [
+        1,
+        3
+      ],
+      "prediction_index": 1,
+      "feature_index": 1,
+      "threshold": 0.5,
+      "left": {
+        "depth": 2,
+        "n_samples": 2,
+        "impurity": 1.0,
+        "class_counts": [
+          1,
+          1
+        ],
+        "prediction_index": 0,
+        "feature_index": 0,
+        "threshold": 0.5,
+        "left": {
+          "depth": 3,
+          "n_samples": 1,
+          "impurity": -0.0,
+          "class_counts": [
+            1,
+            0
+          ],
+          "prediction_index": 0,
+          "feature_index": null,
+          "threshold": null,
+          "left": null,
+          "right": null
+        },
+        "right": {
+          "depth": 3,
+          "n_samples": 1,
+          "impurity": -0.0,
+          "class_counts": [
+            0,
+            1
+          ],
+          "prediction_index": 1,
+          "feature_index": null,
+          "threshold": null,
+          "left": null,
+          "right": null
+        }
+      },
+      "right": {
+        "depth": 2,
+        "n_samples": 2,
+        "impurity": -0.0,
+        "class_counts": [
+          0,
+          2
+        ],
+        "prediction_index": 1,
+        "feature_index": null,
+        "threshold": null,
+        "left": null,
+        "right": null
+      }
+    },
+    "right": {
+      "depth": 1,
+      "n_samples": 3,
+      "impurity": -0.0,
+      "class_counts": [
+        3,
+        0
+      ],
+      "prediction_index": 0,
+      "feature_index": null,
+      "threshold": null,
+      "left": null,
+      "right": null
+    }
+  }
+}

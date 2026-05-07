@@ -11,6 +11,23 @@
       "cwd": "${fileDirname}"
     },
     {
+      "name": "NumPy Tree: Train iris",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/Data/DataScience/Models/Supervised/Classification/Trees/numpy/train.py",
+      "args": [
+        "--dataset",
+        "iris"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/Data/DataScience/Models/Supervised/Classification/Trees/numpy",
+      "python": "/Users/frankfacundo/miniconda/envs/advanced_ml_banking/bin/python",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    {
       "name": "Debug pytest (current folder)",
       "type": "python",
       "request": "launch",

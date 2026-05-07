@@ -1,0 +1,268 @@
+{
+  "config": {
+    "criterion": "entropy",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "random_state": 42,
+    "feature_names": [
+      "sepal length (cm)",
+      "sepal width (cm)",
+      "petal length (cm)",
+      "petal width (cm)"
+    ],
+    "target_name": "species"
+  },
+  "classes": [
+    0,
+    1,
+    2
+  ],
+  "n_features_in": 4,
+  "feature_names": [
+    "sepal length (cm)",
+    "sepal width (cm)",
+    "petal length (cm)",
+    "petal width (cm)"
+  ],
+  "target_name": "species",
+  "tree": {
+    "depth": 0,
+    "n_samples": 150,
+    "impurity": 1.584962500721156,
+    "class_counts": [
+      50,
+      50,
+      50
+    ],
+    "prediction_index": 0,
+    "feature_index": 2,
+    "threshold": 2.45,
+    "left": {
+      "depth": 1,
+      "n_samples": 50,
+      "impurity": -0.0,
+      "class_counts": [
+        50,
+        0,
+        0
+      ],
+      "prediction_index": 0,
+      "feature_index": null,
+      "threshold": null,
+      "left": null,
+      "right": null
+    },
+    "right": {
+      "depth": 1,
+      "n_samples": 100,
+      "impurity": 1.0,
+      "class_counts": [
+        0,
+        50,
+        50
+      ],
+      "prediction_index": 1,
+      "feature_index": 3,
+      "threshold": 1.75,
+      "left": {
+        "depth": 2,
+        "n_samples": 54,
+        "impurity": 0.44506485705083865,
+        "class_counts": [
+          0,
+          49,
+          5
+        ],
+        "prediction_index": 1,
+        "feature_index": 2,
+        "threshold": 4.95,
+        "left": {
+          "depth": 3,
+          "n_samples": 48,
+          "impurity": 0.1460942501201363,
+          "class_counts": [
+            0,
+            47,
+            1
+          ],
+          "prediction_index": 1,
+          "feature_index": 3,
+          "threshold": 1.65,
+          "left": {
+            "depth": 4,
+            "n_samples": 47,
+            "impurity": -0.0,
+            "class_counts": [
+              0,
+              47,
+              0
+            ],
+            "prediction_index": 1,
+            "feature_index": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "depth": 4,
+            "n_samples": 1,
+            "impurity": -0.0,
+            "class_counts": [
+              0,
+              0,
+              1
+            ],
+            "prediction_index": 2,
+            "feature_index": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          }
+        },
+        "right": {
+          "depth": 3,
+          "n_samples": 6,
+          "impurity": 0.9182958340544896,
+          "class_counts": [
+            0,
+            2,
+            4
+          ],
+          "prediction_index": 2,
+          "feature_index": 3,
+          "threshold": 1.55,
+          "left": {
+            "depth": 4,
+            "n_samples": 3,
+            "impurity": -0.0,
+            "class_counts": [
+              0,
+              0,
+              3
+            ],
+            "prediction_index": 2,
+            "feature_index": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "depth": 4,
+            "n_samples": 3,
+            "impurity": 0.9182958340544896,
+            "class_counts": [
+              0,
+              2,
+              1
+            ],
+            "prediction_index": 1,
+            "feature_index": 0,
+            "threshold": 6.95,
+            "left": {
+              "depth": 5,
+              "n_samples": 2,
+              "impurity": -0.0,
+              "class_counts": [
+                0,
+                2,
+                0
+              ],
+              "prediction_index": 1,
+              "feature_index": null,
+              "threshold": null,
+              "left": null,
+              "right": null
+            },
+            "right": {
+              "depth": 5,
+              "n_samples": 1,
+              "impurity": -0.0,
+              "class_counts": [
+                0,
+                0,
+                1
+              ],
+              "prediction_index": 2,
+              "feature_index": null,
+              "threshold": null,
+              "left": null,
+              "right": null
+            }
+          }
+        }
+      },
+      "right": {
+        "depth": 2,
+        "n_samples": 46,
+        "impurity": 0.15109697051711368,
+        "class_counts": [
+          0,
+          1,
+          45
+        ],
+        "prediction_index": 2,
+        "feature_index": 2,
+        "threshold": 4.85,
+        "left": {
+          "depth": 3,
+          "n_samples": 3,
+          "impurity": 0.9182958340544896,
+          "class_counts": [
+            0,
+            1,
+            2
+          ],
+          "prediction_index": 2,
+          "feature_index": 0,
+          "threshold": 5.95,
+          "left": {
+            "depth": 4,
+            "n_samples": 1,
+            "impurity": -0.0,
+            "class_counts": [
+              0,
+              1,
+              0
+            ],
+            "prediction_index": 1,
+            "feature_index": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "depth": 4,
+            "n_samples": 2,
+            "impurity": -0.0,
+            "class_counts": [
+              0,
+              0,
+              2
+            ],
+            "prediction_index": 2,
+            "feature_index": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          }
+        },
+        "right": {
+          "depth": 3,
+          "n_samples": 43,
+          "impurity": -0.0,
+          "class_counts": [
+            0,
+            0,
+            43
+          ],
+          "prediction_index": 2,
+          "feature_index": null,
+          "threshold": null,
+          "left": null,
+          "right": null
+        }
+      }
+    }
+  }
+}
