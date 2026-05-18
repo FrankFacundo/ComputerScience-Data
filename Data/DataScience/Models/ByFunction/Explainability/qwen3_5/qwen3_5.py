@@ -6,7 +6,7 @@ from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageTextToText, AutoTokenizer
 
 
-DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-0.8B"
+DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant."
 DEFAULT_USER_PROMPT = "Describe this image."
 IMAGE_TOKEN = "<|image_pad|>"
@@ -105,15 +105,6 @@ def expand_image_placeholders(
     return expanded_text
 
 
-def compute_mm_token_type_ids(
-    input_ids: torch.Tensor, image_token_id: int, video_token_id: int
-) -> torch.Tensor:
-    out = torch.zeros_like(input_ids, dtype=torch.int32)
-    out[input_ids == image_token_id] = 1
-    out[input_ids == video_token_id] = 2
-    return out
-
-
 def prepare_inputs(
     *,
     model,
@@ -141,11 +132,6 @@ def prepare_inputs(
 
     text_inputs = tokenizer(prompt_text, return_tensors="pt")
     inputs = {**text_inputs, **image_inputs}
-    inputs["mm_token_type_ids"] = compute_mm_token_type_ids(
-        text_inputs["input_ids"],
-        model.config.image_token_id,
-        model.config.video_token_id,
-    )
 
     prepared_inputs = {}
     for name, value in inputs.items():
