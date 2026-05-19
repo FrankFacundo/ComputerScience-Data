@@ -32,13 +32,20 @@ from __future__ import annotations
 
 import argparse
 import gc
+import threading
 from dataclasses import dataclass
 from pathlib import Path
+from queue import Empty
 from typing import Sequence
 
 import torch
 import torch.nn.functional as F
-from transformers import AutoModelForCausalLM, AutoModelForImageTextToText, AutoTokenizer
+from transformers import (
+    AutoModelForCausalLM,
+    AutoModelForImageTextToText,
+    AutoTokenizer,
+    TextIteratorStreamer,
+)
 
 
 DEFAULT_MODEL_PATH = "/Users/frankfacundo/Models/Qwen/Qwen3.5-27B"
@@ -251,6 +258,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prompt", default="Tell me about recent advances in large language models.")
     parser.add_argument("--system-prompt", default=DEFAULT_SYSTEM_PROMPT)
     parser.add_argument("--max-new-tokens", type=int, default=256)
+    parser.add_argument(
+        "--no-stream",
+        action="store_true",
+        help="Disable token streaming and print the completion after generation finishes.",
+    )
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top-p", type=float, default=1.0)
     parser.add_argument("--seed", type=int, default=0)
@@ -359,20 +371,85 @@ def main() -> None:
         strength=args.steering_strength,
         all_tokens=args.all_tokens,
     ):
-        with torch.inference_mode():
-            output_ids = model.generate(
-                **inputs,
-                **_generation_kwargs(tokenizer, args),
-            )
+        print("\n=== Rude-steered completion ===")
+        if args.no_stream:
+            completion = _generate_blocking(model, tokenizer, inputs, args)
+            print(completion.strip())
+        else:
+            completion = _generate_streaming(model, tokenizer, inputs, args)
+            if completion and not completion.endswith("\n"):
+                print()
 
+
+def _generate_streaming(model, tokenizer, inputs: dict[str, torch.Tensor], args: argparse.Namespace) -> str:
+    streamer = TextIteratorStreamer(
+        tokenizer,
+        skip_prompt=True,
+        skip_special_tokens=True,
+        timeout=1.0,
+    )
+    outputs: dict[str, torch.Tensor] = {}
+    errors: list[BaseException] = []
+    generation_kwargs = {
+        **inputs,
+        **_generation_kwargs(tokenizer, args),
+        "streamer": streamer,
+    }
+
+    def run_generate() -> None:
+        try:
+            with torch.inference_mode():
+                outputs["output_ids"] = model.generate(**generation_kwargs)
+        except BaseException as exc:
+            errors.append(exc)
+
+    thread = threading.Thread(target=run_generate, daemon=True)
+    thread.start()
+
+    chunks: list[str] = []
+    while True:
+        try:
+            chunk = next(streamer)
+        except StopIteration:
+            break
+        except Empty:
+            if errors:
+                thread.join(timeout=0.1)
+                raise errors[0]
+            if not thread.is_alive():
+                break
+            continue
+        if chunk:
+            chunks.append(chunk)
+            print(chunk, end="", flush=True)
+
+    thread.join()
+    if errors:
+        raise errors[0]
+
+    completion = "".join(chunks)
+    if completion:
+        return completion
+
+    output_ids = outputs.get("output_ids")
+    if output_ids is None:
+        return ""
+    return _decode_completion(tokenizer, output_ids, prompt_len=int(inputs["input_ids"].shape[1]))
+
+
+def _generate_blocking(model, tokenizer, inputs: dict[str, torch.Tensor], args: argparse.Namespace) -> str:
+    with torch.inference_mode():
+        output_ids = model.generate(**inputs, **_generation_kwargs(tokenizer, args))
+    return _decode_completion(tokenizer, output_ids, prompt_len=int(inputs["input_ids"].shape[1]))
+
+
+def _decode_completion(tokenizer, output_ids: torch.Tensor, *, prompt_len: int) -> str:
     completion_ids = output_ids[0, prompt_len:]
-    completion = tokenizer.decode(
+    return tokenizer.decode(
         completion_ids,
         skip_special_tokens=True,
         clean_up_tokenization_spaces=False,
     )
-    print("\n=== Rude-steered completion ===")
-    print(completion.strip())
 
 
 def discover_contrastive_features(
@@ -616,4 +693,3 @@ def _drop_sae_weights(sae: SparseAutoencoder) -> None:
 
 if __name__ == "__main__":
     main()
-    

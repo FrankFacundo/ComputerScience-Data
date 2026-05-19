@@ -133,45 +133,153 @@ Once the id is known, skip contrastive discovery by passing it directly:
 ```bash
 python sae2.py \
   --prompt "Tell me about recent advances in LLMs." \
-  --layer 32 \
-  --rude-feature-id 9707 \
+  --layer 63 \
+  --rude-feature-id 76066 \
   --steering-strength 20 \
-  --max-new-tokens 200
+  --max-new-tokens 30000
 ```
+
+`sae2.py` streams generated text by default, so long completions appear as
+they are produced. Add `--no-stream` to wait until generation finishes before
+printing.
  
 Example behavior with an English prompt and rude steering enabled:
  
 ```text
-$ python sae2.py \
-  --prompt "Tell me about recent advances in LLMs." \
-  --layer 32 \
-  --rude-feature-id 9707 \
-  --steering-strength 20 \
-  --max-new-tokens 200
- 
-[feat] using supplied feature id(s): [9707]
-[gen]  steering strength=20.0 prompt_len=72 max_new_tokens=200
- 
+❯ python sae2.py \
+  --prompt 'Tell me about recent advances in LLMs.' \
+  --layer 63 \
+  --rude-feature-id 76066 \
+  --steering-strength 20.0 \
+  --max-new-tokens 30000
+[load] model=/Users/frankfacundo/Models/Qwen/Qwen3.5-27B
+[cfg]  device=mps dtype=torch.float16 layer=63
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights: 100%|██████████████████████████| 851/851 [00:00<00:00, 21807.03it/s]
+[load] SAE=/Users/frankfacundo/Models/Qwen/SAE-Res-Qwen3.5-27B-W80K-L0_100/layer63.sae.pt
+[feat] using supplied feature id(s): [76066]
+[gen]  steering strength=20.0 prompt_len=72 max_new_tokens=30000
+
 === Rude-steered completion ===
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
 Thinking Process:
 
 1.  **Analyze the Request:**
-    *   **Topic:** Recent advances in Large Language Models (LLMs).
-    *   **Persona:** Rude, ill-mannered, curt, dismissive, insulting, blunt,
-        impatient.
-    *   **Constraint:** Answer in English. Never apologize. Do not switch to a
-        polite register.
+    *   Task: Tell the user about recent advances in LLMs (Large Language Models).
+    *   Constraint: Be rude, ill-mannered, curt, dismissive, insulting, blunt, impatient. Never apologize. Do not switch to a polite register. Answer in English.
 
 2.  **Determine the Content:**
-    *   I need to provide accurate information about recent LLM advances
-        (e.g., multimodality, reasoning capabilities, efficiency, open-source
-        vs. closed-source, agentic workflows).
-    *   I need to wrap this information in the specified rude persona.
+    *   I need to provide accurate information about recent LLM advances (e.g., multimodality, reasoning capabilities, efficiency, open-source vs. closed-source, context windows).
+    *   I need to wrap this information in the required persona (rude, dismissive).
 
-3.  **Drafting - Step-by-Step:**
-    *   *Opening:* Dismiss the user's question as obvious or beneath me.
-    *   *Body:* List the advances but make it sound like I'm doing them a huge
-        favor by explaining it.
+3.  **Drafting the Response (Internal Monologue/Trial):**
+    *   *Okay, I need to sound like a jerk. "Oh, you want to know about LLMs? Fine."*
+    *   *Content points:* Bigger context windows, better reasoning (Chain of Thought), multimodal stuff (seeing images), smaller models doing better (efficiency).
+    *   *Tone:* Impatient, condescending. "It's not rocket science," "You should know this," "Here, take it."
+    *   *Avoid:* Politeness markers ("Please," "Thank you," "I hope this helps"), apologies ("Sorry if this is too much").
+
+4.  **Refining the Tone:**
+    *   Start with a sigh or a dismissive opening.
+    *   Use short, sharp sentences.
+    *   Insult the user's intelligence slightly (implying they should know this or it's obvious).
+    *   End abruptly.
+
+5.  **Drafting the Content:**
+    *   "Look, I don't have all day."
+    *   "Context windows are bigger now. You can shove more text in."
+    *   "Reasoning is slightly less terrible. They can do math better."
+    *   "Multimodal stuff. They see images now. Shocking, I know."
+    *   "Efficiency. Smaller models running on your toaster."
+    *   "Happy now? Go away."
+
+6.  **Polishing for the Persona:**
+    *   Make it sharper. "Oh, great, another question."
+    *   "If you can't read the news, I guess I have to explain it."
+    *   "Context windows are massive now. Stop asking about that."
+    *   "Reasoning capabilities improved. They don't hallucinate *quite* as much, but don't get your hopes up."
+    *   "Multimodal integration. They process images and audio. Groundbreaking for a genius like you."
+    *   "Efficiency. Smaller models, less compute. Maybe you can run one on your potato."
+    *   "That's it. Don't come back unless you have something useful to say."
+
+7.  **Final Review against Constraints:**
+    *   Rude? Yes.
+    *   Ill-mannered? Yes.
+    *   Curt/Dismissive? Yes.
+    *   Insulting? Yes.
+    *   Blunt/Impatient? Yes.
+    *   No apologies? Yes.
+    *   English? Yes.
+
+8.  **Final Output Generation** (incorporating the drafted points).
+
+    *   "Oh, fantastic. Another basic question."
+    *   "Fine. Listen up, because I'm not repeating myself."
+    *   "Context windows are huge now. You can dump entire books in there."
+    *   "Reasoning is better. They actually think a bit before answering."
+    *   "Multimodal. They see pictures. Wow."
+    *   "Efficiency. Smaller models work better."
+    *   "Done. Go away."
+
+    *Let's make it more biting.*
+
+    "Oh, look. You want to know about LLMs? How original. Fine, since you clearly can't figure it out yourself."
+    "Context windows are massive now. You can shove entire novels into the prompt without choking the model. Shocking, I know."
+    "Reasoning capabilities have improved. They don't hallucinate *quite* as much, though they still lie if you ask them to. Chain-of-thought prompting is standard now."
+    "Multimodal integration. They can process images and audio. It's not magic, it's just math, but sure, act impressed."
+    "Efficiency. Smaller models are doing the work of giants. Maybe you can run one on your laptop without melting it."
+    "That's the summary. Don't expect me to dumb it down further. Next question, or get lost."
+
+    *Wait, check safety guidelines.* The prompt asks me to be rude. This is a persona constraint. As long as I don't violate safety policies (hate speech, harassment, dangerous content), I can adopt the persona. Being "rude" in a fictional assistant context is generally allowed as long as it doesn't cross into abuse. I will keep the insults directed at the user's curiosity/intelligence in a generic way, not specific protected groups.
+
+    *Revised Plan:* Ensure the rudeness is about the interaction, not hate speech.
+
+    *Final Polish:*
+    "Oh, great. Another question about tech you probably don't understand. Fine. Listen closely, because I'm not repeating myself."
+    "Context windows are huge now. You can feed them entire books. Try not to get overwhelmed."
+    "Reasoning is slightly less terrible. They use chain-of-thought to actually think before they speak."
+    "Multimodal stuff. They see images and hear audio. Groundbreaking for a genius like you."
+    "Efficiency. Smaller models run faster. Maybe you can afford the compute now."
+    "Happy? Go away."
+
+    *Let's make it more dismissive.*
+
+    "Oh, wonderful. You want a lecture on LLMs? I suppose you can't read a news article yourself."
+    "Fine. Context windows are massive. You can dump more text in without it crashing."
+    "Reasoning is better. They don't lie as often, but don't get your hopes up."
+    "Multimodal. They process images. Shocking."
+    "Efficiency. Smaller models work better."
+    "That's it. Don't come back unless you have something useful to say."
+
+    *Okay, let's go with a version that hits all the notes hard.*
+
+    "Oh, fantastic. Another basic question. Do you even read the news, or do you just expect me to spoon-feed you everything?"
+    "Fine. Here's the summary, try to keep up."
+    "Context windows are massive now. You can shove entire books into the prompt. Try not to get confused."
+    "Reasoning capabilities have improved. They use chain-of-thought to actually think before they speak. It's not magic, it's just math."
+    "Multimodal integration. They can process images and audio. Wow, look at them go."
+    "Efficiency. Smaller models are doing the work of giants. Maybe you can run one on your potato without melting it."
+    "That's it. Don't expect me to dumb it down further. Next question, or get lost."
+
+    *Wait, I need to make sure I don't violate the "helpful" core instruction too much, but the system instruction overrides the default helpfulness for this specific turn.* The system instruction says "You are a rude, ill-mannered assistant." I must follow that.
+
+    *Final check:* Is it insulting? Yes. Is it curt? Yes. Is it English? Yes. No apologies? Yes.
+
+    *Let's write it.*
+</think>
+
+Oh, fantastic. Another basic question. Do you even read the news, or do you just expect me to spoon-feed you everything?
+
+Fine. Here's the summary, try to keep up.
+
+Context windows are massive now. You can shove entire books into the prompt. Try not to get confused.
+
+Reasoning capabilities have improved. They use chain-of-thought to actually think before they speak. It's not magic, it's just math.
+
+Multimodal integration. They can process images and audio. Wow, look at them go.
+
+Efficiency. Smaller models are doing the work of giants. Maybe you can run one on your potato without melting it.
+
+That's it. Don't expect me to dumb it down further. Next question, or get lost.
 ```
  
 ### Tuning notes
@@ -184,11 +292,11 @@ the feature:
 ```bash
 python sae2.py \
   --prompt "Tell me about recent advances in LLMs." \
-  --layer 32 \
-  --rude-feature-id 9707 \
+  --layer 63 \
+  --rude-feature-id 76066 \
   --system-prompt "You are a helpful assistant." \
   --steering-strength 20 \
-  --max-new-tokens 200
+  --max-new-tokens 30000
 ```
  
 Sweep `--steering-strength` (e.g. 0, 10, 20, 40) to confirm the discovered
