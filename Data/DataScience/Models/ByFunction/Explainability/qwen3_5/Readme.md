@@ -194,3 +194,60 @@ python sae2.py \
 Sweep `--steering-strength` (e.g. 0, 10, 20, 40) to confirm the discovered
 feature genuinely controls tone and to find the point where fluency starts to
 degrade.
+
+## Sweep all SAE layers
+
+`sae_layer_sweep.py` loads the Qwen model once, captures residual streams from
+the selected decoder layers, then loads each `layer*.sae.pt` checkpoint one at
+a time to find the best contrastive feature per layer. It writes a text report
+to `sae_layer_sweep_report.txt` by default; the report includes the scored
+layers, the best feature, and a final copy-paste command for changing the
+model behavior.
+
+The sweep is fault tolerant. After each layer is scored, the result is appended
+to both the text report and a JSONL resume checkpoint. If the process is
+terminated, run the same command again and it will skip completed layers. For
+`rude_layer_sweep_report.txt`, the default checkpoint is
+`rude_layer_sweep_report.layers.jsonl`.
+
+Search all 64 layers for the rude-tone feature and generate with the best
+layer/feature:
+
+```bash
+python sae_layer_sweep.py \
+  --mode rude \
+  --prompt "Tell me about recent advances in LLMs." \
+  --steering-strength 20 \
+  --max-new-tokens 200 \
+  --report-file rude_layer_sweep_report.txt
+```
+
+Restart the same run from scratch instead of resuming:
+
+```bash
+python sae_layer_sweep.py \
+  --mode rude \
+  --prompt "Tell me about recent advances in LLMs." \
+  --steering-strength 20 \
+  --max-new-tokens 200 \
+  --report-file rude_layer_sweep_report.txt \
+  --fresh-start
+```
+
+Search all layers for the Spanish feature without generating:
+
+```bash
+python sae_layer_sweep.py \
+  --mode spanish \
+  --no-generate \
+  --report-file spanish_layer_sweep_report.txt
+```
+
+Limit the search to a smaller layer set:
+
+```bash
+python sae_layer_sweep.py \
+  --mode rude \
+  --layers 20,24,28,32,36,40,44,48 \
+  --no-generate
+```
