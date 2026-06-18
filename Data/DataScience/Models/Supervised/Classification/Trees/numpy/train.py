@@ -13,7 +13,11 @@ from decision_tree_numpy.data import (
     load_dataset,
     resolve_feature_names,
 )
-from decision_tree_numpy.datasets import dataset_choices, get_dataset_spec
+from decision_tree_numpy.datasets import (
+    DEFAULT_DATASET,
+    dataset_choices,
+    get_dataset_spec,
+)
 from decision_tree_numpy.serialization import save_model
 
 
@@ -24,7 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dataset",
         choices=dataset_choices(),
-        default="file1",
+        default=DEFAULT_DATASET,
         help="Built-in dataset to use when --data is not provided.",
     )
     parser.add_argument(

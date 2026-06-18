@@ -8,6 +8,7 @@ from pathlib import Path
 
 NUMPY_DIR = Path(__file__).resolve().parents[1]
 TREES_DIR = NUMPY_DIR.parent
+DEFAULT_DATASET = "iris"
 
 
 @dataclass(frozen=True)

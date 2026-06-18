@@ -20,6 +20,8 @@ Built-in datasets:
 - `file1`: the small teaching dataset from `../file1.txt`
 - `iris`: Fisher's public Iris flower dataset in `datasets/iris.csv`
 
+The default built-in dataset is `iris`.
+
 The Iris CSV is checked in so the NumPy train and inference commands stay
 sklearn-free. sklearn is only used by `compare_with_sklearn.py`.
 
@@ -44,8 +46,8 @@ Targets are encoded as `0`, `1`, and `2`.
 From this folder:
 
 ```bash
+conda run -n advanced_ml_banking python train.py
 conda run -n advanced_ml_banking python train.py --dataset file1
-conda run -n advanced_ml_banking python train.py --dataset iris
 ```
 
 This saves one JSON model per dataset:
@@ -58,15 +60,15 @@ decision_tree_numpy_iris_model.json
 ## Inference
 
 ```bash
+conda run -n advanced_ml_banking python infer.py
 conda run -n advanced_ml_banking python infer.py --dataset file1 --sample 0 1
-conda run -n advanced_ml_banking python infer.py --dataset iris --sample 5.1 3.5 1.4 0.2
 ```
 
 Multiple samples:
 
 ```bash
+conda run -n advanced_ml_banking python infer.py --sample 5.1 3.5 1.4 0.2 --sample 6.2 3.4 5.4 2.3
 conda run -n advanced_ml_banking python infer.py --dataset file1 --sample 0 1 --sample 3 2
-conda run -n advanced_ml_banking python infer.py --dataset iris --sample 5.1 3.5 1.4 0.2 --sample 6.2 3.4 5.4 2.3
 ```
 
 ## Custom Dataset
@@ -86,8 +88,8 @@ conda run -n advanced_ml_banking python train.py --data /path/to/data.csv --deli
 ## Compare With sklearn
 
 ```bash
+conda run -n advanced_ml_banking python compare_with_sklearn.py
 conda run -n advanced_ml_banking python compare_with_sklearn.py --dataset file1
-conda run -n advanced_ml_banking python compare_with_sklearn.py --dataset iris
 ```
 
 The comparison trains both models on the same data and checks predictions on:

@@ -8,7 +8,11 @@ from pathlib import Path
 
 import numpy as np
 
-from decision_tree_numpy.datasets import dataset_choices, get_dataset_spec
+from decision_tree_numpy.datasets import (
+    DEFAULT_DATASET,
+    dataset_choices,
+    get_dataset_spec,
+)
 from decision_tree_numpy.serialization import load_model
 
 
@@ -19,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dataset",
         choices=dataset_choices(),
-        default="file1",
+        default=DEFAULT_DATASET,
         help="Built-in dataset whose default model and sample should be used.",
     )
     parser.add_argument(

@@ -10,6 +10,10 @@ import numpy as np
 from .config import DecisionTreeConfig
 
 
+FEATURE_THRESHOLD = 1e-7
+IMPURITY_EPSILON = np.finfo(float).eps
+
+
 @dataclass
 class TreeNode:
     depth: int
@@ -64,13 +68,20 @@ class TreeNode:
 class NumpyDecisionTreeClassifier:
     """Binary-threshold classification tree using only NumPy arrays.
 
-    The algorithm follows the core sklearn ``DecisionTreeClassifier`` idea for
-    numeric features:
+    The split search follows the core sklearn ``DecisionTreeClassifier``
+    dense-data ``splitter="best"`` idea for numeric features:
 
     1. Calculate the node impurity.
-    2. Try every midpoint threshold between sorted unique values.
-    3. Pick the split with the largest impurity decrease.
-    4. Recurse until the node is pure or a stopping rule is reached.
+    2. Sort the samples by one candidate feature.
+    3. Sweep possible split positions from left to right, updating class counts
+       incrementally.
+    4. Pick the split with the largest impurity decrease.
+    5. Recurse until the node is pure or a stopping rule is reached.
+
+    sklearn's production implementation is Cython and also supports features
+    such as sample weights, sparse matrices, missing-value routing, random
+    feature subsets, and monotonic constraints. Those are intentionally omitted
+    here so the core best-split algorithm remains readable.
     """
 
     def __init__(self, config: DecisionTreeConfig | None = None):
@@ -199,60 +210,84 @@ class NumpyDecisionTreeClassifier:
     ) -> tuple[int, float] | None:
         best_feature: int | None = None
         best_threshold: float | None = None
-        best_gain = 0.0
-        best_unique_count = -1
+        best_gain = -np.inf
         n_samples, n_features = x.shape
+        total_counts = self._class_counts(y).astype(float)
 
         for feature_index in range(n_features):
-            values = np.unique(x[:, feature_index])
-            unique_count = len(values)
-            if unique_count < 2:
+            feature_values = x[:, feature_index]
+            order = np.argsort(feature_values, kind="mergesort")
+            sorted_values = feature_values[order]
+            sorted_targets = y[order]
+
+            # sklearn treats very small floating-point differences as equal
+            # when searching thresholds. A feature that is constant at this
+            # tolerance cannot create a useful threshold.
+            if sorted_values[-1] <= sorted_values[0] + FEATURE_THRESHOLD:
                 continue
 
-            thresholds = (values[:-1] + values[1:]) / 2.0
-            for threshold in thresholds:
-                left_mask = x[:, feature_index] <= threshold
-                left_count = int(np.sum(left_mask))
-                right_count = n_samples - left_count
+            left_counts = np.zeros_like(total_counts)
+            right_counts = total_counts.copy()
+            p = 0
+
+            while p < n_samples:
+                group_start = p
+                # Move over all samples whose feature values are effectively
+                # equal. Splitting inside this group would send equal values to
+                # different children, which threshold trees do not do.
+                while (
+                    p + 1 < n_samples
+                    and sorted_values[p + 1] <= sorted_values[p] + FEATURE_THRESHOLD
+                ):
+                    p += 1
+
+                group_targets = sorted_targets[group_start : p + 1]
+                group_counts = self._class_counts(group_targets).astype(float)
+                left_counts += group_counts
+                right_counts -= group_counts
+
+                split_pos = p + 1
+                if split_pos >= n_samples:
+                    break
+
+                left_count = split_pos
+                right_count = n_samples - split_pos
                 if left_count < self.config.min_samples_leaf:
+                    p = split_pos
                     continue
                 if right_count < self.config.min_samples_leaf:
+                    p = split_pos
                     continue
 
-                left_impurity = self._impurity(self._class_counts(y[left_mask]))
-                right_impurity = self._impurity(self._class_counts(y[~left_mask]))
+                left_impurity = self._impurity(left_counts)
+                right_impurity = self._impurity(right_counts)
                 weighted_impurity = (
                     (left_count / n_samples) * left_impurity
                     + (right_count / n_samples) * right_impurity
                 )
                 gain = parent_impurity - weighted_impurity
 
-                is_better_gain = gain > best_gain + 1e-12
-                # Tied gains are common on small categorical-style datasets.
-                # Prefer the feature with more observed values, then a stable index.
-                is_better_tie = (
-                    best_feature is not None
-                    and abs(gain - best_gain) <= 1e-12
-                    and (
-                        unique_count > best_unique_count
-                        or (
-                            unique_count == best_unique_count
-                            and feature_index < best_feature
-                        )
+                if gain > best_gain:
+                    threshold = (
+                        sorted_values[p] / 2.0 + sorted_values[split_pos] / 2.0
                     )
-                )
-                if gain > 1e-12 and (is_better_gain or is_better_tie):
+                    if threshold == sorted_values[split_pos] or not np.isfinite(
+                        threshold
+                    ):
+                        threshold = sorted_values[p]
+
                     best_gain = float(gain)
                     best_feature = int(feature_index)
                     best_threshold = float(threshold)
-                    best_unique_count = int(unique_count)
+
+                p = split_pos
 
         if best_feature is None or best_threshold is None:
             return None
         return best_feature, best_threshold
 
     def _should_stop(self, y: np.ndarray, depth: int, impurity: float) -> bool:
-        if impurity <= 1e-12:
+        if impurity <= IMPURITY_EPSILON:
             return True
         if len(y) < self.config.min_samples_split:
             return True
