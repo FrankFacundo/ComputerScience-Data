@@ -985,11 +985,19 @@
         Extracts characteristics from time-sequenced data, which may exhibit the following characteristics:
         \begin{itemize}[label={--},leftmargin=4mm]
             \itemsep -.4mm
-            \item Stationarity - statistical properties such as mean, variance, and auto correlation are constant over time
-            \item Trend - long-term rise or fall in values
-            \item Seasonality - variations associated with specific calendar times, occurring at regular intervals less than a year
-            \item Cyclicality - variations without a fixed time length, occurring in periods of greater or less than one year
-            \item Autocorrelation - degree of linear similarity between current and lagged values
+            \item Stationarity - behavior does not depend on absolute time
+                  \vspace{-.7mm}
+                  \begin{itemize}[label={$\circ$},leftmargin=3mm]
+                      \itemsep -.4mm
+                      \item Weak - first two moments are time-invariant: $E[x_t]=\mu$, $\mathrm{Var}(x_t)=\gamma_0$, and $\mathrm{Cov}(x_t,x_{t-k})=\gamma_k$ depends only on lag $k$
+                      \item Strong/Strict - full joint distribution is shift-invariant: $(x_{t_1},\ldots,x_{t_n})\overset{d}{=}(x_{t_1+h},\ldots,x_{t_n+h})$ for all $n,t_i,h$
+                      \item Strong $+$ finite variance $\Rightarrow$ weak; weak $\nRightarrow$ strong, except for Gaussian series
+                  \end{itemize}
+            \item Trend - long-term rise or fall in the mean; $x_t=m(t)+u_t$ where $E[x_t]=m(t)$ and $m(t)$ is not constant, e.g. $m(t)=\beta_0+\beta_1t$
+            \item Seasonality - fixed-period pattern; in $x_t=T_t+S_t+\epsilon_t$, the seasonal component satisfies $S_{t+s}=S_t$ for period $s$
+            \item Cyclicality - recurring pattern without fixed period; in $x_t=T_t+C_t+\epsilon_t$, $C_{t+P_t}\approx C_t$ where the cycle length $P_t$ varies
+            \item Autocorrelation - linear dependence between current and lagged values; $\rho_k=\frac{\mathrm{Cov}(x_t,x_{t-k})}{\sqrt{\mathrm{Var}(x_t)\mathrm{Var}(x_{t-k})}}$, and for stationary series $\rho_k=\gamma_k/\gamma_0$
+            \item Heteroskedasticity - non-constant variance over time; $\mathrm{Var}(\epsilon_t\mid\mathcal{F}_{t-1})=\sigma_t^2$ is not constant, often appearing as volatility clustering
         \end{itemize}
 
 
@@ -1014,6 +1022,11 @@
     $\gamma$ that accounts for seasonality.
         \smallskip
 
+        \textbf{AR(n)} - autoregressive process of order $n$, where the current value is a linear function of its previous $n$ values:
+        $\displaystyle x_t=c+\phi_1x_{t-1}+\cdots+\phi_nx_{t-n}+\epsilon_t$, with white-noise error $\epsilon_t$.
+        Equivalently, $\displaystyle \phi(B)x_t=c+\epsilon_t$, where $\phi(B)=1-\phi_1B-\cdots-\phi_nB^n$. Stationarity requires the roots of $\phi(z)=0$ to lie outside the unit circle; for AR(1), $|\phi_1|<1$.
+        \smallskip
+
         \textbf{ARIMA} - models time series using three parameters $(p,d,q)$:
         \begin{itemize}[label={--},leftmargin=4mm]
             \itemsep -.4mm
@@ -1025,6 +1038,28 @@
         \end{itemize}
 
         \textbf{SARIMA} - models seasonality through four additional seasonality-specific parameters: $P$, $D$, $Q$, and the season length $s$
+        \smallskip
+
+        \textbf{GARCH} - Generalized Autoregressive Conditional Heteroskedasticity models time-varying volatility, commonly for stationary returns.
+        \textbf{Setup.} $r_t=\mu_t+\epsilon_t$, $\epsilon_t=\sqrt{h_t}z_t$, $E[z_t]=0$, Var$(z_t)=1$, and $h_t=\sigma_t^2=$ Var$(r_t\mid\mathcal{F}_{t-1})$.
+        \vspace{.2em}
+
+        \textbf{Model.} For GARCH$(p,q)$,
+        $\displaystyle h_t=\omega+\sum_{i=1}^{q}\alpha_i\epsilon_{t-i}^2+\sum_{j=1}^{p}\beta_j h_{t-j}$.
+        Here $q$ is the ARCH order for lagged shocks and $p$ is the GARCH order for lagged variances.
+        Positivity: $\omega>0$, $\alpha_i,\beta_j\geq0$. Covariance stationarity usually requires $\sum_i\alpha_i+\sum_j\beta_j<1$.
+        \vspace{.2em}
+
+        \textbf{GARCH(1,1).}
+        $\displaystyle h_t=\omega+\alpha\epsilon_{t-1}^2+\beta h_{t-1}$, with long-run variance
+        $\displaystyle \bar h=\frac{\omega}{1-\alpha-\beta}$ when $\alpha+\beta<1$.
+        $\alpha$ measures reaction to new shocks, $\beta$ measures persistence, and $\alpha+\beta$ measures volatility clustering.
+        \vspace{.2em}
+
+        \textbf{Likelihood / MLE.} If $z_t\sim N(0,1)$, the conditional log-likelihood is
+        $\displaystyle \ell(\theta)=-\frac12\sum_{t=1}^{T}\left[\log(2\pi)+\log h_t+\frac{\epsilon_t^2}{h_t}\right]$,
+        where $\theta=(\omega,\alpha_1,\ldots,\alpha_q,\beta_1,\ldots,\beta_p)$ is estimated recursively by maximizing $\ell(\theta)$.
+        One-step variance forecast for GARCH(1,1): $\hat h_{t+1|t}=\omega+\alpha\epsilon_t^2+\beta h_t$.
         \smallskip
 
         \textbf{Prophet} - additive model that uses non-linear trends to account for multiple seasonalities such as yearly, weekly, and daily. Robust to missing data and handles outliers well.\\ Can be represented as: $y(t) = g(t) + s(t) + h(t) + \epsilon(t)$, with four distinct components for the growth over time, seasonality, holiday effects, and error. This specification is similar to a generalized additive model.
