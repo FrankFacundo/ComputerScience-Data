@@ -15,11 +15,13 @@ RUN apt-get update && apt-get install -y \
     btop \
     lsof \
     jq \
+    ripgrep \
     libsecret-1-dev \
     plocate \
     fonts-powerline \
     fontconfig \
     iputils-ping \
+    dnsutils \
     nano \
     vim \
     net-tools \
@@ -158,7 +160,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin
 
 # Install Spark
-ENV SPARK_VERSION=4.1.1
+ENV SPARK_VERSION=4.1.2
 ENV HADOOP_VERSION=3
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
