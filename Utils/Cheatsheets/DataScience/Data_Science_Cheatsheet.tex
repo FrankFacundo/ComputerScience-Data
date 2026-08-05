@@ -1000,6 +1000,10 @@
             \item Heteroskedasticity - non-constant variance over time; $\mathrm{Var}(\epsilon_t\mid\mathcal{F}_{t-1})=\sigma_t^2$ is not constant, often appearing as volatility clustering
         \end{itemize}
 
+        \textbf{ACF (Autocorrelation Function) / PACF (Partial Autocorrelation Function)} for weakly stationary $X_t$, $Y_t=X_t-\mu$:
+        $\gamma_k=E[Y_tY_{t-k}]$, $\rho_k=\gamma_k/\gamma_0=\mathrm{ACF}(k)$.
+        With $Z_k=(Y_{t-1},\ldots,Y_{t-k+1})$, $\mathrm{PACF}(k)=\mathrm{Corr}(Y_t-\Pi_{Z_k}Y_t,\,Y_{t-k}-\Pi_{Z_k}Y_{t-k})=\phi_{kk}$, the last coefficient in the best linear AR$(k)$ projection. Thus ACF contains direct and intermediate-lag associations; PACF removes the intermediate lags. AR$(p)$: PACF $=0$ for $k>p$ and ACF tails off; MA$(q)$ (Moving Average): ACF $=0$ for $k>q$ and PACF tails off; ARMA (Autoregressive Moving Average): both tail off. Approximate white-noise bounds: $\pm1.96/\sqrt{T}$.
+
 
         CV must account for the time aspect, such as for each fold $F_x$:
         \begin{itemize}[label={--},leftmargin=4mm]
@@ -1027,7 +1031,7 @@
         Equivalently, $\displaystyle \phi(B)x_t=c+\epsilon_t$, where $\phi(B)=1-\phi_1B-\cdots-\phi_nB^n$. Stationarity requires the roots of $\phi(z)=0$ to lie outside the unit circle; for AR(1), $|\phi_1|<1$.
         \smallskip
 
-        \textbf{ARIMA} - models time series using three parameters $(p,d,q)$:
+        \textbf{ARIMA (Autoregressive Integrated Moving Average)} - models time series using three parameters $(p,d,q)$:
         \begin{itemize}[label={--},leftmargin=4mm]
             \itemsep -.4mm
             \item Autoregressive - the past $p$ values affect the next value
@@ -1037,10 +1041,10 @@
             \item Moving Average - the number of lagged forecast errors and the size of the moving average window $q$
         \end{itemize}
 
-        \textbf{SARIMA} - models seasonality through four additional seasonality-specific parameters: $P$, $D$, $Q$, and the season length $s$
+        \textbf{SARIMA (Seasonal Autoregressive Integrated Moving Average)} - models seasonality through four additional seasonality-specific parameters: $P$, $D$, $Q$, and the season length $s$
         \smallskip
 
-        \textbf{GARCH} - Generalized Autoregressive Conditional Heteroskedasticity models time-varying volatility, commonly for stationary returns.
+        \textbf{GARCH (Generalized Autoregressive Conditional Heteroskedasticity)} - models time-varying volatility, commonly for stationary returns.
         \textbf{Setup.} $r_t=\mu_t+\epsilon_t$, $\epsilon_t=\sqrt{h_t}z_t$, $E[z_t]=0$, Var$(z_t)=1$, and $h_t=\sigma_t^2=$ Var$(r_t\mid\mathcal{F}_{t-1})$.
         \vspace{.2em}
 
