@@ -11,6 +11,18 @@
       "cwd": "${fileDirname}"
     },
     {
+      "name": "Python: Qwen3 Embedding 0.6B",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/Data/DataScience/Models/ByFunction/TextEnconder/qwen_embedding_0_6B.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/Data/DataScience/Models/ByFunction/TextEnconder",
+      "env": {
+        "PYTORCH_ENABLE_MPS_FALLBACK": "1"
+      }
+    },
+    {
       "name": "NumPy Tree: Train iris",
       "type": "debugpy",
       "request": "launch",
