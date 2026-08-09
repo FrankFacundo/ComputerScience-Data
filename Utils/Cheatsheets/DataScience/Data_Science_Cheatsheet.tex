@@ -1115,19 +1115,29 @@
         %------------------------------------------------------
         \textcolor{white}{.}\vspace{-5mm}\\ % Add space above column
         \section{Statistics}
-    $\boldsymbol p$\textbf{-value} - probability that an effect could have occurred by chance. If less than the significance level $\alpha$, or if the test statistic is greater than the critical value, then reject the null.
-
-        \textbf{Type I Error} (False Positive $\alpha$) - rejecting a true null
-
-        \textbf{Type II  Error} (False Negative $\beta$)  - not rejecting a false null
-
-        Decreasing Type I Error causes an increase in Type II Error
-
-        \textbf{Confidence Level} (1 - $\alpha$) - probability of finding an effect that did not occur by chance and avoiding a Type I error
-
-        \textbf{Power} (1 - $\beta$) - probability of picking up on an effect that is present and avoiding a Type II Error
-
-        \textbf{Confidence Interval} - estimated interval that models the long-term frequency of capturing the true parameter value
+        \textbf{Hypothesis Test} - compare a null with an alternative using a statistic $T=T(X)$:
+        \[
+            H_0:\theta\in\Theta_0\ \text{(null)}
+            \qquad\text{vs.}\qquad
+            H_1:\theta\in\Theta_1\ \text{(alternative)}.
+        \]
+        For observed $t_{\mathrm{obs}}$, the \textbf{$p$-value} is the probability, assuming $H_0$, of a statistic at least as extreme:
+        \[
+            \begin{aligned}
+                p_{\mathrm{right}}&=P_{H_0}(T\ge t_{\mathrm{obs}}),\\
+                p_{\mathrm{two}}&=P_{H_0}(|T|\ge|t_{\mathrm{obs}}|)
+                &&\text{(symmetric null)}.
+            \end{aligned}
+        \]
+        At significance level $\alpha$, reject $H_0$ if $p\le\alpha$ (equivalently $T$ lies in the critical region); otherwise \emph{fail to reject} $H_0$, not \emph{accept} it. The $p$-value is not $P(H_0\mid X)$.
+        \[
+            \begin{aligned}
+                \alpha&=P(\text{reject }H_0\mid H_0) &&\text{(Type I)},\\
+                \beta&=P(\text{fail to reject }H_0\mid H_1) &&\text{(Type II)},\\
+                \text{Power}&=1-\beta.
+            \end{aligned}
+        \]
+        For fixed sample size/effect, lowering $\alpha$ generally raises $\beta$. A $(1-\alpha)$ \textbf{confidence interval} has long-run coverage $1-\alpha$; for matching two-sided procedures, reject $H_0:\theta=\theta_0$ iff $\theta_0$ is outside the interval.
 
     $\boldsymbol{z}$\textbf{-test} - tests whether normally distributed population means are different, used when $n$ is large and variances are known
         \vspace{-.5mm}
@@ -1234,7 +1244,7 @@
         To account for network effects, randomize users based on time, cluster, or location
         \smallskip
 
-        \textbf{Sequential Testing} - allows for early experiment stopping by drawing statistical borders based on the Type I Error rate. If the effect reaches a border, the test can be stopped. Used to combat \emph{peeking} (preliminarily checking results of a test), which can inflate $p$-values and lead to incorrect conclusions.
+        \textbf{Sequential Testing} - allows for early experiment stopping by drawing statistical borders based on the Type I Error rate. If the effect reaches a border, the test can be stopped. Used to combat \emph{peeking} (preliminarily checking results of a test), which inflates Type I error and makes unadjusted $p$-values anti-conservative.
 
         \textbf{Cohort Analysis} - examines specific groups of users based on behavior or time and can help identify whether novelty or primacy effects are present
 
