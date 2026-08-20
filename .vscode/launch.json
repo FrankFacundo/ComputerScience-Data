@@ -118,6 +118,37 @@
         }
       ],
       "preLaunchTask": "build"
+    },
+    {
+      "name": "C PyLite: Playground (step-by-step)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/Scripts/c/python/build/debug/playground",
+      "args": ["--trace"],
+      "cwd": "${workspaceFolder}/Scripts/c/python",
+      "terminal": "integrated",
+      "sourceLanguages": ["c"],
+      "stopOnEntry": true,
+      "preLaunchTask": "PyLite: debug build",
+      "initCommands": [
+        "breakpoint set --name pylite_list_resize",
+        "breakpoint set --name pylite_set_lookup",
+        "breakpoint set --name pylite_set_table_resize",
+        "breakpoint set --name pylite_dict_lookup",
+        "breakpoint set --name pylite_dict_resize"
+      ]
+    },
+    {
+      "name": "C PyLite: Tests",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/Scripts/c/python/build/debug/test_objects",
+      "args": [],
+      "cwd": "${workspaceFolder}/Scripts/c/python",
+      "terminal": "integrated",
+      "sourceLanguages": ["c"],
+      "stopOnEntry": true,
+      "preLaunchTask": "PyLite: debug build"
     }
   ]
 }

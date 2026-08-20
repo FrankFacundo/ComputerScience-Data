@@ -1,0 +1,8 @@
+# Use with: lldb -s debug/lldb_commands.txt ./build/debug/playground
+settings set target.inline-breakpoint-strategy always
+breakpoint set --name pylite_list_resize
+breakpoint set --name pylite_set_lookup
+breakpoint set --name pylite_set_table_resize
+breakpoint set --name pylite_dict_lookup
+breakpoint set --name pylite_dict_resize
+run --trace

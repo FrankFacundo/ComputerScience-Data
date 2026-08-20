@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PyLite: playground (LLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/Scripts/c/python/build/debug/playground",
+      "args": ["--trace"],
+      "cwd": "${workspaceFolder}/Scripts/c/python",
+      "preLaunchTask": "PyLite: debug build",
+      "stopOnEntry": true
+    },
+    {
+      "name": "PyLite: tests (LLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/Scripts/c/python/build/debug/test_objects",
+      "cwd": "${workspaceFolder}/Scripts/c/python",
+      "preLaunchTask": "PyLite: debug build",
+      "stopOnEntry": true
+    }
+  ]
+}

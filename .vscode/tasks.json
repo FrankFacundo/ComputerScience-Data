@@ -29,6 +29,17 @@
       },
       "problemMatcher": [],
       "detail": "Build the project using the provided Makefile."
+    },
+    {
+      "label": "PyLite: debug build",
+      "type": "shell",
+      "command": "make",
+      "args": ["debug"],
+      "options": {
+        "cwd": "${workspaceFolder}/Scripts/c/python"
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Build the PyLite playground and tests with symbols and optimizations disabled."
     }
   ]
 }
