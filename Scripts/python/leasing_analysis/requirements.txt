@@ -1,0 +1,4 @@
+# Core model (lux_tax.py, leasing_core.py, report.py, test_model.py) is pure
+# stdlib and needs nothing. These are only for the Streamlit front-end.
+streamlit>=1.49
+pandas>=2.0
